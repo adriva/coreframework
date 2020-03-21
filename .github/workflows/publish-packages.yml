@@ -1,6 +1,4 @@
-# publish Adriva.Common.Core library to nuget
-
-name: Publish Common Library
+name: Publish Packages
 
 # Controls when the action will run. Triggers the workflow on push or pull request 
 # events but only for the master branch
