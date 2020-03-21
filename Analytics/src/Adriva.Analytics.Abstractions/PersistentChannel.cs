@@ -51,8 +51,9 @@ namespace Adriva.Analytics.Abstractions
 
         public string LocalFolder { get; set; }
 
-        public PersistentChannel(IOptions<AnalyticsOptions> optionsAccessor)
+        public PersistentChannel(IHttpClientFactory httpClientFactory, IOptions<AnalyticsOptions> optionsAccessor)
         {
+            this.HttpClient = httpClientFactory.CreateClient();
             this.Options = optionsAccessor.Value;
 
             this.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);

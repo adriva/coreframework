@@ -30,6 +30,7 @@ namespace Adriva.Analytics.Abstractions
                 options.EndpointAddress = analyticsOptions.EndPointAddress;
             });
 
+            services.AddHttpClient();
             services.AddSingleton<ITelemetryChannel, PersistentChannel>();
 
             services.AddLogging(builder =>
