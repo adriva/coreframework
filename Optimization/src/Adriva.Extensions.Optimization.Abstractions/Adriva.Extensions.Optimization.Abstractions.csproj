@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Caching\src\Adriva.Extensions.Caching.Memory\Adriva.Extensions.Caching.Memory.csproj" />
+    <ProjectReference Include="..\..\..\Common\src\Adriva.Common.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.2" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Title>Adriva Core Framework Optimization Abstractions</Title>
+    <PackageDescription>Base library providing common types and interfaces for asset optimization.</PackageDescription>    
+    <Version>3.0.0-rc01</Version>
+  </PropertyGroup>
+
+</Project>

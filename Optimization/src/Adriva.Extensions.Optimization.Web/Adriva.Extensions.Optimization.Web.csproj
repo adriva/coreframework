@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Adriva.Extensions.Optimization.Transforms\Adriva.Extensions.Optimization.Transforms.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />    
+  
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Title>Adriva Core Framework Optimization Web Library</Title>
+    <PackageDescription>TagHelpers, middleware and utility classes that can be used in asp.net applications to optimize resource delivery.</PackageDescription>    
+    <Version>3.0.0-rc01</Version>
+  </PropertyGroup>
+
+</Project>

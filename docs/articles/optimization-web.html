@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Optimization in ASP.net Core </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Optimization in ASP.net Core ">  
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="optimization-in-aspnet-core">Optimization in ASP.net Core</h1>
+
+<p>Adriva Core Framework provides the base infrastructure to optimize resources (called assets) and deliver them to the client in runtime. In other words, asset optimization in web applications, such as bundling and minification happens in runtime rather than compile or build time.</p>
+<p>In the default implementation Adriva.Extensions.Optimization.Web library optimizes the assets when requested, optionally stores them on the file system and relies on static file middleware to deliver them to the client once requested or renders them inline.</p>
+<p>To get started you can either clone and build the <a href="https://adriva.github.io/coreframework/">Adriva Core Framework</a> repository or download packages from <a href="https://www.nuget.org/profiles/adriva">Nuget</a>.</p>
+<h2 id="setting-things-up">Setting Things Up</h2>
+<p>To use static asset optimization in a web application (such as javascript and css files) first we need to register the optimization services using the <code>AddOptimization</code> extension method.</p>
+<pre><code class="lang-csharp">public void ConfigureServices(IServiceCollection services){
+    services.AddOptimization(options =&gt;
+    {
+        options.BundleStylesheets = true; // enable bundling of CSS files
+        options.MinifyStylesheets = true; // enable minifaction of css files
+        options.BundleJavascripts = true; // enable bundling of js files
+        options.MinifyJavascripts = true; // enable minification of js files
+        options.MinifyHtml = true; // enable minification of html response
+    });
+}
+</code></pre>
+<p>If HTML response minification is enabled then we need to add the <code>OptimizationMiddleware</code> to the ASP.net pipeline.</p>
+<pre><code class="lang-csharp">public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    if (env.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
+    }
+    else
+    {
+        app.UseExceptionHandler(&quot;/Home/Error&quot;);
+        app.UseHsts();
+    }
+
+    app.UseHttpsRedirection();
+
+    app.UseResponseCompression();
+    app.UseStaticFiles();
+
+    app.UseRouting();
+
+    app.UseAuthorization();
+
+    // we need to make sure the optimization middleware is registered 
+    // before any other middleware that produces HTML output such as MVC    
+    app.UseOptimization(); 
+
+    app.UseEndpoints(endpoints =&gt;
+    {
+        endpoints.MapControllerRoute(
+            name: &quot;default&quot;,
+            pattern: &quot;{controller=Home}/{action=Index}/{id?}&quot;);
+    });
+}
+</code></pre>
+<p>For static assets we need to provide the optimization module with some information about which assets to use per request. In order to be able to do that we will rely on the <code>IOptimizationContext</code> service provided by the optimization module.
+The easiest way to access the Optimization Context is to inject it into our views.
+Also we'll need a mechanism to render (deliver) the optimized assets, which is managed by tag helpers provided. So in the _ViewImports.cshtml file we can add the following lines:</p>
+<pre><code class="lang-csharp">// inject the optimization context into the views
+@inject Adriva.Extensions.Optimization.Abstractions.IOptimizationContext OptimizationContext
+
+// allow using optimization tag helpers in the views
+@addTagHelper *, Adriva.Extensions.Optimization.Web
+</code></pre>
+<h2 id="using-the-optimization-system">Using The Optimization System</h2>
+<p>After setting thing up, in the view files we can tell the system what static assets we will need by adding them to the <code>OptimizationContext</code>. <code>OptimizationContext</code> is a scoped service that lives through a single request. For example in the <code>_Layout.cshtml</code> view file we can write the following:</p>
+<pre><code class="lang-csharp">OptimizationContext.AddAsset(&quot;~/js/jquery.js&quot;);
+OptimizationContext.AddAsset(&quot;~/js/site.js&quot;);
+OptimizationContext.AddAsset(&quot;https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.css&quot;);
+</code></pre>
+<p>As you can see, we can include assets from the local file system or any valid <em>http</em> or <em>https</em> url.
+<code>OptimizationContext</code> makes sure the same asset is not included twice, so in a scenario where you include <code>jquery.js</code> in the layout and re-include the same asset in a sub view, there will be only one <code>jquery.js</code> included in the current <code>OptimizationContext</code>.</p>
+<p>The final part is the rendering of optimized assets. And in order to achieve that we will use the <code>&lt;optimizedresource&gt;</code> tag helper in our view file.</p>
+<p>For example to deliver the optimized <code>js</code> files we can write:</p>
+<pre><code class="lang-csharp">&lt;optimizedresource extension=&quot;js&quot; output=&quot;StaticFile&quot; /&gt;
+</code></pre>
+<p>or for css files:</p>
+<pre><code class="lang-csharp">&lt;optimizedresource extension=&quot;css&quot; output=&quot;StaticFile&quot; /&gt;
+</code></pre>
+<p>The <code>extension</code> attribute tells the Optimization module what type of resources are to be delivered by the current optimized resource tag and <code>output</code> attribute tells <em>HOW</em> to deliver them.</p>
+<p>The valid values for the <code>output</code> attribute can be found <a href="https://adriva.github.io/coreframework/api/Adriva.Extensions.Optimization.Web.OptimizationTagOutput.html">here</a> .</p>
+<p>If you prefer to use the <code>StaticFiles</code> method as the output delivery option then the system will create asset files for all different <code>OptimizationContext</code>s.
+<br>
+<br>
+<em>Note that, if two different <code>OptimizationContext</code>s include the same assets they are considered to be the same.</em>
+<br>
+<br>
+Static asset output files will be stored in the web root path in a folder named <em>assets</em>.
+If you prefer to use a different folder you can do it by setting the options.</p>
+<pre><code class="lang-csharp">services.AddOptimization(options =&gt;
+{
+    // this the storage folder that will be used to serve optimized output files
+    // it's relative to the web content path and must start with '/'.
+    options.StaticAssetsPath = &quot;/some/other/folder&quot;;
+    options.BundleStylesheets = true;
+    options.MinifyStylesheets = true;
+    options.BundleJavascripts = true;
+    options.MinifyJavascripts = true;
+    options.MinifyHtml = true;
+});
+</code></pre>
+<p>You can find the full source code in <a href="https://github.com/adriva/coreframework/tree/master/Optimization/src/Adriva.Extensions.Optimization.Web">Adriva Core Framework repository</a> on github.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>&copy; 2020, <strong>Adriva LLC.</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

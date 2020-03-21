@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <Authors>adriva</Authors>
+    <Copyright>(c) 2020, Adriva LLC.</Copyright>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/adriva/coreframework</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/adriva/coreframework</PackageProjectUrl>
+    <RepositoryBranch>master</RepositoryBranch>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,52 @@
+# publish Adriva.Common.Core library to nuget
+
+name: Publish Common Library
+
+# Controls when the action will run. Triggers the workflow on push or pull request 
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+    - name: Publish NuGet Core
+      uses: rohith/publish-nuget@v2.1.2
+      with:
+        PROJECT_FILE_PATH: Common/src/Adriva.Common.Core.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish NuGet Caching Abstractions
+      uses: rohith/publish-nuget@v2.1.2
+      with:
+        PROJECT_FILE_PATH: Caching/src/Adriva.Extensions.Caching.Abstractions/Adriva.Extensions.Caching.Abstractions.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish NuGet Caching Memory
+      uses: rohith/publish-nuget@v2.1.2
+      with:
+        PROJECT_FILE_PATH: Caching/src/Adriva.Extensions.Caching.Memory/Adriva.Extensions.Caching.Memory.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish NuGet Optimization Abstractions
+      uses: rohith/publish-nuget@v2.1.2
+      with:
+        PROJECT_FILE_PATH: Optimization/src/Adriva.Extensions.Optimization.Abstractions/Adriva.Extensions.Optimization.Abstractions.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish NuGet Optimization Transforms
+      uses: rohith/publish-nuget@v2.1.2
+      with:
+        PROJECT_FILE_PATH: Optimization/src/Adriva.Extensions.Optimization.Transforms/Adriva.Extensions.Optimization.Transforms.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish NuGet Optimization Web
+      uses: rohith/publish-nuget@v2.1.2
+      with:
+        PROJECT_FILE_PATH: Optimization/src/Adriva.Extensions.Optimization.Web/Adriva.Extensions.Optimization.Web.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+        

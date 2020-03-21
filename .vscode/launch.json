@@ -1,0 +1,52 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Common Tests",
+            "type": "coreclr",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/Common/test",
+            "program": "dotnet",
+            "args": [
+                "test",
+                "${workspaceFolder}/Common/test/test.csproj"
+            ],
+            "env": {
+                "VSTEST_HOST_DEBUG": "1"
+            }
+        },
+        {
+            "name": "Launch Optimization Tests",
+            "type": "coreclr",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/Optimization/test",
+            "program": "dotnet",
+            "args": [
+                "test",
+                "${workspaceFolder}/Optimization/test/test.csproj"
+            ],
+            "env": {
+                "VSTEST_HOST_DEBUG": "1"
+            }
+        },
+        {
+            "name": "Launch Demo Web",
+            "preLaunchTask": "build demo",
+            "type": "coreclr",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/demo",
+            "program": "${workspaceFolder}/demo/bin/Debug/netcoreapp3.0/demo.dll",
+            "launchBrowser": {
+                "enabled": true,
+                "args": "${auto-detect-url}"
+            }
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}",
+        }
+    ],
+    "compounds": []
+}

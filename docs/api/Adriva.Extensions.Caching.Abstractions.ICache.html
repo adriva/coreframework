@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface ICache
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface ICache
+   ">  
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Adriva.Extensions.Caching.Abstractions.ICache">
+  
+  <div style="text-align:center;margin-bottom: 20px;color: #ca3030;">
+  [This is preliminary documentation and is subject to change.]
+  </div>
+  <div>
+    <h6><strong>Namespace</strong>: <a class="xref" href="Adriva.Extensions.Caching.Abstractions.html">Adriva.Extensions.Caching.Abstractions</a></h6>
+    <h6><strong>Assembly</strong>: Adriva.Extensions.Caching.Abstractions.dll</h6>
+  </div>
+  <h1 id="Adriva_Extensions_Caching_Abstractions_ICache" data-uid="Adriva.Extensions.Caching.Abstractions.ICache" class="text-break">Interface ICache
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a cache type.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h5 id="Adriva_Extensions_Caching_Abstractions_ICache_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface ICache</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Abstractions/ICache.cs/#L22">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Caching_Abstractions_ICache_GetOrCreateAsync_" data-uid="Adriva.Extensions.Caching.Abstractions.ICache.GetOrCreateAsync*"></a>
+  <h4 id="Adriva_Extensions_Caching_Abstractions_ICache_GetOrCreateAsync__1_System_String_System_Func_Adriva_Extensions_Caching_Abstractions_ICacheItem_System_Threading_Tasks_Task___0___Adriva_Extensions_Caching_Abstractions_EvictionCallback_System_String___" data-uid="Adriva.Extensions.Caching.Abstractions.ICache.GetOrCreateAsync``1(System.String,System.Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,System.Threading.Tasks.Task{``0}},Adriva.Extensions.Caching.Abstractions.EvictionCallback,System.String[])">GetOrCreateAsync&lt;T&gt;(String, Func&lt;ICacheItem, Task&lt;T&gt;&gt;, EvictionCallback, String[])</h4>
+  <div class="markdown level1 summary"><p>Gets or creates a new cache entry in the cache asynchronously.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;T&gt; GetOrCreateAsync&lt;T&gt;(string key, Func&lt;ICacheItem, Task&lt;T&gt;&gt; factory, EvictionCallback evictionCallback = null, params string[] dependencyMonikers)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The identifier of the cache item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="Adriva.Extensions.Caching.Abstractions.ICacheItem.html">ICacheItem</a>, <span class="xref">System.Threading.Tasks.Task</span>&lt;T&gt;&gt;</td>
+        <td><span class="parametername">factory</span></td>
+        <td><p>A factory method that creates the cache data if it already does not exist in the cache.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Adriva.Extensions.Caching.Abstractions.EvictionCallback.html">EvictionCallback</a></td>
+        <td><span class="parametername">evictionCallback</span></td>
+        <td><p>A callback function that will be called when the cached item is evicted.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td><span class="parametername">dependencyMonikers</span></td>
+        <td><p>List of dependency keys, so that if any of the dependencies expire the cached item will be removed from the cache.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;T&gt;</td>
+        <td><p>A task that represents the asynchronous cache operation. The value of the TResult parameter contains the data retrieved from the cache if exists, or the result of the factory method.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Type of the data that will be cached.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Abstractions/ICache.cs/#L28">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Caching_Abstractions_ICache_NotifyChanged_" data-uid="Adriva.Extensions.Caching.Abstractions.ICache.NotifyChanged*"></a>
+  <h4 id="Adriva_Extensions_Caching_Abstractions_ICache_NotifyChanged_System_String_" data-uid="Adriva.Extensions.Caching.Abstractions.ICache.NotifyChanged(System.String)">NotifyChanged(String)</h4>
+  <div class="markdown level1 summary"><p>Notifies the given dependency item of a change so that all cache dependencies are expired in the cache.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void NotifyChanged(string dependencyMoniker)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">dependencyMoniker</span></td>
+        <td><p>The identifier of the dependency.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Abstractions/ICache.cs/#L35">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Caching_Abstractions_ICache_NotifyChangedAsync_" data-uid="Adriva.Extensions.Caching.Abstractions.ICache.NotifyChangedAsync*"></a>
+  <h4 id="Adriva_Extensions_Caching_Abstractions_ICache_NotifyChangedAsync_System_String_" data-uid="Adriva.Extensions.Caching.Abstractions.ICache.NotifyChangedAsync(System.String)">NotifyChangedAsync(String)</h4>
+  <div class="markdown level1 summary"><p>Notifies the given dependency item of a change so that all cached items depending on this moniker are evicted.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task NotifyChangedAsync(string dependencyMoniker)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">dependencyMoniker</span></td>
+        <td><p>The identifier of the dependency.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td><p>A task that represents the asynchronous operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Abstractions/ICache.cs/#L11" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>&copy; 2020, <strong>Adriva LLC.</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
