@@ -30,6 +30,20 @@
             }
         },
         {
+            "name": "Launch Analytics Tests",
+            "type": "coreclr",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/Analytics/test",
+            "program": "dotnet",
+            "args": [
+                "test",
+                "${workspaceFolder}/Analytics/test/test.csproj"
+            ],
+            "env": {
+                "VSTEST_HOST_DEBUG": "1"
+            }
+        },
+        {
             "name": "Launch Demo Web",
             "preLaunchTask": "build demo",
             "type": "coreclr",
