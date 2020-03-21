@@ -4,7 +4,11 @@ using Microsoft.ApplicationInsights.Channel;
 
 namespace Adriva.Analytics.Abstractions
 {
+#if DEBUG
+    public class TelemetryBuffer
+#else
     internal class TelemetryBuffer
+#endif
     {
         public Action OnFull;
         private const int DefaultCapacity = 500;
@@ -15,6 +19,11 @@ namespace Adriva.Analytics.Abstractions
         private int MinimumBacklogSize = 1001;
         private List<ITelemetry> Items;
         private bool IsItemDroppedMessageLogged = false;
+
+#if DEBUG
+        // Exposed in DEBUG mode only for testing purposes
+        public IList<ITelemetry> TelemetryItems => this.Items;
+#endif
 
         internal TelemetryBuffer()
         {

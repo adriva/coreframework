@@ -1,13 +1,13 @@
 ﻿using System;
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.ApplicationInsights;
 
 namespace Adriva.Analytics.Abstractions
 {
     public static class AnalyticsExtensions
     {
-        //TODO: https://docs.microsoft.com/en-us/azure/azure-monitor/app/ilogger#create-filter-rules-in-code
-
         public static IServiceCollection AddAnalytics(this IServiceCollection services, Action<AnalyticsOptions> configure)
         {
             AnalyticsOptions analyticsOptions = new AnalyticsOptions();
@@ -29,7 +29,17 @@ namespace Adriva.Analytics.Abstractions
                 options.DeveloperMode = analyticsOptions.IsDeveloperMode;
                 options.EndpointAddress = analyticsOptions.EndPointAddress;
             });
+
             services.AddSingleton<ITelemetryChannel, PersistentChannel>();
+
+            services.AddLogging(builder =>
+            {
+                foreach (var logLevelEntry in analyticsOptions.LogLevels)
+                {
+                    builder.AddFilter<ApplicationInsightsLoggerProvider>(logLevelEntry.Key, logLevelEntry.Value);
+                }
+            });
+
             return services;
         }
     }

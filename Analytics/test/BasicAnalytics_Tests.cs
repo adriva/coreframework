@@ -5,33 +5,49 @@ using Adriva.Analytics.Abstractions;
 using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.ApplicationInsights;
+using Microsoft.Extensions.Logging;
+using Microsoft.ApplicationInsights.Channel;
+using System.Linq;
+using Microsoft.ApplicationInsights.DataContracts;
 
 namespace test
 {
     public class BasicAnalytics_Tests
     {
-        private IServiceProvider ServiceProvider;
+        private readonly IServiceProvider ServiceProvider;
+        private readonly TelemetryClient TelemetryClient;
+        private readonly PersistentChannel TelemetryChannel;
 
         public BasicAnalytics_Tests()
         {
             IServiceCollection services = new ServiceCollection();
+
             services.AddAnalytics(options =>
             {
                 options.IsDeveloperMode = true;
                 options.BacklogSize = 100;
-                options.Capacity = 5;
-                options.EndPointAddress = "http://no.such.domain.exists.local";
-                options.InstrumentationKey = "IK01";
+                options.Capacity = 50;
+                options.SetLogLevel(string.Empty, LogLevel.Trace);
             });
             this.ServiceProvider = services.BuildServiceProvider();
+            this.TelemetryClient = this.ServiceProvider.GetService<TelemetryClient>();
+            this.TelemetryChannel = (PersistentChannel)this.ServiceProvider.GetService<ITelemetryChannel>();
         }
 
         [Fact]
-        public async Task TestName()
+        public void EnsureAllTracesAreInBuffer()
         {
-            var tc = this.ServiceProvider.GetService<TelemetryClient>();
-            await Task.Run(() => Thread.Sleep(300000));
-            Assert.True(true);
+            var loggingFactory = this.ServiceProvider.GetService<ILoggerFactory>();
+            var logger = loggingFactory.CreateLogger("BasicAnalytics_Tests");
+
+            logger.LogTrace("Trace Log Example");
+            logger.LogInformation("Information Log Example");
+            logger.LogDebug("Debug Log Example");
+            logger.LogWarning("Warning Log Example");
+            logger.LogError("Error Log Example");
+            logger.LogCritical("Critical Log Example");
+
+            Assert.True(6 == this.TelemetryChannel.TelemetryBuffer.TelemetryItems.OfType<TraceTelemetry>().Count());
         }
     }
 }

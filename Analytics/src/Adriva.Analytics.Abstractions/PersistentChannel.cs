@@ -12,19 +12,25 @@ using Microsoft.Extensions.Options;
 
 namespace Adriva.Analytics.Abstractions
 {
-
+#if DEBUG
+    public class PersistentChannel : ITelemetryChannel, IDisposable
+#else
     internal class PersistentChannel : ITelemetryChannel, IDisposable
+#endif
     {
         private readonly TelemetryBuffer Buffer;
         private readonly ManualResetEvent FileSignal = new ManualResetEvent(true);
         private readonly HttpClient HttpClient;
         private readonly AnalyticsOptions Options;
-        private int IsProcessingBackLog = 0;
-
-        private bool IsWorkingFolderReady;
         private readonly object FileLock = new object();
 
+        private int IsProcessingBackLog = 0;
+        private bool IsWorkingFolderReady;
         private Uri EndpointUri;
+
+#if DEBUG
+        public TelemetryBuffer TelemetryBuffer => this.Buffer;
+#endif
 
         public bool? DeveloperMode { get; set; }
 
@@ -66,7 +72,6 @@ namespace Adriva.Analytics.Abstractions
                 {
                     if (!this.IsWorkingFolderReady)
                     {
-
                         if (!Directory.Exists(workingFolder))
                         {
                             Directory.CreateDirectory(workingFolder);
