@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.ApplicationInsights.Channel;
 
-namespace Adriva.Analytics.Abstractions
+namespace Adriva.Extensions.Analytics.AppInsights
 {
 #if DEBUG
     public class TelemetryBuffer

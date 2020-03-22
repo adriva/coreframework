@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BF45F630-9E4C-45FD-8C9B-18277AD20DF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Analytics.Abstractions", "src\Adriva.Analytics.Abstractions\Adriva.Analytics.Abstractions.csproj", "{248E5BC3-64FD-4B0B-A51E-666618CD1EE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.Analytics.AppInsights", "src\Adriva.Extensions.Analytics.AppInsights\Adriva.Extensions.Analytics.AppInsights.csproj", "{248E5BC3-64FD-4B0B-A51E-666618CD1EE5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{2B968B92-B2A2-481D-AB38-273432E3BA2D}"
 EndProject

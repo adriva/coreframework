@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Adriva.Analytics.Abstractions
+namespace Adriva.Extensions.Analytics.AppInsights
 {
     internal sealed class FileTransaction : IDisposable
     {

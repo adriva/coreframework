@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Adriva.Analytics.Abstractions\Adriva.Analytics.Abstractions.csproj" />
+    <ProjectReference Include="..\src\Adriva.Extensions.Analytics.AppInsights\Adriva.Extensions.Analytics.AppInsights.csproj" />
   </ItemGroup>
 
 </Project>

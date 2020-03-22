@@ -29,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Analytics", "Analytics", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{41BE8748-98D8-400D-9285-FF6A7A881FAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Analytics.Abstractions", "Analytics\src\Adriva.Analytics.Abstractions\Adriva.Analytics.Abstractions.csproj", "{CD26839C-3AED-454F-9B90-A6CBB93F20F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.Analytics.AppInsights", "Analytics\src\Adriva.Extensions.Analytics.AppInsights\Adriva.Extensions.Analytics.AppInsights.csproj", "{CD26839C-3AED-454F-9B90-A6CBB93F20F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

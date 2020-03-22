@@ -1,14 +1,12 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using Adriva.Analytics.Abstractions;
-using System.Threading.Tasks;
-using System.Threading;
-using Microsoft.ApplicationInsights;
+using Adriva.Extensions.Analytics.AppInsights;
 using Microsoft.Extensions.Logging;
 using Microsoft.ApplicationInsights.Channel;
 using System.Linq;
 using Microsoft.ApplicationInsights.DataContracts;
+using Microsoft.ApplicationInsights;
 
 namespace test
 {
@@ -22,13 +20,15 @@ namespace test
         {
             IServiceCollection services = new ServiceCollection();
 
-            services.AddAnalytics(options =>
+            services.AddGenericAnalytics(options =>
             {
                 options.IsDeveloperMode = true;
                 options.BacklogSize = 100;
                 options.Capacity = 50;
                 options.SetLogLevel(string.Empty, LogLevel.Trace);
+                options.EndPointAddress = "http://www.some.url.here.com";
             });
+
             this.ServiceProvider = services.BuildServiceProvider();
             this.TelemetryClient = this.ServiceProvider.GetService<TelemetryClient>();
             this.TelemetryChannel = (PersistentChannel)this.ServiceProvider.GetService<ITelemetryChannel>();
@@ -48,6 +48,7 @@ namespace test
             logger.LogCritical("Critical Log Example");
 
             Assert.True(6 == this.TelemetryChannel.TelemetryBuffer.TelemetryItems.OfType<TraceTelemetry>().Count());
+            this.TelemetryChannel.Flush();
         }
     }
 }

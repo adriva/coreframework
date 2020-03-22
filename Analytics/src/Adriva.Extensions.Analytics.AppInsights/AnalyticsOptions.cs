@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.Extensions.Logging;
 
-namespace Adriva.Analytics.Abstractions
+namespace Adriva.Extensions.Analytics.AppInsights
 {
     public class AnalyticsOptions
     {
         internal readonly IDictionary<string, LogLevel> LogLevels = new Dictionary<string, LogLevel>();
+
+        public static string HttpClientName { get; } = "AdrivaAnalyticsHttpClient";
 
         public string InstrumentationKey { get; set; }
 

@@ -10,7 +10,7 @@ using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.Extensibility.Implementation;
 using Microsoft.Extensions.Options;
 
-namespace Adriva.Analytics.Abstractions
+namespace Adriva.Extensions.Analytics.AppInsights
 {
 #if DEBUG
     public class PersistentChannel : ITelemetryChannel, IDisposable
@@ -51,9 +51,9 @@ namespace Adriva.Analytics.Abstractions
 
         public string LocalFolder { get; set; }
 
-        public PersistentChannel(IHttpClientFactory httpClientFactory, IOptions<AnalyticsOptions> optionsAccessor)
+        public PersistentChannel(IOptions<AnalyticsOptions> optionsAccessor)
         {
-            this.HttpClient = httpClientFactory.CreateClient();
+            this.HttpClient = new HttpClient() { Timeout = TimeSpan.FromSeconds(30) };
             this.Options = optionsAccessor.Value;
 
             this.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -185,6 +185,7 @@ namespace Adriva.Analytics.Abstractions
         public void Dispose()
         {
             this.FileSignal?.Dispose();
+            this.HttpClient?.Dispose();
         }
     }
 }
