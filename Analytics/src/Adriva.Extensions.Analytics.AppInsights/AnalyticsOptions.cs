@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Adriva.Extensions.Analytics.AppInsights
 {
+
     public class AnalyticsOptions
     {
         internal readonly IDictionary<string, LogLevel> LogLevels = new Dictionary<string, LogLevel>();

@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\src\Adriva.Common.Core.csproj" />
+    <ProjectReference Include="..\Adriva.Extensions.Analytics.Abstractions\Adriva.Extensions.Analytics.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
