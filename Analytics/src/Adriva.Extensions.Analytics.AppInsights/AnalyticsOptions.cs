@@ -22,7 +22,11 @@ namespace Adriva.Extensions.Analytics.AppInsights
 
         public bool IsDeveloperMode { get; set; }
 
+        public int TransmitThreadCount { get; set; } = Environment.ProcessorCount;
+
         public Func<ITelemetry, bool> Filter { get; set; } = _ => true;
+
+        public Action<IServiceProvider, ITelemetry> Initializer { get; set; } = (sp, t) => { };
 
         /// <summary>
         /// Sets the logging level per category.

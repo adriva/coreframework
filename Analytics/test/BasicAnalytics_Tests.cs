@@ -47,7 +47,7 @@ namespace test
             logger.LogError("Error Log Example");
             logger.LogCritical("Critical Log Example");
 
-            Assert.True(6 == this.TelemetryChannel.TelemetryBuffer.TelemetryItems.OfType<TraceTelemetry>().Count());
+            Assert.True(6 == this.TelemetryChannel.Buffer.TelemetryItems.OfType<TraceTelemetry>().Count());
             this.TelemetryChannel.Flush();
         }
     }

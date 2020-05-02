@@ -18,19 +18,19 @@ namespace Adriva.Extensions.Analytics.AppInsights
     internal class PersistentChannel : ITelemetryChannel, IDisposable
 #endif
     {
+#if DEBUG
+        public readonly TelemetryBuffer Buffer;
+#else
         private readonly TelemetryBuffer Buffer;
-        private readonly ManualResetEvent FileSignal = new ManualResetEvent(true);
+#endif
+        private readonly SemaphoreSlim TransmitSemaphore;
         private readonly HttpClient HttpClient;
         private readonly AnalyticsOptions Options;
         private readonly object FileLock = new object();
 
-        private int IsProcessingBackLog = 0;
         private bool IsWorkingFolderReady;
         private Uri EndpointUri;
-
-#if DEBUG
-        public TelemetryBuffer TelemetryBuffer => this.Buffer;
-#endif
+        private int IsProcessingBackLog;
 
         public bool? DeveloperMode { get; set; }
 
@@ -53,9 +53,12 @@ namespace Adriva.Extensions.Analytics.AppInsights
 
         public PersistentChannel(IOptions<AnalyticsOptions> optionsAccessor)
         {
-            this.HttpClient = new HttpClient() { Timeout = TimeSpan.FromSeconds(30) };
             this.Options = optionsAccessor.Value;
 
+            int transmitThreadCount = Math.Max(1, this.Options.TransmitThreadCount);
+            this.TransmitSemaphore = new SemaphoreSlim(transmitThreadCount, transmitThreadCount);
+
+            this.HttpClient = new HttpClient();
             this.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             this.Buffer = new TelemetryBuffer();
             this.Buffer.OnFull = this.OnBufferFull;
@@ -77,7 +80,21 @@ namespace Adriva.Extensions.Analytics.AppInsights
                         {
                             Directory.CreateDirectory(workingFolder);
                         }
+                        else
+                        {
 
+                            var filePaths = Directory.EnumerateFiles(workingFolder, "*.ai");
+                            try
+                            {
+                                foreach (var filePath in filePaths)
+                                {
+                                    File.Move(filePath, $"{filePath}.fail");
+                                }
+                            }
+                            catch { }
+
+
+                        }
                         this.IsWorkingFolderReady = true;
                     }
                 }
@@ -86,19 +103,17 @@ namespace Adriva.Extensions.Analytics.AppInsights
             return workingFolder;
         }
 
-        private FileTransaction GetLogFileTransaction()
-        {
-            string filePath = Path.Combine(this.GetWorkingFolder(), $"{Guid.NewGuid().ToString("N")}.ai");
-            return FileTransaction.Create(filePath, FileMode.Create, FileAccess.Write, FileShare.Read);
-        }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Potential Code Quality Issues", "RECS0022:A catch clause that catches System.Exception and has an empty body", Justification = "<Pending>")]
         private void OnBufferFull()
         {
             var items = this.Buffer.Dequeue();
 
             _ = this.TransmitAsync(items);
-            _ = this.TransmitFailedLogsAsync();
+
+            if (0 == Interlocked.CompareExchange(ref this.IsProcessingBackLog, 1, 0))
+            {
+                _ = this.TransmitFailedLogsAsync();
+            }
         }
 
         private async Task TransmitAsync(IEnumerable<ITelemetry> items)
@@ -108,14 +123,14 @@ namespace Adriva.Extensions.Analytics.AppInsights
                 return;
             }
 
-            this.FileSignal.WaitOne();
+            await this.TransmitSemaphore.WaitAsync();
 
             byte[] buffer = JsonSerializer.Serialize(items, true);
 
+            string filePath = Path.Combine(this.GetWorkingFolder(), $"{Guid.NewGuid().ToString("N")}.ai");
             try
             {
-
-                using (var fileTransaction = this.GetLogFileTransaction())
+                using (var fileTransaction = FileTransaction.Create(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     await fileTransaction.WriteAsync(buffer);
                     using (var content = new ByteArrayContent(buffer))
@@ -126,29 +141,26 @@ namespace Adriva.Extensions.Analytics.AppInsights
                     fileTransaction.Commit();
                 }
             }
+            catch
+            {
+                File.Move(filePath, $"{filePath}.fail");
+            }
             finally
             {
-                this.FileSignal.Set();
+                this.TransmitSemaphore.Release();
             }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Potential Code Quality Issues", "RECS0022:A catch clause that catches System.Exception and has an empty body", Justification = "<Pending>")]
         private async Task TransmitFailedLogsAsync()
         {
-            if (0 != Interlocked.CompareExchange(ref this.IsProcessingBackLog, 1, 0)) return;
-
-            if (!this.FileSignal.WaitOne(1000)) return;
-
             string workingFolder = this.GetWorkingFolder();
 
-            var filePaths = Directory.EnumerateFiles(workingFolder, "*.ai");
+            var filePaths = Directory.EnumerateFiles(workingFolder, "*.ai.fail");
             try
             {
                 foreach (var filePath in filePaths)
                 {
-                    string name = Path.GetFileNameWithoutExtension(filePath);
-
-                    if (!Guid.TryParse(name, out _)) continue;
                     try
                     {
                         using (var transaction = FileTransaction.Create(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -167,10 +179,10 @@ namespace Adriva.Extensions.Analytics.AppInsights
             }
             finally
             {
-                Interlocked.Exchange(ref this.IsProcessingBackLog, 1);
-                this.FileSignal.Set();
+                Interlocked.Exchange(ref this.IsProcessingBackLog, 0);
             }
         }
+
 
         public void Send(ITelemetry item)
         {
@@ -184,8 +196,7 @@ namespace Adriva.Extensions.Analytics.AppInsights
 
         public void Dispose()
         {
-            this.FileSignal?.Dispose();
-            this.HttpClient?.Dispose();
+            this.TransmitSemaphore?.Dispose();
         }
     }
 }

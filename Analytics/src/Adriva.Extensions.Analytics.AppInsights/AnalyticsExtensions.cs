@@ -1,39 +1,12 @@
 ﻿using System;
+using Adriva.Extensions.Analytics.AppInsights;
 using Microsoft.ApplicationInsights.Channel;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.ApplicationInsights;
 
-namespace Adriva.Extensions.Analytics.AppInsights
+namespace Microsoft.Extensions.DependencyInjection
 {
-    public interface IAnalyticsBuilder
-    {
-        IServiceCollection Services { get; }
-
-        AnalyticsOptions Options { get; }
-
-        void Configure(Action<AnalyticsOptions> configure);
-    }
-
-    internal sealed class AnalyticsBuilder : IAnalyticsBuilder
-    {
-        internal Action<AnalyticsOptions> ConfigureAction;
-        public AnalyticsOptions Options { get; private set; }
-        public IServiceCollection Services { get; private set; }
-
-        public AnalyticsBuilder(IServiceCollection services, AnalyticsOptions options)
-        {
-            this.Services = services;
-            this.Options = options;
-        }
-
-        public void Configure(Action<AnalyticsOptions> configure)
-        {
-            this.ConfigureAction = configure;
-        }
-    }
-
     public static class AnalyticsExtensions
     {
         public static IServiceCollection AddAnalytics(this IServiceCollection services, Action<IAnalyticsBuilder> build)
