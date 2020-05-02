@@ -1,9 +1,8 @@
 using System;
-using Adriva.Extensions.Caching.Memory;
-using Microsoft.Extensions.DependencyInjection;
+using Adriva.Extensions.Optimization.Abstractions;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Adriva.Extensions.Optimization.Abstractions
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class OptimizationExtensions
     {

@@ -1,6 +1,6 @@
-using Microsoft.Extensions.DependencyInjection;
+using Adriva.Extensions.Caching.Abstractions;
 
-namespace Adriva.Extensions.Caching.Abstractions
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class CacheExtensions
     {

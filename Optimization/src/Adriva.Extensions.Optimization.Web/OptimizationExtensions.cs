@@ -1,10 +1,10 @@
 ﻿using System;
 using Adriva.Extensions.Optimization.Abstractions;
 using Adriva.Extensions.Optimization.Transforms;
+using Adriva.Extensions.Optimization.Web;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Adriva.Extensions.Optimization.Web
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class OptimizationExtensions
     {

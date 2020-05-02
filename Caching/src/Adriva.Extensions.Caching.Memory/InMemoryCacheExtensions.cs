@@ -1,7 +1,6 @@
-using Adriva.Extensions.Caching.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
+using Adriva.Extensions.Caching.Memory;
 
-namespace Adriva.Extensions.Caching.Memory
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class InMemoryCacheExtensions
     {
