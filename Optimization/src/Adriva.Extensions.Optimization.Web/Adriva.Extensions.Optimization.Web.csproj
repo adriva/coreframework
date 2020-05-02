@@ -14,7 +14,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Title>Adriva Core Framework Optimization Web Library</Title>
     <PackageDescription>TagHelpers, middleware and utility classes that can be used in asp.net applications to optimize resource delivery.</PackageDescription>    
-    <Version>3.0.0-rc01</Version>
+    <Version>3.0.0-rc02</Version>
   </PropertyGroup>
 
 </Project>
