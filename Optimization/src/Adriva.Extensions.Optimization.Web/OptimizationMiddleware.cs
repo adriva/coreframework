@@ -43,30 +43,34 @@ namespace Adriva.Extensions.Optimization.Web
                     context.Response.Body = autoStream;
                     await next.Invoke(context);
                     autoStream.Seek(0, SeekOrigin.Begin);
-                    var contentType = new ContentType(context.Response.ContentType);
 
-                    if (0 == string.Compare(contentType.MediaType, MediaTypeNames.Text.Html, StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(context.Response.ContentType))
                     {
-                        using (StreamReader reader = new StreamReader(autoStream, Encoding.UTF8, false, 4096, true))
+                        var contentType = new ContentType(context.Response.ContentType);
+
+                        if (0 == string.Compare(contentType.MediaType, MediaTypeNames.Text.Html, StringComparison.OrdinalIgnoreCase))
                         {
-                            string content = await reader.ReadToEndAsync();
-                            var result = Uglify.Html(content, this.HtmlSettings);
-
-                            if (result.HasErrors)
+                            using (StreamReader reader = new StreamReader(autoStream, Encoding.UTF8, false, 4096, true))
                             {
-                                this.Logger.LogWarning("Html minification has errors. Falling back to no minification.");
+                                string content = await reader.ReadToEndAsync();
+                                var result = Uglify.Html(content, this.HtmlSettings);
 
-                                foreach (var error in result.Errors)
+                                if (result.HasErrors)
                                 {
-                                    this.Logger.LogWarning(error.ToString());
-                                }
-                            }
+                                    this.Logger.LogWarning("Html minification has errors. Falling back to no minification.");
 
-                            if (!(fallbackToDefault = result.HasErrors))
-                            {
-                                context.Response.Body = originalStream;
-                                await context.Response.WriteAsync(result.Code, Encoding.UTF8);
-                                this.Logger.LogInformation($"Html minification succeeded for '{context.Request.Path}'.");
+                                    foreach (var error in result.Errors)
+                                    {
+                                        this.Logger.LogWarning(error.ToString());
+                                    }
+                                }
+
+                                if (!(fallbackToDefault = result.HasErrors))
+                                {
+                                    context.Response.Body = originalStream;
+                                    await context.Response.WriteAsync(result.Code, Encoding.UTF8);
+                                    this.Logger.LogInformation($"Html minification succeeded for '{context.Request.Path}'.");
+                                }
                             }
                         }
                     }

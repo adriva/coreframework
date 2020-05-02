@@ -14,7 +14,7 @@ namespace Adriva.Extensions.Caching.Memory
     {
         private readonly ILogger Logger;
         private readonly IMemoryCache MemoryCache;
-        private readonly ReaderWriterLockSlim Lock = new ReaderWriterLockSlim();
+        private readonly ReaderWriterLockSlim Lock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
 
         public InMemoryCache(ILogger<InMemoryCache> logger)
         {
@@ -74,7 +74,7 @@ namespace Adriva.Extensions.Caching.Memory
             finally
             {
                 this.Logger.LogInformation($"Item '{key}' returned from in-memory cache.");
-                this.Lock.ExitReadLock();
+                if (this.Lock.IsReadLockHeld) this.Lock.ExitReadLock();
             }
         }
 

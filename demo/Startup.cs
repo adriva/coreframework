@@ -36,6 +36,14 @@ namespace demo
                 options.MinifyJavascripts = true;
                 options.MinifyHtml = true;
             });
+
+            services.AddWebAnalytics(options =>
+            {
+                options.TransmitThreadCount = 1;
+                options.InstrumentationKey = "Deneme";
+                options.IsDeveloperMode = true;
+                options.Capacity = 50;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

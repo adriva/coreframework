@@ -9,7 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class AnalyticsExtensions
     {
-        public static IServiceCollection AddAnalytics(this IServiceCollection services, Action<IAnalyticsBuilder> build)
+        private static IServiceCollection AddAnalytics(this IServiceCollection services, Action<IAnalyticsBuilder> build)
         {
             AnalyticsOptions analyticsOptions = new AnalyticsOptions();
             AnalyticsBuilder builder = new AnalyticsBuilder(services, analyticsOptions);
@@ -34,6 +34,23 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     builder.AddFilter<ApplicationInsightsLoggerProvider>(logLevelEntry.Key, logLevelEntry.Value);
                 }
+            });
+
+            return services;
+        }
+
+        public static IServiceCollection AddWebAnalytics(this IServiceCollection services, Action<AnalyticsOptions> configure)
+        {
+            services.AddAnalytics(builder =>
+            {
+                builder.Configure(configure);
+
+                services.AddApplicationInsightsTelemetry(options =>
+                {
+                    options.InstrumentationKey = builder.Options.InstrumentationKey;
+                    options.DeveloperMode = builder.Options.IsDeveloperMode;
+                    options.EndpointAddress = builder.Options.EndPointAddress;
+                });
             });
 
             return services;

@@ -17,7 +17,7 @@ namespace Adriva.Extensions.Optimization.Web
                 if (!string.IsNullOrWhiteSpace(options.StaticAssetsPath))
                 {
                     var physicalAssetsPath = hostingEnvironment.WebRootFileProvider.GetFileInfo(options.StaticAssetsPath).PhysicalPath;
-                    Directory.Delete(physicalAssetsPath, true);
+                    if (Directory.Exists(physicalAssetsPath)) Directory.Delete(physicalAssetsPath, true);
                     Directory.CreateDirectory(physicalAssetsPath);
                 }
             };

@@ -12,7 +12,7 @@ namespace Adriva.Extensions.Optimization.Abstractions
 
         public ValueTask<Stream> OpenReadStreamAsync(Asset asset)
         {
-            return new ValueTask<Stream>(File.Open(asset.Location.AbsolutePath, FileMode.Open, FileAccess.Read));
+            return new ValueTask<Stream>(File.Open(asset.Location.AbsolutePath, FileMode.Open, FileAccess.Read, FileShare.Read));
         }
     }
 

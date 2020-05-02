@@ -47,6 +47,12 @@ namespace Adriva.Extensions.Optimization.Web
 
                     output.AppendHtmlLine($"<script defer type='text/javascript' src='{relativeWebPath}'></script>");
                     break;
+
+            }
+
+            if (null != asset?.Content)
+            {
+                await asset.Content.DisposeAsync();
             }
         }
     }

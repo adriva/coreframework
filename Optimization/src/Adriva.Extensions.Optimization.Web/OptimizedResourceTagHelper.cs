@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Adriva.Extensions.Caching.Abstractions;
 using Adriva.Extensions.Optimization.Abstractions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -14,6 +15,7 @@ namespace Adriva.Extensions.Optimization.Web
         private readonly IOptimizationContext OptimizationContext;
         private readonly IOptimizationManager OptimizationManager;
         private readonly IOptimizationResultTagBuilderFactory TagBuilderFactory;
+        private readonly ICache Cache;
 
         /// <summary>
         /// Gets or sets the extension of assets that will be rendered in this tag.
@@ -29,16 +31,21 @@ namespace Adriva.Extensions.Optimization.Web
         [HtmlAttributeName("Output")]
         public OptimizationTagOutput Output { get; set; }
 
-        public OptimizedResourceTagHelper(IOptimizationManager optimizationManager, IOptimizationContext optimizationContext, IOptimizationResultTagBuilderFactory tagBuilderFactory)
+        public OptimizedResourceTagHelper(IOptimizationManager optimizationManager, IOptimizationContext optimizationContext, IOptimizationResultTagBuilderFactory tagBuilderFactory, ICache cache)
         {
             this.OptimizationContext = optimizationContext;
             this.OptimizationManager = optimizationManager;
             this.TagBuilderFactory = tagBuilderFactory;
+            this.Cache = cache;
         }
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
-            var optimizationResult = await this.OptimizationManager.OptimizeAsync(this.OptimizationContext, this.Extension);
+            string cacheKey = $"{this.OptimizationContext.Identifier}+{this.Extension}";
+            OptimizationResult optimizationResult = await this.Cache.GetOrCreateAsync(cacheKey, async entry =>
+            {
+                return await this.OptimizationManager.OptimizeAsync(this.OptimizationContext, this.Extension);
+            });
 
             output.SuppressOutput();
 
