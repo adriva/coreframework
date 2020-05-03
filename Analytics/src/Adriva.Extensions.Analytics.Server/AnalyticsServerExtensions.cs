@@ -1,22 +1,28 @@
 ﻿using System;
+using Adriva.Extensions.Analytics.Server;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
 
     public static class AnalyticsServerExtensions
     {
-        public static IServiceCollection AddAnalyticsServer(this IServiceCollection services, Action<AnalyticsServerOptions> configure)
+        public static IServiceCollection AddAnalyticsServer(this IServiceCollection services, Action<IAnalyticsServerBuilder> build)
         {
-            services.Configure(configure);
+            AnalyticsServerBuilder analyticsBuilder = new AnalyticsServerBuilder(services);
+            build.Invoke(analyticsBuilder);
+            analyticsBuilder.Build();
+            services.AddSingleton<IQueueingService, QueueingService>();
             return services;
         }
 
-        public static IApplicationBuilder UseAnalyticsServer(this IApplicationBuilder app, Action<IAnalyticsServerBuilder> build)
+        public static IApplicationBuilder UseAnalyticsServer(this IApplicationBuilder app, PathString basePath)
         {
-            AnalyticsServerBuilder analyticsBuilder = ActivatorUtilities.CreateInstance<AnalyticsServerBuilder>(app.ApplicationServices);
-            build?.Invoke(analyticsBuilder);
-            analyticsBuilder.Build(app);
+            if (string.IsNullOrWhiteSpace(basePath)) basePath = "/analytics";
+
+            app.Map(basePath.Add("/track"), appBuilder => appBuilder.UseMiddleware<AnalyticsTrackingMiddleware>());
+
             return app;
         }
     }

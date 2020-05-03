@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace demo
 {
@@ -18,6 +19,10 @@ namespace demo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging(builder =>
+            {
+                builder.AddConsole();
+            });
 
             services
                 .AddControllersWithViews()
@@ -46,9 +51,11 @@ namespace demo
                 options.EndPointAddress = "https://localhost:5001/analytics/track";
             });
 
-            services.AddAnalyticsServer(options =>
+            services.AddAnalyticsServer(builder =>
             {
-                options.BasePath = "/analytics";
+                builder
+                    .UseHandler<Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsHandler>()
+                    ;
             });
         }
 
@@ -70,10 +77,7 @@ namespace demo
 
             app.UseResponseCompression();
 
-            app.UseAnalyticsServer(builder =>
-            {
-
-            });
+            app.UseAnalyticsServer("/analytics");
 
             app.UseStaticFiles();
 

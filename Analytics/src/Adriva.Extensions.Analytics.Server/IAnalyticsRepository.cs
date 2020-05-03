@@ -1,4 +1,4 @@
-namespace Microsoft.Extensions.DependencyInjection
+namespace Adriva.Extensions.Analytics.Server
 {
     public interface IAnalyticsRepository { }
 }

@@ -1,35 +1,45 @@
 using System;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Adriva.Extensions.Analytics.Server
 {
     internal sealed class AnalyticsServerBuilder : IAnalyticsServerBuilder
     {
-        private readonly AnalyticsServerOptions Options;
+        private readonly IServiceCollection Services;
+        private Type RepositoryType;
+        private Type HandlerType;
 
-        public AnalyticsServerBuilder(IOptions<AnalyticsServerOptions> optionsAccessor)
+        public AnalyticsServerBuilder(IServiceCollection services)
         {
-            this.Options = optionsAccessor.Value;
+            this.Services = services;
         }
 
-
-        public void Build(IApplicationBuilder app)
+        public IAnalyticsServerBuilder UseRepository<TRepository>() where TRepository : IAnalyticsRepository
         {
-            if (null == this.Options.HandlerType)
+            this.RepositoryType = typeof(TRepository);
+            return this;
+        }
+
+        public IAnalyticsServerBuilder UseHandler<THandler>() where THandler : IAnalyticsHandler
+        {
+            this.HandlerType = typeof(THandler);
+            return this;
+        }
+
+        public void Build()
+        {
+            this.Services.AddSingleton<IAnalyticsHandler>(serviceProvider =>
             {
-                throw new ArgumentNullException("Handler", "A valid analytics handler is not specified.");
-            }
+                return (IAnalyticsHandler)ActivatorUtilities.CreateInstance(serviceProvider, this.HandlerType);
+            });
 
-            if (null == this.Options.RepositoryType)
+            this.Services.AddSingleton<IAnalyticsRepository>(serviceProvider =>
             {
-                throw new ArgumentNullException("Repository", "A valid analytics repository is not specified.");
-            }
-
-            IAnalyticsHandler handler = (IAnalyticsHandler)ActivatorUtilities.CreateInstance(app.ApplicationServices, this.Options.HandlerType);
-            IAnalyticsRepository repository = (IAnalyticsRepository)ActivatorUtilities.CreateInstance(app.ApplicationServices, this.Options.RepositoryType);
-
-
+                return (IAnalyticsRepository)ActivatorUtilities.CreateInstance(serviceProvider, this.RepositoryType);
+            });
         }
     }
 }

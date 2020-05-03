@@ -9,6 +9,7 @@
     <ProjectReference Include="..\Optimization\src\Adriva.Extensions.Optimization.Web\Adriva.Extensions.Optimization.Web.csproj" />
     <ProjectReference Include="..\Analytics\src\Adriva.Extensions.Analytics.AppInsights\Adriva.Extensions.Analytics.AppInsights.csproj" />
     <ProjectReference Include="..\Analytics\src\Adriva.Extensions.Analytics.Server\Adriva.Extensions.Analytics.Server.csproj" />
+    <ProjectReference Include="..\Analytics\src\Adriva.Extensions.Analytics.Server.AppInsights\Adriva.Extensions.Analytics.Server.AppInsights.csproj" />
   </ItemGroup>
 
 

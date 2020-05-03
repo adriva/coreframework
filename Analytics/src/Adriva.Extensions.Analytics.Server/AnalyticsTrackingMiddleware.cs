@@ -1,28 +1,42 @@
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Adriva.Extensions.Analytics.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Adriva.Extensions.Analytics.Server
 {
-    public class AnalyticsTrackingMiddleware
+    internal class AnalyticsTrackingMiddleware
     {
         private readonly RequestDelegate Next;
+        private readonly IAnalyticsHandler Handler;
+        private readonly IQueueingService QueueingService;
         private readonly ILogger Logger;
 
-        public AnalyticsTrackingMiddleware(RequestDelegate next, ILogger<AnalyticsTrackingMiddleware> logger)
+        public AnalyticsTrackingMiddleware(RequestDelegate next, IAnalyticsHandler handler, IQueueingService queueingService, ILogger<AnalyticsTrackingMiddleware> logger)
         {
             this.Next = next;
+            this.Handler = handler;
+            this.QueueingService = queueingService;
             this.Logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
         {
-            await context.Response.WriteAsync($"<pre>");
-            await context.Response.WriteAsync($"Method: {context.Request.Method}{Environment.NewLine}");
-            await context.Response.WriteAsync($"ContentType: {context.Request.ContentType}{Environment.NewLine}");
-            await context.Response.WriteAsync($"ContentLength: {context.Request.ContentLength}{Environment.NewLine}");
-            await context.Response.WriteAsync($"</pre>");
+            IEnumerable<AnalyticsItem> items = await this.Handler.HandleAsync(context.Request);
+
+            if (null != items)
+            {
+                items = items.Where(x => null != x);
+
+                foreach (var item in items)
+                {
+                    this.QueueingService.Enqueue(item);
+                }
+            }
+
+            context.Response.StatusCode = 204;
         }
     }
 }

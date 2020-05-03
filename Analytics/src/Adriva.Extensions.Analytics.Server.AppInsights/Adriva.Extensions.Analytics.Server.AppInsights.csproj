@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+ <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.14.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Adriva.Extensions.Analytics.Server\Adriva.Extensions.Analytics.Server.csproj" />
+    <ProjectReference Include="..\..\..\Common\src\Adriva.Common.Core.csproj" />
+  </ItemGroup>
+
+</Project>

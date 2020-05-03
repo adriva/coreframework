@@ -15,7 +15,7 @@ namespace Adriva.Extensions.Caching.Memory
     {
         private readonly ILogger Logger;
         private readonly IMemoryCache MemoryCache;
-        private readonly ReaderWriterLockSlim Lock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
+        private readonly ReaderWriterLockSlim Lock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
 
         public InMemoryCache(ILogger<InMemoryCache> logger)
         {

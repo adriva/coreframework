@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.Analytics.Server", "src\Adriva.Extensions.Analytics.Server\Adriva.Extensions.Analytics.Server.csproj", "{EB347292-68B0-4069-932E-FC9CDA9538D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.Analytics.Server.AppInsights", "src\Adriva.Extensions.Analytics.Server.AppInsights\Adriva.Extensions.Analytics.Server.AppInsights.csproj", "{49EE6ABC-EA0D-4B68-B968-06995EC47CC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,9 +59,22 @@ Global
 		{EB347292-68B0-4069-932E-FC9CDA9538D2}.Release|x64.Build.0 = Release|Any CPU
 		{EB347292-68B0-4069-932E-FC9CDA9538D2}.Release|x86.ActiveCfg = Release|Any CPU
 		{EB347292-68B0-4069-932E-FC9CDA9538D2}.Release|x86.Build.0 = Release|Any CPU
+		{49EE6ABC-EA0D-4B68-B968-06995EC47CC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49EE6ABC-EA0D-4B68-B968-06995EC47CC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49EE6ABC-EA0D-4B68-B968-06995EC47CC7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{49EE6ABC-EA0D-4B68-B968-06995EC47CC7}.Debug|x64.Build.0 = Debug|Any CPU
+		{49EE6ABC-EA0D-4B68-B968-06995EC47CC7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{49EE6ABC-EA0D-4B68-B968-06995EC47CC7}.Debug|x86.Build.0 = Debug|Any CPU
+		{49EE6ABC-EA0D-4B68-B968-06995EC47CC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49EE6ABC-EA0D-4B68-B968-06995EC47CC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49EE6ABC-EA0D-4B68-B968-06995EC47CC7}.Release|x64.ActiveCfg = Release|Any CPU
+		{49EE6ABC-EA0D-4B68-B968-06995EC47CC7}.Release|x64.Build.0 = Release|Any CPU
+		{49EE6ABC-EA0D-4B68-B968-06995EC47CC7}.Release|x86.ActiveCfg = Release|Any CPU
+		{49EE6ABC-EA0D-4B68-B968-06995EC47CC7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{248E5BC3-64FD-4B0B-A51E-666618CD1EE5} = {BF45F630-9E4C-45FD-8C9B-18277AD20DF3}
 		{EB347292-68B0-4069-932E-FC9CDA9538D2} = {BF45F630-9E4C-45FD-8C9B-18277AD20DF3}
+		{49EE6ABC-EA0D-4B68-B968-06995EC47CC7} = {BF45F630-9E4C-45FD-8C9B-18277AD20DF3}
 	EndGlobalSection
 EndGlobal

@@ -53,6 +53,9 @@
             "launchBrowser": {
                 "enabled": true,
                 "args": "${auto-detect-url}"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
             }
         },
         {
