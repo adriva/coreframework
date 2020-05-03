@@ -32,20 +32,20 @@ namespace Adriva.Extensions.Analytics.Server.AppInsights
             this.Logger = logger;
         }
 
-        public async Task<IEnumerable<AnalyticsItem>> HandleAsync(HttpRequest request)
+        public async IAsyncEnumerable<AnalyticsItem> HandleAsync(HttpRequest request)
         {
-            await Task.CompletedTask;
             if (0 == string.Compare(request.Method, HttpMethods.Post))
             {
                 using (Stream inputStream = new AutoStream(32 * 1024))
                 {
-                    bool isZipped = false;
+                    bool hasPopulatedStream = false;
+
                     if (request.Headers.TryGetValue(HeaderNames.ContentType, out StringValues contentTypeHeader))
                     {
                         if (contentTypeHeader.Any(ct => 0 == string.Compare(ct, AiJsonSerializer.ContentType, StringComparison.OrdinalIgnoreCase)))
                         {
                             this.Logger.LogInformation("Analytics Middleware received compressed JSON data.");
-                            //inputStream = new GZipStream(request.Body, CompressionMode.Decompress);
+
                             using (var zipStream = new GZipStream(request.Body, CompressionMode.Decompress))
                             {
                                 await zipStream.CopyToAsync(inputStream);
@@ -53,27 +53,24 @@ namespace Adriva.Extensions.Analytics.Server.AppInsights
                         }
                     }
 
-                    if (!isZipped)
+                    if (!hasPopulatedStream)
                     {
                         await request.Body.CopyToAsync(inputStream);
                     }
 
-                    // using (StreamReader reader = new StreamReader(inputStream))
-                    // {
-                    //     string j = await reader.ReadToEndAsync();
-                    // }
                     inputStream.Seek(0, SeekOrigin.Begin);
+
                     this.Logger.LogInformation("Extracting envelope items from the request body.");
                     var envelopeItems = (await NdJsonSerializer.DeserializeAsync<Envelope>(inputStream, AppInsightsHandler.JsonSerializerSettings)).ToList();
                     this.Logger.LogInformation($"Extracted {envelopeItems.Count} envelope items.");
 
                     if (0 < envelopeItems.Count)
                     {
-
+#warning NOT IMPLEMENTED
+                        yield return null;
                     }
                 }
             }
-            return null;
         }
     }
 }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Adriva.Extensions.Analytics.Abstractions;
 using Microsoft.AspNetCore.Http;
@@ -16,10 +15,11 @@ namespace Adriva.Extensions.Analytics.Server
             this.Logger = logger;
         }
 
-        public Task<IEnumerable<AnalyticsItem>> HandleAsync(HttpRequest request)
+        public async IAsyncEnumerable<AnalyticsItem> HandleAsync(HttpRequest request)
         {
             this.Logger.LogTrace($"Null Analytics handler received: {request.Method} {request.Path} with ContentType = {request.ContentType} and ContentLength = {request.ContentLength}");
-            return Task.FromResult(Enumerable.Empty<AnalyticsItem>());
+            await Task.CompletedTask;
+            yield break;
         }
     }
 }

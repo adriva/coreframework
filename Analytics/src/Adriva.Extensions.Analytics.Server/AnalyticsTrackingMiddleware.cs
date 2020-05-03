@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Adriva.Extensions.Analytics.Abstractions;
 using Microsoft.AspNetCore.Http;
@@ -24,13 +23,11 @@ namespace Adriva.Extensions.Analytics.Server
 
         public async Task Invoke(HttpContext context)
         {
-            IEnumerable<AnalyticsItem> items = await this.Handler.HandleAsync(context.Request);
+            IAsyncEnumerable<AnalyticsItem> items = this.Handler.HandleAsync(context.Request);
 
             if (null != items)
             {
-                items = items.Where(x => null != x);
-
-                foreach (var item in items)
+                await foreach (var item in items)
                 {
                     this.QueueingService.Enqueue(item);
                 }
