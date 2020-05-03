@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Adriva.Extensions.Caching.Abstractions;
 using Xunit;
+using System.Threading;
 
 namespace Adriva.Extensions.Caching.Memory.Test
 {
@@ -82,6 +83,38 @@ namespace Adriva.Extensions.Caching.Memory.Test
             }, "Dependency");
 
             Assert.NotSame(item, newItem);
+        }
+
+        [Fact]
+        public async Task MultiThreadCheck()
+        {
+            int threadCount = 20; int loop = 0;
+            Task[] tasks = new Task[threadCount];
+            var cache = this.ServiceProvider.GetService<ICache>();
+
+            while (loop < threadCount)
+            {
+                tasks[loop] = cache.GetOrCreateAsync<object>("test", async item =>
+                                    {
+                                        await Task.CompletedTask;
+                                        item.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15);
+                                        return new object();
+                                    });
+                ++loop;
+            }
+
+            Task.WaitAll(tasks);
+            bool isFactoryMethodCalled = false;
+
+            object sameItem = await cache.GetOrCreateAsync<object>("test", async item =>
+            {
+                await Task.CompletedTask;
+                item.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15);
+                isFactoryMethodCalled = true;
+                return new object();
+            });
+
+            Assert.False(isFactoryMethodCalled);
         }
     }
 }

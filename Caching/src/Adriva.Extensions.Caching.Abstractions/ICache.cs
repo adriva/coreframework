@@ -22,6 +22,16 @@ namespace Adriva.Extensions.Caching.Abstractions
         Task<T> GetOrCreateAsync<T>(string key, Func<ICacheItem, Task<T>> factory, EvictionCallback evictionCallback = null, params string[] dependencyMonikers);
 
         /// <summary>
+        /// Gets or creates a new cache entry in the cache asynchronously.
+        /// </summary>
+        /// <param name="key">The identifier of the cache item.</param>
+        /// <param name="factory">A factory method that creates the cache data if it already does not exist in the cache.</param>
+        /// <param name="dependencyMonikers">List of dependency keys, so that if any of the dependencies expire the cached item will be removed from the cache.</param>
+        /// <typeparam name="T">Type of the data that will be cached.</typeparam>
+        /// <returns>A task that represents the asynchronous cache operation. The value of the TResult parameter contains the data retrieved from the cache if exists, or the result of the factory method.</returns>
+        Task<T> GetOrCreateAsync<T>(string key, Func<ICacheItem, Task<T>> factory, params string[] dependencyMonikers);
+
+        /// <summary>
         /// Notifies the given dependency item of a change so that all cache dependencies are expired in the cache.
         /// </summary>
         /// <param name="dependencyMoniker">The identifier of the dependency.</param>

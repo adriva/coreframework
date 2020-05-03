@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Extensions.Caching.Abstractions;
@@ -14,7 +15,7 @@ namespace Adriva.Extensions.Caching.Memory
     {
         private readonly ILogger Logger;
         private readonly IMemoryCache MemoryCache;
-        private readonly ReaderWriterLockSlim Lock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
+        private readonly ReaderWriterLockSlim Lock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
 
         public InMemoryCache(ILogger<InMemoryCache> logger)
         {
@@ -30,9 +31,24 @@ namespace Adriva.Extensions.Caching.Memory
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Task<T> GetOrCreateAsync<T>(string key, Func<ICacheItem, Task<T>> factory, params string[] dependencyMonikers)
+        {
+            return this.GetOrCreateAsync(key, factory, null, dependencyMonikers);
+        }
+
         public async Task<T> GetOrCreateAsync<T>(string key, Func<ICacheItem, Task<T>> factory, EvictionCallback evictionCallback = null, params string[] dependencyMonikers)
         {
-            this.Lock.EnterReadLock();
+            try
+            {
+                this.Lock.EnterReadLock();
+            }
+            catch (Exception error)
+            {
+                this.Logger.LogWarning(error, "Failed to acquire memory cache access lock. Will by-pass cache.");
+                NullCacheItem nullCacheItem = new NullCacheItem();
+                return await factory?.Invoke(nullCacheItem);
+            }
 
             try
             {
@@ -74,7 +90,10 @@ namespace Adriva.Extensions.Caching.Memory
             finally
             {
                 this.Logger.LogInformation($"Item '{key}' returned from in-memory cache.");
-                if (this.Lock.IsReadLockHeld) this.Lock.ExitReadLock();
+                if (this.Lock.IsReadLockHeld)
+                {
+                    this.Lock.ExitReadLock();
+                }
             }
         }
 
