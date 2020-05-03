@@ -43,6 +43,12 @@ namespace demo
                 options.InstrumentationKey = "Deneme";
                 options.IsDeveloperMode = true;
                 options.Capacity = 50;
+                options.EndPointAddress = "https://localhost:5001/analytics/track";
+            });
+
+            services.AddAnalyticsServer(options =>
+            {
+                options.BasePath = "/analytics";
             });
         }
 
@@ -63,6 +69,12 @@ namespace demo
             app.UseHttpsRedirection();
 
             app.UseResponseCompression();
+
+            app.UseAnalyticsServer(builder =>
+            {
+
+            });
+
             app.UseStaticFiles();
 
             app.UseRouting();
