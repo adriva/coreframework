@@ -16,6 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
             build.Invoke(analyticsBuilder);
             analyticsBuilder.Build();
             services.AddSingleton<IQueueingService, QueueingService>();
+            services.AddHostedService<QueueProcessorService>();
             return services;
         }
 
