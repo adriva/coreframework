@@ -20,7 +20,7 @@ namespace test
         {
             IServiceCollection services = new ServiceCollection();
 
-            services.AddGenericAnalytics(options =>
+            services.AddAppInsightsGenericAnalytics(options =>
             {
                 options.IsDeveloperMode = true;
                 options.BacklogSize = 100;
