@@ -42,7 +42,7 @@ namespace demo
                 options.MinifyHtml = true;
             });
 
-            services.AddWebAnalytics(options =>
+            services.AddAppInsightsWebAnalytics(options =>
             {
                 options.TransmitThreadCount = 1;
                 options.InstrumentationKey = "Deneme";

@@ -9,7 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class AnalyticsExtensions
     {
-        private static IServiceCollection AddAnalytics(this IServiceCollection services, Action<IAnalyticsBuilder> build)
+        private static IServiceCollection AddAppInsightsAnalytics(this IServiceCollection services, Action<IAnalyticsBuilder> build)
         {
             AnalyticsOptions analyticsOptions = new AnalyticsOptions();
             AnalyticsBuilder builder = new AnalyticsBuilder(services, analyticsOptions);
@@ -39,9 +39,9 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        public static IServiceCollection AddWebAnalytics(this IServiceCollection services, Action<AnalyticsOptions> configure)
+        public static IServiceCollection AddAppInsightsWebAnalytics(this IServiceCollection services, Action<AnalyticsOptions> configure)
         {
-            services.AddAnalytics(builder =>
+            services.AddAppInsightsAnalytics(builder =>
             {
                 builder.Configure(configure);
 
@@ -56,10 +56,10 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        public static IServiceCollection AddGenericAnalytics(this IServiceCollection services, Action<AnalyticsOptions> configure)
+        public static IServiceCollection AddAppInsightsGenericAnalytics(this IServiceCollection services, Action<AnalyticsOptions> configure)
         {
 
-            services.AddAnalytics(builder =>
+            services.AddAppInsightsAnalytics(builder =>
             {
                 builder.Configure(configure);
                 builder.Services.AddApplicationInsightsTelemetryWorkerService(options =>
