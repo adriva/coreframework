@@ -12,7 +12,7 @@ namespace Adriva.Common.Core
     public static class NdJsonSerializer
     {
         /// <summary>
-        /// Deserializes a set of items from nsjson formatted stream.
+        /// Deserializes a set of items from ndjson formatted stream.
         /// </summary>
         /// <param name="stream">A readable stream that the json data will be read from.</param>
         /// <param name="jsonSerializerSettings">Settings to use when deserializing items.</param>

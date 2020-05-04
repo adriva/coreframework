@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Interface IOptimizationBuilder&lt;TOptions&gt;
+    <title>Class OptimizationExtensions
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Interface IOptimizationBuilder&lt;TOptions&gt;
+    <meta name="title" content="Class OptimizationExtensions
    ">  
     
     <link rel="shortcut icon" href="../favicon.ico">
@@ -67,25 +67,158 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder`1">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Extensions.DependencyInjection.OptimizationExtensions">
   
   <div style="text-align:center;margin-bottom: 20px;color: #ca3030;">
   [This is preliminary documentation and is subject to change.]
   </div>
   <div>
-    <h6><strong>Namespace</strong>: <a class="xref" href="Adriva.Extensions.Optimization.Abstractions.html">Adriva.Extensions.Optimization.Abstractions</a></h6>
+    <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Extensions.DependencyInjection.html">Microsoft.Extensions.DependencyInjection</a></h6>
     <h6><strong>Assembly</strong>: Adriva.Extensions.Optimization.Abstractions.dll</h6>
   </div>
-  <h1 id="Adriva_Extensions_Optimization_Abstractions_IOptimizationBuilder_1" data-uid="Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder`1" class="text-break">Interface IOptimizationBuilder&lt;TOptions&gt;
+  <h1 id="Microsoft_Extensions_DependencyInjection_OptimizationExtensions" data-uid="Microsoft.Extensions.DependencyInjection.OptimizationExtensions" class="text-break">Class OptimizationExtensions
   </h1>
   <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
-  <h5 id="Adriva_Extensions_Optimization_Abstractions_IOptimizationBuilder_1_syntax">Syntax</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IOptimizationBuilder&lt;TOptions&gt;
-
-    where TOptions : OptimizationOptions</code></pre>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">OptimizationExtensions</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h5 id="Microsoft_Extensions_DependencyInjection_OptimizationExtensions_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class OptimizationExtensions</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/OptimizationExtensions.cs/#L9">View Source</a>
+  </span>
+  <a id="Microsoft_Extensions_DependencyInjection_OptimizationExtensions_AddOptimization_" data-uid="Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization*"></a>
+  <h4 id="Microsoft_Extensions_DependencyInjection_OptimizationExtensions_AddOptimization_IServiceCollection_System_Action_Adriva_Extensions_Optimization_Abstractions_OptimizationOptions__" data-uid="Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization(IServiceCollection,System.Action{Adriva.Extensions.Optimization.Abstractions.OptimizationOptions})">AddOptimization(IServiceCollection, Action&lt;OptimizationOptions&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IOptimizationBuilder&lt;OptimizationOptions&gt; AddOptimization(this IServiceCollection services, Action&lt;OptimizationOptions&gt; configure)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IServiceCollection</span></td>
+        <td><span class="parametername">services</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Action</span>&lt;<a class="xref" href="Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.html">OptimizationOptions</a>&gt;</td>
+        <td><span class="parametername">configure</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder-1.html">IOptimizationBuilder</a>&lt;<a class="xref" href="Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.html">OptimizationOptions</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/OptimizationExtensions.cs/#L14">View Source</a>
+  </span>
+  <a id="Microsoft_Extensions_DependencyInjection_OptimizationExtensions_AddOptimization_" data-uid="Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization*"></a>
+  <h4 id="Microsoft_Extensions_DependencyInjection_OptimizationExtensions_AddOptimization__1_IServiceCollection_System_Action___0__" data-uid="Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization``1(IServiceCollection,System.Action{``0})">AddOptimization&lt;TOptions&gt;(IServiceCollection, Action&lt;TOptions&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IOptimizationBuilder&lt;TOptions&gt; AddOptimization&lt;TOptions&gt;(this IServiceCollection services, Action&lt;TOptions&gt; configure)
+
+    where TOptions : OptimizationOptions, new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IServiceCollection</span></td>
+        <td><span class="parametername">services</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Action</span>&lt;TOptions&gt;</td>
+        <td><span class="parametername">configure</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder-1.html">IOptimizationBuilder</a>&lt;TOptions&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -101,157 +234,6 @@
       </tr>
     </tbody>
   </table>
-  <h3 id="properties">Properties
-  </h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/IOptimizationBuilder.cs/#L8">View Source</a>
-  </span>
-  <a id="Adriva_Extensions_Optimization_Abstractions_IOptimizationBuilder_1_Services_" data-uid="Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder`1.Services*"></a>
-  <h4 id="Adriva_Extensions_Optimization_Abstractions_IOptimizationBuilder_1_Services" data-uid="Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder`1.Services">Services</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IServiceCollection Services { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IServiceCollection</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="methods">Methods
-  </h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/IOptimizationBuilder.cs/#L12">View Source</a>
-  </span>
-  <a id="Adriva_Extensions_Optimization_Abstractions_IOptimizationBuilder_1_AddFormatter_" data-uid="Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder`1.AddFormatter*"></a>
-  <h4 id="Adriva_Extensions_Optimization_Abstractions_IOptimizationBuilder_1_AddFormatter__2_System_Int32_" data-uid="Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder`1.AddFormatter``2(System.Int32)">AddFormatter&lt;TFormatter, TType&gt;(Int32)</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IOptimizationBuilder&lt;TOptions&gt; AddFormatter&lt;TFormatter, TType&gt;(int order)
-
-    where TFormatter : class, IOptimizationResultFormatter&lt;TType&gt;</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td><span class="parametername">order</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder-1.html">IOptimizationBuilder</a>&lt;TOptions&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TFormatter</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TType</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/IOptimizationBuilder.cs/#L10">View Source</a>
-  </span>
-  <a id="Adriva_Extensions_Optimization_Abstractions_IOptimizationBuilder_1_AddTransformationChain_" data-uid="Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder`1.AddTransformationChain*"></a>
-  <h4 id="Adriva_Extensions_Optimization_Abstractions_IOptimizationBuilder_1_AddTransformationChain_System_String_System_Type___" data-uid="Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder`1.AddTransformationChain(System.String,System.Type[])">AddTransformationChain(String, Type[])</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IOptimizationBuilder&lt;TOptions&gt; AddTransformationChain(string extension, params Type[] transformation)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">extension</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Type</span>[]</td>
-        <td><span class="parametername">transformation</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder-1.html">IOptimizationBuilder</a>&lt;TOptions&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
 </article>
           </div>
           
@@ -260,7 +242,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/IOptimizationBuilder.cs/#L6" class="contribution-link">View Source</a>
+                    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/OptimizationExtensions.cs/#L7" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

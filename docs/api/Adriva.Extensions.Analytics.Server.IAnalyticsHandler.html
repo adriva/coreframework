@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Namespace Adriva.Extensions.Optimization.Abstractions
+    <title>Interface IAnalyticsHandler
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Namespace Adriva.Extensions.Optimization.Abstractions
+    <meta name="title" content="Interface IAnalyticsHandler
    ">  
     
     <link rel="shortcut icon" href="../favicon.ico">
@@ -67,57 +67,71 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Adriva.Extensions.Optimization.Abstractions">
+            <article class="content wrap" id="_content" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsHandler">
   
-  <h1 id="Adriva_Extensions_Optimization_Abstractions" data-uid="Adriva.Extensions.Optimization.Abstractions" class="text-break">Namespace Adriva.Extensions.Optimization.Abstractions
+  <div style="text-align:center;margin-bottom: 20px;color: #ca3030;">
+  [This is preliminary documentation and is subject to change.]
+  </div>
+  <div>
+    <h6><strong>Namespace</strong>: <a class="xref" href="Adriva.Extensions.Analytics.Server.html">Adriva.Extensions.Analytics.Server</a></h6>
+    <h6><strong>Assembly</strong>: Adriva.Extensions.Analytics.Server.dll</h6>
+  </div>
+  <h1 id="Adriva_Extensions_Analytics_Server_IAnalyticsHandler" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsHandler" class="text-break">Interface IAnalyticsHandler
   </h1>
   <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
-  <div class="markdown level0 remarks"></div>
-    <h3 id="classes">Classes
+  <h5 id="Adriva_Extensions_Analytics_Server_IAnalyticsHandler_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IAnalyticsHandler</code></pre>
+  </div>
+  <h3 id="methods">Methods
   </h3>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.Asset.html">Asset</a></h4>
-      <section><p>Represents an asset resource that can be processed by the optimization transforms.</p>
-</section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.AssetExtensions.html">AssetExtensions</a></h4>
-      <section><p>Provides extension methods that can be used with an asset.</p>
-</section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationContext.html">DefaultOptimizationContext</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.html">FileAssetOrderer</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.HttpAssetLoader.html">HttpAssetLoader</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.MergeContentTransform.html">MergeContentTransform</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.OptimizationException.html">OptimizationException</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.html">OptimizationOptions</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.OptimizationResult.html">OptimizationResult</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.PhysicalFileAssetLoader.html">PhysicalFileAssetLoader</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.SingleTranform.html">SingleTranform</a></h4>
-      <section></section>
-    <h3 id="interfaces">Interfaces
-  </h3>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.IAssetLoader.html">IAssetLoader</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.html">IAssetOrderer</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder-1.html">IOptimizationBuilder&lt;TOptions&gt;</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.IOptimizationContext.html">IOptimizationContext</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.IOptimizationEvents-1.html">IOptimizationEvents&lt;TOptions&gt;</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.IOptimizationManager.html">IOptimizationManager</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.IOptimizationResultFormatter-1.html">IOptimizationResultFormatter&lt;TOutput&gt;</a></h4>
-      <section></section>
-      <h4><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.ITransform.html">ITransform</a></h4>
-      <section></section>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsHandler.cs/#L9">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Analytics_Server_IAnalyticsHandler_HandleAsync_" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsHandler.HandleAsync*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Server_IAnalyticsHandler_HandleAsync_HttpRequest_" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsHandler.HandleAsync(HttpRequest)">HandleAsync(HttpRequest)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IAsyncEnumerable&lt;AnalyticsItem&gt; HandleAsync(HttpRequest request)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">HttpRequest</span></td>
+        <td><span class="parametername">request</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IAsyncEnumerable</span>&lt;<a class="xref" href="Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html">AnalyticsItem</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
 </article>
           </div>
           
@@ -125,6 +139,9 @@
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
+                  <li>
+                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsHandler.cs/#L7" class="contribution-link">View Source</a>
+                  </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
