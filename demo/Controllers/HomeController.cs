@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace demo.Controllers
 {
@@ -19,7 +19,10 @@ namespace demo.Controllers
 
         public IActionResult Index()
         {
-            if (0 == Rnd.Next(0, 4)) throw new Exception("Exception here");
+            var tc = this.HttpContext.RequestServices.GetService<Microsoft.ApplicationInsights.TelemetryClient>();
+            tc.TrackTrace("Hello world", Microsoft.ApplicationInsights.DataContracts.SeverityLevel.Information);
+            tc.TrackEvent("EVENT NAME");
+            tc.TrackAvailability("AVAILABILITY DEMO", DateTimeOffset.Now, TimeSpan.FromSeconds(10), "RUN LOCATION", true, "MESSAGE HERE");
             return View();
         }
     }

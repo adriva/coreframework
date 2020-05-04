@@ -14,7 +14,7 @@ namespace Adriva.Extensions.Analytics.Server.Entities
 
         public bool? IsDeveloperMode { get; set; }
 
-        public Severity? Severity { get; internal set; }
+        public Severity? Severity { get; set; }
 
         public AnalyticsItem AnalyticsItem { get; set; }
     }

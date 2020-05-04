@@ -40,6 +40,8 @@ namespace Adriva.Extensions.Analytics.Server.Entities
 
         public MessageItem MessageItem { get; set; }
 
+        public AvailabilityItem AvailabilityItem { get; set; }
+
         public List<MetricItem> Metrics { get; set; } = new List<MetricItem>();
 
         public List<EventItem> Events { get; set; } = new List<EventItem>();

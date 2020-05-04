@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -16,7 +17,7 @@ namespace Adriva.Extensions.Analytics.Server.AppInsights.Contracts
         public string Name { get; set; }
 
         [JsonProperty("duration")]
-        public string Duration { get; set; }
+        public TimeSpan? Duration { get; set; }
 
         [JsonProperty("success")]
         public bool Success { get; set; }
@@ -30,7 +31,7 @@ namespace Adriva.Extensions.Analytics.Server.AppInsights.Contracts
         [JsonProperty("properties")]
         public Dictionary<string, string> Properties { get; set; }
 
-        [JsonProperty("Measurements")]
+        [JsonProperty("measurements")]
         public Dictionary<string, double> Measurements { get; set; }
 
         public AvailabilityData()
@@ -42,7 +43,7 @@ namespace Adriva.Extensions.Analytics.Server.AppInsights.Contracts
             this.Version = 2;
             this.Id = string.Empty;
             this.Name = string.Empty;
-            this.Duration = string.Empty;
+            this.Duration = null;
             this.RunLocation = string.Empty;
             this.Message = string.Empty;
             this.Properties = new Dictionary<string, string>();

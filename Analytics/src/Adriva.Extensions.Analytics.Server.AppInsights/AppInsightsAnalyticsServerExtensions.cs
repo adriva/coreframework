@@ -17,6 +17,10 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<AnalyticsItemPopulator, MetricItemPopulator>();
             services.AddSingleton<AnalyticsItemPopulator, DependencyItemPopulator>();
             services.AddSingleton<AnalyticsItemPopulator, ExceptionItemPopulator>();
+            services.AddSingleton<AnalyticsItemPopulator, TraceItemPopulator>();
+            services.AddSingleton<AnalyticsItemPopulator, EventItemPopulator>();
+            services.AddSingleton<AnalyticsItemPopulator, AvailabilityItemPopulator>();
+
             return services;
         }
     }
