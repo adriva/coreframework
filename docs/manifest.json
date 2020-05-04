@@ -36,7 +36,7 @@
           "hash": "kjIAiYf7ymc8UL9osZ2fdg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -48,7 +48,7 @@
           "hash": "xbjF8ppFOxF5bO8TJYLu/g=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -60,7 +60,7 @@
           "hash": "WxAF7GSZ076dCmEtQdDcYA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -84,7 +84,7 @@
           "hash": "Zz9LdLl4QhXMRX/mBno0Rg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -132,7 +132,7 @@
           "hash": "DUh+mCEyuhlXq16op+pRgw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -144,7 +144,7 @@
           "hash": "TLURdHSmn1qFQqUdP/FhAw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -156,7 +156,7 @@
           "hash": "cewtYSA+o3Eo3nhFQcWuQQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -168,7 +168,7 @@
           "hash": "kMFTl/B2xndN7QWNNa23uw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -177,7 +177,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Common.Core.NdJsonSerializer.html",
-          "hash": "Xlvr7QiuViQyKJ86Kw+nLA=="
+          "hash": "+IaikF82wBttO1eezIcyYQ=="
         }
       },
       "is_incremental": false,
@@ -216,7 +216,7 @@
           "hash": "Ru/kEmzlMAoDPSgekenBPQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -228,7 +228,7 @@
           "hash": "mlTEF1kpF3K576J+ECvTHw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -240,7 +240,7 @@
           "hash": "mwlhnwGW2nA0E02Tuhc+TQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -264,7 +264,7 @@
           "hash": "Z57h/07t5mEA2PVvsiV/tA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -288,7 +288,7 @@
           "hash": "aru43xzd9BBq7yixwIGaeA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -300,7 +300,7 @@
           "hash": "9iYYu1GzqnsK1ohknAodug=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -312,7 +312,7 @@
           "hash": "9cT2wIvmEssKzPuw41GbZQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -345,7 +345,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.AvailabilityData.html",
-          "hash": "sCkpIeKPzRUPsqcsxeAWRw=="
+          "hash": "WOel3QEdGr1/Dag7PdwZHA=="
         }
       },
       "is_incremental": false,
@@ -393,7 +393,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.Envelope.html",
-          "hash": "0kEMLt8n+wtw5S9B/t8q0w=="
+          "hash": "TgxjsGfvy5eilaBMfByJlA=="
         }
       },
       "is_incremental": false,
@@ -561,7 +561,19 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html",
-          "hash": "M45LMk0HpVc6USuWl3TaZw=="
+          "hash": "dSc2OQD423CeCHYdLzBuyg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.html",
+          "hash": "5GHW50/LiMwB8eaTpQxUzg=="
         }
       },
       "is_incremental": false,
@@ -576,7 +588,7 @@
           "hash": "RsQwgAtSFUn7d2TVgjo7PA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -624,7 +636,7 @@
           "hash": "taeoVwO/ZKF70zppe+QPOA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -633,7 +645,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.MessageItem.html",
-          "hash": "CSjelYF47wlkNtLptiC7Yg=="
+          "hash": "uNxHyC2Ps5rtgFnbw39KVA=="
         }
       },
       "is_incremental": false,
@@ -672,7 +684,7 @@
           "hash": "/+43uoS18TmkuPPLib4oGA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -681,7 +693,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.html",
-          "hash": "btZxNTPUXDjjc6vGreAyKA=="
+          "hash": "Z86e/VnKp7leYSLWlvRYFQ=="
         }
       },
       "is_incremental": false,
@@ -696,7 +708,7 @@
           "hash": "dg2Ipigea21ZuFejDaY++A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -708,7 +720,7 @@
           "hash": "zNHFxTAP85inMT/k1vcBCg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -717,7 +729,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html",
-          "hash": "zTHecwaCyYsy8E0RnGJlqg=="
+          "hash": "KnZSPyX0rCTHMD61mfTB7w=="
         }
       },
       "is_incremental": false,
@@ -744,7 +756,7 @@
           "hash": "8tTKsaQsG9M5ybrtOeoVHg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -756,7 +768,7 @@
           "hash": "WlxK08OeLGPz7oCppfQyiQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -768,7 +780,7 @@
           "hash": "O/J4RZJw6usj1T9RzKPQlw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -900,7 +912,7 @@
           "hash": "X6NwtnCcFJcKQW12iYXoeQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -909,7 +921,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder-1.html",
-          "hash": "7dcBpLFomHmxvgfsvUfmWQ=="
+          "hash": "ugfd3tSR/afdUZk0syz6Pg=="
         }
       },
       "is_incremental": false,
@@ -933,7 +945,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationEvents-1.html",
-          "hash": "5UniIqcj5/yaNRZ3h6Lfdg=="
+          "hash": "9RYNrTyGKRGp6jCQMwfR6w=="
         }
       },
       "is_incremental": false,
@@ -972,7 +984,7 @@
           "hash": "H24eUAqFxPJbnmEp3KsZpA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1005,7 +1017,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.html",
-          "hash": "8rntIvFWLXDCJhVn37ktVw=="
+          "hash": "6ClNBTMKsizWYGFv7lJGLw=="
         }
       },
       "is_incremental": false,
@@ -1128,7 +1140,7 @@
           "hash": "OgZChOIGLlWXR/PjtvU9ww=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1140,7 +1152,7 @@
           "hash": "ws0tzn8JPGHrW3zVgDdqXQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1152,7 +1164,7 @@
           "hash": "YScOJa2lc6GImdBB5O8qxQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1176,7 +1188,7 @@
           "hash": "cisKM+xq88uOrUkr1gYI+g=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1236,7 +1248,7 @@
           "hash": "aW1bbywhDmjfhDHvgsmRWw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1269,7 +1281,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.CacheExtensions.html",
-          "hash": "sVNov5aersutsuApQobqrQ=="
+          "hash": "EwtVIDK8iS9KiHvN954bgw=="
         }
       },
       "is_incremental": false,
@@ -1284,7 +1296,7 @@
           "hash": "Xe5J0Uu+dLYPu122l4TmwQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1293,7 +1305,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.OptimizationExtensions.html",
-          "hash": "61i0OD8gKJawtInepJBSvQ=="
+          "hash": "q6Y0Wn1XprKeqq/5RYfgVw=="
         }
       },
       "is_incremental": false,
@@ -1320,7 +1332,7 @@
           "hash": "KPcI8vjBRE8VbME3iLPYIQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1329,7 +1341,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "i6CysyA15qhb7smenvGQ9g=="
+          "hash": "6zVveiajKVJIO9pnRvNqkA=="
         }
       },
       "is_incremental": false,
@@ -1377,10 +1389,10 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "f+Ud8RdUJXllCDaORlXkPg=="
+          "hash": "tuJtELSHTO98KuwaD+rxuw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1409,13 +1421,13 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 4,
-          "skipped_file_count": 4
+          "skipped_file_count": 3
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 109,
-          "skipped_file_count": 47
+          "total_file_count": 110,
+          "skipped_file_count": 52
         },
         "TocDocumentProcessor": {
           "can_incremental": false,

@@ -4037,6 +4037,19 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.AuthenticatedUserId
   nameWithType: AnalyticsItem.AuthenticatedUserId
+- uid: Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.AvailabilityItem
+  name: AvailabilityItem
+  href: api/Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html#Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem_AvailabilityItem
+  commentId: P:Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.AvailabilityItem
+  fullName: Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.AvailabilityItem
+  nameWithType: AnalyticsItem.AvailabilityItem
+- uid: Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.AvailabilityItem*
+  name: AvailabilityItem
+  href: api/Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html#Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem_AvailabilityItem_
+  commentId: Overload:Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.AvailabilityItem
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.AvailabilityItem
+  nameWithType: AnalyticsItem.AvailabilityItem
 - uid: Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.Dependencies
   name: Dependencies
   href: api/Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html#Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem_Dependencies
@@ -4284,6 +4297,90 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.UserId
   nameWithType: AnalyticsItem.UserId
+- uid: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem
+  name: AvailabilityItem
+  href: api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.html
+  commentId: T:Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem
+  fullName: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem
+  nameWithType: AvailabilityItem
+- uid: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Duration
+  name: Duration
+  href: api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.html#Adriva_Extensions_Analytics_Server_Entities_AvailabilityItem_Duration
+  commentId: P:Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Duration
+  fullName: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Duration
+  nameWithType: AvailabilityItem.Duration
+- uid: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Duration*
+  name: Duration
+  href: api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.html#Adriva_Extensions_Analytics_Server_Entities_AvailabilityItem_Duration_
+  commentId: Overload:Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Duration
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Duration
+  nameWithType: AvailabilityItem.Duration
+- uid: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Environment
+  name: Environment
+  href: api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.html#Adriva_Extensions_Analytics_Server_Entities_AvailabilityItem_Environment
+  commentId: P:Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Environment
+  fullName: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Environment
+  nameWithType: AvailabilityItem.Environment
+- uid: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Environment*
+  name: Environment
+  href: api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.html#Adriva_Extensions_Analytics_Server_Entities_AvailabilityItem_Environment_
+  commentId: Overload:Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Environment
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Environment
+  nameWithType: AvailabilityItem.Environment
+- uid: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Id
+  name: Id
+  href: api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.html#Adriva_Extensions_Analytics_Server_Entities_AvailabilityItem_Id
+  commentId: P:Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Id
+  fullName: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Id
+  nameWithType: AvailabilityItem.Id
+- uid: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Id*
+  name: Id
+  href: api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.html#Adriva_Extensions_Analytics_Server_Entities_AvailabilityItem_Id_
+  commentId: Overload:Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Id
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Id
+  nameWithType: AvailabilityItem.Id
+- uid: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Message
+  name: Message
+  href: api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.html#Adriva_Extensions_Analytics_Server_Entities_AvailabilityItem_Message
+  commentId: P:Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Message
+  fullName: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Message
+  nameWithType: AvailabilityItem.Message
+- uid: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Message*
+  name: Message
+  href: api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.html#Adriva_Extensions_Analytics_Server_Entities_AvailabilityItem_Message_
+  commentId: Overload:Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Message
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Message
+  nameWithType: AvailabilityItem.Message
+- uid: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Name
+  name: Name
+  href: api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.html#Adriva_Extensions_Analytics_Server_Entities_AvailabilityItem_Name
+  commentId: P:Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Name
+  fullName: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Name
+  nameWithType: AvailabilityItem.Name
+- uid: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Name*
+  name: Name
+  href: api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.html#Adriva_Extensions_Analytics_Server_Entities_AvailabilityItem_Name_
+  commentId: Overload:Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Name
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Name
+  nameWithType: AvailabilityItem.Name
+- uid: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Success
+  name: Success
+  href: api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.html#Adriva_Extensions_Analytics_Server_Entities_AvailabilityItem_Success
+  commentId: P:Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Success
+  fullName: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Success
+  nameWithType: AvailabilityItem.Success
+- uid: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Success*
+  name: Success
+  href: api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.html#Adriva_Extensions_Analytics_Server_Entities_AvailabilityItem_Success_
+  commentId: Overload:Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Success
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.Success
+  nameWithType: AvailabilityItem.Success
 - uid: Adriva.Extensions.Analytics.Server.Entities.DataPointType
   name: DataPointType
   href: api/Adriva.Extensions.Analytics.Server.Entities.DataPointType.html
