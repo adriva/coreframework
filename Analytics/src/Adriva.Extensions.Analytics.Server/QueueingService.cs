@@ -1,6 +1,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using Adriva.Extensions.Analytics.Abstractions;
+using Adriva.Extensions.Analytics.Server.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace Adriva.Extensions.Analytics.Server

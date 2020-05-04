@@ -47,15 +47,13 @@ namespace demo
                 options.TransmitThreadCount = 1;
                 options.InstrumentationKey = "Deneme";
                 options.IsDeveloperMode = true;
-                options.Capacity = 50;
+                options.Capacity = 10;
                 options.EndPointAddress = "https://localhost:5001/analytics/track";
             });
 
-            services.AddAnalyticsServer(builder =>
+            services.AddAppInsightsAnalyticsServer(builder =>
             {
-                builder
-                    .UseHandler<Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsHandler>()
-                    ;
+
             });
         }
 

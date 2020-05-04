@@ -1,6 +1,6 @@
-namespace Adriva.Extensions.Analytics.Abstractions
+namespace Adriva.Extensions.Analytics.Server.Entities
 {
-    public class RequestItem
+    public class RequestItem : IAnalyticsObject
     {
         public long Id { get; set; }
 

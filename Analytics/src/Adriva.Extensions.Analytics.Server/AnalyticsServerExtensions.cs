@@ -11,6 +11,8 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddAnalyticsServer(this IServiceCollection services, Action<IAnalyticsServerBuilder> build)
         {
             AnalyticsServerBuilder analyticsBuilder = new AnalyticsServerBuilder(services);
+            analyticsBuilder.UseHandler<NullHandler>();
+
             build.Invoke(analyticsBuilder);
             analyticsBuilder.Build();
             services.AddSingleton<IQueueingService, QueueingService>();

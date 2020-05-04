@@ -1,4 +1,4 @@
-namespace Adriva.Extensions.Analytics.Abstractions
+namespace Adriva.Extensions.Analytics.Server.Entities
 {
     /// <summary>
     /// Represents the severity level of an analytics item.
@@ -25,5 +25,11 @@ namespace Adriva.Extensions.Analytics.Abstractions
         // Summary:
         //     Critical severity level.
         Critical = 4
+    }
+
+    public enum DataPointType
+    {
+        Measurement,
+        Aggregation,
     }
 }

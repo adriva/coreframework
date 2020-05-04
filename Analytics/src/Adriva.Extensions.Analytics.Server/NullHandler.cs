@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Adriva.Extensions.Analytics.Abstractions;
+using Adriva.Extensions.Analytics.Server.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace Adriva.Extensions.Analytics.Server
 {
-    public sealed class NullHandler : IAnalyticsHandler
+    internal sealed class NullHandler : IAnalyticsHandler
     {
         private readonly ILogger Logger;
 

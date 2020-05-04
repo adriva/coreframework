@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Adriva.Extensions.Analytics.Abstractions;
 using Microsoft.AspNetCore.Http;
 using AiJsonSerializer = Microsoft.ApplicationInsights.Extensibility.Implementation.JsonSerializer;
 using System.IO;
@@ -13,12 +12,15 @@ using System;
 using Adriva.Common.Core;
 using Adriva.Extensions.Analytics.Server.AppInsights.Contracts;
 using Newtonsoft.Json;
+using Adriva.Extensions.Analytics.Server.Entities;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Adriva.Extensions.Analytics.Server.AppInsights
 {
     public class AppInsightsHandler : IAnalyticsHandler
     {
         private readonly ILogger Logger;
+        private readonly Dictionary<string, AnalyticsItemPopulator> Populators = new Dictionary<string, AnalyticsItemPopulator>();
         private static readonly JsonSerializerSettings JsonSerializerSettings;
 
         static AppInsightsHandler()
@@ -27,9 +29,15 @@ namespace Adriva.Extensions.Analytics.Server.AppInsights
             AppInsightsHandler.JsonSerializerSettings.Converters.Add(new TelemetryConverter());
         }
 
-        public AppInsightsHandler(ILogger<AppInsightsHandler> logger)
+        public AppInsightsHandler(IServiceProvider serviceProvider, ILogger<AppInsightsHandler> logger)
         {
             this.Logger = logger;
+            var populatorServices = serviceProvider.GetServices<AnalyticsItemPopulator>();
+
+            foreach (var populatorService in populatorServices)
+            {
+                this.Populators[populatorService.TargetKey] = populatorService;
+            }
         }
 
         public async IAsyncEnumerable<AnalyticsItem> HandleAsync(HttpRequest request)
@@ -49,6 +57,7 @@ namespace Adriva.Extensions.Analytics.Server.AppInsights
                             using (var zipStream = new GZipStream(request.Body, CompressionMode.Decompress))
                             {
                                 await zipStream.CopyToAsync(inputStream);
+                                hasPopulatedStream = true;
                             }
                         }
                     }
@@ -61,13 +70,30 @@ namespace Adriva.Extensions.Analytics.Server.AppInsights
                     inputStream.Seek(0, SeekOrigin.Begin);
 
                     this.Logger.LogInformation("Extracting envelope items from the request body.");
-                    var envelopeItems = (await NdJsonSerializer.DeserializeAsync<Envelope>(inputStream, AppInsightsHandler.JsonSerializerSettings)).ToList();
-                    this.Logger.LogInformation($"Extracted {envelopeItems.Count} envelope items.");
+                    var envelopeItems = await NdJsonSerializer.DeserializeAsync<Envelope>(inputStream, AppInsightsHandler.JsonSerializerSettings);
+                    this.Logger.LogInformation($"Extracted envelope items.");
 
-                    if (0 < envelopeItems.Count)
+                    if (envelopeItems.Any())
                     {
-#warning NOT IMPLEMENTED
-                        yield return null;
+                        foreach (var envelopeItem in envelopeItems)
+                        {
+                            if (AnalyticsItemPopulator.TryPopulateItem(envelopeItem, out AnalyticsItem analyticsItem))
+                            {
+                                this.Logger.LogTrace($"Envelope item with data of type '{analyticsItem.Type}' is parsed.");
+                                if (this.Populators.TryGetValue(analyticsItem.Type, out AnalyticsItemPopulator populator))
+                                {
+                                    if (populator.TryPopulate(envelopeItem, ref analyticsItem))
+                                    {
+                                        this.Logger.LogTrace($"Analytics item of type '{analyticsItem.Type}' is populated.");
+                                    }
+                                }
+                                else
+                                {
+                                    this.Logger.LogWarning($"AppInsights handler received a type of '{analyticsItem.Type}' and doesn't have a populator registered for that type.");
+                                }
+                                yield return analyticsItem;
+                            }
+                        }
                     }
                 }
             }

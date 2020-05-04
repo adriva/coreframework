@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Adriva.Extensions.Analytics.Abstractions;
+using Adriva.Extensions.Analytics.Server.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 

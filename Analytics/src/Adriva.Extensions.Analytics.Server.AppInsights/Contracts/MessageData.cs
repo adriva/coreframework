@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Adriva.Extensions.Analytics.Server.Entities;
 using Newtonsoft.Json;
 
 namespace Adriva.Extensions.Analytics.Server.AppInsights.Contracts
@@ -13,7 +14,7 @@ namespace Adriva.Extensions.Analytics.Server.AppInsights.Contracts
         public string Message { get; set; }
 
         [JsonProperty("severityLevel")]
-        public SeverityLevel? SeverityLevel { get; set; }
+        public Severity SeverityLevel { get; set; }
 
         [JsonProperty("properties")]
         public Dictionary<string, string> Properties { get; set; }

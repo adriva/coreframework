@@ -1,3 +1,4 @@
+using Adriva.Extensions.Analytics.Server.Entities;
 using Newtonsoft.Json;
 
 namespace Adriva.Extensions.Analytics.Server.AppInsights.Contracts
