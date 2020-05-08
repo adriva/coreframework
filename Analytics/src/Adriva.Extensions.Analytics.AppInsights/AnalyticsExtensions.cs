@@ -7,6 +7,9 @@ using Microsoft.Extensions.Logging.ApplicationInsights;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
+    /// <summary>
+    /// Provides extension methods to use Microsoft AppInsights wrapper services.
+    /// </summary>
     public static class AnalyticsExtensions
     {
         private static IServiceCollection AddAppInsightsAnalytics(this IServiceCollection services, Action<IAnalyticsBuilder> build)
@@ -39,6 +42,12 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
+        /// <summary>
+        /// Adds Microsoft AppInsights for asp.net core services to the specified service collection.
+        /// </summary>
+        /// <param name="services">The Microsoft.Extensions.DependencyInjection.IServiceCollection to add services to.</param>
+        /// <param name="configure">The AnalyticsOptions configuration delegate.</param>
+        /// <returns> The Microsoft.Extensions.DependencyInjection.IServiceCollection so that additional calls can be chained.</returns>
         public static IServiceCollection AddAppInsightsWebAnalytics(this IServiceCollection services, Action<AnalyticsOptions> configure)
         {
             services.AddAppInsightsAnalytics(builder =>
@@ -56,6 +65,12 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
+        /// <summary>
+        /// Adds Microsoft AppInsights for generic host core services to the specified service collection.
+        /// </summary>
+        /// <param name="services">The Microsoft.Extensions.DependencyInjection.IServiceCollection to add services to.</param>
+        /// <param name="configure">The AnalyticsOptions configuration delegate.</param>
+        /// <returns> The Microsoft.Extensions.DependencyInjection.IServiceCollection so that additional calls can be chained.</returns>
         public static IServiceCollection AddAppInsightsGenericAnalytics(this IServiceCollection services, Action<AnalyticsOptions> configure)
         {
 
