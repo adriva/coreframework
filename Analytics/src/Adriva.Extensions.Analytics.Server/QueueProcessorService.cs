@@ -50,13 +50,27 @@ namespace Adriva.Extensions.Analytics.Server
                     {
                         try
                         {
-                            await this.Repository.StoreAsync(buffer);
+                            using (CancellationTokenSource storeOperationCancellationTokenSource = new CancellationTokenSource())
+                            {
+                                storeOperationCancellationTokenSource.CancelAfter(this.Options.StorageTimeout);
+                                await this.Repository.StoreAsync(buffer, storeOperationCancellationTokenSource.Token);
+                            }
                             buffer.Clear();
                         }
-                        catch
+                        catch (Exception exception)
                         {
-#warning NOOP
-                            buffer.Clear();
+                            try
+                            {
+                                await this.Repository.HandleErrorAsync(buffer, exception);
+                            }
+                            catch
+                            {
+                                // handle error cannot throw exceptions
+                            }
+                            finally
+                            {
+                                buffer.Clear();
+                            }
                         }
                     }
                 }

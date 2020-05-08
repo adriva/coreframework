@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Extensions.Analytics.Server.Entities;
 
@@ -7,15 +9,8 @@ namespace Adriva.Extensions.Analytics.Server
     public interface IAnalyticsRepository
     {
 
-        Task StoreAsync(IEnumerable<AnalyticsItem> items);
+        Task StoreAsync(IEnumerable<AnalyticsItem> items, CancellationToken cancellationToken);
 
-    }
-
-    public sealed class NullRepository : IAnalyticsRepository
-    {
-        public Task StoreAsync(IEnumerable<AnalyticsItem> items)
-        {
-            return Task.CompletedTask;
-        }
+        Task HandleErrorAsync(IEnumerable<AnalyticsItem> items, Exception exception);
     }
 }

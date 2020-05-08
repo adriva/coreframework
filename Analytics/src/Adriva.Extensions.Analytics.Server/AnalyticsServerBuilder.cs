@@ -42,6 +42,12 @@ namespace Adriva.Extensions.Analytics.Server
             return this;
         }
 
+        public IAnalyticsServerBuilder SetStorageTimeout(TimeSpan timeout)
+        {
+            this.Options.StorageTimeout = timeout;
+            return this;
+        }
+
         public void Build()
         {
             this.Services.AddSingleton<IAnalyticsHandler>(serviceProvider =>
@@ -61,6 +67,7 @@ namespace Adriva.Extensions.Analytics.Server
         {
             options.ProcessorThreadCount = Math.Max(1, this.Options.ProcessorThreadCount);
             options.BufferCapacity = Math.Max(1, this.Options.BufferCapacity);
+            options.StorageTimeout = this.Options.StorageTimeout;
         }
     }
 }
