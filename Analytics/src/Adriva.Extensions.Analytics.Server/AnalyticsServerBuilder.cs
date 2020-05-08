@@ -6,9 +6,10 @@ using Microsoft.Extensions.Options;
 
 namespace Adriva.Extensions.Analytics.Server
 {
-    internal sealed class AnalyticsServerBuilder : IAnalyticsServerBuilder
+    internal sealed class AnalyticsServerBuilder : IAnalyticsServerBuilder, IConfigureOptions<AnalyticsServerOptions>
     {
         private readonly IServiceCollection Services;
+        private readonly AnalyticsServerOptions Options = new AnalyticsServerOptions();
         private Type RepositoryType;
         private Type HandlerType;
 
@@ -29,6 +30,18 @@ namespace Adriva.Extensions.Analytics.Server
             return this;
         }
 
+        public IAnalyticsServerBuilder SetProcessorThreadCount(int threadCount)
+        {
+            this.Options.ProcessorThreadCount = Math.Max(1, threadCount);
+            return this;
+        }
+
+        public IAnalyticsServerBuilder SetBufferCapacity(int capacity)
+        {
+            this.Options.BufferCapacity = capacity;
+            return this;
+        }
+
         public void Build()
         {
             this.Services.AddSingleton<IAnalyticsHandler>(serviceProvider =>
@@ -40,6 +53,14 @@ namespace Adriva.Extensions.Analytics.Server
             {
                 return (IAnalyticsRepository)ActivatorUtilities.CreateInstance(serviceProvider, this.RepositoryType);
             });
+
+            this.Services.ConfigureOptions(this);
+        }
+
+        public void Configure(AnalyticsServerOptions options)
+        {
+            options.ProcessorThreadCount = Math.Max(1, this.Options.ProcessorThreadCount);
+            options.BufferCapacity = Math.Max(1, this.Options.BufferCapacity);
         }
     }
 }

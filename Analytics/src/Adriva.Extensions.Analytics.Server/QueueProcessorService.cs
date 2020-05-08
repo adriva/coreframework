@@ -1,46 +1,76 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Adriva.Extensions.Analytics.Server.Entities;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace Adriva.Extensions.Analytics.Server
 {
     public class QueueProcessorService : IHostedService, IDisposable
     {
+        private readonly AnalyticsServerOptions Options;
+        private readonly IAnalyticsRepository Repository;
         private readonly IQueueingService QueueingService;
-        private readonly AutoResetEvent ProcessingCompleteSignal = new AutoResetEvent(false);
+        private readonly CancellationTokenSource StopTokenSource = new CancellationTokenSource();
+        private readonly Task[] ProcessorTasks;
         private bool IsDisposed;
 
-        public QueueProcessorService(IHostApplicationLifetime applicationLifetime, IQueueingService queueingService)
+        public QueueProcessorService(IQueueingService queueingService, IAnalyticsRepository repository, IOptions<AnalyticsServerOptions> optionsAccessor)
         {
+            this.Options = optionsAccessor.Value;
+            this.Repository = repository;
             this.QueueingService = queueingService;
+
+            this.ProcessorTasks = new Task[this.Options.ProcessorThreadCount];
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public Task StartAsync(CancellationToken cancellationToken)
         {
-            _ = Task.Run(async () => { await this.ProcessItemsAsync(); });
-            await Task.CompletedTask;
+            for (int loop = 0; loop < this.Options.ProcessorThreadCount; loop++)
+            {
+                this.ProcessorTasks[loop] = Task.Run(async () => { await this.ProcessItemsAsync(); });
+            }
+
+            return Task.CompletedTask;
         }
 
         private async Task ProcessItemsAsync()
         {
-            var enumerable = this.QueueingService.GetConsumingEnumerable();
+            List<AnalyticsItem> buffer = new List<AnalyticsItem>();
+            var enumerable = this.QueueingService.GetConsumingEnumerable(this.StopTokenSource.Token);
             using (var enumerator = enumerable.GetEnumerator())
             {
                 while (enumerator.MoveNext())
                 {
-                    await Task.CompletedTask;
+                    buffer.Add(enumerator.Current);
+
+                    if (this.Options.BufferCapacity <= buffer.Count)
+                    {
+                        try
+                        {
+                            await this.Repository.StoreAsync(buffer);
+                            buffer.Clear();
+                        }
+                        catch
+                        {
+#warning NOOP
+                            buffer.Clear();
+                        }
+                    }
                 }
             }
-
-            this.ProcessingCompleteSignal.Set();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            this.ProcessingCompleteSignal.WaitOne();
+            this.StopTokenSource.Cancel();
+            Task.WaitAll(this.ProcessorTasks);
             return Task.CompletedTask;
         }
+
+        #region IDisposable Implementation
 
         protected virtual void Dispose(bool disposing)
         {
@@ -48,7 +78,7 @@ namespace Adriva.Extensions.Analytics.Server
             {
                 if (disposing)
                 {
-                    this.ProcessingCompleteSignal.Dispose();
+                    this.StopTokenSource.Dispose();
                 }
 
                 this.IsDisposed = true;
@@ -68,4 +98,5 @@ namespace Adriva.Extensions.Analytics.Server
             GC.SuppressFinalize(this);
         }
     }
+    #endregion
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using Adriva.Extensions.Analytics.Server.Entities;
 
 namespace Adriva.Extensions.Analytics.Server
@@ -9,6 +10,6 @@ namespace Adriva.Extensions.Analytics.Server
 
         void Enqueue(AnalyticsItem analyticsItem);
 
-        IEnumerable<AnalyticsItem> GetConsumingEnumerable();
+        IEnumerable<AnalyticsItem> GetConsumingEnumerable(CancellationToken cancellationToken);
     }
 }

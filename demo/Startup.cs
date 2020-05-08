@@ -53,7 +53,11 @@ namespace demo
 
             services.AddAppInsightsAnalyticsServer(builder =>
             {
-
+                builder
+                    .SetProcessorThreadCount(1)
+                    .SetBufferCapacity(10)
+                    .UseRepository<Adriva.Extensions.Analytics.Server.NullRepository>()
+                ;
             });
         }
 

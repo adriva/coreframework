@@ -11,6 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddAnalyticsServer(builder =>
             {
                 builder.UseHandler<AppInsightsHandler>();
+                build.Invoke(builder);
             });
 
             services.AddSingleton<AnalyticsItemPopulator, RequestItemPopulator>();
