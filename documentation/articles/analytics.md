@@ -8,3 +8,5 @@ Adriva analytics library is designed to support multiple analytics clients with 
 |Adriva.Extensions.Analytics.AppInsights|Provides extension methods and wrapper classes to host Microsoft AppInsights in your generic or asp&period;core application that is capable of working with ```Ariva.Extensions.Analytics.Server.AppInsights``` library.|
 |Adriva.Extensions.Analytics.Server|Provides a generic analytics server implementation that is configurable to parse and persist virtually *any* incoming analytics data.|
 |Adriva.Extensions.Analytics.Server.AppInsights|Provides handler and parser classes that can be used with ```Adriva.Extensions.Analytics.Server``` library, to convert all incoming Microsoft AppInsights analytics data to a common format.|
+
+>You can find extension methods to help with dependency injection, in the [Microsoft.Extensions.DependencyInjection](../api/Microsoft.Extensions.DependencyInjection.html) namespace.

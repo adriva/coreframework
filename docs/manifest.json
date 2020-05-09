@@ -1408,27 +1408,33 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "articles/analytics.md",
       "output": {
         ".html": {
           "relative_path": "articles/analytics.html",
-          "hash": "fITinnw9y7MViLGOULAsrQ=="
+          "hash": "T680oYuv9D7W2I3AgoiF0Q=="
         }
       },
       "is_incremental": true,
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "articles/gettingstarted.md",
       "output": {
         ".html": {
           "relative_path": "articles/gettingstarted.html",
-          "hash": "gewOsQJ44WsI1CTnGeHvgw=="
+          "hash": "x5UtrtlzfaErZctWBUK0dA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1493,7 +1499,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 6,
-          "skipped_file_count": 6
+          "skipped_file_count": 5
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,

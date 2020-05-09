@@ -18,6 +18,10 @@
     word-wrap: break-word;
   }
   
+  .container,.container-fluid {
+    width: unset;
+  }
+
   /* HIGHLIGHT COLOR */
   
   button,
