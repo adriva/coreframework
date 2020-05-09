@@ -197,6 +197,7 @@
   .sidetoc > .toc {
     background-color: #fff;
     overflow-x: hidden;
+    height: 100%;
   }
   
   .sidetoc {

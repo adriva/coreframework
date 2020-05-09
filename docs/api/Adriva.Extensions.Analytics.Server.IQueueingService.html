@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class AnalyticsServerExtensions
+    <title>Interface IQueueingService
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class AnalyticsServerExtensions
+    <meta name="title" content="Interface IQueueingService
    ">  
     
     <link rel="shortcut icon" href="../favicon.ico">
@@ -67,43 +67,69 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsServerExtensions">
+            <article class="content wrap" id="_content" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService">
   
   <div style="text-align:center;margin-bottom: 20px;color: #ca3030;">
   [This is preliminary documentation and is subject to change.]
   </div>
   <div>
-    <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Extensions.DependencyInjection.html">Microsoft.Extensions.DependencyInjection</a></h6>
+    <h6><strong>Namespace</strong>: <a class="xref" href="Adriva.Extensions.Analytics.Server.html">Adriva.Extensions.Analytics.Server</a></h6>
     <h6><strong>Assembly</strong>: Adriva.Extensions.Analytics.Server.dll</h6>
   </div>
-  <h1 id="Microsoft_Extensions_DependencyInjection_AnalyticsServerExtensions" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsServerExtensions" class="text-break">Class AnalyticsServerExtensions
+  <h1 id="Adriva_Extensions_Analytics_Server_IQueueingService" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService" class="text-break">Interface IQueueingService
   </h1>
   <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
-  <div class="inheritance">
-    <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><span class="xref">AnalyticsServerExtensions</span></div>
-  </div>
-  <h5 id="Microsoft_Extensions_DependencyInjection_AnalyticsServerExtensions_syntax">Syntax</h5>
+  <h5 id="Adriva_Extensions_Analytics_Server_IQueueingService_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class AnalyticsServerExtensions : object</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IQueueingService</code></pre>
   </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IQueueingService.cs/#L9">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Analytics_Server_IQueueingService_IsCompleted_" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService.IsCompleted*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Server_IQueueingService_IsCompleted" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService.IsCompleted">IsCompleted</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsCompleted { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/AnalyticsServerExtensions.cs/#L11">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IQueueingService.cs/#L11">View Source</a>
   </span>
-  <a id="Microsoft_Extensions_DependencyInjection_AnalyticsServerExtensions_AddAnalyticsServer_" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsServerExtensions.AddAnalyticsServer*"></a>
-  <h4 id="Microsoft_Extensions_DependencyInjection_AnalyticsServerExtensions_AddAnalyticsServer_IServiceCollection_Action_Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder__" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsServerExtensions.AddAnalyticsServer(IServiceCollection,Action{Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder})">AddAnalyticsServer(IServiceCollection, Action&lt;IAnalyticsServerBuilder&gt;)</h4>
+  <a id="Adriva_Extensions_Analytics_Server_IQueueingService_Enqueue_" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService.Enqueue*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Server_IQueueingService_Enqueue_Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem_" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService.Enqueue(Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem)">Enqueue(AnalyticsItem)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IServiceCollection AddAnalyticsServer(this IServiceCollection services, Action&lt;IAnalyticsServerBuilder&gt; build)</code></pre>
+    <pre><code class="lang-csharp hljs">void Enqueue(AnalyticsItem analyticsItem)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -116,28 +142,8 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IServiceCollection</span></td>
-        <td><span class="parametername">services</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="xref">Action</span>&lt;<a class="xref" href="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html">IAnalyticsServerBuilder</a>&gt;</td>
-        <td><span class="parametername">build</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IServiceCollection</span></td>
+        <td><a class="xref" href="Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html">AnalyticsItem</a></td>
+        <td><span class="parametername">analyticsItem</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -146,15 +152,15 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/AnalyticsServerExtensions.cs/#L23">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IQueueingService.cs/#L13">View Source</a>
   </span>
-  <a id="Microsoft_Extensions_DependencyInjection_AnalyticsServerExtensions_UseAnalyticsServer_" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsServerExtensions.UseAnalyticsServer*"></a>
-  <h4 id="Microsoft_Extensions_DependencyInjection_AnalyticsServerExtensions_UseAnalyticsServer_IApplicationBuilder_PathString_" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsServerExtensions.UseAnalyticsServer(IApplicationBuilder,PathString)">UseAnalyticsServer(IApplicationBuilder, PathString)</h4>
+  <a id="Adriva_Extensions_Analytics_Server_IQueueingService_GetConsumingEnumerable_" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService.GetConsumingEnumerable*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Server_IQueueingService_GetConsumingEnumerable_CancellationToken_" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService.GetConsumingEnumerable(CancellationToken)">GetConsumingEnumerable(CancellationToken)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IApplicationBuilder UseAnalyticsServer(this IApplicationBuilder app, PathString basePath)</code></pre>
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;AnalyticsItem&gt; GetConsumingEnumerable(CancellationToken cancellationToken)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -167,13 +173,8 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IApplicationBuilder</span></td>
-        <td><span class="parametername">app</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="xref">PathString</span></td>
-        <td><span class="parametername">basePath</span></td>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -188,7 +189,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IApplicationBuilder</span></td>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html">AnalyticsItem</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -201,7 +202,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/AnalyticsServerExtensions.cs/#L9" class="contribution-link">View Source</a>
+                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IQueueingService.cs/#L7" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
