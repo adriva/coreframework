@@ -63,7 +63,9 @@
         "repo": "https://github.com/adriva/coreframework",
         "branch": "master"
       },
-      "_gitUrlPattern": "github"
+      "_gitUrlPattern": "github",
+      "_enableNewTab": true,
+      "_appTitle": "Adriva Core Framework"
     },
     "fileMetadataFiles": [],
     "template": [
