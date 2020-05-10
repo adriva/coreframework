@@ -87,7 +87,8 @@
   </div>
   <h1 id="Adriva_Extensions_Analytics_Server_IAnalyticsRepository" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsRepository" class="text-break">Interface IAnalyticsRepository
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Provides methods to persist analytics data in a repository.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <h5 id="Adriva_Extensions_Analytics_Server_IAnalyticsRepository_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -99,11 +100,13 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsRepository.cs/#L14">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsRepository.cs/#L29">View Source</a>
   </span>
   <a id="Adriva_Extensions_Analytics_Server_IAnalyticsRepository_HandleErrorAsync_" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsRepository.HandleErrorAsync*"></a>
   <h4 id="Adriva_Extensions_Analytics_Server_IAnalyticsRepository_HandleErrorAsync_IEnumerable_Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem__Exception_" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsRepository.HandleErrorAsync(IEnumerable{Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem},Exception)">HandleErrorAsync(IEnumerable&lt;AnalyticsItem&gt;, Exception)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Called by the system when the StoreAsync method encounters an exception.
+<remarks>This method should never throw any exceptions. Even if it does, it will be swallowed and ignored by the system.</remarks></p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -122,12 +125,14 @@
       <tr>
         <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html">AnalyticsItem</a>&gt;</td>
         <td><span class="parametername">items</span></td>
-        <td></td>
+        <td><p>Items that failed to be stored in the repository.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">Exception</span></td>
         <td><span class="parametername">exception</span></td>
-        <td></td>
+        <td><p>The exception that is caught by the system.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -142,7 +147,8 @@
     <tbody>
       <tr>
         <td><span class="xref">Task</span></td>
-        <td></td>
+        <td><p>Represents the asynchronous process operation.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -150,11 +156,12 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsRepository.cs/#L12">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsRepository.cs/#L20">View Source</a>
   </span>
   <a id="Adriva_Extensions_Analytics_Server_IAnalyticsRepository_StoreAsync_" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsRepository.StoreAsync*"></a>
   <h4 id="Adriva_Extensions_Analytics_Server_IAnalyticsRepository_StoreAsync_IEnumerable_Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem__CancellationToken_" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsRepository.StoreAsync(IEnumerable{Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem},CancellationToken)">StoreAsync(IEnumerable&lt;AnalyticsItem&gt;, CancellationToken)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Called by the system when the server analytics buffer is full to persist items in the repository.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -173,12 +180,14 @@
       <tr>
         <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html">AnalyticsItem</a>&gt;</td>
         <td><span class="parametername">items</span></td>
-        <td></td>
+        <td><p>Items that should be persisted in the repository.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">CancellationToken</span></td>
         <td><span class="parametername">cancellationToken</span></td>
-        <td></td>
+        <td><p>Propagates notification that operations should be canceled.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -193,7 +202,8 @@
     <tbody>
       <tr>
         <td><span class="xref">Task</span></td>
-        <td></td>
+        <td><p>Represents the asynchronous process operation.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -205,7 +215,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsRepository.cs/#L9" class="contribution-link">View Source</a>
+                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsRepository.cs/#L12" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

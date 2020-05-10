@@ -87,7 +87,8 @@
   </div>
   <h1 id="Adriva_Extensions_Analytics_Server_IQueueingService" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService" class="text-break">Interface IQueueingService
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Provides methods and properties to queue analytics items in a server buffer and share it with processors to persist in an analytics repository.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <h5 id="Adriva_Extensions_Analytics_Server_IQueueingService_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -99,11 +100,13 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IQueueingService.cs/#L9">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IQueueingService.cs/#L17">View Source</a>
   </span>
   <a id="Adriva_Extensions_Analytics_Server_IQueueingService_IsCompleted_" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService.IsCompleted*"></a>
   <h4 id="Adriva_Extensions_Analytics_Server_IQueueingService_IsCompleted" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService.IsCompleted">IsCompleted</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Returns a value indicating if adding to the queue is completed and no other items will be added.
+<remarks>When the applicaion about to shutdown, this property should return True to indicate the consumers that no more items will be added to the queue.</remarks></p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -120,7 +123,8 @@
     <tbody>
       <tr>
         <td><span class="xref">System.Boolean</span></td>
-        <td></td>
+        <td><p>A boolean value indicating if the adding to the queue is completed.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -130,11 +134,12 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IQueueingService.cs/#L11">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IQueueingService.cs/#L23">View Source</a>
   </span>
   <a id="Adriva_Extensions_Analytics_Server_IQueueingService_Enqueue_" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService.Enqueue*"></a>
   <h4 id="Adriva_Extensions_Analytics_Server_IQueueingService_Enqueue_Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem_" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService.Enqueue(Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem)">Enqueue(AnalyticsItem)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Adds an analytics item to the queue to be processed by the system.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -153,7 +158,8 @@
       <tr>
         <td><a class="xref" href="Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html">AnalyticsItem</a></td>
         <td><span class="parametername">analyticsItem</span></td>
-        <td></td>
+        <td><p>An instance of AnalyticsItem class to be processed.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -161,11 +167,13 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IQueueingService.cs/#L13">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IQueueingService.cs/#L31">View Source</a>
   </span>
   <a id="Adriva_Extensions_Analytics_Server_IQueueingService_GetConsumingEnumerable_" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService.GetConsumingEnumerable*"></a>
   <h4 id="Adriva_Extensions_Analytics_Server_IQueueingService_GetConsumingEnumerable_CancellationToken_" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService.GetConsumingEnumerable(CancellationToken)">GetConsumingEnumerable(CancellationToken)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Returns an enumerable that will be used by the processors to get items from the queue and process and persist.
+<remarks>The IEnumerable instance returned must be thread safe and allow multiple readers and writers since it will be read by multiple processors (read) and handlers (write) at the same time.</remarks></p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -184,7 +192,8 @@
       <tr>
         <td><span class="xref">CancellationToken</span></td>
         <td><span class="parametername">cancellationToken</span></td>
-        <td></td>
+        <td><p>Propagates notification that operations should be canceled.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -199,7 +208,8 @@
     <tbody>
       <tr>
         <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html">AnalyticsItem</a>&gt;</td>
-        <td></td>
+        <td><p>A instance of a class implementing IEnumerable&lt;AnalyticsItem&gt; interface.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -211,7 +221,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IQueueingService.cs/#L7" class="contribution-link">View Source</a>
+                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IQueueingService.cs/#L10" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

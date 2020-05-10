@@ -25,7 +25,7 @@ namespace Adriva.Common.Core
         /// <param name="message">The QueueMessage instance that encapsulates the request data and type.</param>
         /// <param name="cancellationToken">Propagates notification that operations should be canceled.</param>
         /// <param name="logger">Represents a type used to perform logging.</param>
-        /// <returns></returns>
+        /// <returns>Represents the asynchronous process operation.</returns>
         public async Task ProcessAsync(QueueMessage message, CancellationToken cancellationToken, ILogger logger)
         {
             if (null == message) return;

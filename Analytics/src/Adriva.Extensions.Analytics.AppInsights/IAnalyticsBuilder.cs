@@ -11,7 +11,7 @@ namespace Adriva.Extensions.Analytics.AppInsights
         /// <summary>
         /// Gets the current service collection instance.
         /// </summary>
-        /// <value>A class implementation the IServiceCollection interface.</value>
+        /// <value>A reference to the current services collection.</value>
         IServiceCollection Services { get; }
 
         /// <summary>
