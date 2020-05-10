@@ -1,11 +1,13 @@
 ## Adriva Core Framework
-\>
->### All Extension methods that can be used to add or consume services are declared in the [Microsoft.Extensions.DependencyInjection](../api/Microsoft.Extensions.DependencyInjection.html) namespace in order to help developers import a minimum number of namespaces.
+
+>**NOTE:** All Extension methods that can be used to add or consume services are declared in the [Microsoft.Extensions.DependencyInjection](../api/Microsoft.Extensions.DependencyInjection.html) namespace in order to help developers import a minimum number of namespaces.
 
 
+----
+\
 You can download compiled packages directly from nuget.org.
 
-|Package||
+|Packages||
 |-|-|
 |Common.Core|[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Adriva.Common.Core?style=for-the-badge)](https://www.nuget.org/packages/Adriva.Common.Core)|
 |Caching.Abstractions|[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Adriva.Extensions.Caching.Abstractions?style=for-the-badge)](https://www.nuget.org/packages/Adriva.Extensions.Caching.Abstractions)|

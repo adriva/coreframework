@@ -19,7 +19,7 @@
   }
   
   .container,.container-fluid {
-    width: unset;
+    width: 90vw;
   }
 
   /* HIGHLIGHT COLOR */

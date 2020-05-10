@@ -78,7 +78,8 @@
   </div>
   <h1 id="Microsoft_Extensions_DependencyInjection_AnalyticsServerExtensions" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsServerExtensions" class="text-break">Class AnalyticsServerExtensions
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Provides extension methods to use Microsoft AppInsights server side services.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
@@ -95,11 +96,12 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/AnalyticsServerExtensions.cs/#L11">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/AnalyticsServerExtensions.cs/#L19">View Source</a>
   </span>
   <a id="Microsoft_Extensions_DependencyInjection_AnalyticsServerExtensions_AddAnalyticsServer_" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsServerExtensions.AddAnalyticsServer*"></a>
   <h4 id="Microsoft_Extensions_DependencyInjection_AnalyticsServerExtensions_AddAnalyticsServer_IServiceCollection_Action_Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder__" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsServerExtensions.AddAnalyticsServer(IServiceCollection,Action{Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder})">AddAnalyticsServer(IServiceCollection, Action&lt;IAnalyticsServerBuilder&gt;)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Adds services required to host an analytics server to the service collection.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -118,12 +120,14 @@
       <tr>
         <td><span class="xref">IServiceCollection</span></td>
         <td><span class="parametername">services</span></td>
-        <td></td>
+        <td><p>The Microsoft.Extensions.DependencyInjection.IServiceCollection to add services to.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">Action</span>&lt;<a class="xref" href="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html">IAnalyticsServerBuilder</a>&gt;</td>
         <td><span class="parametername">build</span></td>
-        <td></td>
+        <td><p>Analytics server builder delegate.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -138,7 +142,8 @@
     <tbody>
       <tr>
         <td><span class="xref">IServiceCollection</span></td>
-        <td></td>
+        <td><p>The Microsoft.Extensions.DependencyInjection.IServiceCollection so that additional calls can be chained.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -146,11 +151,12 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/AnalyticsServerExtensions.cs/#L23">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/AnalyticsServerExtensions.cs/#L37">View Source</a>
   </span>
   <a id="Microsoft_Extensions_DependencyInjection_AnalyticsServerExtensions_UseAnalyticsServer_" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsServerExtensions.UseAnalyticsServer*"></a>
   <h4 id="Microsoft_Extensions_DependencyInjection_AnalyticsServerExtensions_UseAnalyticsServer_IApplicationBuilder_PathString_" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsServerExtensions.UseAnalyticsServer(IApplicationBuilder,PathString)">UseAnalyticsServer(IApplicationBuilder, PathString)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Adds analytics server to the Http pipeline of a web application.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -169,12 +175,14 @@
       <tr>
         <td><span class="xref">IApplicationBuilder</span></td>
         <td><span class="parametername">app</span></td>
-        <td></td>
+        <td><p>The Microsoft.AspNetCore.Builder.IApplicationBuilder instance that the analytics server will be added to.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">PathString</span></td>
         <td><span class="parametername">basePath</span></td>
-        <td></td>
+        <td><p>Base path of the analytics server to capture incoming requests.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -189,7 +197,8 @@
     <tbody>
       <tr>
         <td><span class="xref">IApplicationBuilder</span></td>
-        <td></td>
+        <td><p>The Microsoft.AspNetCore.Builder.IApplicationBuilder so that additional calls can be chained.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -201,7 +210,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/AnalyticsServerExtensions.cs/#L9" class="contribution-link">View Source</a>
+                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/AnalyticsServerExtensions.cs/#L11" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

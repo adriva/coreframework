@@ -83,6 +83,7 @@
   <h5 id="Adriva_Extensions_Optimization_Abstractions_IOptimizationBuilder_1_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public interface IOptimizationBuilder&lt;TOptions&gt;
+
     where TOptions : OptimizationOptions</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
@@ -146,6 +147,7 @@
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">IOptimizationBuilder&lt;TOptions&gt; AddFormatter&lt;TFormatter, TType&gt;(int order)
+
     where TFormatter : class, IOptimizationResultFormatter&lt;TType&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>

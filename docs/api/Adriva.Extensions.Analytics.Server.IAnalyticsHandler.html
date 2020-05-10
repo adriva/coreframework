@@ -78,7 +78,8 @@
   </div>
   <h1 id="Adriva_Extensions_Analytics_Server_IAnalyticsHandler" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsHandler" class="text-break">Interface IAnalyticsHandler
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Provides methods to handle the HttpRequest and extract AnalyticsItems from the request.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <h5 id="Adriva_Extensions_Analytics_Server_IAnalyticsHandler_syntax">Syntax</h5>
   <div class="codewrapper">
@@ -90,11 +91,12 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsHandler.cs/#L9">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsHandler.cs/#L17">View Source</a>
   </span>
   <a id="Adriva_Extensions_Analytics_Server_IAnalyticsHandler_HandleAsync_" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsHandler.HandleAsync*"></a>
   <h4 id="Adriva_Extensions_Analytics_Server_IAnalyticsHandler_HandleAsync_HttpRequest_" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsHandler.HandleAsync(HttpRequest)">HandleAsync(HttpRequest)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Processes the HttpRequest and extracts AnalyticsItems from it.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -113,7 +115,8 @@
       <tr>
         <td><span class="xref">HttpRequest</span></td>
         <td><span class="parametername">request</span></td>
-        <td></td>
+        <td><p>Represents the current HttpRequest.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -128,7 +131,8 @@
     <tbody>
       <tr>
         <td><span class="xref">IAsyncEnumerable</span>&lt;<a class="xref" href="Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html">AnalyticsItem</a>&gt;</td>
-        <td></td>
+        <td><p>An IAsyncEnumerable of AnalyticsItems that stores the extracted analytics item data.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -140,7 +144,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsHandler.cs/#L7" class="contribution-link">View Source</a>
+                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsHandler.cs/#L10" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

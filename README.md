@@ -28,9 +28,9 @@ This project targets ***netstandard2.1***.
 | Adriva.Extensions.Optimization.Abstractions |  Optimization abstractions for file optimization modules. |
 |Adriva.Extensions.Optimization.Transforms|Shared transforms that can be used with Adriva.Extensions.Optimization.Abstractions.|
 |Adriva.Extensions.Optimization.Web | Customizable transforms and tag helpers to create and consume optimized resources in <span>asp.net<span> Core applications.|
-|Adriva.Extensions.Analytics.AppInsights |...|
-|Adriva.Extensions.Analytics.Server |...|
-|Adriva.Extensions.Analytics.Server.AppInsights |...|
+|Adriva.Extensions.Analytics.AppInsights |Microsoft AppInsights client wrapper library that can use custom server implementations.|
+|Adriva.Extensions.Analytics.Server |Base analytics server that can be used with virtually any analytics client.|
+|Adriva.Extensions.Analytics.Server.AppInsights |Analytics server services that is used to parse and store incoming Microsoft AppInsights data.|
 
 ### Projects Running On Adriva Core Framework
 * [adriva.com](https://adriva.com)

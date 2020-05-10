@@ -65,7 +65,7 @@ namespace Adriva.Extensions.Analytics.Server
                             }
                             catch
                             {
-                                // handle error cannot throw exceptions
+                                // HandleErrorAsync method cannot throw exceptions
                             }
                             finally
                             {
@@ -98,13 +98,6 @@ namespace Adriva.Extensions.Analytics.Server
                 this.IsDisposed = true;
             }
         }
-
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~QueueProcessorService()
-        // {
-        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        //     Dispose(disposing: false);
-        // }
 
         public void Dispose()
         {
