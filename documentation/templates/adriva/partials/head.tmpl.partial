@@ -17,4 +17,13 @@
   {{#_noindex}}<meta name="searchOption" content="noindex">{{/_noindex}}
   {{#_enableSearch}}<meta property="docfx:rel" content="{{_rel}}">{{/_enableSearch}}
   {{#_enableNewTab}}<meta property="docfx:newtab" content="true">{{/_enableNewTab}}
+  <meta name="google-site-verification" content="Zl456aCnMzWvUAdIpX5rjo1OgPyyWY77C8L-TJRHqYA" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80107673-6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-80107673-6');
+  </script>
 </head>
