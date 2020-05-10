@@ -737,7 +737,7 @@ namespace Adriva.Common.Core
         {
             using (var md5 = MD5.Create())
             {
-                return Utilities.CalculateFileHash(fileInfo);
+                return Utilities.CalculateFileHash(fileInfo, md5);
             }
         }
 
