@@ -15,14 +15,14 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="services">The Microsoft.Extensions.DependencyInjection.IServiceCollection to add services to.</param>
         /// <param name="build">Analytics server builder delegate.</param>
-        /// <returns> The Microsoft.Extensions.DependencyInjection.IServiceCollection so that additional calls can be chained.</returns>
+        /// <returns>The Microsoft.Extensions.DependencyInjection.IServiceCollection so that additional calls can be chained.</returns>
         public static IServiceCollection AddAnalyticsServer(this IServiceCollection services, Action<IAnalyticsServerBuilder> build)
         {
             AnalyticsServerBuilder analyticsBuilder = new AnalyticsServerBuilder(services);
             analyticsBuilder.UseHandler<NullHandler>();
-
             build.Invoke(analyticsBuilder);
             analyticsBuilder.Build();
+
             services.AddSingleton<IQueueingService, QueueingService>();
             services.AddHostedService<QueueProcessorService>();
             return services;

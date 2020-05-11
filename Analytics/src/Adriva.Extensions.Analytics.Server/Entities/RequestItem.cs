@@ -4,6 +4,8 @@ namespace Adriva.Extensions.Analytics.Server.Entities
     {
         public long Id { get; set; }
 
+        public long AnalyticsItemId { get; set; }
+
         public string Name { get; set; }
 
         public string Environment { get; set; }

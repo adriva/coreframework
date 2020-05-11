@@ -47,7 +47,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="services">The Microsoft.Extensions.DependencyInjection.IServiceCollection to add services to.</param>
         /// <param name="configure">The AnalyticsOptions configuration delegate.</param>
-        /// <returns> The Microsoft.Extensions.DependencyInjection.IServiceCollection so that additional calls can be chained.</returns>
+        /// <returns>The Microsoft.Extensions.DependencyInjection.IServiceCollection so that additional calls can be chained.</returns>
         public static IServiceCollection AddAppInsightsWebAnalytics(this IServiceCollection services, Action<AnalyticsOptions> configure)
         {
             services.AddAppInsightsAnalytics(builder =>
@@ -70,7 +70,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="services">The Microsoft.Extensions.DependencyInjection.IServiceCollection to add services to.</param>
         /// <param name="configure">The AnalyticsOptions configuration delegate.</param>
-        /// <returns> The Microsoft.Extensions.DependencyInjection.IServiceCollection so that additional calls can be chained.</returns>
+        /// <returns>The Microsoft.Extensions.DependencyInjection.IServiceCollection so that additional calls can be chained.</returns>
         public static IServiceCollection AddAppInsightsGenericAnalytics(this IServiceCollection services, Action<AnalyticsOptions> configure)
         {
 

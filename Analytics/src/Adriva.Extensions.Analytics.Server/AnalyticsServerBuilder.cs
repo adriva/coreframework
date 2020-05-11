@@ -6,17 +6,19 @@ namespace Adriva.Extensions.Analytics.Server
 {
     internal sealed class AnalyticsServerBuilder : IAnalyticsServerBuilder, IConfigureOptions<AnalyticsServerOptions>
     {
-        private readonly IServiceCollection Services;
+        private readonly IServiceCollection ServiceCollection;
         private readonly AnalyticsServerOptions Options = new AnalyticsServerOptions();
         private Type RepositoryType;
         private Type HandlerType;
 
+        public IServiceCollection Services => this.ServiceCollection;
+
         public AnalyticsServerBuilder(IServiceCollection services)
         {
-            this.Services = services;
+            this.ServiceCollection = services;
         }
 
-        public IAnalyticsServerBuilder UseRepository<TRepository>() where TRepository : IAnalyticsRepository
+        public IAnalyticsServerBuilder UseRepository<TRepository>() where TRepository : class, IAnalyticsRepository
         {
             this.RepositoryType = typeof(TRepository);
             return this;
@@ -48,17 +50,21 @@ namespace Adriva.Extensions.Analytics.Server
 
         public void Build()
         {
-            this.Services.AddSingleton<IAnalyticsHandler>(serviceProvider =>
+            this.ServiceCollection.AddSingleton<IAnalyticsHandler>(serviceProvider =>
             {
                 return (IAnalyticsHandler)ActivatorUtilities.CreateInstance(serviceProvider, this.HandlerType);
             });
 
-            this.Services.AddSingleton<IAnalyticsRepository>(serviceProvider =>
+            this.ServiceCollection.AddSingleton<IAnalyticsRepository>(serviceProvider =>
             {
+                if (null == this.RepositoryType)
+                {
+                    throw new ArgumentException($"Analytics repository type is not set.");
+                }
                 return (IAnalyticsRepository)ActivatorUtilities.CreateInstance(serviceProvider, this.RepositoryType);
             });
 
-            this.Services.ConfigureOptions(this);
+            this.ServiceCollection.ConfigureOptions(this);
         }
 
         public void Configure(AnalyticsServerOptions options)

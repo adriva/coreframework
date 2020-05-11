@@ -6,6 +6,8 @@ namespace Adriva.Extensions.Analytics.Server.Entities
     {
         public long Id { get; set; }
 
+        public long AnalyticsItemId { get; set; }
+
         public string Name { get; set; }
 
         public TimeSpan? Duration { get; set; }
@@ -13,6 +15,9 @@ namespace Adriva.Extensions.Analytics.Server.Entities
         public bool Success { get; set; }
 
         public string Environment { get; set; }
+
         public string Message { get; set; }
+
+        public AnalyticsItem AnalyticsItem { get; set; }
     }
 }
