@@ -76,7 +76,7 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="adriva-analytics">Adriva Analytics</h1>
 
-<p>Adriva analytics library is designed to support multiple analytics clients with multiple analytics servers. Out-of-the-box implementation supports Microsoft AppInsights both on client and server side, which means you can use Microsoft AppInsights under the hood and still persist analytics data in your own custom repository.</p>
+<p>Adriva analytics library is designed to support multiple analytics clients with multiple analytics servers. Out-of-the-box implementation supports <code>Microsoft AppInsights</code> both on client and server side, which means you can use <code>Microsoft AppInsights</code> under the hood and still persist analytics data in your own custom repository / storage.</p>
 <h2 id="libraries">Libraries</h2>
 <table>
 <thead>
@@ -97,6 +97,10 @@
 <tr>
 <td>Adriva.Extensions.Analytics.Server.AppInsights</td>
 <td>Provides handler and parser classes that can be used with <code>Adriva.Extensions.Analytics.Server</code> library, to convert all incoming Microsoft AppInsights analytics data to a common format.</td>
+</tr>
+<tr>
+<td>Adriva.Extensions.Analytics.Repository.EntityFramework</td>
+<td>Provides a base entity framework repository that uses an in memory database. In-memory database is not designed to be used in production environment.</td>
 </tr>
 </tbody>
 </table>
