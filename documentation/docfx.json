@@ -76,6 +76,21 @@
     "noLangKeyword": false,
     "keepFileLink": false,
     "cleanupCacheHistory": false,
-    "disableGitFeatures": false
+    "disableGitFeatures": false,
+    "sitemap": {
+      "baseUrl": "https://adriva.github.io/coreframework",
+      "priority": 0.8,
+      "changefreq": "weekly",
+      "fileOptions": {
+        "**/api/**.yml": {
+          "priority": 0.3,
+          "changefreq": "weekly"
+        },
+        "**/*.md": {
+          "priority": 0.7,
+          "changefreq": "daily"
+        }
+      }
+    }
   }
 }
