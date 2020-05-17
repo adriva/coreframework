@@ -79,16 +79,16 @@
     "disableGitFeatures": false,
     "sitemap": {
       "baseUrl": "https://adriva.github.io/coreframework",
-      "priority": 0.8,
+      "priority": 0.9,
       "changefreq": "weekly",
       "fileOptions": {
         "**/api/**.yml": {
-          "priority": 0.3,
+          "priority": 0.7,
           "changefreq": "weekly"
         },
         "**/*.md": {
-          "priority": 0.7,
-          "changefreq": "daily"
+          "priority": 0.9,
+          "changefreq": "weekly"
         }
       }
     }

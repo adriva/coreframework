@@ -4,17 +4,17 @@
       "**/api/**.yml": {
         "baseUrl": "https://adriva.github.io/coreframework/",
         "changefreq": "weekly",
-        "priority": 0.3
+        "priority": 0.7
       },
       "**/*.md": {
         "baseUrl": "https://adriva.github.io/coreframework/",
-        "changefreq": "daily",
-        "priority": 0.7
+        "changefreq": "weekly",
+        "priority": 0.9
       }
     },
     "baseUrl": "https://adriva.github.io/coreframework/",
     "changefreq": "weekly",
-    "priority": 0.8
+    "priority": 0.9
   },
   "homepages": [],
   "source_base_path": "/Users/mnemonic/Projects/netcorelibs/Framework/documentation",
@@ -1582,7 +1582,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 119,
-          "skipped_file_count": 80
+          "skipped_file_count": 119
         },
         "TocDocumentProcessor": {
           "can_incremental": false,
