@@ -2,7 +2,7 @@
 
 ```Adriva.Extensions.Analytics.AppInsights``` library provides extension methods and wrapper services around ```Microsoft.AppInsights``` client. The client library supports both generic hosting model and asp&period;net core hosting model.
 
-You can use the client in your own asp&period;net core application to persist AppInsights data in your own repository.
+You can use the client in your own asp&period;net core application to persist AppInsights data in your own repository including any custom on-premise systems.
 
 ## Service Configuration
 
