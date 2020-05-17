@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using AiJsonSerializer = Microsoft.ApplicationInsights.Extensibility.Implementation.JsonSerializer;
@@ -17,10 +16,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Adriva.Extensions.Analytics.Server.AppInsights
 {
+
     public class AppInsightsHandler : IAnalyticsHandler
     {
         private readonly ILogger Logger;
         private readonly Dictionary<string, AnalyticsItemPopulator> Populators = new Dictionary<string, AnalyticsItemPopulator>();
+        private readonly IAppInsightsValidator Validator;
         private static readonly JsonSerializerSettings JsonSerializerSettings;
 
         static AppInsightsHandler()
@@ -32,6 +33,7 @@ namespace Adriva.Extensions.Analytics.Server.AppInsights
         public AppInsightsHandler(IServiceProvider serviceProvider, ILogger<AppInsightsHandler> logger)
         {
             this.Logger = logger;
+            this.Validator = serviceProvider.GetRequiredService<IAppInsightsValidator>();
             var populatorServices = serviceProvider.GetServices<AnalyticsItemPopulator>();
 
             foreach (var populatorService in populatorServices)
@@ -77,6 +79,7 @@ namespace Adriva.Extensions.Analytics.Server.AppInsights
                     {
                         foreach (var envelopeItem in envelopeItems)
                         {
+
                             if (AnalyticsItemPopulator.TryPopulateItem(envelopeItem, out AnalyticsItem analyticsItem))
                             {
                                 this.Logger.LogTrace($"Envelope item with data of type '{analyticsItem.Type}' is parsed.");
@@ -91,7 +94,10 @@ namespace Adriva.Extensions.Analytics.Server.AppInsights
                                 {
                                     this.Logger.LogWarning($"AppInsights handler received a type of '{analyticsItem.Type}' and doesn't have a populator registered for that type.");
                                 }
-                                yield return analyticsItem;
+                                if (await this.Validator.ValidateInstrumentationKeyAsync(analyticsItem.InstrumentationKey))
+                                {
+                                    yield return analyticsItem;
+                                }
                             }
                         }
                     }

@@ -22,6 +22,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<AnalyticsItemPopulator, EventItemPopulator>();
             services.AddSingleton<AnalyticsItemPopulator, AvailabilityItemPopulator>();
 
+            services.AddSingleton<IAppInsightsValidator, AppInsightsValidator>();
+
             return services;
         }
     }
