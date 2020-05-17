@@ -194,7 +194,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Common.Core.NdJsonSerializer.html",
-          "hash": "3iSCSDIAlg2zAnk8o3Fpgw=="
+          "hash": "kWM4zhpbpQ2e51Y4CtBHvA=="
         }
       },
       "is_incremental": false,
@@ -398,7 +398,19 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsHandler.html",
-          "hash": "DN4+8gOTLKz3aBdr4wDkgQ=="
+          "hash": "wdi/wu+Ijf7aHl/gjKDQJg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsValidator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsValidator.html",
+          "hash": "5eG1/Rj0HZR8AVy3vcptGw=="
         }
       },
       "is_incremental": false,
@@ -598,6 +610,18 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.IAppInsightsValidator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.IAppInsightsValidator.html",
+          "hash": "FQtNoipNGPMCms5UT857uQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.TelemetryConverter.yml",
       "output": {
         ".html": {
@@ -614,7 +638,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.html",
-          "hash": "oy0xKaNOzDP1KDBEmFztww=="
+          "hash": "CU+698+jcmDW4m2AMD/sYQ=="
         }
       },
       "is_incremental": false,
@@ -826,23 +850,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.QueueProcessorService.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Adriva.Extensions.Analytics.Server.QueueProcessorService.html",
-          "hash": "GpXJflpzTCGD2aElLP2VFg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Adriva.Extensions.Analytics.Server.yml",
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.html",
-          "hash": "dIZupLHeJ/O5UKxDgmNz0g=="
+          "hash": "Ifyefe5fcdeJoT7iq1ocmA=="
         }
       },
       "is_incremental": false,
@@ -1022,7 +1034,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder-1.html",
-          "hash": "Di7KWwjThG7dxOjY98hloA=="
+          "hash": "EzNm7XX9ok2gbz3v1LFh8w=="
         }
       },
       "is_incremental": false,
@@ -1046,7 +1058,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationEvents-1.html",
-          "hash": "PSXv8iB65zLP2oa6Udsg5A=="
+          "hash": "a1jDpx5ssfBqRIZ7EeI47Q=="
         }
       },
       "is_incremental": false,
@@ -1118,7 +1130,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.html",
-          "hash": "bb260ciyOto+OX7BA46AcA=="
+          "hash": "w6uLDGDz8n8DH7MFX3s70g=="
         }
       },
       "is_incremental": false,
@@ -1382,7 +1394,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.CacheExtensions.html",
-          "hash": "xtFFamFsm39SnUBooWkClg=="
+          "hash": "0Qpt4D9T0r0+s6iydTYaJA=="
         }
       },
       "is_incremental": false,
@@ -1418,7 +1430,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.OptimizationExtensions.html",
-          "hash": "EPf+DvdpnbT4UkFPGeSX3Q=="
+          "hash": "ycBgr5HBAaSne8qN6IwQ9A=="
         }
       },
       "is_incremental": false,
@@ -1454,7 +1466,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "HyG7K1vbHBWLq8PAMEyXLg=="
+          "hash": "qsoD2OpD6EoDuD9in2XorA=="
         }
       },
       "is_incremental": false,
@@ -1564,13 +1576,13 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 6,
-          "skipped_file_count": 4
+          "skipped_file_count": 6
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 118,
-          "skipped_file_count": 118
+          "total_file_count": 119,
+          "skipped_file_count": 80
         },
         "TocDocumentProcessor": {
           "can_incremental": false,

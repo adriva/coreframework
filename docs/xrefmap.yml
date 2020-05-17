@@ -2715,6 +2715,25 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsHandler.HandleAsync
   nameWithType: AppInsightsHandler.HandleAsync
+- uid: Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsValidator
+  name: AppInsightsValidator
+  href: api/Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsValidator.html
+  commentId: T:Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsValidator
+  fullName: Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsValidator
+  nameWithType: AppInsightsValidator
+- uid: Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsValidator.ValidateInstrumentationKeyAsync(System.String)
+  name: ValidateInstrumentationKeyAsync(String)
+  href: api/Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsValidator.html#Adriva_Extensions_Analytics_Server_AppInsights_AppInsightsValidator_ValidateInstrumentationKeyAsync_System_String_
+  commentId: M:Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsValidator.ValidateInstrumentationKeyAsync(System.String)
+  fullName: Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsValidator.ValidateInstrumentationKeyAsync(System.String)
+  nameWithType: AppInsightsValidator.ValidateInstrumentationKeyAsync(String)
+- uid: Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsValidator.ValidateInstrumentationKeyAsync*
+  name: ValidateInstrumentationKeyAsync
+  href: api/Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsValidator.html#Adriva_Extensions_Analytics_Server_AppInsights_AppInsightsValidator_ValidateInstrumentationKeyAsync_
+  commentId: Overload:Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsValidator.ValidateInstrumentationKeyAsync
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsValidator.ValidateInstrumentationKeyAsync
+  nameWithType: AppInsightsValidator.ValidateInstrumentationKeyAsync
 - uid: Adriva.Extensions.Analytics.Server.AppInsights.Contracts
   name: Adriva.Extensions.Analytics.Server.AppInsights.Contracts
   href: api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.html
@@ -4198,6 +4217,25 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Analytics.Server.AppInsights.Contracts.StackFrame.ToString
   nameWithType: StackFrame.ToString
+- uid: Adriva.Extensions.Analytics.Server.AppInsights.IAppInsightsValidator
+  name: IAppInsightsValidator
+  href: api/Adriva.Extensions.Analytics.Server.AppInsights.IAppInsightsValidator.html
+  commentId: T:Adriva.Extensions.Analytics.Server.AppInsights.IAppInsightsValidator
+  fullName: Adriva.Extensions.Analytics.Server.AppInsights.IAppInsightsValidator
+  nameWithType: IAppInsightsValidator
+- uid: Adriva.Extensions.Analytics.Server.AppInsights.IAppInsightsValidator.ValidateInstrumentationKeyAsync(System.String)
+  name: ValidateInstrumentationKeyAsync(String)
+  href: api/Adriva.Extensions.Analytics.Server.AppInsights.IAppInsightsValidator.html#Adriva_Extensions_Analytics_Server_AppInsights_IAppInsightsValidator_ValidateInstrumentationKeyAsync_System_String_
+  commentId: M:Adriva.Extensions.Analytics.Server.AppInsights.IAppInsightsValidator.ValidateInstrumentationKeyAsync(System.String)
+  fullName: Adriva.Extensions.Analytics.Server.AppInsights.IAppInsightsValidator.ValidateInstrumentationKeyAsync(System.String)
+  nameWithType: IAppInsightsValidator.ValidateInstrumentationKeyAsync(String)
+- uid: Adriva.Extensions.Analytics.Server.AppInsights.IAppInsightsValidator.ValidateInstrumentationKeyAsync*
+  name: ValidateInstrumentationKeyAsync
+  href: api/Adriva.Extensions.Analytics.Server.AppInsights.IAppInsightsValidator.html#Adriva_Extensions_Analytics_Server_AppInsights_IAppInsightsValidator_ValidateInstrumentationKeyAsync_
+  commentId: Overload:Adriva.Extensions.Analytics.Server.AppInsights.IAppInsightsValidator.ValidateInstrumentationKeyAsync
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Server.AppInsights.IAppInsightsValidator.ValidateInstrumentationKeyAsync
+  nameWithType: IAppInsightsValidator.ValidateInstrumentationKeyAsync
 - uid: Adriva.Extensions.Analytics.Server.AppInsights.TelemetryConverter
   name: TelemetryConverter
   href: api/Adriva.Extensions.Analytics.Server.AppInsights.TelemetryConverter.html
@@ -5783,73 +5821,6 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Analytics.Server.NullRepository.StoreAsync
   nameWithType: NullRepository.StoreAsync
-- uid: Adriva.Extensions.Analytics.Server.QueueProcessorService
-  name: QueueProcessorService
-  href: api/Adriva.Extensions.Analytics.Server.QueueProcessorService.html
-  commentId: T:Adriva.Extensions.Analytics.Server.QueueProcessorService
-  fullName: Adriva.Extensions.Analytics.Server.QueueProcessorService
-  nameWithType: QueueProcessorService
-- uid: Adriva.Extensions.Analytics.Server.QueueProcessorService.#ctor(Adriva.Extensions.Analytics.Server.IQueueingService,Adriva.Extensions.Analytics.Server.IAnalyticsRepository,IOptions{Adriva.Extensions.Analytics.Server.AnalyticsServerOptions})
-  name: QueueProcessorService(IQueueingService, IAnalyticsRepository, IOptions<AnalyticsServerOptions>)
-  href: api/Adriva.Extensions.Analytics.Server.QueueProcessorService.html#Adriva_Extensions_Analytics_Server_QueueProcessorService__ctor_Adriva_Extensions_Analytics_Server_IQueueingService_Adriva_Extensions_Analytics_Server_IAnalyticsRepository_IOptions_Adriva_Extensions_Analytics_Server_AnalyticsServerOptions__
-  commentId: M:Adriva.Extensions.Analytics.Server.QueueProcessorService.#ctor(Adriva.Extensions.Analytics.Server.IQueueingService,Adriva.Extensions.Analytics.Server.IAnalyticsRepository,IOptions{Adriva.Extensions.Analytics.Server.AnalyticsServerOptions})
-  name.vb: QueueProcessorService(IQueueingService, IAnalyticsRepository, IOptions(Of AnalyticsServerOptions))
-  fullName: Adriva.Extensions.Analytics.Server.QueueProcessorService.QueueProcessorService(Adriva.Extensions.Analytics.Server.IQueueingService, Adriva.Extensions.Analytics.Server.IAnalyticsRepository, IOptions<Adriva.Extensions.Analytics.Server.AnalyticsServerOptions>)
-  fullName.vb: Adriva.Extensions.Analytics.Server.QueueProcessorService.QueueProcessorService(Adriva.Extensions.Analytics.Server.IQueueingService, Adriva.Extensions.Analytics.Server.IAnalyticsRepository, IOptions(Of Adriva.Extensions.Analytics.Server.AnalyticsServerOptions))
-  nameWithType: QueueProcessorService.QueueProcessorService(IQueueingService, IAnalyticsRepository, IOptions<AnalyticsServerOptions>)
-  nameWithType.vb: QueueProcessorService.QueueProcessorService(IQueueingService, IAnalyticsRepository, IOptions(Of AnalyticsServerOptions))
-- uid: Adriva.Extensions.Analytics.Server.QueueProcessorService.#ctor*
-  name: QueueProcessorService
-  href: api/Adriva.Extensions.Analytics.Server.QueueProcessorService.html#Adriva_Extensions_Analytics_Server_QueueProcessorService__ctor_
-  commentId: Overload:Adriva.Extensions.Analytics.Server.QueueProcessorService.#ctor
-  isSpec: "True"
-  fullName: Adriva.Extensions.Analytics.Server.QueueProcessorService.QueueProcessorService
-  nameWithType: QueueProcessorService.QueueProcessorService
-- uid: Adriva.Extensions.Analytics.Server.QueueProcessorService.Dispose
-  name: Dispose()
-  href: api/Adriva.Extensions.Analytics.Server.QueueProcessorService.html#Adriva_Extensions_Analytics_Server_QueueProcessorService_Dispose
-  commentId: M:Adriva.Extensions.Analytics.Server.QueueProcessorService.Dispose
-  fullName: Adriva.Extensions.Analytics.Server.QueueProcessorService.Dispose()
-  nameWithType: QueueProcessorService.Dispose()
-- uid: Adriva.Extensions.Analytics.Server.QueueProcessorService.Dispose(System.Boolean)
-  name: Dispose(Boolean)
-  href: api/Adriva.Extensions.Analytics.Server.QueueProcessorService.html#Adriva_Extensions_Analytics_Server_QueueProcessorService_Dispose_System_Boolean_
-  commentId: M:Adriva.Extensions.Analytics.Server.QueueProcessorService.Dispose(System.Boolean)
-  fullName: Adriva.Extensions.Analytics.Server.QueueProcessorService.Dispose(System.Boolean)
-  nameWithType: QueueProcessorService.Dispose(Boolean)
-- uid: Adriva.Extensions.Analytics.Server.QueueProcessorService.Dispose*
-  name: Dispose
-  href: api/Adriva.Extensions.Analytics.Server.QueueProcessorService.html#Adriva_Extensions_Analytics_Server_QueueProcessorService_Dispose_
-  commentId: Overload:Adriva.Extensions.Analytics.Server.QueueProcessorService.Dispose
-  isSpec: "True"
-  fullName: Adriva.Extensions.Analytics.Server.QueueProcessorService.Dispose
-  nameWithType: QueueProcessorService.Dispose
-- uid: Adriva.Extensions.Analytics.Server.QueueProcessorService.StartAsync(CancellationToken)
-  name: StartAsync(CancellationToken)
-  href: api/Adriva.Extensions.Analytics.Server.QueueProcessorService.html#Adriva_Extensions_Analytics_Server_QueueProcessorService_StartAsync_CancellationToken_
-  commentId: M:Adriva.Extensions.Analytics.Server.QueueProcessorService.StartAsync(CancellationToken)
-  fullName: Adriva.Extensions.Analytics.Server.QueueProcessorService.StartAsync(CancellationToken)
-  nameWithType: QueueProcessorService.StartAsync(CancellationToken)
-- uid: Adriva.Extensions.Analytics.Server.QueueProcessorService.StartAsync*
-  name: StartAsync
-  href: api/Adriva.Extensions.Analytics.Server.QueueProcessorService.html#Adriva_Extensions_Analytics_Server_QueueProcessorService_StartAsync_
-  commentId: Overload:Adriva.Extensions.Analytics.Server.QueueProcessorService.StartAsync
-  isSpec: "True"
-  fullName: Adriva.Extensions.Analytics.Server.QueueProcessorService.StartAsync
-  nameWithType: QueueProcessorService.StartAsync
-- uid: Adriva.Extensions.Analytics.Server.QueueProcessorService.StopAsync(CancellationToken)
-  name: StopAsync(CancellationToken)
-  href: api/Adriva.Extensions.Analytics.Server.QueueProcessorService.html#Adriva_Extensions_Analytics_Server_QueueProcessorService_StopAsync_CancellationToken_
-  commentId: M:Adriva.Extensions.Analytics.Server.QueueProcessorService.StopAsync(CancellationToken)
-  fullName: Adriva.Extensions.Analytics.Server.QueueProcessorService.StopAsync(CancellationToken)
-  nameWithType: QueueProcessorService.StopAsync(CancellationToken)
-- uid: Adriva.Extensions.Analytics.Server.QueueProcessorService.StopAsync*
-  name: StopAsync
-  href: api/Adriva.Extensions.Analytics.Server.QueueProcessorService.html#Adriva_Extensions_Analytics_Server_QueueProcessorService_StopAsync_
-  commentId: Overload:Adriva.Extensions.Analytics.Server.QueueProcessorService.StopAsync
-  isSpec: "True"
-  fullName: Adriva.Extensions.Analytics.Server.QueueProcessorService.StopAsync
-  nameWithType: QueueProcessorService.StopAsync
 - uid: Adriva.Extensions.Caching.Abstractions
   name: Adriva.Extensions.Caching.Abstractions
   href: api/Adriva.Extensions.Caching.Abstractions.html

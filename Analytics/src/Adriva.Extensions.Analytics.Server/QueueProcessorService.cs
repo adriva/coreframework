@@ -8,7 +8,10 @@ using Microsoft.Extensions.Options;
 
 namespace Adriva.Extensions.Analytics.Server
 {
-    public class QueueProcessorService : IHostedService, IDisposable
+    /// <summary>
+    /// Provides the queueing (buffering) services required to store parsed analytics data temporarily until it's sent to the repository.
+    /// </summary>
+    internal class QueueProcessorService : IHostedService, IDisposable
     {
         private readonly AnalyticsServerOptions Options;
         private readonly IAnalyticsRepository Repository;
