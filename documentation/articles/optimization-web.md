@@ -64,7 +64,7 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 For static assets we need to provide the optimization module with some information about which assets to use per request. In order to be able to do that we will rely on the `IOptimizationContext` service provided by the optimization module. Each optimization context is a part of a parent optimization scope. So in other words, one optimization scope may have 1 or more contexts inside it.
 This feature is particularly useful when you need to have multiple output resources that are reused in some other parts of your application.
 
-So wee need to get a reference to the current ```IOptimizationScope``` and either use the default context or create child contexes.
+So wee need to get a reference to the current ```IOptimizationScope``` and either use the default context or create child contexts.
 
 Also we'll need a mechanism to render (deliver) the optimized assets, which is managed by tag helpers provided. So in the _ViewImports.cshtml file we can add the following lines:
 
