@@ -6270,6 +6270,64 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationContext.Identifier
   nameWithType: DefaultOptimizationContext.Identifier
+- uid: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope
+  name: DefaultOptimizationScope
+  href: api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.html
+  commentId: T:Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope
+  fullName: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope
+  nameWithType: DefaultOptimizationScope
+- uid: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.#ctor(System.IServiceProvider)
+  name: DefaultOptimizationScope(IServiceProvider)
+  href: api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.html#Adriva_Extensions_Optimization_Abstractions_DefaultOptimizationScope__ctor_System_IServiceProvider_
+  commentId: M:Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.#ctor(System.IServiceProvider)
+  fullName: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.DefaultOptimizationScope(System.IServiceProvider)
+  nameWithType: DefaultOptimizationScope.DefaultOptimizationScope(IServiceProvider)
+- uid: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.#ctor*
+  name: DefaultOptimizationScope
+  href: api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.html#Adriva_Extensions_Optimization_Abstractions_DefaultOptimizationScope__ctor_
+  commentId: Overload:Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.#ctor
+  isSpec: "True"
+  fullName: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.DefaultOptimizationScope
+  nameWithType: DefaultOptimizationScope.DefaultOptimizationScope
+- uid: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.AddOrGetContext(System.String)
+  name: AddOrGetContext(String)
+  href: api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.html#Adriva_Extensions_Optimization_Abstractions_DefaultOptimizationScope_AddOrGetContext_System_String_
+  commentId: M:Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.AddOrGetContext(System.String)
+  fullName: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.AddOrGetContext(System.String)
+  nameWithType: DefaultOptimizationScope.AddOrGetContext(String)
+- uid: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.AddOrGetContext*
+  name: AddOrGetContext
+  href: api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.html#Adriva_Extensions_Optimization_Abstractions_DefaultOptimizationScope_AddOrGetContext_
+  commentId: Overload:Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.AddOrGetContext
+  isSpec: "True"
+  fullName: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.AddOrGetContext
+  nameWithType: DefaultOptimizationScope.AddOrGetContext
+- uid: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.DefaultContext
+  name: DefaultContext
+  href: api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.html#Adriva_Extensions_Optimization_Abstractions_DefaultOptimizationScope_DefaultContext
+  commentId: P:Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.DefaultContext
+  fullName: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.DefaultContext
+  nameWithType: DefaultOptimizationScope.DefaultContext
+- uid: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.DefaultContext*
+  name: DefaultContext
+  href: api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.html#Adriva_Extensions_Optimization_Abstractions_DefaultOptimizationScope_DefaultContext_
+  commentId: Overload:Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.DefaultContext
+  isSpec: "True"
+  fullName: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.DefaultContext
+  nameWithType: DefaultOptimizationScope.DefaultContext
+- uid: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.Dispose
+  name: Dispose()
+  href: api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.html#Adriva_Extensions_Optimization_Abstractions_DefaultOptimizationScope_Dispose
+  commentId: M:Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.Dispose
+  fullName: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.Dispose()
+  nameWithType: DefaultOptimizationScope.Dispose()
+- uid: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.Dispose*
+  name: Dispose
+  href: api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.html#Adriva_Extensions_Optimization_Abstractions_DefaultOptimizationScope_Dispose_
+  commentId: Overload:Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.Dispose
+  isSpec: "True"
+  fullName: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.Dispose
+  nameWithType: DefaultOptimizationScope.Dispose
 - uid: Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer
   name: FileAssetOrderer
   href: api/Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.html
@@ -6655,6 +6713,38 @@ references:
   fullName.vb: Adriva.Extensions.Optimization.Abstractions.IOptimizationResultFormatter(Of TOutput).WriteAsync
   nameWithType: IOptimizationResultFormatter<TOutput>.WriteAsync
   nameWithType.vb: IOptimizationResultFormatter(Of TOutput).WriteAsync
+- uid: Adriva.Extensions.Optimization.Abstractions.IOptimizationScope
+  name: IOptimizationScope
+  href: api/Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.html
+  commentId: T:Adriva.Extensions.Optimization.Abstractions.IOptimizationScope
+  fullName: Adriva.Extensions.Optimization.Abstractions.IOptimizationScope
+  nameWithType: IOptimizationScope
+- uid: Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.AddOrGetContext(System.String)
+  name: AddOrGetContext(String)
+  href: api/Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.html#Adriva_Extensions_Optimization_Abstractions_IOptimizationScope_AddOrGetContext_System_String_
+  commentId: M:Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.AddOrGetContext(System.String)
+  fullName: Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.AddOrGetContext(System.String)
+  nameWithType: IOptimizationScope.AddOrGetContext(String)
+- uid: Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.AddOrGetContext*
+  name: AddOrGetContext
+  href: api/Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.html#Adriva_Extensions_Optimization_Abstractions_IOptimizationScope_AddOrGetContext_
+  commentId: Overload:Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.AddOrGetContext
+  isSpec: "True"
+  fullName: Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.AddOrGetContext
+  nameWithType: IOptimizationScope.AddOrGetContext
+- uid: Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.DefaultContext
+  name: DefaultContext
+  href: api/Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.html#Adriva_Extensions_Optimization_Abstractions_IOptimizationScope_DefaultContext
+  commentId: P:Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.DefaultContext
+  fullName: Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.DefaultContext
+  nameWithType: IOptimizationScope.DefaultContext
+- uid: Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.DefaultContext*
+  name: DefaultContext
+  href: api/Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.html#Adriva_Extensions_Optimization_Abstractions_IOptimizationScope_DefaultContext_
+  commentId: Overload:Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.DefaultContext
+  isSpec: "True"
+  fullName: Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.DefaultContext
+  nameWithType: IOptimizationScope.DefaultContext
 - uid: Adriva.Extensions.Optimization.Abstractions.ITransform
   name: ITransform
   href: api/Adriva.Extensions.Optimization.Abstractions.ITransform.html
@@ -7211,12 +7301,12 @@ references:
   commentId: T:Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper
   fullName: Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper
   nameWithType: OptimizedResourceTagHelper
-- uid: Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.#ctor(IOptimizationManager,IOptimizationContext,Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilderFactory,ICache)
-  name: OptimizedResourceTagHelper(IOptimizationManager, IOptimizationContext, IOptimizationResultTagBuilderFactory, ICache)
-  href: api/Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.html#Adriva_Extensions_Optimization_Web_OptimizedResourceTagHelper__ctor_IOptimizationManager_IOptimizationContext_Adriva_Extensions_Optimization_Web_IOptimizationResultTagBuilderFactory_ICache_
-  commentId: M:Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.#ctor(IOptimizationManager,IOptimizationContext,Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilderFactory,ICache)
-  fullName: Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.OptimizedResourceTagHelper(IOptimizationManager, IOptimizationContext, Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilderFactory, ICache)
-  nameWithType: OptimizedResourceTagHelper.OptimizedResourceTagHelper(IOptimizationManager, IOptimizationContext, IOptimizationResultTagBuilderFactory, ICache)
+- uid: Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.#ctor(IOptimizationManager,IOptimizationScope,Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilderFactory,ICache)
+  name: OptimizedResourceTagHelper(IOptimizationManager, IOptimizationScope, IOptimizationResultTagBuilderFactory, ICache)
+  href: api/Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.html#Adriva_Extensions_Optimization_Web_OptimizedResourceTagHelper__ctor_IOptimizationManager_IOptimizationScope_Adriva_Extensions_Optimization_Web_IOptimizationResultTagBuilderFactory_ICache_
+  commentId: M:Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.#ctor(IOptimizationManager,IOptimizationScope,Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilderFactory,ICache)
+  fullName: Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.OptimizedResourceTagHelper(IOptimizationManager, IOptimizationScope, Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilderFactory, ICache)
+  nameWithType: OptimizedResourceTagHelper.OptimizedResourceTagHelper(IOptimizationManager, IOptimizationScope, IOptimizationResultTagBuilderFactory, ICache)
 - uid: Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.#ctor*
   name: OptimizedResourceTagHelper
   href: api/Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.html#Adriva_Extensions_Optimization_Web_OptimizedResourceTagHelper__ctor_
@@ -7224,6 +7314,19 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.OptimizedResourceTagHelper
   nameWithType: OptimizedResourceTagHelper.OptimizedResourceTagHelper
+- uid: Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.Context
+  name: Context
+  href: api/Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.html#Adriva_Extensions_Optimization_Web_OptimizedResourceTagHelper_Context
+  commentId: P:Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.Context
+  fullName: Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.Context
+  nameWithType: OptimizedResourceTagHelper.Context
+- uid: Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.Context*
+  name: Context
+  href: api/Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.html#Adriva_Extensions_Optimization_Web_OptimizedResourceTagHelper_Context_
+  commentId: Overload:Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.Context
+  isSpec: "True"
+  fullName: Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.Context
+  nameWithType: OptimizedResourceTagHelper.Context
 - uid: Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.Extension
   name: Extension
   href: api/Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.html#Adriva_Extensions_Optimization_Web_OptimizedResourceTagHelper_Extension

@@ -126,30 +126,36 @@
     });
 }
 </code></pre>
-<p>For static assets we need to provide the optimization module with some information about which assets to use per request. In order to be able to do that we will rely on the <code>IOptimizationContext</code> service provided by the optimization module.
-The easiest way to access the Optimization Context is to inject it into our views.
-Also we'll need a mechanism to render (deliver) the optimized assets, which is managed by tag helpers provided. So in the _ViewImports.cshtml file we can add the following lines:</p>
-<pre><code class="lang-csharp">// inject the optimization context into the views
-@inject Adriva.Extensions.Optimization.Abstractions.IOptimizationContext OptimizationContext
+<p>For static assets we need to provide the optimization module with some information about which assets to use per request. In order to be able to do that we will rely on the <code>IOptimizationContext</code> service provided by the optimization module. Each optimization context is a part of a parent optimization scope. So in other words, one optimization scope may have 1 or more contexts inside it.
+This feature is particularly useful when you need to have multiple output resources that are reused in some other parts of your application.</p>
+<p>So wee need to get a reference to the current <code>IOptimizationScope</code> and either use the default context or create child contexes.</p>
+<p>Also we'll need a mechanism to render (deliver) the optimized assets, which is managed by tag helpers provided. So in the _ViewImports.cshtml file we can add the following lines:</p>
+<pre><code class="lang-csharp">// inject the optimization scope into the views
+@inject Adriva.Extensions.Optimization.Abstractions.IOptimizationScope OptimizationScope
 
 // allow using optimization tag helpers in the views
 @addTagHelper *, Adriva.Extensions.Optimization.Web
 </code></pre>
 <h2 id="using-the-optimization-system">Using The Optimization System</h2>
-<p>After setting thing up, in the view files we can tell the system what static assets we will need by adding them to the <code>OptimizationContext</code>. <code>OptimizationContext</code> is a scoped service that lives through a single request. For example in the <code>_Layout.cshtml</code> view file we can write the following:</p>
-<pre><code class="lang-csharp">OptimizationContext.AddAsset(&quot;~/js/jquery.js&quot;);
-OptimizationContext.AddAsset(&quot;~/js/site.js&quot;);
-OptimizationContext.AddAsset(&quot;https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.css&quot;);
+<p>After setting thing up, in the view files we can tell the system what static assets we will need by adding them to the default (or custom) <code>OptimizationContext</code>. <code>OptimizationScope</code> is a scoped service that lives through a single request so are all <code>OptimizationContexts</code>. For example in the <code>_Layout.cshtml</code> view file we can write the following:</p>
+<pre><code class="lang-csharp">IOptimizationContext oc = this.OptimizationScope.AddOrGetContext(&quot;MainContext&quot;);
+    oc.AddAsset(&quot;~/js/jquery.js&quot;);
+    oc.AddAsset(&quot;~/js/site.js&quot;);
+    this.OptimizationScope.DefaultContext.AddAsset(&quot;https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.css&quot;);
 </code></pre>
+<blockquote>
+<p>To make sure the custom contexts are accessible everywehere in your view, place the sample code at the top of your view file, before any Html tags.</p>
+</blockquote>
 <p>As you can see, we can include assets from the local file system or any valid <em>http</em> or <em>https</em> url.
 <code>OptimizationContext</code> makes sure the same asset is not included twice, so in a scenario where you include <code>jquery.js</code> in the layout and re-include the same asset in a sub view, there will be only one <code>jquery.js</code> included in the current <code>OptimizationContext</code>.</p>
 <p>The final part is the rendering of optimized assets. And in order to achieve that we will use the <code>&lt;optimizedresource&gt;</code> tag helper in our view file.</p>
 <p>For example to deliver the optimized <code>js</code> files we can write:</p>
-<pre><code class="lang-csharp">&lt;optimizedresource extension=&quot;js&quot; output=&quot;StaticFile&quot; /&gt;
+<pre><code class="lang-csharp">&lt;optimizedresource context=&quot;oc&quot; extension=&quot;js&quot; output=&quot;StaticFile&quot; /&gt;
 </code></pre>
 <p>or for css files:</p>
-<pre><code class="lang-csharp">&lt;optimizedresource extension=&quot;css&quot; output=&quot;StaticFile&quot; /&gt;
+<pre><code class="lang-csharp">&lt;optimizedresource context=&quot;@this.OptimizationScope.DefaultContext&quot; extension=&quot;css&quot; output=&quot;StaticFile&quot; /&gt;    
 </code></pre>
+<p>The <code>context</code> attribute tells the Optimization module which context of the current <code>OptimizationScope</code> to use. You can think of contexts as bundles and scope as a bundle repository.</p>
 <p>The <code>extension</code> attribute tells the Optimization module what type of resources are to be delivered by the current optimized resource tag and <code>output</code> attribute tells <em>HOW</em> to deliver them.</p>
 <p>The valid values for the <code>output</code> attribute can be found <a href="https://adriva.github.io/coreframework/api/Adriva.Extensions.Optimization.Web.OptimizationTagOutput.html">here</a> .</p>
 <p>If you prefer to use the <code>StaticFiles</code> method as the output delivery option then the system will create asset files for all different <code>OptimizationContext</code>s.

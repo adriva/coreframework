@@ -61,13 +61,16 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 }
 ```
 
-For static assets we need to provide the optimization module with some information about which assets to use per request. In order to be able to do that we will rely on the `IOptimizationContext` service provided by the optimization module.
-The easiest way to access the Optimization Context is to inject it into our views. 
+For static assets we need to provide the optimization module with some information about which assets to use per request. In order to be able to do that we will rely on the `IOptimizationContext` service provided by the optimization module. Each optimization context is a part of a parent optimization scope. So in other words, one optimization scope may have 1 or more contexts inside it.
+This feature is particularly useful when you need to have multiple output resources that are reused in some other parts of your application.
+
+So wee need to get a reference to the current ```IOptimizationScope``` and either use the default context or create child contexes.
+
 Also we'll need a mechanism to render (deliver) the optimized assets, which is managed by tag helpers provided. So in the _ViewImports.cshtml file we can add the following lines:
 
 ```csharp
-// inject the optimization context into the views
-@inject Adriva.Extensions.Optimization.Abstractions.IOptimizationContext OptimizationContext
+// inject the optimization scope into the views
+@inject Adriva.Extensions.Optimization.Abstractions.IOptimizationScope OptimizationScope
 
 // allow using optimization tag helpers in the views
 @addTagHelper *, Adriva.Extensions.Optimization.Web
@@ -75,13 +78,15 @@ Also we'll need a mechanism to render (deliver) the optimized assets, which is m
 
 ## Using The Optimization System 
 
-After setting thing up, in the view files we can tell the system what static assets we will need by adding them to the `OptimizationContext`. `OptimizationContext` is a scoped service that lives through a single request. For example in the `_Layout.cshtml` view file we can write the following:
+After setting thing up, in the view files we can tell the system what static assets we will need by adding them to the default (or custom) `OptimizationContext`. `OptimizationScope` is a scoped service that lives through a single request so are all ```OptimizationContexts```. For example in the `_Layout.cshtml` view file we can write the following:
 
 ```csharp
-OptimizationContext.AddAsset("~/js/jquery.js");
-OptimizationContext.AddAsset("~/js/site.js");
-OptimizationContext.AddAsset("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.css");
+IOptimizationContext oc = this.OptimizationScope.AddOrGetContext("MainContext");
+    oc.AddAsset("~/js/jquery.js");
+    oc.AddAsset("~/js/site.js");
+    this.OptimizationScope.DefaultContext.AddAsset("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.css");
 ```
+>To make sure the custom contexts are accessible everywehere in your view, place the sample code at the top of your view file, before any Html tags.
 
 As you can see, we can include assets from the local file system or any valid *http* or *https* url.
 `OptimizationContext` makes sure the same asset is not included twice, so in a scenario where you include `jquery.js` in the layout and re-include the same asset in a sub view, there will be only one `jquery.js` included in the current `OptimizationContext`.
@@ -91,14 +96,15 @@ The final part is the rendering of optimized assets. And in order to achieve tha
 For example to deliver the optimized `js` files we can write:
 
 ```csharp
-<optimizedresource extension="js" output="StaticFile" />
+<optimizedresource context="oc" extension="js" output="StaticFile" />
 ```
 
 or for css files:
 
 ```csharp
-<optimizedresource extension="css" output="StaticFile" />
+<optimizedresource context="@this.OptimizationScope.DefaultContext" extension="css" output="StaticFile" />    
 ```
+The ```context``` attribute tells the Optimization module which context of the current ```OptimizationScope``` to use. You can think of contexts as bundles and scope as a bundle repository.
 
 The `extension` attribute tells the Optimization module what type of resources are to be delivered by the current optimized resource tag and `output` attribute tells *HOW* to deliver them.
 
