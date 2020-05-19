@@ -1,16 +1,18 @@
-﻿@using Adriva.Extensions.Optimization.Web
+﻿@using Adriva.Extensions.Optimization.Abstractions
+@using Adriva.Extensions.Optimization.Web
 <!DOCTYPE html>
+ @{        
+    IOptimizationContext oc = this.OptimizationScope.AddOrGetContext("Deneme");
+    oc.AddAsset("~/js/jquery.js");
+    oc.AddAsset("~/js/site.js");
+    this.OptimizationScope.DefaultContext.AddAsset("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.css");
+}
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - demo</title>
-    @{
-        OptimizationContext.AddAsset("~/js/jquery.js");
-        OptimizationContext.AddAsset("~/js/site.js");
-        OptimizationContext.AddAsset("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.css");
-    }
-    <optimizedresource extension="css" output="StaticFile" />
+    <title>@ViewData["Title"] - demo</title>       
+    <optimizedresource context="@this.OptimizationScope.DefaultContext" extension="css" output="StaticFile" />    
 </head>
 <body>
     <header>
@@ -35,7 +37,7 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3">            
             @RenderBody()
         </main>
     </div>
@@ -45,7 +47,7 @@
             &copy; 2020 - demo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <optimizedresource extension="js" output="StaticFile"/>
+    <optimizedresource context="oc" extension="js" output="StaticFile" />
     @RenderSection("Scripts", required: false)
 </body>
 </html>

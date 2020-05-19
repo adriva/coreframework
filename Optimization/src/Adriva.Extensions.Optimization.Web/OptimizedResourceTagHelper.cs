@@ -12,10 +12,13 @@ namespace Adriva.Extensions.Optimization.Web
     [HtmlTargetElement("optimizedresource", TagStructure = TagStructure.NormalOrSelfClosing)]
     public class OptimizedResourceTagHelper : TagHelper, ITagBuilderOptions
     {
-        private readonly IOptimizationContext OptimizationContext;
+        private readonly IOptimizationScope OptimizationScope;
         private readonly IOptimizationManager OptimizationManager;
         private readonly IOptimizationResultTagBuilderFactory TagBuilderFactory;
         private readonly ICache Cache;
+
+        [HtmlAttributeName("context")]
+        public IOptimizationContext Context { get; set; }
 
         /// <summary>
         /// Gets or sets the extension of assets that will be rendered in this tag.
@@ -31,9 +34,9 @@ namespace Adriva.Extensions.Optimization.Web
         [HtmlAttributeName("Output")]
         public OptimizationTagOutput Output { get; set; }
 
-        public OptimizedResourceTagHelper(IOptimizationManager optimizationManager, IOptimizationContext optimizationContext, IOptimizationResultTagBuilderFactory tagBuilderFactory, ICache cache)
+        public OptimizedResourceTagHelper(IOptimizationManager optimizationManager, IOptimizationScope optimizationScope, IOptimizationResultTagBuilderFactory tagBuilderFactory, ICache cache)
         {
-            this.OptimizationContext = optimizationContext;
+            this.OptimizationScope = optimizationScope;
             this.OptimizationManager = optimizationManager;
             this.TagBuilderFactory = tagBuilderFactory;
             this.Cache = cache;
@@ -41,10 +44,13 @@ namespace Adriva.Extensions.Optimization.Web
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
-            string cacheKey = $"{this.OptimizationContext.Identifier}+{this.Extension}";
+            if (null == this.Context)
+                throw new System.ArgumentException("<optimizedresource> tag requires a valid OptimizationContext. Have you forgotten to set the 'context' attribute ?");
+
+            string cacheKey = $"{this.Context.Identifier}+{this.Extension}";
             OptimizationResult optimizationResult = await this.Cache.GetOrCreateAsync(cacheKey, async entry =>
             {
-                return await this.OptimizationManager.OptimizeAsync(this.OptimizationContext, this.Extension);
+                return await this.OptimizationManager.OptimizeAsync(this.Context, this.Extension);
             });
 
             output.SuppressOutput();

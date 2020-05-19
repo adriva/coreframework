@@ -4,7 +4,6 @@ using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
-using Adriva.Extensions.Optimization.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

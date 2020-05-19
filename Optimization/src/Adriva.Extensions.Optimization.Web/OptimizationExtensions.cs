@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddHttpContextAccessor();
             services.AddSingleton<OptimizationMiddleware>();
-            services.AddScoped<IOptimizationContext, WebOptimizationContext>();
+            services.AddTransient<IOptimizationContext, WebOptimizationContext>();
             services.AddSingleton<IOptimizationEvents<WebOptimizationOptions>, WebOptimizationEvents>();
             services.AddSingleton<IOptimizationResultTagBuilderFactory, OptimizationResultTagBuilderFactory>();
             return services

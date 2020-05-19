@@ -16,7 +16,8 @@ namespace Microsoft.Extensions.DependencyInjection
             IOptimizationBuilder<TOptions> builder = new OptimizationBuilder<TOptions>(services);
             services.AddHttpClient();
             services.TryAddSingleton<IOptimizationManager, DefaultOptimizationManager<TOptions>>();
-            services.TryAddScoped<IOptimizationContext, DefaultOptimizationContext>();
+            services.TryAddScoped<IOptimizationScope, DefaultOptimizationScope>();
+            services.TryAddTransient<IOptimizationContext, DefaultOptimizationContext>();
             services.AddInMemoryCache();
             services.Configure<TOptions>((options) =>
             {
