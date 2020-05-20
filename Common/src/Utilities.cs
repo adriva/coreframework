@@ -404,6 +404,12 @@ namespace Adriva.Common.Core
 
         // isreversed : can be used to keep rowkey in order (azuretable)
         //				since row keys are by design, ordered asc
+        /// <summary>
+        /// Converts a given DateTimeOffset to its ticks representation as a string and can be negated using DateTimeOffset.MaxValue if needed.
+        /// </summary>
+        /// <param name="dateTimeOffset">The DateTimeOffset instance that the ticks will be calculated for.</param>
+        /// <param name="isReversed">True, if the difference between DateTimeOffset.MaxValue and the given DateTimeOffset will be used, otherwise False.</param>
+        /// <returns>A string value representing the numeric ticks value.</returns>
         public static string GetDateTicksString(DateTimeOffset dateTimeOffset, bool isReversed)
         {
             if (!isReversed)
@@ -414,6 +420,12 @@ namespace Adriva.Common.Core
             return Convert.ToString(DateTimeOffset.MaxValue.Subtract(dateTimeOffset).Ticks);
         }
 
+        /// <summary>
+        /// Parses and constructs a DateTimeOffset instance from the given string representing the ticks value.
+        /// </summary>
+        /// <param name="ticksString">Ticks value of the DateTimeOffset that will be parsed.</param>
+        /// <param name="isReversed">True, if the ticks represents the difference between the DateTimeOffset.MaxValue and another DateTimeOffset, otherwise False.</param>
+        /// <returns>A DateTimeOffset value representing the parsed ticks value.</returns>
         public static DateTimeOffset ParseDateTicks(string ticksString, bool isReversed)
         {
             if (!long.TryParse(ticksString, out long longTicks)) return DateTimeOffset.MinValue;
@@ -422,6 +434,12 @@ namespace Adriva.Common.Core
             return DateTimeOffset.MaxValue.Subtract(deltaTime);
         }
 
+        /// <summary>
+        /// Converts a DateTimeOffset value to another DateTimeOffset which can be used safely in Azure storage.
+        /// <remarks>Values less than 1900-01-01 are not supported in Azure storage.</remarks>
+        /// </summary>
+        /// <param name="dateTimeOffset">The DateTimeOffset valiue that will be validated.</param>
+        /// <returns>A DateTimeOffset value that can used with Azure storage.</returns>
         public static DateTimeOffset GetAzureDateTime(DateTimeOffset dateTimeOffset)
         {
             if (dateTimeOffset < Utilities.AzureMinDateTimeOffset) dateTimeOffset = Utilities.AzureMinDateTimeOffset;
@@ -430,16 +448,18 @@ namespace Adriva.Common.Core
 
         #region Currency Utilities
 
-        public static decimal ExtractDecimal(string input)
+        public static decimal ExtractDecimal(string input, CultureInfo primaryCulture = null, CultureInfo fallbackCulture = null)
         {
             input = Utilities.RemoveWhitespaces(input);
             var match = Regex.Match(input, @"((\d{1,3}((\,\d{3}|\.\d{3})*))+(\,|\.)*\d{0,2})");
             if (!match.Success) return -1;
-            return Utilities.ParseDecimal(match.Value);
+            return Utilities.ParseDecimal(match.Value, primaryCulture, fallbackCulture);
         }
 
-        public static decimal ParseDecimal(string input)
+        public static decimal ParseDecimal(string input, CultureInfo primaryCulture = null, CultureInfo fallbackCulture = null)
         {
+            primaryCulture = primaryCulture ?? CultureInfo.GetCultureInfo("tr-TR");
+            fallbackCulture = fallbackCulture ?? CultureInfo.InvariantCulture;
             int count = input.Length;
 
             for (int loop = count - 1; loop >= 0; loop--)
@@ -450,9 +470,9 @@ namespace Adriva.Common.Core
                 }
             }
 
-            if (!decimal.TryParse(input, NumberStyles.Any, CultureInfo.GetCultureInfo("tr-tr"), out decimal output))
+            if (!decimal.TryParse(input, NumberStyles.Any, primaryCulture, out decimal output))
             {
-                if (!decimal.TryParse(input, NumberStyles.Any, CultureInfo.GetCultureInfo("en-us"), out output))
+                if (!decimal.TryParse(input, NumberStyles.Any, fallbackCulture, out output))
                 {
                 }
             }
@@ -460,12 +480,25 @@ namespace Adriva.Common.Core
             return output;
         }
 
-        public static string ParseCurrencyCode(string text)
+        public static string ParseCurrencyCode(string text, IDictionary<string, string> codeCurrencyMap = null)
         {
             var currenyCodeMap = new Dictionary<string, string> { { "try", "TRY" }, { "tl", "TRY" }, { "usd", "USD" }, { "eur", "EUR" }, { "$", "USD" }, { "€", "EUR" }, { "₺", "TRY" }, { "cny", "CNY" }, { "rub", "RUB" }, { "azn", "AZN" }, { "gbp", "GBP" } };
 
+            if (null != codeCurrencyMap)
+            {
+                foreach (var entry in codeCurrencyMap)
+                {
+                    if (!currenyCodeMap.ContainsKey(entry.Key.ToLower()))
+                    {
+                        currenyCodeMap.Add(entry.Key.ToLower(), entry.Value);
+                    }
+                }
+            }
+
             if (string.IsNullOrWhiteSpace(text)) return null;
-            var match = Regex.Match(text, "TL|tl|USD|usd|TRY|try|EUR|eur|[$]|€|₺");
+
+            string pattern = string.Join('|', currenyCodeMap.Select(e => e.Key).Distinct());
+            var match = Regex.Match(text, pattern);
 
             if (!match.Success || !currenyCodeMap.ContainsKey(match.Value.ToLowerInvariant())) return string.Empty;
 
