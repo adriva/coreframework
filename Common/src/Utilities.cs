@@ -196,9 +196,6 @@ namespace Adriva.Common.Core
             if (null == input) return null;
             else if (0 == input.Length) return string.Empty;
 
-            input = input.Trim();
-            input = input.Replace(Environment.NewLine, " ");
-
             StringBuilder buffer = new StringBuilder();
             int loop = 0;
 
@@ -210,7 +207,7 @@ namespace Adriva.Common.Core
                     loop++;
                 }
 
-                if (loop < input.Length - 1) buffer.Append(" ");
+                if (loop < input.Length - 1 && 0 < buffer.Length) buffer.Append(" ");
 
                 while (loop < input.Length && char.IsWhiteSpace(input[loop]))
                 {
