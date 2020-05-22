@@ -13,7 +13,7 @@ namespace Adriva.Extensions.Optimization.Web
 {
     internal class WebOptimizationContext : IOptimizationContext
     {
-        private readonly IHostingEnvironment HostingEnvironment;
+        private readonly IWebHostEnvironment HostingEnvironment;
 
         internal HttpContext HttpContext { get; private set; }
 
@@ -23,7 +23,7 @@ namespace Adriva.Extensions.Optimization.Web
 
         public ReadOnlyCollection<Asset> Assets => new ReadOnlyCollection<Asset>(this.AssetList);
 
-        public WebOptimizationContext(IHttpContextAccessor httpContextAccessor, IHostingEnvironment hostingEnvironment)
+        public WebOptimizationContext(IHttpContextAccessor httpContextAccessor, IWebHostEnvironment hostingEnvironment)
         {
             this.HttpContext = httpContextAccessor.HttpContext;
             this.HostingEnvironment = hostingEnvironment;

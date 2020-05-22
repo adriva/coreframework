@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Adriva.Extensions.Caching.Memory
     {
         private readonly ILogger Logger;
         private readonly IMemoryCache MemoryCache;
-        private readonly ReaderWriterLockSlim Lock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
+        private readonly ConcurrentQueue<Tuple<Action<string>, string>> NotificationQueue = new ConcurrentQueue<Tuple<Action<string>, string>>();
 
         public InMemoryCache(ILogger<InMemoryCache> logger)
         {
@@ -39,88 +40,65 @@ namespace Adriva.Extensions.Caching.Memory
 
         public async Task<T> GetOrCreateAsync<T>(string key, Func<ICacheItem, Task<T>> factory, EvictionCallback evictionCallback = null, params string[] dependencyMonikers)
         {
-            try
+            while (0 < this.NotificationQueue.Count && this.NotificationQueue.TryDequeue(out Tuple<Action<string>, string> notifyTuple))
             {
-                this.Lock.EnterReadLock();
-            }
-            catch (Exception error)
-            {
-                this.Logger.LogWarning(error, "Failed to acquire memory cache access lock. Will by-pass cache.");
-                NullCacheItem nullCacheItem = new NullCacheItem();
-                return await factory?.Invoke(nullCacheItem);
+                notifyTuple.Item1?.Invoke(notifyTuple.Item2);
             }
 
-            try
+            this.Logger.LogTrace($"Returning item '{key}' from in-memory cache.");
+
+            return await this.MemoryCache.GetOrCreateAsync<T>(key, async (entry) =>
             {
-                this.Logger.LogTrace($"Returning item '{key}' from in-memory cache.");
-                return await this.MemoryCache.GetOrCreateAsync<T>(key, async (entry) =>
+                this.Logger.LogTrace($"Item '{key}' not found in in-memory cache. Creating a new one.");
+                if (null != dependencyMonikers)
                 {
-                    this.Logger.LogTrace($"Item '{key}' not found in in-memory cache. Creating a new one.");
-                    if (null != dependencyMonikers)
+                    foreach (string dependencyMoniker in dependencyMonikers)
                     {
-                        foreach (string dependencyMoniker in dependencyMonikers)
+                        var changeToken = this.MemoryCache.GetOrCreate(dependencyMoniker, (dependencyEntry) =>
                         {
-                            var changeToken = this.MemoryCache.GetOrCreate(dependencyMoniker, (dependencyEntry) =>
-                            {
-                                dependencyEntry.RegisterPostEvictionCallback(this.ChangeTokenEvicted);
-                                return new DependencyChangeToken();
-                            });
-                            entry.AddExpirationToken(changeToken);
-                            this.Logger.LogTrace($"Change token added to item '{key}'.");
-                        }
+                            dependencyEntry.RegisterPostEvictionCallback(this.ChangeTokenEvicted);
+                            return new DependencyChangeToken();
+                        });
+                        entry.AddExpirationToken(changeToken);
+                        this.Logger.LogTrace($"Change token added to item '{key}'.");
                     }
-
-                    MemoryCacheItem memoryCacheItem = new MemoryCacheItem(entry);
-                    T data = await factory.Invoke(memoryCacheItem);
-                    entry.AbsoluteExpiration = memoryCacheItem.AbsoluteExpiration;
-                    entry.AbsoluteExpirationRelativeToNow = memoryCacheItem.AbsoluteExpirationRelativeToNow;
-                    entry.SlidingExpiration = memoryCacheItem.SlidingExpiration;
-
-                    if (null != evictionCallback)
-                    {
-                        entry.RegisterPostEvictionCallback((object key, object value, EvictionReason reason, object state) =>
-                        {
-                            evictionCallback.Invoke(Convert.ToString(key), value, (ICache)state);
-                        }, this);
-                    }
-
-                    return data;
-                });
-            }
-            finally
-            {
-                this.Logger.LogInformation($"Item '{key}' returned from in-memory cache.");
-                if (this.Lock.IsReadLockHeld)
-                {
-                    this.Lock.ExitReadLock();
                 }
-            }
+
+                MemoryCacheItem memoryCacheItem = new MemoryCacheItem(entry);
+                T data = await factory.Invoke(memoryCacheItem);
+                entry.AbsoluteExpiration = memoryCacheItem.AbsoluteExpiration;
+                entry.AbsoluteExpirationRelativeToNow = memoryCacheItem.AbsoluteExpirationRelativeToNow;
+                entry.SlidingExpiration = memoryCacheItem.SlidingExpiration;
+
+                if (null != evictionCallback)
+                {
+                    entry.RegisterPostEvictionCallback((object key, object value, EvictionReason reason, object state) =>
+                    {
+                        evictionCallback.Invoke(Convert.ToString(key), value, (ICache)state);
+                    }, this);
+                }
+
+                return data;
+            });
+
         }
 
         public void NotifyChanged(string dependencyMoniker)
         {
             if (string.IsNullOrWhiteSpace(dependencyMoniker)) return;
 
-            this.Logger.LogTrace($"Waiting to notify change token '{dependencyMoniker}'.");
-
-            this.Lock.EnterWriteLock();
-
-            try
+            Action<string> notifyAction = (moniker) =>
             {
-                this.Logger.LogTrace($"Trying to retrieve change token '{dependencyMoniker}'.");
-
-                if (this.MemoryCache.TryGetValue<DependencyChangeToken>(dependencyMoniker, out DependencyChangeToken changeToken))
+                this.Logger.LogTrace($"Trying to retrieve change token '{moniker}'.");
+                if (this.MemoryCache.TryGetValue<DependencyChangeToken>(moniker, out DependencyChangeToken changeToken))
                 {
-                    this.MemoryCache.Remove(dependencyMoniker);
+                    this.MemoryCache.Remove(moniker);
                     changeToken.NotifyChanged();
-                    this.Logger.LogInformation($"Change token '{dependencyMoniker}' notified.");
+                    this.Logger.LogInformation($"Change token '{moniker}' notified.");
                 }
-            }
-            finally
-            {
-                this.Lock.ExitWriteLock();
-                this.Logger.LogTrace($"Change token '{dependencyMoniker}' expired.");
-            }
+            };
+
+            this.NotificationQueue.Enqueue(new Tuple<Action<string>, string>(notifyAction, dependencyMoniker));
         }
 
         public Task NotifyChangedAsync(string dependencyMoniker)
@@ -138,7 +116,6 @@ namespace Adriva.Extensions.Caching.Memory
                 if (disposing)
                 {
                     this.MemoryCache?.Dispose();
-                    this.Lock.Dispose();
                 }
 
                 this.IsDisposed = true;

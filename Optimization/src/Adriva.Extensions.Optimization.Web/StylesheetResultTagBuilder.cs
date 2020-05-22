@@ -13,11 +13,11 @@ namespace Adriva.Extensions.Optimization.Web
     {
         private readonly IHttpContextAccessor HttpContextAccessor;
         private readonly WebOptimizationOptions Options;
-        private readonly IHostingEnvironment HostingEnvironment;
+        private readonly IWebHostEnvironment HostingEnvironment;
 
         public string Extension => "css";
 
-        public StylesheetResultTagBuilder(IOptions<WebOptimizationOptions> optionsAccessor, IHttpContextAccessor httpContextAccessor, IHostingEnvironment hostingEnvironment)
+        public StylesheetResultTagBuilder(IOptions<WebOptimizationOptions> optionsAccessor, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment hostingEnvironment)
         {
             this.Options = optionsAccessor.Value;
             this.HttpContextAccessor = httpContextAccessor;

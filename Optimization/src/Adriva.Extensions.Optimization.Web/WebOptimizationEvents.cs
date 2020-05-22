@@ -13,7 +13,7 @@ namespace Adriva.Extensions.Optimization.Web
         {
             get => (serviceProvider, options) =>
             {
-                IHostingEnvironment hostingEnvironment = serviceProvider.GetService<IHostingEnvironment>();
+                IWebHostEnvironment hostingEnvironment = serviceProvider.GetService<IWebHostEnvironment>();
                 if (!string.IsNullOrWhiteSpace(options.StaticAssetsPath))
                 {
                     var physicalAssetsPath = hostingEnvironment.WebRootFileProvider.GetFileInfo(options.StaticAssetsPath).PhysicalPath;
