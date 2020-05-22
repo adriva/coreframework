@@ -36,7 +36,7 @@ namespace Adriva.Extensions.Optimization.Web
             {
                 Stream originalStream = context.Response.Body;
 
-                using (AutoStream autoStream = new AutoStream(102400))
+                using (AutoStream autoStream = new AutoStream(102400, true))
                 {
                     bool fallbackToDefault = true;
                     context.Response.Body = autoStream;
