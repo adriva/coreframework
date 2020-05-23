@@ -87,7 +87,6 @@ Since this is a web application we need to use the <code>AddAppInsightsWebAnalyt
 
     services.AddAppInsightsWebAnalytics(options =&gt;
     {
-        options.TransmitThreadCount = 2;
         options.InstrumentationKey = &quot;&lt;YOUR KEY GOES HERE&gt;&quot;;
         options.IsDeveloperMode = true | false;
         options.Capacity = 5000;
@@ -105,10 +104,6 @@ Since this is a web application we need to use the <code>AddAppInsightsWebAnalyt
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>TransmitThreadCount</td>
-<td>The number of threads the client app will use to transmit analytics data to the server in parallel. The number of threads is at least set to 1 by the system.</td>
-</tr>
 <tr>
 <td>InstrumentationKey</td>
 <td>The key value that uniquely identifies the application. The value of this key depends on the server implementation and the default implementation doesn't provide any obfuscation or security on this key.</td>

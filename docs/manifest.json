@@ -38,7 +38,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Common.Core.AutoStream.html",
-          "hash": "Ji2vsF5ddLL4R9qUBNo48A=="
+          "hash": "5rGWZXTTfVBQqrNwbicGYw=="
         }
       },
       "is_incremental": false,
@@ -194,7 +194,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Common.Core.NdJsonSerializer.html",
-          "hash": "3iSCSDIAlg2zAnk8o3Fpgw=="
+          "hash": "kWM4zhpbpQ2e51Y4CtBHvA=="
         }
       },
       "is_incremental": false,
@@ -278,7 +278,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Common.Core.Utilities.html",
-          "hash": "2jZRDyoWFggmBkwjNz6ORQ=="
+          "hash": "2B+GZbV20J8rKGZlfJXNsA=="
         }
       },
       "is_incremental": false,
@@ -302,7 +302,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions.html",
-          "hash": "VeThfxF6SQxpvCaKKKd6dg=="
+          "hash": "gCuzkEbrEF8OsqHNqST6uQ=="
         }
       },
       "is_incremental": false,
@@ -470,7 +470,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.Envelope.html",
-          "hash": "YVoHdZy/sl8QNoKSPrA0nQ=="
+          "hash": "2/vldVsdHuGp6DQ4hQbCtg=="
         }
       },
       "is_incremental": false,
@@ -818,7 +818,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html",
-          "hash": "81Oe4OYwKCyjoNtTTQreGA=="
+          "hash": "s/4DCuCBuetJWg1/kEVVYQ=="
         }
       },
       "is_incremental": false,
@@ -926,7 +926,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Caching.Memory.InMemoryCache.html",
-          "hash": "/p7LB5wc1D9IU0xVReA8AQ=="
+          "hash": "F0jGd8zkBvhnmCNAbNJc4A=="
         }
       },
       "is_incremental": false,
@@ -1046,7 +1046,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder-1.html",
-          "hash": "Di7KWwjThG7dxOjY98hloA=="
+          "hash": "EzNm7XX9ok2gbz3v1LFh8w=="
         }
       },
       "is_incremental": false,
@@ -1070,7 +1070,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationEvents-1.html",
-          "hash": "PSXv8iB65zLP2oa6Udsg5A=="
+          "hash": "a1jDpx5ssfBqRIZ7EeI47Q=="
         }
       },
       "is_incremental": false,
@@ -1154,7 +1154,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.html",
-          "hash": "bb260ciyOto+OX7BA46AcA=="
+          "hash": "w6uLDGDz8n8DH7MFX3s70g=="
         }
       },
       "is_incremental": false,
@@ -1274,7 +1274,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilder.html",
-          "hash": "tyn1xzTGxPmdqJsU7giFIw=="
+          "hash": "HgUf96o5n5r3mi93HvhJQw=="
         }
       },
       "is_incremental": false,
@@ -1310,7 +1310,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder.html",
-          "hash": "wf/JbmyH61C4S0MLPnoWTg=="
+          "hash": "ecSom82403c0Kck2jQuwfg=="
         }
       },
       "is_incremental": false,
@@ -1322,7 +1322,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Web.OptimizationTagOutput.html",
-          "hash": "g5+0nSnFW9t+M7sdsa6TlQ=="
+          "hash": "WSMlXLIFpqZeMMRmYlJbyQ=="
         }
       },
       "is_incremental": false,
@@ -1334,7 +1334,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.html",
-          "hash": "6nTOyaz/jtR8Pz2q73C5Xw=="
+          "hash": "TZpAW/E2brC3DaxzoNnz8w=="
         }
       },
       "is_incremental": false,
@@ -1346,7 +1346,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder.html",
-          "hash": "iRvqbTqpXtZ2wZ6UDtkOyw=="
+          "hash": "rNMTP3QaPwgVok5i8dnK7Q=="
         }
       },
       "is_incremental": false,
@@ -1382,7 +1382,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.html",
-          "hash": "xctZMsOz1HiVEmcwBZHrmg=="
+          "hash": "ZyzEWfD3mrN3XXglDMyooA=="
         }
       },
       "is_incremental": false,
@@ -1418,7 +1418,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.CacheExtensions.html",
-          "hash": "xtFFamFsm39SnUBooWkClg=="
+          "hash": "0Qpt4D9T0r0+s6iydTYaJA=="
         }
       },
       "is_incremental": false,
@@ -1454,7 +1454,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.OptimizationExtensions.html",
-          "hash": "EPf+DvdpnbT4UkFPGeSX3Q=="
+          "hash": "ycBgr5HBAaSne8qN6IwQ9A=="
         }
       },
       "is_incremental": false,
@@ -1502,7 +1502,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/analytics-aspnetcore.html",
-          "hash": "7+kSn2oVfNKY78qFqC0HBQ=="
+          "hash": "Y65bYOOJUA8+3ymaw8ba8Q=="
         }
       },
       "is_incremental": false,
@@ -1544,7 +1544,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/optimization-web.html",
-          "hash": "Vy4F4G1vao3BBp9wuQ/+VA=="
+          "hash": "HFRvh4aREd69JZZeik50UA=="
         }
       },
       "is_incremental": false,
@@ -1590,25 +1590,23 @@
   "incremental_info": [
     {
       "status": {
-        "can_incremental": false,
-        "details": "Cannot build incrementally because config changed.",
+        "can_incremental": true,
         "incrementalPhase": "build",
         "total_file_count": 0,
-        "skipped_file_count": 0,
-        "full_build_reason_code": "ConfigChanged"
+        "skipped_file_count": 0
       },
       "processors": {
         "ConceptualDocumentProcessor": {
-          "can_incremental": false,
+          "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 6,
-          "skipped_file_count": 0
+          "skipped_file_count": 5
         },
         "ManagedReferenceDocumentProcessor": {
-          "can_incremental": false,
+          "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 121,
-          "skipped_file_count": 0
+          "skipped_file_count": 50
         },
         "TocDocumentProcessor": {
           "can_incremental": false,

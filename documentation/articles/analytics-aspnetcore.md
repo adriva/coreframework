@@ -16,7 +16,6 @@ public void ConfigureServices(IServiceCollection services)
 
     services.AddAppInsightsWebAnalytics(options =>
     {
-        options.TransmitThreadCount = 2;
         options.InstrumentationKey = "<YOUR KEY GOES HERE>";
         options.IsDeveloperMode = true | false;
         options.Capacity = 5000;
@@ -28,7 +27,6 @@ public void ConfigureServices(IServiceCollection services)
 ```
 |Property|Description|
 |-|-|
-|TransmitThreadCount|The number of threads the client app will use to transmit analytics data to the server in parallel. The number of threads is at least set to 1 by the system.|
 |InstrumentationKey|The key value that uniquely identifies the application. The value of this key depends on the server implementation and the default implementation doesn't provide any obfuscation or security on this key. |
 |Capacity|The number of items that can be stored locally before trasnmitting to the server.|
 |EndPointAddress|Your http or https analytics server endpoint url.|

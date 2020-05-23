@@ -47,12 +47,12 @@ references:
   commentId: T:Adriva.Common.Core.AutoStream
   fullName: Adriva.Common.Core.AutoStream
   nameWithType: AutoStream
-- uid: Adriva.Common.Core.AutoStream.#ctor(System.Int64)
-  name: AutoStream(Int64)
-  href: api/Adriva.Common.Core.AutoStream.html#Adriva_Common_Core_AutoStream__ctor_System_Int64_
-  commentId: M:Adriva.Common.Core.AutoStream.#ctor(System.Int64)
-  fullName: Adriva.Common.Core.AutoStream.AutoStream(System.Int64)
-  nameWithType: AutoStream.AutoStream(Int64)
+- uid: Adriva.Common.Core.AutoStream.#ctor(System.Int64,System.Boolean)
+  name: AutoStream(Int64, Boolean)
+  href: api/Adriva.Common.Core.AutoStream.html#Adriva_Common_Core_AutoStream__ctor_System_Int64_System_Boolean_
+  commentId: M:Adriva.Common.Core.AutoStream.#ctor(System.Int64,System.Boolean)
+  fullName: Adriva.Common.Core.AutoStream.AutoStream(System.Int64, System.Boolean)
+  nameWithType: AutoStream.AutoStream(Int64, Boolean)
 - uid: Adriva.Common.Core.AutoStream.#ctor*
   name: AutoStream
   href: api/Adriva.Common.Core.AutoStream.html#Adriva_Common_Core_AutoStream__ctor_
@@ -1843,12 +1843,12 @@ references:
   isSpec: "True"
   fullName: Adriva.Common.Core.Utilities.EnumerateFiles
   nameWithType: Utilities.EnumerateFiles
-- uid: Adriva.Common.Core.Utilities.ExtractDecimal(System.String)
-  name: ExtractDecimal(String)
-  href: api/Adriva.Common.Core.Utilities.html#Adriva_Common_Core_Utilities_ExtractDecimal_System_String_
-  commentId: M:Adriva.Common.Core.Utilities.ExtractDecimal(System.String)
-  fullName: Adriva.Common.Core.Utilities.ExtractDecimal(System.String)
-  nameWithType: Utilities.ExtractDecimal(String)
+- uid: Adriva.Common.Core.Utilities.ExtractDecimal(System.String,System.Globalization.CultureInfo,System.Globalization.CultureInfo)
+  name: ExtractDecimal(String, CultureInfo, CultureInfo)
+  href: api/Adriva.Common.Core.Utilities.html#Adriva_Common_Core_Utilities_ExtractDecimal_System_String_System_Globalization_CultureInfo_System_Globalization_CultureInfo_
+  commentId: M:Adriva.Common.Core.Utilities.ExtractDecimal(System.String,System.Globalization.CultureInfo,System.Globalization.CultureInfo)
+  fullName: Adriva.Common.Core.Utilities.ExtractDecimal(System.String, System.Globalization.CultureInfo, System.Globalization.CultureInfo)
+  nameWithType: Utilities.ExtractDecimal(String, CultureInfo, CultureInfo)
 - uid: Adriva.Common.Core.Utilities.ExtractDecimal*
   name: ExtractDecimal
   href: api/Adriva.Common.Core.Utilities.html#Adriva_Common_Core_Utilities_ExtractDecimal_
@@ -2011,12 +2011,15 @@ references:
   isSpec: "True"
   fullName: Adriva.Common.Core.Utilities.NegateString
   nameWithType: Utilities.NegateString
-- uid: Adriva.Common.Core.Utilities.ParseCurrencyCode(System.String)
-  name: ParseCurrencyCode(String)
-  href: api/Adriva.Common.Core.Utilities.html#Adriva_Common_Core_Utilities_ParseCurrencyCode_System_String_
-  commentId: M:Adriva.Common.Core.Utilities.ParseCurrencyCode(System.String)
-  fullName: Adriva.Common.Core.Utilities.ParseCurrencyCode(System.String)
-  nameWithType: Utilities.ParseCurrencyCode(String)
+- uid: Adriva.Common.Core.Utilities.ParseCurrencyCode(System.String,System.Collections.Generic.IDictionary{System.String,System.String})
+  name: ParseCurrencyCode(String, IDictionary<String, String>)
+  href: api/Adriva.Common.Core.Utilities.html#Adriva_Common_Core_Utilities_ParseCurrencyCode_System_String_System_Collections_Generic_IDictionary_System_String_System_String__
+  commentId: M:Adriva.Common.Core.Utilities.ParseCurrencyCode(System.String,System.Collections.Generic.IDictionary{System.String,System.String})
+  name.vb: ParseCurrencyCode(String, IDictionary(Of String, String))
+  fullName: Adriva.Common.Core.Utilities.ParseCurrencyCode(System.String, System.Collections.Generic.IDictionary<System.String, System.String>)
+  fullName.vb: Adriva.Common.Core.Utilities.ParseCurrencyCode(System.String, System.Collections.Generic.IDictionary(Of System.String, System.String))
+  nameWithType: Utilities.ParseCurrencyCode(String, IDictionary<String, String>)
+  nameWithType.vb: Utilities.ParseCurrencyCode(String, IDictionary(Of String, String))
 - uid: Adriva.Common.Core.Utilities.ParseCurrencyCode*
   name: ParseCurrencyCode
   href: api/Adriva.Common.Core.Utilities.html#Adriva_Common_Core_Utilities_ParseCurrencyCode_
@@ -2037,12 +2040,12 @@ references:
   isSpec: "True"
   fullName: Adriva.Common.Core.Utilities.ParseDateTicks
   nameWithType: Utilities.ParseDateTicks
-- uid: Adriva.Common.Core.Utilities.ParseDecimal(System.String)
-  name: ParseDecimal(String)
-  href: api/Adriva.Common.Core.Utilities.html#Adriva_Common_Core_Utilities_ParseDecimal_System_String_
-  commentId: M:Adriva.Common.Core.Utilities.ParseDecimal(System.String)
-  fullName: Adriva.Common.Core.Utilities.ParseDecimal(System.String)
-  nameWithType: Utilities.ParseDecimal(String)
+- uid: Adriva.Common.Core.Utilities.ParseDecimal(System.String,System.Globalization.CultureInfo,System.Globalization.CultureInfo)
+  name: ParseDecimal(String, CultureInfo, CultureInfo)
+  href: api/Adriva.Common.Core.Utilities.html#Adriva_Common_Core_Utilities_ParseDecimal_System_String_System_Globalization_CultureInfo_System_Globalization_CultureInfo_
+  commentId: M:Adriva.Common.Core.Utilities.ParseDecimal(System.String,System.Globalization.CultureInfo,System.Globalization.CultureInfo)
+  fullName: Adriva.Common.Core.Utilities.ParseDecimal(System.String, System.Globalization.CultureInfo, System.Globalization.CultureInfo)
+  nameWithType: Utilities.ParseDecimal(String, CultureInfo, CultureInfo)
 - uid: Adriva.Common.Core.Utilities.ParseDecimal*
   name: ParseDecimal
   href: api/Adriva.Common.Core.Utilities.html#Adriva_Common_Core_Utilities_ParseDecimal_
@@ -2328,19 +2331,6 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions.SetLogLevel
   nameWithType: AnalyticsOptions.SetLogLevel
-- uid: Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions.TransmitThreadCount
-  name: TransmitThreadCount
-  href: api/Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions.html#Adriva_Extensions_Analytics_AppInsights_AnalyticsOptions_TransmitThreadCount
-  commentId: P:Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions.TransmitThreadCount
-  fullName: Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions.TransmitThreadCount
-  nameWithType: AnalyticsOptions.TransmitThreadCount
-- uid: Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions.TransmitThreadCount*
-  name: TransmitThreadCount
-  href: api/Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions.html#Adriva_Extensions_Analytics_AppInsights_AnalyticsOptions_TransmitThreadCount_
-  commentId: Overload:Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions.TransmitThreadCount
-  isSpec: "True"
-  fullName: Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions.TransmitThreadCount
-  nameWithType: AnalyticsOptions.TransmitThreadCount
 - uid: Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder
   name: IAnalyticsBuilder
   href: api/Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder.html
@@ -7223,15 +7213,15 @@ references:
   commentId: T:Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder
   fullName: Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder
   nameWithType: JavascriptResultTagBuilder
-- uid: Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder.#ctor(IOptions{Adriva.Extensions.Optimization.Web.WebOptimizationOptions},IHttpContextAccessor,IHostingEnvironment)
-  name: JavascriptResultTagBuilder(IOptions<WebOptimizationOptions>, IHttpContextAccessor, IHostingEnvironment)
-  href: api/Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder.html#Adriva_Extensions_Optimization_Web_JavascriptResultTagBuilder__ctor_IOptions_Adriva_Extensions_Optimization_Web_WebOptimizationOptions__IHttpContextAccessor_IHostingEnvironment_
-  commentId: M:Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder.#ctor(IOptions{Adriva.Extensions.Optimization.Web.WebOptimizationOptions},IHttpContextAccessor,IHostingEnvironment)
-  name.vb: JavascriptResultTagBuilder(IOptions(Of WebOptimizationOptions), IHttpContextAccessor, IHostingEnvironment)
-  fullName: Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder.JavascriptResultTagBuilder(IOptions<Adriva.Extensions.Optimization.Web.WebOptimizationOptions>, IHttpContextAccessor, IHostingEnvironment)
-  fullName.vb: Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder.JavascriptResultTagBuilder(IOptions(Of Adriva.Extensions.Optimization.Web.WebOptimizationOptions), IHttpContextAccessor, IHostingEnvironment)
-  nameWithType: JavascriptResultTagBuilder.JavascriptResultTagBuilder(IOptions<WebOptimizationOptions>, IHttpContextAccessor, IHostingEnvironment)
-  nameWithType.vb: JavascriptResultTagBuilder.JavascriptResultTagBuilder(IOptions(Of WebOptimizationOptions), IHttpContextAccessor, IHostingEnvironment)
+- uid: Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder.#ctor(IOptions{Adriva.Extensions.Optimization.Web.WebOptimizationOptions},IHttpContextAccessor,IWebHostEnvironment)
+  name: JavascriptResultTagBuilder(IOptions<WebOptimizationOptions>, IHttpContextAccessor, IWebHostEnvironment)
+  href: api/Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder.html#Adriva_Extensions_Optimization_Web_JavascriptResultTagBuilder__ctor_IOptions_Adriva_Extensions_Optimization_Web_WebOptimizationOptions__IHttpContextAccessor_IWebHostEnvironment_
+  commentId: M:Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder.#ctor(IOptions{Adriva.Extensions.Optimization.Web.WebOptimizationOptions},IHttpContextAccessor,IWebHostEnvironment)
+  name.vb: JavascriptResultTagBuilder(IOptions(Of WebOptimizationOptions), IHttpContextAccessor, IWebHostEnvironment)
+  fullName: Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder.JavascriptResultTagBuilder(IOptions<Adriva.Extensions.Optimization.Web.WebOptimizationOptions>, IHttpContextAccessor, IWebHostEnvironment)
+  fullName.vb: Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder.JavascriptResultTagBuilder(IOptions(Of Adriva.Extensions.Optimization.Web.WebOptimizationOptions), IHttpContextAccessor, IWebHostEnvironment)
+  nameWithType: JavascriptResultTagBuilder.JavascriptResultTagBuilder(IOptions<WebOptimizationOptions>, IHttpContextAccessor, IWebHostEnvironment)
+  nameWithType.vb: JavascriptResultTagBuilder.JavascriptResultTagBuilder(IOptions(Of WebOptimizationOptions), IHttpContextAccessor, IWebHostEnvironment)
 - uid: Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder.#ctor*
   name: JavascriptResultTagBuilder
   href: api/Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder.html#Adriva_Extensions_Optimization_Web_JavascriptResultTagBuilder__ctor_
@@ -7372,15 +7362,15 @@ references:
   commentId: T:Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder
   fullName: Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder
   nameWithType: StylesheetResultTagBuilder
-- uid: Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder.#ctor(IOptions{Adriva.Extensions.Optimization.Web.WebOptimizationOptions},IHttpContextAccessor,IHostingEnvironment)
-  name: StylesheetResultTagBuilder(IOptions<WebOptimizationOptions>, IHttpContextAccessor, IHostingEnvironment)
-  href: api/Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder.html#Adriva_Extensions_Optimization_Web_StylesheetResultTagBuilder__ctor_IOptions_Adriva_Extensions_Optimization_Web_WebOptimizationOptions__IHttpContextAccessor_IHostingEnvironment_
-  commentId: M:Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder.#ctor(IOptions{Adriva.Extensions.Optimization.Web.WebOptimizationOptions},IHttpContextAccessor,IHostingEnvironment)
-  name.vb: StylesheetResultTagBuilder(IOptions(Of WebOptimizationOptions), IHttpContextAccessor, IHostingEnvironment)
-  fullName: Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder.StylesheetResultTagBuilder(IOptions<Adriva.Extensions.Optimization.Web.WebOptimizationOptions>, IHttpContextAccessor, IHostingEnvironment)
-  fullName.vb: Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder.StylesheetResultTagBuilder(IOptions(Of Adriva.Extensions.Optimization.Web.WebOptimizationOptions), IHttpContextAccessor, IHostingEnvironment)
-  nameWithType: StylesheetResultTagBuilder.StylesheetResultTagBuilder(IOptions<WebOptimizationOptions>, IHttpContextAccessor, IHostingEnvironment)
-  nameWithType.vb: StylesheetResultTagBuilder.StylesheetResultTagBuilder(IOptions(Of WebOptimizationOptions), IHttpContextAccessor, IHostingEnvironment)
+- uid: Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder.#ctor(IOptions{Adriva.Extensions.Optimization.Web.WebOptimizationOptions},IHttpContextAccessor,IWebHostEnvironment)
+  name: StylesheetResultTagBuilder(IOptions<WebOptimizationOptions>, IHttpContextAccessor, IWebHostEnvironment)
+  href: api/Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder.html#Adriva_Extensions_Optimization_Web_StylesheetResultTagBuilder__ctor_IOptions_Adriva_Extensions_Optimization_Web_WebOptimizationOptions__IHttpContextAccessor_IWebHostEnvironment_
+  commentId: M:Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder.#ctor(IOptions{Adriva.Extensions.Optimization.Web.WebOptimizationOptions},IHttpContextAccessor,IWebHostEnvironment)
+  name.vb: StylesheetResultTagBuilder(IOptions(Of WebOptimizationOptions), IHttpContextAccessor, IWebHostEnvironment)
+  fullName: Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder.StylesheetResultTagBuilder(IOptions<Adriva.Extensions.Optimization.Web.WebOptimizationOptions>, IHttpContextAccessor, IWebHostEnvironment)
+  fullName.vb: Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder.StylesheetResultTagBuilder(IOptions(Of Adriva.Extensions.Optimization.Web.WebOptimizationOptions), IHttpContextAccessor, IWebHostEnvironment)
+  nameWithType: StylesheetResultTagBuilder.StylesheetResultTagBuilder(IOptions<WebOptimizationOptions>, IHttpContextAccessor, IWebHostEnvironment)
+  nameWithType.vb: StylesheetResultTagBuilder.StylesheetResultTagBuilder(IOptions(Of WebOptimizationOptions), IHttpContextAccessor, IWebHostEnvironment)
 - uid: Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder.#ctor*
   name: StylesheetResultTagBuilder
   href: api/Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder.html#Adriva_Extensions_Optimization_Web_StylesheetResultTagBuilder__ctor_
