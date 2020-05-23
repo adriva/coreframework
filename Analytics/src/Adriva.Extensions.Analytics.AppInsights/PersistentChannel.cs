@@ -55,7 +55,7 @@ namespace Adriva.Extensions.Analytics.AppInsights
         {
             this.Options = optionsAccessor.Value;
 
-            int transmitThreadCount = Math.Max(1, this.Options.TransmitThreadCount);
+            int transmitThreadCount = 1;
             this.TransmitSemaphore = new SemaphoreSlim(transmitThreadCount, transmitThreadCount);
 
             this.HttpClient = new HttpClient();

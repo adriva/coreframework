@@ -1,6 +1,7 @@
 ﻿using System;
 using Adriva.Extensions.Analytics.AppInsights;
 using Microsoft.ApplicationInsights.Channel;
+using Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.ApplicationInsights;
@@ -29,7 +30,16 @@ namespace Microsoft.Extensions.DependencyInjection
                 baseOptions.Filter = analyticsOptions.Filter;
             });
 
-            services.Replace(ServiceDescriptor.Singleton<ITelemetryChannel, PersistentChannel>());
+            services.Replace(ServiceDescriptor.Singleton<ITelemetryChannel>(serviceProvider =>
+            {
+                return new ServerTelemetryChannel()
+                {
+                    DeveloperMode = analyticsOptions.IsDeveloperMode,
+                    EndpointAddress = analyticsOptions.EndPointAddress,
+                    MaxBacklogSize = analyticsOptions.BacklogSize,
+                    MaxTelemetryBufferCapacity = analyticsOptions.Capacity
+                };
+            }));
 
             services.AddLogging(builder =>
             {
@@ -62,6 +72,11 @@ namespace Microsoft.Extensions.DependencyInjection
                 });
             });
 
+            services.AddSingleton<ApplicationInsights.AspNetCore.ITelemetryProcessorFactory>(serviceProvider =>
+            {
+                return new SharedTelemetryProcessorFactory(serviceProvider, typeof(DefaultTelemetryFilter));
+            });
+
             return services;
         }
 
@@ -83,6 +98,11 @@ namespace Microsoft.Extensions.DependencyInjection
                     options.DeveloperMode = builder.Options.IsDeveloperMode;
                     options.EndpointAddress = builder.Options.EndPointAddress;
                 });
+            });
+
+            services.AddSingleton<ApplicationInsights.WorkerService.ITelemetryProcessorFactory>(serviceProvider =>
+            {
+                return new SharedTelemetryProcessorFactory(serviceProvider, typeof(DefaultTelemetryFilter));
             });
 
             return services;

@@ -50,17 +50,10 @@ namespace Adriva.Extensions.Analytics.AppInsights
         public bool IsDeveloperMode { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum number of worker threads that will transmit the analytics data.
-        /// <remarks>The minimum number of allowed thread count is 1.</remarks>
-        /// </summary>
-        /// <value>An integer value represeting the number of worker threads.</value>
-        public int TransmitThreadCount { get; set; } = Environment.ProcessorCount;
-
-        /// <summary>
         /// Gets or sets a function that can be used to filter analytics items so that filtered items will not be transferred to the server.
         /// </summary>
         /// <value>A function predicate that returns a boolean value indicating if the given telemetrry can be transferred to the server.</value>
-        public Func<ITelemetry, bool> Filter { get; set; } = _ => true;
+        public Func<ITelemetry, bool> Filter { get; set; }
 
         /// <summary>
         /// Gets or sets an action that can be used to populate analytics data with extra information.

@@ -44,7 +44,6 @@ namespace demo
 
             services.AddAppInsightsWebAnalytics(options =>
             {
-                options.TransmitThreadCount = 1;
                 options.InstrumentationKey = "Deneme";
                 options.IsDeveloperMode = true;
                 options.Capacity = 10;
