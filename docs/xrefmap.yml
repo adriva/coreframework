@@ -5747,19 +5747,6 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Analytics.Server.IQueueingService.Enqueue
   nameWithType: IQueueingService.Enqueue
-- uid: Adriva.Extensions.Analytics.Server.IQueueingService.GetConsumingEnumerable(CancellationToken)
-  name: GetConsumingEnumerable(CancellationToken)
-  href: api/Adriva.Extensions.Analytics.Server.IQueueingService.html#Adriva_Extensions_Analytics_Server_IQueueingService_GetConsumingEnumerable_CancellationToken_
-  commentId: M:Adriva.Extensions.Analytics.Server.IQueueingService.GetConsumingEnumerable(CancellationToken)
-  fullName: Adriva.Extensions.Analytics.Server.IQueueingService.GetConsumingEnumerable(CancellationToken)
-  nameWithType: IQueueingService.GetConsumingEnumerable(CancellationToken)
-- uid: Adriva.Extensions.Analytics.Server.IQueueingService.GetConsumingEnumerable*
-  name: GetConsumingEnumerable
-  href: api/Adriva.Extensions.Analytics.Server.IQueueingService.html#Adriva_Extensions_Analytics_Server_IQueueingService_GetConsumingEnumerable_
-  commentId: Overload:Adriva.Extensions.Analytics.Server.IQueueingService.GetConsumingEnumerable
-  isSpec: "True"
-  fullName: Adriva.Extensions.Analytics.Server.IQueueingService.GetConsumingEnumerable
-  nameWithType: IQueueingService.GetConsumingEnumerable
 - uid: Adriva.Extensions.Analytics.Server.IQueueingService.IsCompleted
   name: IsCompleted
   href: api/Adriva.Extensions.Analytics.Server.IQueueingService.html#Adriva_Extensions_Analytics_Server_IQueueingService_IsCompleted
@@ -5773,6 +5760,22 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Analytics.Server.IQueueingService.IsCompleted
   nameWithType: IQueueingService.IsCompleted
+- uid: Adriva.Extensions.Analytics.Server.IQueueingService.TryGetNext(System.Int32,Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem@)
+  name: TryGetNext(Int32, out AnalyticsItem)
+  href: api/Adriva.Extensions.Analytics.Server.IQueueingService.html#Adriva_Extensions_Analytics_Server_IQueueingService_TryGetNext_System_Int32_Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem__
+  commentId: M:Adriva.Extensions.Analytics.Server.IQueueingService.TryGetNext(System.Int32,Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem@)
+  name.vb: TryGetNext(Int32, ByRef AnalyticsItem)
+  fullName: Adriva.Extensions.Analytics.Server.IQueueingService.TryGetNext(System.Int32, out Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem)
+  fullName.vb: Adriva.Extensions.Analytics.Server.IQueueingService.TryGetNext(System.Int32, ByRef Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem)
+  nameWithType: IQueueingService.TryGetNext(Int32, out AnalyticsItem)
+  nameWithType.vb: IQueueingService.TryGetNext(Int32, ByRef AnalyticsItem)
+- uid: Adriva.Extensions.Analytics.Server.IQueueingService.TryGetNext*
+  name: TryGetNext
+  href: api/Adriva.Extensions.Analytics.Server.IQueueingService.html#Adriva_Extensions_Analytics_Server_IQueueingService_TryGetNext_
+  commentId: Overload:Adriva.Extensions.Analytics.Server.IQueueingService.TryGetNext
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Server.IQueueingService.TryGetNext
+  nameWithType: IQueueingService.TryGetNext
 - uid: Adriva.Extensions.Analytics.Server.NullRepository
   name: NullRepository
   href: api/Adriva.Extensions.Analytics.Server.NullRepository.html

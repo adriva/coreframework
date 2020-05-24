@@ -14,6 +14,7 @@ namespace Adriva.Extensions.Analytics.Repository.EntityFramework
     /// </summary>
     public class InMemoryRepository : IAnalyticsRepository
     {
+        private readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1, 1);
         private readonly ILogger Logger;
         private readonly AnalyticsDatabaseContext Context;
 
@@ -37,8 +38,16 @@ namespace Adriva.Extensions.Analytics.Repository.EntityFramework
         public async virtual Task StoreAsync(IEnumerable<AnalyticsItem> items, CancellationToken cancellationToken)
         {
             this.Logger.LogTrace($"Persisting {items.Count()} analytics items in memory.");
-            await this.Context.AddRangeAsync(items);
-            await this.Context.SaveChangesAsync(cancellationToken);
+            await this.Semaphore.WaitAsync();
+            try
+            {
+                await this.Context.AddRangeAsync(items);
+                await this.Context.SaveChangesAsync(cancellationToken);
+            }
+            finally
+            {
+                this.Semaphore.Release();
+            }
             this.Logger.LogInformation($"Persisted {items.Count()} analytics items in memory.");
         }
 

@@ -23,11 +23,11 @@ namespace Adriva.Extensions.Analytics.Server
         void Enqueue(AnalyticsItem analyticsItem);
 
         /// <summary>
-        /// Returns an enumerable that will be used by the processors to get items from the queue and process and persist.
-        /// <remarks>The IEnumerable instance returned must be thread safe and allow multiple readers and writers since it will be read by multiple processors (read) and handlers (write) at the same time.</remarks>
+        /// Tries to get the next item from the queue in a given time period.
         /// </summary>
-        /// <param name="cancellationToken">Propagates notification that operations should be canceled.</param>
-        /// <returns>A instance of a class implementing IEnumerable&lt;AnalyticsItem&gt; interface.</returns>
-        IEnumerable<AnalyticsItem> GetConsumingEnumerable(CancellationToken cancellationToken);
+        /// <param name="millisecondsTimeout">Maximum time to wait in milliseconds before timing out.</param>
+        /// <param name="analyticsItem">The AnalyticsItem instance that is retrieved from the queue, if possible.</param>
+        /// <returns>A boolean value indicating if the AnalyticsItem could be retrieved or not.</returns>
+        bool TryGetNext(int millisecondsTimeout, out AnalyticsItem analyticsItem);
     }
 }

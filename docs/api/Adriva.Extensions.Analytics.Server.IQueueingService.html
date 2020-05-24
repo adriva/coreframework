@@ -168,15 +168,14 @@
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IQueueingService.cs/#L31">View Source</a>
   </span>
-  <a id="Adriva_Extensions_Analytics_Server_IQueueingService_GetConsumingEnumerable_" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService.GetConsumingEnumerable*"></a>
-  <h4 id="Adriva_Extensions_Analytics_Server_IQueueingService_GetConsumingEnumerable_CancellationToken_" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService.GetConsumingEnumerable(CancellationToken)">GetConsumingEnumerable(CancellationToken)</h4>
-  <div class="markdown level1 summary"><p>Returns an enumerable that will be used by the processors to get items from the queue and process and persist.
-<remarks>The IEnumerable instance returned must be thread safe and allow multiple readers and writers since it will be read by multiple processors (read) and handlers (write) at the same time.</remarks></p>
+  <a id="Adriva_Extensions_Analytics_Server_IQueueingService_TryGetNext_" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService.TryGetNext*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Server_IQueueingService_TryGetNext_System_Int32_Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem__" data-uid="Adriva.Extensions.Analytics.Server.IQueueingService.TryGetNext(System.Int32,Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem@)">TryGetNext(Int32, out AnalyticsItem)</h4>
+  <div class="markdown level1 summary"><p>Tries to get the next item from the queue in a given time period.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IEnumerable&lt;AnalyticsItem&gt; GetConsumingEnumerable(CancellationToken cancellationToken)</code></pre>
+    <pre><code class="lang-csharp hljs">bool TryGetNext(int millisecondsTimeout, out AnalyticsItem analyticsItem)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -189,9 +188,15 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">CancellationToken</span></td>
-        <td><span class="parametername">cancellationToken</span></td>
-        <td><p>Propagates notification that operations should be canceled.</p>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">millisecondsTimeout</span></td>
+        <td><p>Maximum time to wait in milliseconds before timing out.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html">AnalyticsItem</a></td>
+        <td><span class="parametername">analyticsItem</span></td>
+        <td><p>The AnalyticsItem instance that is retrieved from the queue, if possible.</p>
 </td>
       </tr>
     </tbody>
@@ -206,8 +211,8 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html">AnalyticsItem</a>&gt;</td>
-        <td><p>A instance of a class implementing IEnumerable&lt;AnalyticsItem&gt; interface.</p>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>A boolean value indicating if the AnalyticsItem could be retrieved or not.</p>
 </td>
       </tr>
     </tbody>

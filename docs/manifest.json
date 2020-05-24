@@ -350,7 +350,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.html",
-          "hash": "3qCs6qbo7LlwQT3+IACqJg=="
+          "hash": "+8wXfPq0myBuudjAro3DyQ=="
         }
       },
       "is_incremental": false,
@@ -470,7 +470,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.Envelope.html",
-          "hash": "2/vldVsdHuGp6DQ4hQbCtg=="
+          "hash": "YVoHdZy/sl8QNoKSPrA0nQ=="
         }
       },
       "is_incremental": false,
@@ -818,7 +818,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html",
-          "hash": "s/4DCuCBuetJWg1/kEVVYQ=="
+          "hash": "81Oe4OYwKCyjoNtTTQreGA=="
         }
       },
       "is_incremental": false,
@@ -830,7 +830,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.IQueueingService.html",
-          "hash": "fkHcVnmebm9/QjH0EU/1eg=="
+          "hash": "uCTQI49YBomplF4q3gfqoQ=="
         }
       },
       "is_incremental": false,
@@ -1600,13 +1600,13 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 6,
-          "skipped_file_count": 5
+          "skipped_file_count": 6
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 121,
-          "skipped_file_count": 50
+          "skipped_file_count": 85
         },
         "TocDocumentProcessor": {
           "can_incremental": false,

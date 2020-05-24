@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Extensions.Analytics.Server.Entities;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Adriva.Extensions.Analytics.Server
@@ -13,6 +14,7 @@ namespace Adriva.Extensions.Analytics.Server
     /// </summary>
     internal class QueueProcessorService : IHostedService, IDisposable
     {
+        private readonly ILogger Logger;
         private readonly AnalyticsServerOptions Options;
         private readonly IAnalyticsRepository Repository;
         private readonly IQueueingService QueueingService;
@@ -20,11 +22,15 @@ namespace Adriva.Extensions.Analytics.Server
         private readonly Task[] ProcessorTasks;
         private bool IsDisposed;
 
-        public QueueProcessorService(IQueueingService queueingService, IAnalyticsRepository repository, IOptions<AnalyticsServerOptions> optionsAccessor)
+        public QueueProcessorService(IQueueingService queueingService,
+                                    IAnalyticsRepository repository,
+                                    IOptions<AnalyticsServerOptions> optionsAccessor,
+                                    ILogger<QueueProcessorService> logger)
         {
             this.Options = optionsAccessor.Value;
             this.Repository = repository;
             this.QueueingService = queueingService;
+            this.Logger = logger;
 
             this.ProcessorTasks = new Task[this.Options.ProcessorThreadCount];
         }
@@ -33,50 +39,56 @@ namespace Adriva.Extensions.Analytics.Server
         {
             for (int loop = 0; loop < this.Options.ProcessorThreadCount; loop++)
             {
+                this.Logger.LogInformation($"Starting queue processor instance {loop}.");
                 this.ProcessorTasks[loop] = Task.Run(async () => { await this.ProcessItemsAsync(); });
             }
 
             return Task.CompletedTask;
         }
 
+        private async Task PersistBufferAsync(List<AnalyticsItem> buffer)
+        {
+            if (0 == buffer.Count) return;
+
+            try
+            {
+                await this.Repository.StoreAsync(buffer, CancellationToken.None);
+                this.Logger.LogTrace($"AnalyticsItems persisted in repository.");
+            }
+            catch (Exception storageError)
+            {
+                try
+                {
+                    await this.Repository.HandleErrorAsync(buffer, storageError);
+                }
+                catch (Exception errorHandlerError)
+                {
+                    this.Logger.LogError(errorHandlerError, $"Repository '{this.Repository.GetType().FullName}' failed to handle error.");
+                }
+            }
+            finally
+            {
+                buffer.Clear();
+            }
+        }
+
         private async Task ProcessItemsAsync()
         {
-            List<AnalyticsItem> buffer = new List<AnalyticsItem>();
-            var enumerable = this.QueueingService.GetConsumingEnumerable(this.StopTokenSource.Token);
-            using (var enumerator = enumerable.GetEnumerator())
+            while (!this.QueueingService.IsCompleted)
             {
-                while (enumerator.MoveNext())
+                List<AnalyticsItem> buffer = new List<AnalyticsItem>(1 + this.Options.BufferCapacity);
+
+                while (this.QueueingService.TryGetNext(10000, out AnalyticsItem analyticsItem))
                 {
-                    buffer.Add(enumerator.Current);
+                    buffer.Add(analyticsItem);
 
                     if (this.Options.BufferCapacity <= buffer.Count)
                     {
-                        try
-                        {
-                            using (CancellationTokenSource storeOperationCancellationTokenSource = new CancellationTokenSource())
-                            {
-                                storeOperationCancellationTokenSource.CancelAfter(this.Options.StorageTimeout);
-                                await this.Repository.StoreAsync(buffer, storeOperationCancellationTokenSource.Token);
-                            }
-                            buffer.Clear();
-                        }
-                        catch (Exception exception)
-                        {
-                            try
-                            {
-                                await this.Repository.HandleErrorAsync(buffer, exception);
-                            }
-                            catch
-                            {
-                                // HandleErrorAsync method cannot throw exceptions
-                            }
-                            finally
-                            {
-                                buffer.Clear();
-                            }
-                        }
+                        await this.PersistBufferAsync(buffer);
                     }
                 }
+
+                await this.PersistBufferAsync(buffer);
             }
         }
 
