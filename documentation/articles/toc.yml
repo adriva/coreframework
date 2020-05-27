@@ -7,3 +7,5 @@
   items:
     - name: Analytics Asp.net Core
       href: analytics-aspnetcore.md
+    - name: Analytics Server
+      href: analytics-server.md

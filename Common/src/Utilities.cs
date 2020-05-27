@@ -345,6 +345,12 @@ namespace Adriva.Common.Core
             return BitConverter.ToString(diffBytes).Replace("-", null);
         }
 
+        /// <summary>
+        /// Slugifies a string by converting it to its ASCII representation and replacing non alphanumeric values with the '-' character.
+        /// </summary>
+        /// <param name="input">The string that will be slugified.</param>
+        /// <param name="wordCount">The maximum number of '-' seperated words allowed in the output.</param>
+        /// <returns>A string value representing the slugified copy of the source string.</returns>
         public static string Slugify(string input, int wordCount)
         {
             wordCount = Math.Max(1, wordCount);
@@ -578,18 +584,6 @@ namespace Adriva.Common.Core
             throw new InvalidCastException();
         }
 
-        public static string GetPartitionKey(string data)
-        {
-            if (string.IsNullOrWhiteSpace(data)) return null;
-            if (3 > data.Length) return null;
-
-            int bucket = (((7 * (int)data[0]) + (7 * (int)data[1]) + (17 * (int)data[2])) % 1513);
-
-            while (0 > bucket) bucket += 1513;
-
-            return bucket.ToString("x4");
-        }
-
         #endregion
 
         #region Serialization Utilities
@@ -793,37 +787,6 @@ namespace Adriva.Common.Core
         {
             if (null == stream) return Array.Empty<byte>();
             return hashAlgorithm.ComputeHash(stream);
-        }
-
-        public static byte[] CalculateMultiFileHash(IEnumerable<IFileInfo> fileInfoList)
-        {
-            using (var md5 = MD5.Create())
-            {
-                return Utilities.CalculateMultiFileHash(fileInfoList, md5);
-            }
-        }
-
-        public static byte[] CalculateMultiFileHash(IEnumerable<IFileInfo> fileInfoList, HashAlgorithm hashAlgorithm)
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                memoryStream.Seek(0, SeekOrigin.Begin);
-                foreach (var fileInfo in fileInfoList)
-                {
-                    using (var stream = fileInfo.CreateReadStream())
-                    {
-                        byte[] hash = hashAlgorithm.ComputeHash(stream);
-                        memoryStream.Write(hash, 0, hash.Length);
-                    }
-                }
-                memoryStream.Flush();
-                memoryStream.Seek(0, SeekOrigin.Begin);
-
-                using (var algorithm = MD5.Create())
-                {
-                    return algorithm.ComputeHash(memoryStream);
-                }
-            }
         }
 
         #endregion
