@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width">
   <meta name="title" content="{{#title}}{{title}}{{/title}}{{^title}}{{>partials/title}}{{/title}} {{#_appTitle}}| {{_appTitle}} {{/_appTitle}}">  
   {{#_description}}<meta name="description" content="{{_description}}">{{/_description}}
+  <link rel="canonical" href="https://adriva.github.io/coreframework/{{_path}}" />
   <link rel="shortcut icon" href="{{_rel}}{{{_appFaviconPath}}}{{^_appFaviconPath}}favicon.ico{{/_appFaviconPath}}">
   <link rel="stylesheet" href="{{_rel}}styles/docfx.vendor.css">
   <link rel="stylesheet" href="{{_rel}}styles/docfx.css">
@@ -17,7 +18,6 @@
   {{#_noindex}}<meta name="searchOption" content="noindex">{{/_noindex}}
   {{#_enableSearch}}<meta property="docfx:rel" content="{{_rel}}">{{/_enableSearch}}
   {{#_enableNewTab}}<meta property="docfx:newtab" content="true">{{/_enableNewTab}}
-  <meta name="google-site-verification" content="Zl456aCnMzWvUAdIpX5rjo1OgPyyWY77C8L-TJRHqYA" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80107673-6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];

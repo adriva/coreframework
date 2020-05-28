@@ -1744,31 +1744,6 @@ references:
   isSpec: "True"
   fullName: Adriva.Common.Core.Utilities.CalculateHash
   nameWithType: Utilities.CalculateHash
-- uid: Adriva.Common.Core.Utilities.CalculateMultiFileHash(System.Collections.Generic.IEnumerable{IFileInfo})
-  name: CalculateMultiFileHash(IEnumerable<IFileInfo>)
-  href: api/Adriva.Common.Core.Utilities.html#Adriva_Common_Core_Utilities_CalculateMultiFileHash_System_Collections_Generic_IEnumerable_IFileInfo__
-  commentId: M:Adriva.Common.Core.Utilities.CalculateMultiFileHash(System.Collections.Generic.IEnumerable{IFileInfo})
-  name.vb: CalculateMultiFileHash(IEnumerable(Of IFileInfo))
-  fullName: Adriva.Common.Core.Utilities.CalculateMultiFileHash(System.Collections.Generic.IEnumerable<IFileInfo>)
-  fullName.vb: Adriva.Common.Core.Utilities.CalculateMultiFileHash(System.Collections.Generic.IEnumerable(Of IFileInfo))
-  nameWithType: Utilities.CalculateMultiFileHash(IEnumerable<IFileInfo>)
-  nameWithType.vb: Utilities.CalculateMultiFileHash(IEnumerable(Of IFileInfo))
-- uid: Adriva.Common.Core.Utilities.CalculateMultiFileHash(System.Collections.Generic.IEnumerable{IFileInfo},System.Security.Cryptography.HashAlgorithm)
-  name: CalculateMultiFileHash(IEnumerable<IFileInfo>, HashAlgorithm)
-  href: api/Adriva.Common.Core.Utilities.html#Adriva_Common_Core_Utilities_CalculateMultiFileHash_System_Collections_Generic_IEnumerable_IFileInfo__System_Security_Cryptography_HashAlgorithm_
-  commentId: M:Adriva.Common.Core.Utilities.CalculateMultiFileHash(System.Collections.Generic.IEnumerable{IFileInfo},System.Security.Cryptography.HashAlgorithm)
-  name.vb: CalculateMultiFileHash(IEnumerable(Of IFileInfo), HashAlgorithm)
-  fullName: Adriva.Common.Core.Utilities.CalculateMultiFileHash(System.Collections.Generic.IEnumerable<IFileInfo>, System.Security.Cryptography.HashAlgorithm)
-  fullName.vb: Adriva.Common.Core.Utilities.CalculateMultiFileHash(System.Collections.Generic.IEnumerable(Of IFileInfo), System.Security.Cryptography.HashAlgorithm)
-  nameWithType: Utilities.CalculateMultiFileHash(IEnumerable<IFileInfo>, HashAlgorithm)
-  nameWithType.vb: Utilities.CalculateMultiFileHash(IEnumerable(Of IFileInfo), HashAlgorithm)
-- uid: Adriva.Common.Core.Utilities.CalculateMultiFileHash*
-  name: CalculateMultiFileHash
-  href: api/Adriva.Common.Core.Utilities.html#Adriva_Common_Core_Utilities_CalculateMultiFileHash_
-  commentId: Overload:Adriva.Common.Core.Utilities.CalculateMultiFileHash
-  isSpec: "True"
-  fullName: Adriva.Common.Core.Utilities.CalculateMultiFileHash
-  nameWithType: Utilities.CalculateMultiFileHash
 - uid: Adriva.Common.Core.Utilities.CalculateStreamHash(System.IO.Stream)
   name: CalculateStreamHash(Stream)
   href: api/Adriva.Common.Core.Utilities.html#Adriva_Common_Core_Utilities_CalculateStreamHash_System_IO_Stream_
@@ -1933,19 +1908,6 @@ references:
   isSpec: "True"
   fullName: Adriva.Common.Core.Utilities.GetMainDomainName
   nameWithType: Utilities.GetMainDomainName
-- uid: Adriva.Common.Core.Utilities.GetPartitionKey(System.String)
-  name: GetPartitionKey(String)
-  href: api/Adriva.Common.Core.Utilities.html#Adriva_Common_Core_Utilities_GetPartitionKey_System_String_
-  commentId: M:Adriva.Common.Core.Utilities.GetPartitionKey(System.String)
-  fullName: Adriva.Common.Core.Utilities.GetPartitionKey(System.String)
-  nameWithType: Utilities.GetPartitionKey(String)
-- uid: Adriva.Common.Core.Utilities.GetPartitionKey*
-  name: GetPartitionKey
-  href: api/Adriva.Common.Core.Utilities.html#Adriva_Common_Core_Utilities_GetPartitionKey_
-  commentId: Overload:Adriva.Common.Core.Utilities.GetPartitionKey
-  isSpec: "True"
-  fullName: Adriva.Common.Core.Utilities.GetPartitionKey
-  nameWithType: Utilities.GetPartitionKey
 - uid: Adriva.Common.Core.Utilities.GetRandomBytes(System.Int32)
   name: GetRandomBytes(Int32)
   href: api/Adriva.Common.Core.Utilities.html#Adriva_Common_Core_Utilities_GetRandomBytes_System_Int32_
