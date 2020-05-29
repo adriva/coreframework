@@ -11,7 +11,6 @@ namespace Adriva.Common.Core
     public class AutoStream : Stream
     {
         private readonly long MemoryLimit;
-        private readonly bool UseBuffer;
 
         private SemaphoreSlim SwapLock = new SemaphoreSlim(1, 1);
 
@@ -85,16 +84,10 @@ namespace Adriva.Common.Core
         /// Creates a new instance of AutoStream class with optional buffering and a memory limit.
         /// </summary>
         /// <param name="memoryLimit">The maximum number of bytes that can be used in memory before swapping to a FileStream.</param>
-        /// <param name="useBuffer">True, to use a BufferedStream wrapper to buffer the underlying stream operations, otherwise False.</param>
-        public AutoStream(long memoryLimit, bool useBuffer = true)
+        public AutoStream(long memoryLimit)
         {
             this.MemoryLimit = Math.Max(0, memoryLimit);
-            this.UseBuffer = useBuffer;
             this.InnerStream = new MemoryStream();
-            if (this.UseBuffer)
-            {
-                this.InnerStream = new BufferedStream(this.InnerStream);
-            }
         }
 
         private void CheckSwapStream(long requiredByteCount)
@@ -114,16 +107,8 @@ namespace Adriva.Common.Core
                         this.InnerStream.CopyTo(fileStream);
                         fileStream.Flush();
                         fileStream.Seek(position, SeekOrigin.Begin);
-
                         this.InnerStream.Dispose();
-                        if (!this.UseBuffer)
-                        {
-                            this.InnerStream = fileStream;
-                        }
-                        else
-                        {
-                            this.InnerStream = new BufferedStream(fileStream);
-                        }
+                        this.InnerStream = fileStream;
                         this.HasSwapped = true;
                     }
                 }
@@ -151,14 +136,8 @@ namespace Adriva.Common.Core
                         await this.InnerStream.CopyToAsync(fileStream);
                         await fileStream.FlushAsync();
                         await this.InnerStream.DisposeAsync();
-                        if (!this.UseBuffer)
-                        {
-                            this.InnerStream = fileStream;
-                        }
-                        else
-                        {
-                            this.InnerStream = new BufferedStream(fileStream);
-                        }
+
+                        this.InnerStream = fileStream;
 
                         this.InnerStream.Seek(position, SeekOrigin.Begin);
                         this.HasSwapped = true;

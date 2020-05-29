@@ -269,8 +269,10 @@ namespace Adriva.Common.Core
 
             foreach (var dataItem in this.Data)
             {
-                ICloneable clonedItemValue = dataItem.Value as ICloneable;
-                if (null != clonedItemValue) clone.Data.Add(dataItem.Key, clonedItemValue);
+                if (dataItem.Value is ICloneable cloneableValue)
+                {
+                    clone.Data.Add(dataItem.Key, cloneableValue.Clone());
+                }
                 else clone.Data.Add(dataItem.Key, dataItem.Value);
             }
 
