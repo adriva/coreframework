@@ -178,16 +178,16 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L89">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L87">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream__ctor_" data-uid="Adriva.Common.Core.AutoStream.#ctor*"></a>
-  <h4 id="Adriva_Common_Core_AutoStream__ctor_System_Int64_System_Boolean_" data-uid="Adriva.Common.Core.AutoStream.#ctor(System.Int64,System.Boolean)">AutoStream(Int64, Boolean)</h4>
+  <h4 id="Adriva_Common_Core_AutoStream__ctor_System_Int64_" data-uid="Adriva.Common.Core.AutoStream.#ctor(System.Int64)">AutoStream(Int64)</h4>
   <div class="markdown level1 summary"><p>Creates a new instance of AutoStream class with optional buffering and a memory limit.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AutoStream(long memoryLimit, bool useBuffer = true)</code></pre>
+    <pre><code class="lang-csharp hljs">public AutoStream(long memoryLimit)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -205,12 +205,6 @@
         <td><p>The maximum number of bytes that can be used in memory before swapping to a FileStream.</p>
 </td>
       </tr>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">useBuffer</span></td>
-        <td><p>True, to use a BufferedStream wrapper to buffer the underlying stream operations, otherwise False.</p>
-</td>
-      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
@@ -219,7 +213,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L32">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L31">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_CanRead_" data-uid="Adriva.Common.Core.AutoStream.CanRead*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_CanRead" data-uid="Adriva.Common.Core.AutoStream.CanRead">CanRead</h4>
@@ -251,7 +245,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L37">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L36">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_CanSeek_" data-uid="Adriva.Common.Core.AutoStream.CanSeek*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_CanSeek" data-uid="Adriva.Common.Core.AutoStream.CanSeek">CanSeek</h4>
@@ -283,7 +277,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L62">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L61">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_CanTimeout_" data-uid="Adriva.Common.Core.AutoStream.CanTimeout*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_CanTimeout" data-uid="Adriva.Common.Core.AutoStream.CanTimeout">CanTimeout</h4>
@@ -315,7 +309,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L42">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L41">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_CanWrite_" data-uid="Adriva.Common.Core.AutoStream.CanWrite*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_CanWrite" data-uid="Adriva.Common.Core.AutoStream.CanWrite">CanWrite</h4>
@@ -347,7 +341,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L27">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L26">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_FilePath_" data-uid="Adriva.Common.Core.AutoStream.FilePath*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_FilePath" data-uid="Adriva.Common.Core.AutoStream.FilePath">FilePath</h4>
@@ -381,7 +375,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L47">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L46">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_Length_" data-uid="Adriva.Common.Core.AutoStream.Length*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_Length" data-uid="Adriva.Common.Core.AutoStream.Length">Length</h4>
@@ -413,7 +407,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L53">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L52">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_Position_" data-uid="Adriva.Common.Core.AutoStream.Position*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_Position" data-uid="Adriva.Common.Core.AutoStream.Position">Position</h4>
@@ -446,7 +440,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L68">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L67">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_ReadTimeout_" data-uid="Adriva.Common.Core.AutoStream.ReadTimeout*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_ReadTimeout" data-uid="Adriva.Common.Core.AutoStream.ReadTimeout">ReadTimeout</h4>
@@ -479,7 +473,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L78">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L77">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_WriteTimeout_" data-uid="Adriva.Common.Core.AutoStream.WriteTimeout*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_WriteTimeout" data-uid="Adriva.Common.Core.AutoStream.WriteTimeout">WriteTimeout</h4>
@@ -514,7 +508,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L175">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L154">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_BeginRead_" data-uid="Adriva.Common.Core.AutoStream.BeginRead*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_BeginRead_System_Byte___System_Int32_System_Int32_System_AsyncCallback_System_Object_" data-uid="Adriva.Common.Core.AutoStream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)">BeginRead(Byte[], Int32, Int32, AsyncCallback, Object)</h4>
@@ -582,7 +576,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L180">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L159">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_BeginWrite_" data-uid="Adriva.Common.Core.AutoStream.BeginWrite*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_BeginWrite_System_Byte___System_Int32_System_Int32_System_AsyncCallback_System_Object_" data-uid="Adriva.Common.Core.AutoStream.BeginWrite(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)">BeginWrite(Byte[], Int32, Int32, AsyncCallback, Object)</h4>
@@ -650,7 +644,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L186">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L165">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_Close_" data-uid="Adriva.Common.Core.AutoStream.Close*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_Close" data-uid="Adriva.Common.Core.AutoStream.Close">Close()</h4>
@@ -666,7 +660,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L191">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L170">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_CopyTo_" data-uid="Adriva.Common.Core.AutoStream.CopyTo*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_CopyTo_System_IO_Stream_System_Int32_" data-uid="Adriva.Common.Core.AutoStream.CopyTo(System.IO.Stream,System.Int32)">CopyTo(Stream, Int32)</h4>
@@ -704,7 +698,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L196">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L175">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_CopyToAsync_" data-uid="Adriva.Common.Core.AutoStream.CopyToAsync*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_CopyToAsync_System_IO_Stream_System_Int32_System_Threading_CancellationToken_" data-uid="Adriva.Common.Core.AutoStream.CopyToAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)">CopyToAsync(Stream, Int32, CancellationToken)</h4>
@@ -762,7 +756,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L308">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L287">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_Dispose_" data-uid="Adriva.Common.Core.AutoStream.Dispose*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_Dispose_System_Boolean_" data-uid="Adriva.Common.Core.AutoStream.Dispose(System.Boolean)">Dispose(Boolean)</h4>
@@ -795,7 +789,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L301">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L280">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_DisposeAsync_" data-uid="Adriva.Common.Core.AutoStream.DisposeAsync*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_DisposeAsync" data-uid="Adriva.Common.Core.AutoStream.DisposeAsync">DisposeAsync()</h4>
@@ -826,7 +820,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L201">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L180">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_EndRead_" data-uid="Adriva.Common.Core.AutoStream.EndRead*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_EndRead_System_IAsyncResult_" data-uid="Adriva.Common.Core.AutoStream.EndRead(System.IAsyncResult)">EndRead(IAsyncResult)</h4>
@@ -874,7 +868,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L206">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L185">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_EndWrite_" data-uid="Adriva.Common.Core.AutoStream.EndWrite*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_EndWrite_System_IAsyncResult_" data-uid="Adriva.Common.Core.AutoStream.EndWrite(System.IAsyncResult)">EndWrite(IAsyncResult)</h4>
@@ -907,7 +901,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L211">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L190">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_Flush_" data-uid="Adriva.Common.Core.AutoStream.Flush*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_Flush" data-uid="Adriva.Common.Core.AutoStream.Flush">Flush()</h4>
@@ -923,7 +917,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L216">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L195">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_FlushAsync_" data-uid="Adriva.Common.Core.AutoStream.FlushAsync*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_FlushAsync_System_Threading_CancellationToken_" data-uid="Adriva.Common.Core.AutoStream.FlushAsync(System.Threading.CancellationToken)">FlushAsync(CancellationToken)</h4>
@@ -971,7 +965,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L221">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L200">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_Read_" data-uid="Adriva.Common.Core.AutoStream.Read*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_Read_System_Byte___System_Int32_System_Int32_" data-uid="Adriva.Common.Core.AutoStream.Read(System.Byte[],System.Int32,System.Int32)">Read(Byte[], Int32, Int32)</h4>
@@ -1029,7 +1023,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L226">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L205">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_Read_" data-uid="Adriva.Common.Core.AutoStream.Read*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_Read_System_Span_System_Byte__" data-uid="Adriva.Common.Core.AutoStream.Read(System.Span{System.Byte})">Read(Span&lt;Byte&gt;)</h4>
@@ -1077,7 +1071,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L231">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L210">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_ReadAsync_" data-uid="Adriva.Common.Core.AutoStream.ReadAsync*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_ReadAsync_System_Byte___System_Int32_System_Int32_System_Threading_CancellationToken_" data-uid="Adriva.Common.Core.AutoStream.ReadAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)">ReadAsync(Byte[], Int32, Int32, CancellationToken)</h4>
@@ -1140,7 +1134,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L236">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L215">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_ReadAsync_" data-uid="Adriva.Common.Core.AutoStream.ReadAsync*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_ReadAsync_System_Memory_System_Byte__System_Threading_CancellationToken_" data-uid="Adriva.Common.Core.AutoStream.ReadAsync(System.Memory{System.Byte},System.Threading.CancellationToken)">ReadAsync(Memory&lt;Byte&gt;, CancellationToken)</h4>
@@ -1193,7 +1187,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L241">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L220">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_ReadByte_" data-uid="Adriva.Common.Core.AutoStream.ReadByte*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_ReadByte" data-uid="Adriva.Common.Core.AutoStream.ReadByte">ReadByte()</h4>
@@ -1224,7 +1218,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L246">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L225">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_Seek_" data-uid="Adriva.Common.Core.AutoStream.Seek*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_Seek_System_Int64_System_IO_SeekOrigin_" data-uid="Adriva.Common.Core.AutoStream.Seek(System.Int64,System.IO.SeekOrigin)">Seek(Int64, SeekOrigin)</h4>
@@ -1277,7 +1271,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L251">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L230">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_SetLength_" data-uid="Adriva.Common.Core.AutoStream.SetLength*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_SetLength_System_Int64_" data-uid="Adriva.Common.Core.AutoStream.SetLength(System.Int64)">SetLength(Int64)</h4>
@@ -1310,7 +1304,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L319">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L298">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_ToString_" data-uid="Adriva.Common.Core.AutoStream.ToString*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_ToString" data-uid="Adriva.Common.Core.AutoStream.ToString">ToString()</h4>
@@ -1341,7 +1335,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L257">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L236">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_Write_" data-uid="Adriva.Common.Core.AutoStream.Write*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_Write_System_Byte___System_Int32_System_Int32_" data-uid="Adriva.Common.Core.AutoStream.Write(System.Byte[],System.Int32,System.Int32)">Write(Byte[], Int32, Int32)</h4>
@@ -1384,7 +1378,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L263">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L242">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_Write_" data-uid="Adriva.Common.Core.AutoStream.Write*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_Write_System_ReadOnlySpan_System_Byte__" data-uid="Adriva.Common.Core.AutoStream.Write(System.ReadOnlySpan{System.Byte})">Write(ReadOnlySpan&lt;Byte&gt;)</h4>
@@ -1417,7 +1411,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L269">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L248">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_WriteAsync_" data-uid="Adriva.Common.Core.AutoStream.WriteAsync*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_WriteAsync_System_Byte___System_Int32_System_Int32_System_Threading_CancellationToken_" data-uid="Adriva.Common.Core.AutoStream.WriteAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)">WriteAsync(Byte[], Int32, Int32, CancellationToken)</h4>
@@ -1480,7 +1474,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L275">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L254">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_WriteAsync_" data-uid="Adriva.Common.Core.AutoStream.WriteAsync*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_WriteAsync_System_ReadOnlyMemory_System_Byte__System_Threading_CancellationToken_" data-uid="Adriva.Common.Core.AutoStream.WriteAsync(System.ReadOnlyMemory{System.Byte},System.Threading.CancellationToken)">WriteAsync(ReadOnlyMemory&lt;Byte&gt;, CancellationToken)</h4>
@@ -1533,7 +1527,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L281">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/AutoStream.cs/#L260">View Source</a>
   </span>
   <a id="Adriva_Common_Core_AutoStream_WriteByte_" data-uid="Adriva.Common.Core.AutoStream.WriteByte*"></a>
   <h4 id="Adriva_Common_Core_AutoStream_WriteByte_System_Byte_" data-uid="Adriva.Common.Core.AutoStream.WriteByte(System.Byte)">WriteByte(Byte)</h4>

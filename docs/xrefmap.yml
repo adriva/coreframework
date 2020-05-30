@@ -47,12 +47,12 @@ references:
   commentId: T:Adriva.Common.Core.AutoStream
   fullName: Adriva.Common.Core.AutoStream
   nameWithType: AutoStream
-- uid: Adriva.Common.Core.AutoStream.#ctor(System.Int64,System.Boolean)
-  name: AutoStream(Int64, Boolean)
-  href: api/Adriva.Common.Core.AutoStream.html#Adriva_Common_Core_AutoStream__ctor_System_Int64_System_Boolean_
-  commentId: M:Adriva.Common.Core.AutoStream.#ctor(System.Int64,System.Boolean)
-  fullName: Adriva.Common.Core.AutoStream.AutoStream(System.Int64, System.Boolean)
-  nameWithType: AutoStream.AutoStream(Int64, Boolean)
+- uid: Adriva.Common.Core.AutoStream.#ctor(System.Int64)
+  name: AutoStream(Int64)
+  href: api/Adriva.Common.Core.AutoStream.html#Adriva_Common_Core_AutoStream__ctor_System_Int64_
+  commentId: M:Adriva.Common.Core.AutoStream.#ctor(System.Int64)
+  fullName: Adriva.Common.Core.AutoStream.AutoStream(System.Int64)
+  nameWithType: AutoStream.AutoStream(Int64)
 - uid: Adriva.Common.Core.AutoStream.#ctor*
   name: AutoStream
   href: api/Adriva.Common.Core.AutoStream.html#Adriva_Common_Core_AutoStream__ctor_
@@ -2299,13 +2299,13 @@ references:
   commentId: T:Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder
   fullName: Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder
   nameWithType: IAnalyticsBuilder
-- uid: Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder.Configure(System.Action{Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions})
+- uid: Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder.Configure(Action{Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions})
   name: Configure(Action<AnalyticsOptions>)
-  href: api/Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder.html#Adriva_Extensions_Analytics_AppInsights_IAnalyticsBuilder_Configure_System_Action_Adriva_Extensions_Analytics_AppInsights_AnalyticsOptions__
-  commentId: M:Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder.Configure(System.Action{Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions})
+  href: api/Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder.html#Adriva_Extensions_Analytics_AppInsights_IAnalyticsBuilder_Configure_Action_Adriva_Extensions_Analytics_AppInsights_AnalyticsOptions__
+  commentId: M:Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder.Configure(Action{Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions})
   name.vb: Configure(Action(Of AnalyticsOptions))
-  fullName: Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder.Configure(System.Action<Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions>)
-  fullName.vb: Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder.Configure(System.Action(Of Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions))
+  fullName: Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder.Configure(Action<Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions>)
+  fullName.vb: Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder.Configure(Action(Of Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions))
   nameWithType: IAnalyticsBuilder.Configure(Action<AnalyticsOptions>)
   nameWithType.vb: IAnalyticsBuilder.Configure(Action(Of AnalyticsOptions))
 - uid: Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder.Configure*
@@ -2353,15 +2353,15 @@ references:
   commentId: T:Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext
   fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext
   nameWithType: AnalyticsDatabaseContext
-- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.#ctor(DbContextOptions{Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext})
-  name: AnalyticsDatabaseContext(DbContextOptions<AnalyticsDatabaseContext>)
-  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.html#Adriva_Extensions_Analytics_Repository_EntityFramework_AnalyticsDatabaseContext__ctor_DbContextOptions_Adriva_Extensions_Analytics_Repository_EntityFramework_AnalyticsDatabaseContext__
-  commentId: M:Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.#ctor(DbContextOptions{Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext})
-  name.vb: AnalyticsDatabaseContext(DbContextOptions(Of AnalyticsDatabaseContext))
-  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.AnalyticsDatabaseContext(DbContextOptions<Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext>)
-  fullName.vb: Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.AnalyticsDatabaseContext(DbContextOptions(Of Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext))
-  nameWithType: AnalyticsDatabaseContext.AnalyticsDatabaseContext(DbContextOptions<AnalyticsDatabaseContext>)
-  nameWithType.vb: AnalyticsDatabaseContext.AnalyticsDatabaseContext(DbContextOptions(Of AnalyticsDatabaseContext))
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.#ctor(DbContextOptions{Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext},IServiceProvider)
+  name: AnalyticsDatabaseContext(DbContextOptions<AnalyticsDatabaseContext>, IServiceProvider)
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.html#Adriva_Extensions_Analytics_Repository_EntityFramework_AnalyticsDatabaseContext__ctor_DbContextOptions_Adriva_Extensions_Analytics_Repository_EntityFramework_AnalyticsDatabaseContext__IServiceProvider_
+  commentId: M:Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.#ctor(DbContextOptions{Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext},IServiceProvider)
+  name.vb: AnalyticsDatabaseContext(DbContextOptions(Of AnalyticsDatabaseContext), IServiceProvider)
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.AnalyticsDatabaseContext(DbContextOptions<Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext>, IServiceProvider)
+  fullName.vb: Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.AnalyticsDatabaseContext(DbContextOptions(Of Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext), IServiceProvider)
+  nameWithType: AnalyticsDatabaseContext.AnalyticsDatabaseContext(DbContextOptions<AnalyticsDatabaseContext>, IServiceProvider)
+  nameWithType.vb: AnalyticsDatabaseContext.AnalyticsDatabaseContext(DbContextOptions(Of AnalyticsDatabaseContext), IServiceProvider)
 - uid: Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.#ctor*
   name: AnalyticsDatabaseContext
   href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.html#Adriva_Extensions_Analytics_Repository_EntityFramework_AnalyticsDatabaseContext__ctor_
@@ -2486,6 +2486,115 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.Requests
   nameWithType: AnalyticsDatabaseContext.Requests
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository
+  name: EntityFrameworkRepository
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html
+  commentId: T:Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository
+  nameWithType: EntityFrameworkRepository
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.#ctor(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext,ILogger)
+  name: EntityFrameworkRepository(AnalyticsDatabaseContext, ILogger)
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository__ctor_Adriva_Extensions_Analytics_Repository_EntityFramework_AnalyticsDatabaseContext_ILogger_
+  commentId: M:Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.#ctor(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext,ILogger)
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.EntityFrameworkRepository(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext, ILogger)
+  nameWithType: EntityFrameworkRepository.EntityFrameworkRepository(AnalyticsDatabaseContext, ILogger)
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.#ctor*
+  name: EntityFrameworkRepository
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository__ctor_
+  commentId: Overload:Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.#ctor
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.EntityFrameworkRepository
+  nameWithType: EntityFrameworkRepository.EntityFrameworkRepository
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.Context
+  name: Context
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_Context
+  commentId: P:Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.Context
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.Context
+  nameWithType: EntityFrameworkRepository.Context
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.Context*
+  name: Context
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_Context_
+  commentId: Overload:Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.Context
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.Context
+  nameWithType: EntityFrameworkRepository.Context
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.HandleErrorAsync(IEnumerable{Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem},Exception)
+  name: HandleErrorAsync(IEnumerable<AnalyticsItem>, Exception)
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_HandleErrorAsync_IEnumerable_Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem__Exception_
+  commentId: M:Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.HandleErrorAsync(IEnumerable{Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem},Exception)
+  name.vb: HandleErrorAsync(IEnumerable(Of AnalyticsItem), Exception)
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.HandleErrorAsync(IEnumerable<Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem>, Exception)
+  fullName.vb: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.HandleErrorAsync(IEnumerable(Of Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem), Exception)
+  nameWithType: EntityFrameworkRepository.HandleErrorAsync(IEnumerable<AnalyticsItem>, Exception)
+  nameWithType.vb: EntityFrameworkRepository.HandleErrorAsync(IEnumerable(Of AnalyticsItem), Exception)
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.HandleErrorAsync*
+  name: HandleErrorAsync
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_HandleErrorAsync_
+  commentId: Overload:Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.HandleErrorAsync
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.HandleErrorAsync
+  nameWithType: EntityFrameworkRepository.HandleErrorAsync
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.InitializeAsync
+  name: InitializeAsync()
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_InitializeAsync
+  commentId: M:Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.InitializeAsync
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.InitializeAsync()
+  nameWithType: EntityFrameworkRepository.InitializeAsync()
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.InitializeAsync*
+  name: InitializeAsync
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_InitializeAsync_
+  commentId: Overload:Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.InitializeAsync
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.InitializeAsync
+  nameWithType: EntityFrameworkRepository.InitializeAsync
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.Logger
+  name: Logger
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_Logger
+  commentId: P:Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.Logger
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.Logger
+  nameWithType: EntityFrameworkRepository.Logger
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.Logger*
+  name: Logger
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_Logger_
+  commentId: Overload:Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.Logger
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.Logger
+  nameWithType: EntityFrameworkRepository.Logger
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.StoreAsync(IEnumerable{Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem},CancellationToken)
+  name: StoreAsync(IEnumerable<AnalyticsItem>, CancellationToken)
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_StoreAsync_IEnumerable_Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem__CancellationToken_
+  commentId: M:Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.StoreAsync(IEnumerable{Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem},CancellationToken)
+  name.vb: StoreAsync(IEnumerable(Of AnalyticsItem), CancellationToken)
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.StoreAsync(IEnumerable<Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem>, CancellationToken)
+  fullName.vb: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.StoreAsync(IEnumerable(Of Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem), CancellationToken)
+  nameWithType: EntityFrameworkRepository.StoreAsync(IEnumerable<AnalyticsItem>, CancellationToken)
+  nameWithType.vb: EntityFrameworkRepository.StoreAsync(IEnumerable(Of AnalyticsItem), CancellationToken)
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.StoreAsync*
+  name: StoreAsync
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_StoreAsync_
+  commentId: Overload:Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.StoreAsync
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.StoreAsync
+  nameWithType: EntityFrameworkRepository.StoreAsync
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder
+  name: IDatabaseModelBuilder
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder.html
+  commentId: T:Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder
+  nameWithType: IDatabaseModelBuilder
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder.OnModelCreating(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext,ModelBuilder)
+  name: OnModelCreating(AnalyticsDatabaseContext, ModelBuilder)
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder.html#Adriva_Extensions_Analytics_Repository_EntityFramework_IDatabaseModelBuilder_OnModelCreating_Adriva_Extensions_Analytics_Repository_EntityFramework_AnalyticsDatabaseContext_ModelBuilder_
+  commentId: M:Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder.OnModelCreating(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext,ModelBuilder)
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder.OnModelCreating(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext, ModelBuilder)
+  nameWithType: IDatabaseModelBuilder.OnModelCreating(AnalyticsDatabaseContext, ModelBuilder)
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder.OnModelCreating*
+  name: OnModelCreating
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder.html#Adriva_Extensions_Analytics_Repository_EntityFramework_IDatabaseModelBuilder_OnModelCreating_
+  commentId: Overload:Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder.OnModelCreating
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder.OnModelCreating
+  nameWithType: IDatabaseModelBuilder.OnModelCreating
 - uid: Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository
   name: InMemoryRepository
   href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.html
@@ -2508,22 +2617,6 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.InMemoryRepository
   nameWithType: InMemoryRepository.InMemoryRepository
-- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.HandleErrorAsync(IEnumerable{Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem},Exception)
-  name: HandleErrorAsync(IEnumerable<AnalyticsItem>, Exception)
-  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_InMemoryRepository_HandleErrorAsync_IEnumerable_Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem__Exception_
-  commentId: M:Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.HandleErrorAsync(IEnumerable{Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem},Exception)
-  name.vb: HandleErrorAsync(IEnumerable(Of AnalyticsItem), Exception)
-  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.HandleErrorAsync(IEnumerable<Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem>, Exception)
-  fullName.vb: Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.HandleErrorAsync(IEnumerable(Of Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem), Exception)
-  nameWithType: InMemoryRepository.HandleErrorAsync(IEnumerable<AnalyticsItem>, Exception)
-  nameWithType.vb: InMemoryRepository.HandleErrorAsync(IEnumerable(Of AnalyticsItem), Exception)
-- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.HandleErrorAsync*
-  name: HandleErrorAsync
-  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_InMemoryRepository_HandleErrorAsync_
-  commentId: Overload:Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.HandleErrorAsync
-  isSpec: "True"
-  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.HandleErrorAsync
-  nameWithType: InMemoryRepository.HandleErrorAsync
 - uid: Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.StoreAsync(IEnumerable{Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem},CancellationToken)
   name: StoreAsync(IEnumerable<AnalyticsItem>, CancellationToken)
   href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_InMemoryRepository_StoreAsync_IEnumerable_Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem__CancellationToken_
@@ -5584,6 +5677,19 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Analytics.Server.IAnalyticsRepository.HandleErrorAsync
   nameWithType: IAnalyticsRepository.HandleErrorAsync
+- uid: Adriva.Extensions.Analytics.Server.IAnalyticsRepository.InitializeAsync
+  name: InitializeAsync()
+  href: api/Adriva.Extensions.Analytics.Server.IAnalyticsRepository.html#Adriva_Extensions_Analytics_Server_IAnalyticsRepository_InitializeAsync
+  commentId: M:Adriva.Extensions.Analytics.Server.IAnalyticsRepository.InitializeAsync
+  fullName: Adriva.Extensions.Analytics.Server.IAnalyticsRepository.InitializeAsync()
+  nameWithType: IAnalyticsRepository.InitializeAsync()
+- uid: Adriva.Extensions.Analytics.Server.IAnalyticsRepository.InitializeAsync*
+  name: InitializeAsync
+  href: api/Adriva.Extensions.Analytics.Server.IAnalyticsRepository.html#Adriva_Extensions_Analytics_Server_IAnalyticsRepository_InitializeAsync_
+  commentId: Overload:Adriva.Extensions.Analytics.Server.IAnalyticsRepository.InitializeAsync
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Server.IAnalyticsRepository.InitializeAsync
+  nameWithType: IAnalyticsRepository.InitializeAsync
 - uid: Adriva.Extensions.Analytics.Server.IAnalyticsRepository.StoreAsync(IEnumerable{Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem},CancellationToken)
   name: StoreAsync(IEnumerable<AnalyticsItem>, CancellationToken)
   href: api/Adriva.Extensions.Analytics.Server.IAnalyticsRepository.html#Adriva_Extensions_Analytics_Server_IAnalyticsRepository_StoreAsync_IEnumerable_Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem__CancellationToken_
@@ -5760,6 +5866,19 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Analytics.Server.NullRepository.HandleErrorAsync
   nameWithType: NullRepository.HandleErrorAsync
+- uid: Adriva.Extensions.Analytics.Server.NullRepository.InitializeAsync
+  name: InitializeAsync()
+  href: api/Adriva.Extensions.Analytics.Server.NullRepository.html#Adriva_Extensions_Analytics_Server_NullRepository_InitializeAsync
+  commentId: M:Adriva.Extensions.Analytics.Server.NullRepository.InitializeAsync
+  fullName: Adriva.Extensions.Analytics.Server.NullRepository.InitializeAsync()
+  nameWithType: NullRepository.InitializeAsync()
+- uid: Adriva.Extensions.Analytics.Server.NullRepository.InitializeAsync*
+  name: InitializeAsync
+  href: api/Adriva.Extensions.Analytics.Server.NullRepository.html#Adriva_Extensions_Analytics_Server_NullRepository_InitializeAsync_
+  commentId: Overload:Adriva.Extensions.Analytics.Server.NullRepository.InitializeAsync
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Server.NullRepository.InitializeAsync
+  nameWithType: NullRepository.InitializeAsync
 - uid: Adriva.Extensions.Analytics.Server.NullRepository.StoreAsync(IEnumerable{Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem},CancellationToken)
   name: StoreAsync(IEnumerable<AnalyticsItem>, CancellationToken)
   href: api/Adriva.Extensions.Analytics.Server.NullRepository.html#Adriva_Extensions_Analytics_Server_NullRepository_StoreAsync_IEnumerable_Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem__CancellationToken_
@@ -5989,22 +6108,22 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync
   nameWithType: InMemoryCache.GetOrCreateAsync
-- uid: Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync``1(System.String,System.Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,System.Threading.Tasks.Task{``0}},Adriva.Extensions.Caching.Abstractions.EvictionCallback,System.String[])
+- uid: Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync``1(System.String,Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,Task{``0}},Adriva.Extensions.Caching.Abstractions.EvictionCallback,System.String[])
   name: GetOrCreateAsync<T>(String, Func<ICacheItem, Task<T>>, EvictionCallback, String[])
-  href: api/Adriva.Extensions.Caching.Memory.InMemoryCache.html#Adriva_Extensions_Caching_Memory_InMemoryCache_GetOrCreateAsync__1_System_String_System_Func_Adriva_Extensions_Caching_Abstractions_ICacheItem_System_Threading_Tasks_Task___0___Adriva_Extensions_Caching_Abstractions_EvictionCallback_System_String___
-  commentId: M:Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync``1(System.String,System.Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,System.Threading.Tasks.Task{``0}},Adriva.Extensions.Caching.Abstractions.EvictionCallback,System.String[])
+  href: api/Adriva.Extensions.Caching.Memory.InMemoryCache.html#Adriva_Extensions_Caching_Memory_InMemoryCache_GetOrCreateAsync__1_System_String_Func_Adriva_Extensions_Caching_Abstractions_ICacheItem_Task___0___Adriva_Extensions_Caching_Abstractions_EvictionCallback_System_String___
+  commentId: M:Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync``1(System.String,Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,Task{``0}},Adriva.Extensions.Caching.Abstractions.EvictionCallback,System.String[])
   name.vb: GetOrCreateAsync(Of T)(String, Func(Of ICacheItem, Task(Of T)), EvictionCallback, String())
-  fullName: Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync<T>(System.String, System.Func<Adriva.Extensions.Caching.Abstractions.ICacheItem, System.Threading.Tasks.Task<T>>, Adriva.Extensions.Caching.Abstractions.EvictionCallback, System.String[])
-  fullName.vb: Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync(Of T)(System.String, System.Func(Of Adriva.Extensions.Caching.Abstractions.ICacheItem, System.Threading.Tasks.Task(Of T)), Adriva.Extensions.Caching.Abstractions.EvictionCallback, System.String())
+  fullName: Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync<T>(System.String, Func<Adriva.Extensions.Caching.Abstractions.ICacheItem, Task<T>>, Adriva.Extensions.Caching.Abstractions.EvictionCallback, System.String[])
+  fullName.vb: Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync(Of T)(System.String, Func(Of Adriva.Extensions.Caching.Abstractions.ICacheItem, Task(Of T)), Adriva.Extensions.Caching.Abstractions.EvictionCallback, System.String())
   nameWithType: InMemoryCache.GetOrCreateAsync<T>(String, Func<ICacheItem, Task<T>>, EvictionCallback, String[])
   nameWithType.vb: InMemoryCache.GetOrCreateAsync(Of T)(String, Func(Of ICacheItem, Task(Of T)), EvictionCallback, String())
-- uid: Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync``1(System.String,System.Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,System.Threading.Tasks.Task{``0}},System.String[])
+- uid: Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync``1(System.String,Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,Task{``0}},System.String[])
   name: GetOrCreateAsync<T>(String, Func<ICacheItem, Task<T>>, String[])
-  href: api/Adriva.Extensions.Caching.Memory.InMemoryCache.html#Adriva_Extensions_Caching_Memory_InMemoryCache_GetOrCreateAsync__1_System_String_System_Func_Adriva_Extensions_Caching_Abstractions_ICacheItem_System_Threading_Tasks_Task___0___System_String___
-  commentId: M:Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync``1(System.String,System.Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,System.Threading.Tasks.Task{``0}},System.String[])
+  href: api/Adriva.Extensions.Caching.Memory.InMemoryCache.html#Adriva_Extensions_Caching_Memory_InMemoryCache_GetOrCreateAsync__1_System_String_Func_Adriva_Extensions_Caching_Abstractions_ICacheItem_Task___0___System_String___
+  commentId: M:Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync``1(System.String,Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,Task{``0}},System.String[])
   name.vb: GetOrCreateAsync(Of T)(String, Func(Of ICacheItem, Task(Of T)), String())
-  fullName: Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync<T>(System.String, System.Func<Adriva.Extensions.Caching.Abstractions.ICacheItem, System.Threading.Tasks.Task<T>>, System.String[])
-  fullName.vb: Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync(Of T)(System.String, System.Func(Of Adriva.Extensions.Caching.Abstractions.ICacheItem, System.Threading.Tasks.Task(Of T)), System.String())
+  fullName: Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync<T>(System.String, Func<Adriva.Extensions.Caching.Abstractions.ICacheItem, Task<T>>, System.String[])
+  fullName.vb: Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync(Of T)(System.String, Func(Of Adriva.Extensions.Caching.Abstractions.ICacheItem, Task(Of T)), System.String())
   nameWithType: InMemoryCache.GetOrCreateAsync<T>(String, Func<ICacheItem, Task<T>>, String[])
   nameWithType.vb: InMemoryCache.GetOrCreateAsync(Of T)(String, Func(Of ICacheItem, Task(Of T)), String())
 - uid: Adriva.Extensions.Caching.Memory.InMemoryCache.NotifyChanged(System.String)
@@ -6051,17 +6170,17 @@ references:
   commentId: M:Adriva.Extensions.Optimization.Abstractions.Asset.#ctor(System.String)
   fullName: Adriva.Extensions.Optimization.Abstractions.Asset.Asset(System.String)
   nameWithType: Asset.Asset(String)
-- uid: Adriva.Extensions.Optimization.Abstractions.Asset.#ctor(System.String,System.IO.Stream)
+- uid: Adriva.Extensions.Optimization.Abstractions.Asset.#ctor(System.String,Stream)
   name: Asset(String, Stream)
-  href: api/Adriva.Extensions.Optimization.Abstractions.Asset.html#Adriva_Extensions_Optimization_Abstractions_Asset__ctor_System_String_System_IO_Stream_
-  commentId: M:Adriva.Extensions.Optimization.Abstractions.Asset.#ctor(System.String,System.IO.Stream)
-  fullName: Adriva.Extensions.Optimization.Abstractions.Asset.Asset(System.String, System.IO.Stream)
+  href: api/Adriva.Extensions.Optimization.Abstractions.Asset.html#Adriva_Extensions_Optimization_Abstractions_Asset__ctor_System_String_Stream_
+  commentId: M:Adriva.Extensions.Optimization.Abstractions.Asset.#ctor(System.String,Stream)
+  fullName: Adriva.Extensions.Optimization.Abstractions.Asset.Asset(System.String, Stream)
   nameWithType: Asset.Asset(String, Stream)
-- uid: Adriva.Extensions.Optimization.Abstractions.Asset.#ctor(System.Uri)
+- uid: Adriva.Extensions.Optimization.Abstractions.Asset.#ctor(Uri)
   name: Asset(Uri)
-  href: api/Adriva.Extensions.Optimization.Abstractions.Asset.html#Adriva_Extensions_Optimization_Abstractions_Asset__ctor_System_Uri_
-  commentId: M:Adriva.Extensions.Optimization.Abstractions.Asset.#ctor(System.Uri)
-  fullName: Adriva.Extensions.Optimization.Abstractions.Asset.Asset(System.Uri)
+  href: api/Adriva.Extensions.Optimization.Abstractions.Asset.html#Adriva_Extensions_Optimization_Abstractions_Asset__ctor_Uri_
+  commentId: M:Adriva.Extensions.Optimization.Abstractions.Asset.#ctor(Uri)
+  fullName: Adriva.Extensions.Optimization.Abstractions.Asset.Asset(Uri)
   nameWithType: Asset.Asset(Uri)
 - uid: Adriva.Extensions.Optimization.Abstractions.Asset.#ctor*
   name: Asset
@@ -6231,11 +6350,11 @@ references:
   commentId: T:Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope
   fullName: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope
   nameWithType: DefaultOptimizationScope
-- uid: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.#ctor(System.IServiceProvider)
+- uid: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.#ctor(IServiceProvider)
   name: DefaultOptimizationScope(IServiceProvider)
-  href: api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.html#Adriva_Extensions_Optimization_Abstractions_DefaultOptimizationScope__ctor_System_IServiceProvider_
-  commentId: M:Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.#ctor(System.IServiceProvider)
-  fullName: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.DefaultOptimizationScope(System.IServiceProvider)
+  href: api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.html#Adriva_Extensions_Optimization_Abstractions_DefaultOptimizationScope__ctor_IServiceProvider_
+  commentId: M:Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.#ctor(IServiceProvider)
+  fullName: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.DefaultOptimizationScope(IServiceProvider)
   nameWithType: DefaultOptimizationScope.DefaultOptimizationScope(IServiceProvider)
 - uid: Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.#ctor*
   name: DefaultOptimizationScope
@@ -6328,13 +6447,13 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.LoadAssetNamesInOrder
   nameWithType: FileAssetOrderer.LoadAssetNamesInOrder
-- uid: Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.Order(System.Collections.Generic.IEnumerable{Adriva.Extensions.Optimization.Abstractions.Asset})
+- uid: Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.Order(IEnumerable{Adriva.Extensions.Optimization.Abstractions.Asset})
   name: Order(IEnumerable<Asset>)
-  href: api/Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.html#Adriva_Extensions_Optimization_Abstractions_FileAssetOrderer_Order_System_Collections_Generic_IEnumerable_Adriva_Extensions_Optimization_Abstractions_Asset__
-  commentId: M:Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.Order(System.Collections.Generic.IEnumerable{Adriva.Extensions.Optimization.Abstractions.Asset})
+  href: api/Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.html#Adriva_Extensions_Optimization_Abstractions_FileAssetOrderer_Order_IEnumerable_Adriva_Extensions_Optimization_Abstractions_Asset__
+  commentId: M:Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.Order(IEnumerable{Adriva.Extensions.Optimization.Abstractions.Asset})
   name.vb: Order(IEnumerable(Of Asset))
-  fullName: Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.Order(System.Collections.Generic.IEnumerable<Adriva.Extensions.Optimization.Abstractions.Asset>)
-  fullName.vb: Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.Order(System.Collections.Generic.IEnumerable(Of Adriva.Extensions.Optimization.Abstractions.Asset))
+  fullName: Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.Order(IEnumerable<Adriva.Extensions.Optimization.Abstractions.Asset>)
+  fullName.vb: Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.Order(IEnumerable(Of Adriva.Extensions.Optimization.Abstractions.Asset))
   nameWithType: FileAssetOrderer.Order(IEnumerable<Asset>)
   nameWithType.vb: FileAssetOrderer.Order(IEnumerable(Of Asset))
 - uid: Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.Order*
@@ -6440,13 +6559,13 @@ references:
   commentId: T:Adriva.Extensions.Optimization.Abstractions.IAssetOrderer
   fullName: Adriva.Extensions.Optimization.Abstractions.IAssetOrderer
   nameWithType: IAssetOrderer
-- uid: Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.Order(System.Collections.Generic.IEnumerable{Adriva.Extensions.Optimization.Abstractions.Asset})
+- uid: Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.Order(IEnumerable{Adriva.Extensions.Optimization.Abstractions.Asset})
   name: Order(IEnumerable<Asset>)
-  href: api/Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.html#Adriva_Extensions_Optimization_Abstractions_IAssetOrderer_Order_System_Collections_Generic_IEnumerable_Adriva_Extensions_Optimization_Abstractions_Asset__
-  commentId: M:Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.Order(System.Collections.Generic.IEnumerable{Adriva.Extensions.Optimization.Abstractions.Asset})
+  href: api/Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.html#Adriva_Extensions_Optimization_Abstractions_IAssetOrderer_Order_IEnumerable_Adriva_Extensions_Optimization_Abstractions_Asset__
+  commentId: M:Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.Order(IEnumerable{Adriva.Extensions.Optimization.Abstractions.Asset})
   name.vb: Order(IEnumerable(Of Asset))
-  fullName: Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.Order(System.Collections.Generic.IEnumerable<Adriva.Extensions.Optimization.Abstractions.Asset>)
-  fullName.vb: Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.Order(System.Collections.Generic.IEnumerable(Of Adriva.Extensions.Optimization.Abstractions.Asset))
+  fullName: Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.Order(IEnumerable<Adriva.Extensions.Optimization.Abstractions.Asset>)
+  fullName.vb: Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.Order(IEnumerable(Of Adriva.Extensions.Optimization.Abstractions.Asset))
   nameWithType: IAssetOrderer.Order(IEnumerable<Asset>)
   nameWithType.vb: IAssetOrderer.Order(IEnumerable(Of Asset))
 - uid: Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.Order*
@@ -6483,13 +6602,13 @@ references:
   fullName.vb: Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder(Of TOptions).AddFormatter(Of TFormatter, TType)(System.Int32)
   nameWithType: IOptimizationBuilder<TOptions>.AddFormatter<TFormatter, TType>(Int32)
   nameWithType.vb: IOptimizationBuilder(Of TOptions).AddFormatter(Of TFormatter, TType)(Int32)
-- uid: Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder`1.AddTransformationChain(System.String,System.Type[])
+- uid: Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder`1.AddTransformationChain(System.String,Type[])
   name: AddTransformationChain(String, Type[])
-  href: api/Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder-1.html#Adriva_Extensions_Optimization_Abstractions_IOptimizationBuilder_1_AddTransformationChain_System_String_System_Type___
-  commentId: M:Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder`1.AddTransformationChain(System.String,System.Type[])
+  href: api/Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder-1.html#Adriva_Extensions_Optimization_Abstractions_IOptimizationBuilder_1_AddTransformationChain_System_String_Type___
+  commentId: M:Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder`1.AddTransformationChain(System.String,Type[])
   name.vb: AddTransformationChain(String, Type())
-  fullName: Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder<TOptions>.AddTransformationChain(System.String, System.Type[])
-  fullName.vb: Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder(Of TOptions).AddTransformationChain(System.String, System.Type())
+  fullName: Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder<TOptions>.AddTransformationChain(System.String, Type[])
+  fullName.vb: Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder(Of TOptions).AddTransformationChain(System.String, Type())
   nameWithType: IOptimizationBuilder<TOptions>.AddTransformationChain(String, Type[])
   nameWithType.vb: IOptimizationBuilder(Of TOptions).AddTransformationChain(String, Type())
 - uid: Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder`1.AddTransformationChain*
@@ -6769,11 +6888,11 @@ references:
   commentId: M:Adriva.Extensions.Optimization.Abstractions.OptimizationException.#ctor
   fullName: Adriva.Extensions.Optimization.Abstractions.OptimizationException.OptimizationException()
   nameWithType: OptimizationException.OptimizationException()
-- uid: Adriva.Extensions.Optimization.Abstractions.OptimizationException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+- uid: Adriva.Extensions.Optimization.Abstractions.OptimizationException.#ctor(SerializationInfo,StreamingContext)
   name: OptimizationException(SerializationInfo, StreamingContext)
-  href: api/Adriva.Extensions.Optimization.Abstractions.OptimizationException.html#Adriva_Extensions_Optimization_Abstractions_OptimizationException__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_
-  commentId: M:Adriva.Extensions.Optimization.Abstractions.OptimizationException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
-  fullName: Adriva.Extensions.Optimization.Abstractions.OptimizationException.OptimizationException(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)
+  href: api/Adriva.Extensions.Optimization.Abstractions.OptimizationException.html#Adriva_Extensions_Optimization_Abstractions_OptimizationException__ctor_SerializationInfo_StreamingContext_
+  commentId: M:Adriva.Extensions.Optimization.Abstractions.OptimizationException.#ctor(SerializationInfo,StreamingContext)
+  fullName: Adriva.Extensions.Optimization.Abstractions.OptimizationException.OptimizationException(SerializationInfo, StreamingContext)
   nameWithType: OptimizationException.OptimizationException(SerializationInfo, StreamingContext)
 - uid: Adriva.Extensions.Optimization.Abstractions.OptimizationException.#ctor(System.String)
   name: OptimizationException(String)
@@ -6781,11 +6900,11 @@ references:
   commentId: M:Adriva.Extensions.Optimization.Abstractions.OptimizationException.#ctor(System.String)
   fullName: Adriva.Extensions.Optimization.Abstractions.OptimizationException.OptimizationException(System.String)
   nameWithType: OptimizationException.OptimizationException(String)
-- uid: Adriva.Extensions.Optimization.Abstractions.OptimizationException.#ctor(System.String,System.Exception)
+- uid: Adriva.Extensions.Optimization.Abstractions.OptimizationException.#ctor(System.String,Exception)
   name: OptimizationException(String, Exception)
-  href: api/Adriva.Extensions.Optimization.Abstractions.OptimizationException.html#Adriva_Extensions_Optimization_Abstractions_OptimizationException__ctor_System_String_System_Exception_
-  commentId: M:Adriva.Extensions.Optimization.Abstractions.OptimizationException.#ctor(System.String,System.Exception)
-  fullName: Adriva.Extensions.Optimization.Abstractions.OptimizationException.OptimizationException(System.String, System.Exception)
+  href: api/Adriva.Extensions.Optimization.Abstractions.OptimizationException.html#Adriva_Extensions_Optimization_Abstractions_OptimizationException__ctor_System_String_Exception_
+  commentId: M:Adriva.Extensions.Optimization.Abstractions.OptimizationException.#ctor(System.String,Exception)
+  fullName: Adriva.Extensions.Optimization.Abstractions.OptimizationException.OptimizationException(System.String, Exception)
   nameWithType: OptimizationException.OptimizationException(String, Exception)
 - uid: Adriva.Extensions.Optimization.Abstractions.OptimizationException.#ctor*
   name: OptimizationException
@@ -6860,13 +6979,13 @@ references:
   commentId: T:Adriva.Extensions.Optimization.Abstractions.OptimizationResult
   fullName: Adriva.Extensions.Optimization.Abstractions.OptimizationResult
   nameWithType: OptimizationResult
-- uid: Adriva.Extensions.Optimization.Abstractions.OptimizationResult.#ctor(System.Collections.Generic.IEnumerable{Adriva.Extensions.Optimization.Abstractions.Asset})
+- uid: Adriva.Extensions.Optimization.Abstractions.OptimizationResult.#ctor(IEnumerable{Adriva.Extensions.Optimization.Abstractions.Asset})
   name: OptimizationResult(IEnumerable<Asset>)
-  href: api/Adriva.Extensions.Optimization.Abstractions.OptimizationResult.html#Adriva_Extensions_Optimization_Abstractions_OptimizationResult__ctor_System_Collections_Generic_IEnumerable_Adriva_Extensions_Optimization_Abstractions_Asset__
-  commentId: M:Adriva.Extensions.Optimization.Abstractions.OptimizationResult.#ctor(System.Collections.Generic.IEnumerable{Adriva.Extensions.Optimization.Abstractions.Asset})
+  href: api/Adriva.Extensions.Optimization.Abstractions.OptimizationResult.html#Adriva_Extensions_Optimization_Abstractions_OptimizationResult__ctor_IEnumerable_Adriva_Extensions_Optimization_Abstractions_Asset__
+  commentId: M:Adriva.Extensions.Optimization.Abstractions.OptimizationResult.#ctor(IEnumerable{Adriva.Extensions.Optimization.Abstractions.Asset})
   name.vb: OptimizationResult(IEnumerable(Of Asset))
-  fullName: Adriva.Extensions.Optimization.Abstractions.OptimizationResult.OptimizationResult(System.Collections.Generic.IEnumerable<Adriva.Extensions.Optimization.Abstractions.Asset>)
-  fullName.vb: Adriva.Extensions.Optimization.Abstractions.OptimizationResult.OptimizationResult(System.Collections.Generic.IEnumerable(Of Adriva.Extensions.Optimization.Abstractions.Asset))
+  fullName: Adriva.Extensions.Optimization.Abstractions.OptimizationResult.OptimizationResult(IEnumerable<Adriva.Extensions.Optimization.Abstractions.Asset>)
+  fullName.vb: Adriva.Extensions.Optimization.Abstractions.OptimizationResult.OptimizationResult(IEnumerable(Of Adriva.Extensions.Optimization.Abstractions.Asset))
   nameWithType: OptimizationResult.OptimizationResult(IEnumerable<Asset>)
   nameWithType.vb: OptimizationResult.OptimizationResult(IEnumerable(Of Asset))
 - uid: Adriva.Extensions.Optimization.Abstractions.OptimizationResult.#ctor*
@@ -6902,23 +7021,6 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Optimization.Abstractions.OptimizationResult.GetEnumerator
   nameWithType: OptimizationResult.GetEnumerator
-- uid: Adriva.Extensions.Optimization.Abstractions.OptimizationResult.System#Collections#IEnumerable#GetEnumerator
-  name: IEnumerable.GetEnumerator()
-  href: api/Adriva.Extensions.Optimization.Abstractions.OptimizationResult.html#Adriva_Extensions_Optimization_Abstractions_OptimizationResult_System_Collections_IEnumerable_GetEnumerator
-  commentId: M:Adriva.Extensions.Optimization.Abstractions.OptimizationResult.System#Collections#IEnumerable#GetEnumerator
-  name.vb: System.Collections.IEnumerable.GetEnumerator()
-  fullName: Adriva.Extensions.Optimization.Abstractions.OptimizationResult.System.Collections.IEnumerable.GetEnumerator()
-  nameWithType: OptimizationResult.IEnumerable.GetEnumerator()
-  nameWithType.vb: OptimizationResult.System.Collections.IEnumerable.GetEnumerator()
-- uid: Adriva.Extensions.Optimization.Abstractions.OptimizationResult.System#Collections#IEnumerable#GetEnumerator*
-  name: IEnumerable.GetEnumerator
-  href: api/Adriva.Extensions.Optimization.Abstractions.OptimizationResult.html#Adriva_Extensions_Optimization_Abstractions_OptimizationResult_System_Collections_IEnumerable_GetEnumerator_
-  commentId: Overload:Adriva.Extensions.Optimization.Abstractions.OptimizationResult.System#Collections#IEnumerable#GetEnumerator
-  isSpec: "True"
-  name.vb: System.Collections.IEnumerable.GetEnumerator
-  fullName: Adriva.Extensions.Optimization.Abstractions.OptimizationResult.System.Collections.IEnumerable.GetEnumerator
-  nameWithType: OptimizationResult.IEnumerable.GetEnumerator
-  nameWithType.vb: OptimizationResult.System.Collections.IEnumerable.GetEnumerator
 - uid: Adriva.Extensions.Optimization.Abstractions.PhysicalFileAssetLoader
   name: PhysicalFileAssetLoader
   href: api/Adriva.Extensions.Optimization.Abstractions.PhysicalFileAssetLoader.html
@@ -7465,13 +7567,13 @@ references:
   commentId: T:Microsoft.Extensions.DependencyInjection.AnalyticsExtensions
   fullName: Microsoft.Extensions.DependencyInjection.AnalyticsExtensions
   nameWithType: AnalyticsExtensions
-- uid: Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsGenericAnalytics(IServiceCollection,System.Action{Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions})
+- uid: Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsGenericAnalytics(IServiceCollection,Action{Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions})
   name: AddAppInsightsGenericAnalytics(IServiceCollection, Action<AnalyticsOptions>)
-  href: api/Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.html#Microsoft_Extensions_DependencyInjection_AnalyticsExtensions_AddAppInsightsGenericAnalytics_IServiceCollection_System_Action_Adriva_Extensions_Analytics_AppInsights_AnalyticsOptions__
-  commentId: M:Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsGenericAnalytics(IServiceCollection,System.Action{Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions})
+  href: api/Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.html#Microsoft_Extensions_DependencyInjection_AnalyticsExtensions_AddAppInsightsGenericAnalytics_IServiceCollection_Action_Adriva_Extensions_Analytics_AppInsights_AnalyticsOptions__
+  commentId: M:Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsGenericAnalytics(IServiceCollection,Action{Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions})
   name.vb: AddAppInsightsGenericAnalytics(IServiceCollection, Action(Of AnalyticsOptions))
-  fullName: Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsGenericAnalytics(IServiceCollection, System.Action<Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions>)
-  fullName.vb: Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsGenericAnalytics(IServiceCollection, System.Action(Of Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions))
+  fullName: Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsGenericAnalytics(IServiceCollection, Action<Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions>)
+  fullName.vb: Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsGenericAnalytics(IServiceCollection, Action(Of Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions))
   nameWithType: AnalyticsExtensions.AddAppInsightsGenericAnalytics(IServiceCollection, Action<AnalyticsOptions>)
   nameWithType.vb: AnalyticsExtensions.AddAppInsightsGenericAnalytics(IServiceCollection, Action(Of AnalyticsOptions))
 - uid: Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsGenericAnalytics*
@@ -7481,13 +7583,13 @@ references:
   isSpec: "True"
   fullName: Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsGenericAnalytics
   nameWithType: AnalyticsExtensions.AddAppInsightsGenericAnalytics
-- uid: Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsWebAnalytics(IServiceCollection,System.Action{Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions})
+- uid: Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsWebAnalytics(IServiceCollection,Action{Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions})
   name: AddAppInsightsWebAnalytics(IServiceCollection, Action<AnalyticsOptions>)
-  href: api/Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.html#Microsoft_Extensions_DependencyInjection_AnalyticsExtensions_AddAppInsightsWebAnalytics_IServiceCollection_System_Action_Adriva_Extensions_Analytics_AppInsights_AnalyticsOptions__
-  commentId: M:Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsWebAnalytics(IServiceCollection,System.Action{Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions})
+  href: api/Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.html#Microsoft_Extensions_DependencyInjection_AnalyticsExtensions_AddAppInsightsWebAnalytics_IServiceCollection_Action_Adriva_Extensions_Analytics_AppInsights_AnalyticsOptions__
+  commentId: M:Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsWebAnalytics(IServiceCollection,Action{Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions})
   name.vb: AddAppInsightsWebAnalytics(IServiceCollection, Action(Of AnalyticsOptions))
-  fullName: Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsWebAnalytics(IServiceCollection, System.Action<Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions>)
-  fullName.vb: Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsWebAnalytics(IServiceCollection, System.Action(Of Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions))
+  fullName: Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsWebAnalytics(IServiceCollection, Action<Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions>)
+  fullName.vb: Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsWebAnalytics(IServiceCollection, Action(Of Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions))
   nameWithType: AnalyticsExtensions.AddAppInsightsWebAnalytics(IServiceCollection, Action<AnalyticsOptions>)
   nameWithType.vb: AnalyticsExtensions.AddAppInsightsWebAnalytics(IServiceCollection, Action(Of AnalyticsOptions))
 - uid: Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsWebAnalytics*
@@ -7582,6 +7684,31 @@ references:
   commentId: T:Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions
   fullName: Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions
   nameWithType: EntityFrameworkRepositoryExtensions
+- uid: Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository*
+  name: UseEntityFrameworkRepository
+  href: api/Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.html#Microsoft_Extensions_DependencyInjection_EntityFrameworkRepositoryExtensions_UseEntityFrameworkRepository_
+  commentId: Overload:Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository
+  isSpec: "True"
+  fullName: Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository
+  nameWithType: EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository
+- uid: Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository``2(Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder,Action{DbContextOptionsBuilder},ServiceLifetime,ServiceLifetime)
+  name: UseEntityFrameworkRepository<TContext, TRepository>(IAnalyticsServerBuilder, Action<DbContextOptionsBuilder>, ServiceLifetime, ServiceLifetime)
+  href: api/Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.html#Microsoft_Extensions_DependencyInjection_EntityFrameworkRepositoryExtensions_UseEntityFrameworkRepository__2_Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_Action_DbContextOptionsBuilder__ServiceLifetime_ServiceLifetime_
+  commentId: M:Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository``2(Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder,Action{DbContextOptionsBuilder},ServiceLifetime,ServiceLifetime)
+  name.vb: UseEntityFrameworkRepository(Of TContext, TRepository)(IAnalyticsServerBuilder, Action(Of DbContextOptionsBuilder), ServiceLifetime, ServiceLifetime)
+  fullName: Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository<TContext, TRepository>(Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder, Action<DbContextOptionsBuilder>, ServiceLifetime, ServiceLifetime)
+  fullName.vb: Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository(Of TContext, TRepository)(Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder, Action(Of DbContextOptionsBuilder), ServiceLifetime, ServiceLifetime)
+  nameWithType: EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository<TContext, TRepository>(IAnalyticsServerBuilder, Action<DbContextOptionsBuilder>, ServiceLifetime, ServiceLifetime)
+  nameWithType.vb: EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository(Of TContext, TRepository)(IAnalyticsServerBuilder, Action(Of DbContextOptionsBuilder), ServiceLifetime, ServiceLifetime)
+- uid: Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository``3(Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder,Action{DbContextOptionsBuilder},ServiceLifetime,ServiceLifetime)
+  name: UseEntityFrameworkRepository<TContext, TRepository, TModelBuilder>(IAnalyticsServerBuilder, Action<DbContextOptionsBuilder>, ServiceLifetime, ServiceLifetime)
+  href: api/Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.html#Microsoft_Extensions_DependencyInjection_EntityFrameworkRepositoryExtensions_UseEntityFrameworkRepository__3_Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_Action_DbContextOptionsBuilder__ServiceLifetime_ServiceLifetime_
+  commentId: M:Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository``3(Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder,Action{DbContextOptionsBuilder},ServiceLifetime,ServiceLifetime)
+  name.vb: UseEntityFrameworkRepository(Of TContext, TRepository, TModelBuilder)(IAnalyticsServerBuilder, Action(Of DbContextOptionsBuilder), ServiceLifetime, ServiceLifetime)
+  fullName: Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository<TContext, TRepository, TModelBuilder>(Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder, Action<DbContextOptionsBuilder>, ServiceLifetime, ServiceLifetime)
+  fullName.vb: Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository(Of TContext, TRepository, TModelBuilder)(Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder, Action(Of DbContextOptionsBuilder), ServiceLifetime, ServiceLifetime)
+  nameWithType: EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository<TContext, TRepository, TModelBuilder>(IAnalyticsServerBuilder, Action<DbContextOptionsBuilder>, ServiceLifetime, ServiceLifetime)
+  nameWithType.vb: EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository(Of TContext, TRepository, TModelBuilder)(IAnalyticsServerBuilder, Action(Of DbContextOptionsBuilder), ServiceLifetime, ServiceLifetime)
 - uid: Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseInMemoryRepository(Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder,System.String)
   name: UseInMemoryRepository(IAnalyticsServerBuilder, String)
   href: api/Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.html#Microsoft_Extensions_DependencyInjection_EntityFrameworkRepositoryExtensions_UseInMemoryRepository_Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_System_String_
@@ -7620,13 +7747,13 @@ references:
   commentId: T:Microsoft.Extensions.DependencyInjection.OptimizationExtensions
   fullName: Microsoft.Extensions.DependencyInjection.OptimizationExtensions
   nameWithType: OptimizationExtensions
-- uid: Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization(IServiceCollection,System.Action{Adriva.Extensions.Optimization.Abstractions.OptimizationOptions})
+- uid: Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization(IServiceCollection,Action{Adriva.Extensions.Optimization.Abstractions.OptimizationOptions})
   name: AddOptimization(IServiceCollection, Action<OptimizationOptions>)
-  href: api/Microsoft.Extensions.DependencyInjection.OptimizationExtensions.html#Microsoft_Extensions_DependencyInjection_OptimizationExtensions_AddOptimization_IServiceCollection_System_Action_Adriva_Extensions_Optimization_Abstractions_OptimizationOptions__
-  commentId: M:Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization(IServiceCollection,System.Action{Adriva.Extensions.Optimization.Abstractions.OptimizationOptions})
+  href: api/Microsoft.Extensions.DependencyInjection.OptimizationExtensions.html#Microsoft_Extensions_DependencyInjection_OptimizationExtensions_AddOptimization_IServiceCollection_Action_Adriva_Extensions_Optimization_Abstractions_OptimizationOptions__
+  commentId: M:Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization(IServiceCollection,Action{Adriva.Extensions.Optimization.Abstractions.OptimizationOptions})
   name.vb: AddOptimization(IServiceCollection, Action(Of OptimizationOptions))
-  fullName: Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization(IServiceCollection, System.Action<Adriva.Extensions.Optimization.Abstractions.OptimizationOptions>)
-  fullName.vb: Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization(IServiceCollection, System.Action(Of Adriva.Extensions.Optimization.Abstractions.OptimizationOptions))
+  fullName: Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization(IServiceCollection, Action<Adriva.Extensions.Optimization.Abstractions.OptimizationOptions>)
+  fullName.vb: Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization(IServiceCollection, Action(Of Adriva.Extensions.Optimization.Abstractions.OptimizationOptions))
   nameWithType: OptimizationExtensions.AddOptimization(IServiceCollection, Action<OptimizationOptions>)
   nameWithType.vb: OptimizationExtensions.AddOptimization(IServiceCollection, Action(Of OptimizationOptions))
 - uid: Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization*
@@ -7636,12 +7763,47 @@ references:
   isSpec: "True"
   fullName: Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization
   nameWithType: OptimizationExtensions.AddOptimization
-- uid: Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization``1(IServiceCollection,System.Action{``0})
+- uid: Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization``1(IServiceCollection,Action{``0})
   name: AddOptimization<TOptions>(IServiceCollection, Action<TOptions>)
-  href: api/Microsoft.Extensions.DependencyInjection.OptimizationExtensions.html#Microsoft_Extensions_DependencyInjection_OptimizationExtensions_AddOptimization__1_IServiceCollection_System_Action___0__
-  commentId: M:Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization``1(IServiceCollection,System.Action{``0})
+  href: api/Microsoft.Extensions.DependencyInjection.OptimizationExtensions.html#Microsoft_Extensions_DependencyInjection_OptimizationExtensions_AddOptimization__1_IServiceCollection_Action___0__
+  commentId: M:Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization``1(IServiceCollection,Action{``0})
   name.vb: AddOptimization(Of TOptions)(IServiceCollection, Action(Of TOptions))
-  fullName: Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization<TOptions>(IServiceCollection, System.Action<TOptions>)
-  fullName.vb: Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization(Of TOptions)(IServiceCollection, System.Action(Of TOptions))
+  fullName: Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization<TOptions>(IServiceCollection, Action<TOptions>)
+  fullName.vb: Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization(Of TOptions)(IServiceCollection, Action(Of TOptions))
   nameWithType: OptimizationExtensions.AddOptimization<TOptions>(IServiceCollection, Action<TOptions>)
   nameWithType.vb: OptimizationExtensions.AddOptimization(Of TOptions)(IServiceCollection, Action(Of TOptions))
+- uid: Microsoft.Extensions.DependencyInjection.SqliteRepository
+  name: SqliteRepository
+  href: api/Microsoft.Extensions.DependencyInjection.SqliteRepository.html
+  commentId: T:Microsoft.Extensions.DependencyInjection.SqliteRepository
+  fullName: Microsoft.Extensions.DependencyInjection.SqliteRepository
+  nameWithType: SqliteRepository
+- uid: Microsoft.Extensions.DependencyInjection.SqliteRepository.#ctor(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext,ILogger{Microsoft.Extensions.DependencyInjection.SqliteRepository})
+  name: SqliteRepository(AnalyticsDatabaseContext, ILogger<SqliteRepository>)
+  href: api/Microsoft.Extensions.DependencyInjection.SqliteRepository.html#Microsoft_Extensions_DependencyInjection_SqliteRepository__ctor_Adriva_Extensions_Analytics_Repository_EntityFramework_AnalyticsDatabaseContext_ILogger_Microsoft_Extensions_DependencyInjection_SqliteRepository__
+  commentId: M:Microsoft.Extensions.DependencyInjection.SqliteRepository.#ctor(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext,ILogger{Microsoft.Extensions.DependencyInjection.SqliteRepository})
+  name.vb: SqliteRepository(AnalyticsDatabaseContext, ILogger(Of SqliteRepository))
+  fullName: Microsoft.Extensions.DependencyInjection.SqliteRepository.SqliteRepository(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext, ILogger<Microsoft.Extensions.DependencyInjection.SqliteRepository>)
+  fullName.vb: Microsoft.Extensions.DependencyInjection.SqliteRepository.SqliteRepository(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext, ILogger(Of Microsoft.Extensions.DependencyInjection.SqliteRepository))
+  nameWithType: SqliteRepository.SqliteRepository(AnalyticsDatabaseContext, ILogger<SqliteRepository>)
+  nameWithType.vb: SqliteRepository.SqliteRepository(AnalyticsDatabaseContext, ILogger(Of SqliteRepository))
+- uid: Microsoft.Extensions.DependencyInjection.SqliteRepository.#ctor*
+  name: SqliteRepository
+  href: api/Microsoft.Extensions.DependencyInjection.SqliteRepository.html#Microsoft_Extensions_DependencyInjection_SqliteRepository__ctor_
+  commentId: Overload:Microsoft.Extensions.DependencyInjection.SqliteRepository.#ctor
+  isSpec: "True"
+  fullName: Microsoft.Extensions.DependencyInjection.SqliteRepository.SqliteRepository
+  nameWithType: SqliteRepository.SqliteRepository
+- uid: Microsoft.Extensions.DependencyInjection.SqliteRepository.InitializeAsync
+  name: InitializeAsync()
+  href: api/Microsoft.Extensions.DependencyInjection.SqliteRepository.html#Microsoft_Extensions_DependencyInjection_SqliteRepository_InitializeAsync
+  commentId: M:Microsoft.Extensions.DependencyInjection.SqliteRepository.InitializeAsync
+  fullName: Microsoft.Extensions.DependencyInjection.SqliteRepository.InitializeAsync()
+  nameWithType: SqliteRepository.InitializeAsync()
+- uid: Microsoft.Extensions.DependencyInjection.SqliteRepository.InitializeAsync*
+  name: InitializeAsync
+  href: api/Microsoft.Extensions.DependencyInjection.SqliteRepository.html#Microsoft_Extensions_DependencyInjection_SqliteRepository_InitializeAsync_
+  commentId: Overload:Microsoft.Extensions.DependencyInjection.SqliteRepository.InitializeAsync
+  isSpec: "True"
+  fullName: Microsoft.Extensions.DependencyInjection.SqliteRepository.InitializeAsync
+  nameWithType: SqliteRepository.InitializeAsync

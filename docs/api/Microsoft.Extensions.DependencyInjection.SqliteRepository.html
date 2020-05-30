@@ -5,13 +5,13 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class AnalyticsExtensions
+    <title>Class SqliteRepository
    | Adriva Core Framework </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class AnalyticsExtensions
+    <meta name="title" content="Class SqliteRepository
    | Adriva Core Framework ">  
     
-    <link rel="canonical" href="https://adriva.github.io/coreframework/api/Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.html">
+    <link rel="canonical" href="https://adriva.github.io/coreframework/api/Microsoft.Extensions.DependencyInjection.SqliteRepository.html">
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -76,70 +76,107 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsExtensions">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Extensions.DependencyInjection.SqliteRepository">
   
   <div style="text-align:center;margin-bottom: 20px;color: #ca3030;">
   [This is preliminary documentation and is subject to change.]
   </div>
   <div>
     <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Extensions.DependencyInjection.html">Microsoft.Extensions.DependencyInjection</a></h6>
-    <h6><strong>Assembly</strong>: Adriva.Extensions.Analytics.AppInsights.dll</h6>
+    <h6><strong>Assembly</strong>: Adriva.Extensions.Analytics.Repository.EntityFramework.SqlLite.dll</h6>
   </div>
-  <h1 id="Microsoft_Extensions_DependencyInjection_AnalyticsExtensions" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsExtensions" class="text-break">Class AnalyticsExtensions
+  <h1 id="Microsoft_Extensions_DependencyInjection_SqliteRepository" data-uid="Microsoft.Extensions.DependencyInjection.SqliteRepository" class="text-break">Class SqliteRepository
   </h1>
-  <div class="markdown level0 summary"><p>Provides extension methods to use Microsoft AppInsights wrapper services.</p>
+  <div class="markdown level0 summary"><p>Provides a default implementation of IAnalyticsRepository that uses Sqlite as the base data store.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><span class="xref">AnalyticsExtensions</span></div>
+    <div class="level1"><a class="xref" href="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html">EntityFrameworkRepository</a></div>
+    <div class="level2"><span class="xref">SqliteRepository</span></div>
   </div>
-  <h5 id="Microsoft_Extensions_DependencyInjection_AnalyticsExtensions_syntax">Syntax</h5>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Adriva.Extensions.Analytics.Server.IAnalyticsRepository.html">IAnalyticsRepository</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_Logger">EntityFrameworkRepository.Logger</a>
+    </div>
+    <div>
+      <a class="xref" href="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_Context">EntityFrameworkRepository.Context</a>
+    </div>
+    <div>
+      <span class="xref">Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.StoreAsync(IEnumerable&lt;&gt;, CancellationToken)</span>
+    </div>
+    <div>
+      <span class="xref">Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.HandleErrorAsync(IEnumerable&lt;&gt;, Exception)</span>
+    </div>
+  </div>
+  <h5 id="Microsoft_Extensions_DependencyInjection_SqliteRepository_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class AnalyticsExtensions : object</code></pre>
+    <pre><code class="lang-csharp hljs">public class SqliteRepository : EntityFrameworkRepository, IAnalyticsRepository</code></pre>
   </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework.SqlLite/SqliteRepository.cs/#L17">View Source</a>
+  </span>
+  <a id="Microsoft_Extensions_DependencyInjection_SqliteRepository__ctor_" data-uid="Microsoft.Extensions.DependencyInjection.SqliteRepository.#ctor*"></a>
+  <h4 id="Microsoft_Extensions_DependencyInjection_SqliteRepository__ctor_Adriva_Extensions_Analytics_Repository_EntityFramework_AnalyticsDatabaseContext_ILogger_Microsoft_Extensions_DependencyInjection_SqliteRepository__" data-uid="Microsoft.Extensions.DependencyInjection.SqliteRepository.#ctor(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext,ILogger{Microsoft.Extensions.DependencyInjection.SqliteRepository})">SqliteRepository(AnalyticsDatabaseContext, ILogger&lt;SqliteRepository&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initiates a new instance of SqliteRepository class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SqliteRepository(AnalyticsDatabaseContext context, ILogger&lt;SqliteRepository&gt; logger)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.html">AnalyticsDatabaseContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td><p>An instance of AnalyticsDatabaseContext that will be used to persist analytics data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ILogger</span>&lt;<a class="xref" href="Microsoft.Extensions.DependencyInjection.SqliteRepository.html">SqliteRepository</a>&gt;</td>
+        <td><span class="parametername">logger</span></td>
+        <td><p>An implementation of ILogger that will be used to write out log data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.AppInsights/AnalyticsExtensions.cs/#L89">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework.SqlLite/SqliteRepository.cs/#L26">View Source</a>
   </span>
-  <a id="Microsoft_Extensions_DependencyInjection_AnalyticsExtensions_AddAppInsightsGenericAnalytics_" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsGenericAnalytics*"></a>
-  <h4 id="Microsoft_Extensions_DependencyInjection_AnalyticsExtensions_AddAppInsightsGenericAnalytics_IServiceCollection_Action_Adriva_Extensions_Analytics_AppInsights_AnalyticsOptions__" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsGenericAnalytics(IServiceCollection,Action{Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions})">AddAppInsightsGenericAnalytics(IServiceCollection, Action&lt;AnalyticsOptions&gt;)</h4>
-  <div class="markdown level1 summary"><p>Adds Microsoft AppInsights for generic host core services to the specified service collection.</p>
+  <a id="Microsoft_Extensions_DependencyInjection_SqliteRepository_InitializeAsync_" data-uid="Microsoft.Extensions.DependencyInjection.SqliteRepository.InitializeAsync*"></a>
+  <h4 id="Microsoft_Extensions_DependencyInjection_SqliteRepository_InitializeAsync" data-uid="Microsoft.Extensions.DependencyInjection.SqliteRepository.InitializeAsync">InitializeAsync()</h4>
+  <div class="markdown level1 summary"><p>Initializes the current instance of Adriva.Extensions.Analytics.Repository.EntityFramework.SqlLite.SqlLiteRepository class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IServiceCollection AddAppInsightsGenericAnalytics(this IServiceCollection services, Action&lt;AnalyticsOptions&gt; configure)</code></pre>
+    <pre><code class="lang-csharp hljs">public override Task InitializeAsync()</code></pre>
   </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IServiceCollection</span></td>
-        <td><span class="parametername">services</span></td>
-        <td><p>The Microsoft.Extensions.DependencyInjection.IServiceCollection to add services to.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Action</span>&lt;<a class="xref" href="Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions.html">AnalyticsOptions</a>&gt;</td>
-        <td><span class="parametername">configure</span></td>
-        <td><p>The AnalyticsOptions configuration delegate.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -150,67 +187,18 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IServiceCollection</span></td>
-        <td><p>The Microsoft.Extensions.DependencyInjection.IServiceCollection so that additional calls can be chained.</p>
+        <td><span class="xref">Task</span></td>
+        <td><p>Represents the asynchronous process operation.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.AppInsights/AnalyticsExtensions.cs/#L61">View Source</a>
-  </span>
-  <a id="Microsoft_Extensions_DependencyInjection_AnalyticsExtensions_AddAppInsightsWebAnalytics_" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsWebAnalytics*"></a>
-  <h4 id="Microsoft_Extensions_DependencyInjection_AnalyticsExtensions_AddAppInsightsWebAnalytics_IServiceCollection_Action_Adriva_Extensions_Analytics_AppInsights_AnalyticsOptions__" data-uid="Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.AddAppInsightsWebAnalytics(IServiceCollection,Action{Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions})">AddAppInsightsWebAnalytics(IServiceCollection, Action&lt;AnalyticsOptions&gt;)</h4>
-  <div class="markdown level1 summary"><p>Adds Microsoft AppInsights for asp.net core services to the specified service collection.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IServiceCollection AddAppInsightsWebAnalytics(this IServiceCollection services, Action&lt;AnalyticsOptions&gt; configure)</code></pre>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_InitializeAsync">EntityFrameworkRepository.InitializeAsync()</a></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Adriva.Extensions.Analytics.Server.IAnalyticsRepository.html">IAnalyticsRepository</a>
   </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IServiceCollection</span></td>
-        <td><span class="parametername">services</span></td>
-        <td><p>The Microsoft.Extensions.DependencyInjection.IServiceCollection to add services to.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Action</span>&lt;<a class="xref" href="Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions.html">AnalyticsOptions</a>&gt;</td>
-        <td><span class="parametername">configure</span></td>
-        <td><p>The AnalyticsOptions configuration delegate.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IServiceCollection</span></td>
-        <td><p>The Microsoft.Extensions.DependencyInjection.IServiceCollection so that additional calls can be chained.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
 </article>
           </div>
           
@@ -219,7 +207,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.AppInsights/AnalyticsExtensions.cs/#L14" class="contribution-link">View Source</a>
+                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework.SqlLite/SqliteRepository.cs/#L10" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

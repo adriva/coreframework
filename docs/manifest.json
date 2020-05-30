@@ -38,7 +38,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Common.Core.AutoStream.html",
-          "hash": "YPfw5GjZl3wejadhshD1qA=="
+          "hash": "RKccldA6yt7ND98bAtmfog=="
         }
       },
       "is_incremental": false,
@@ -302,7 +302,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions.html",
-          "hash": "CYpBj/Uhch36NqjQhCfk7g=="
+          "hash": "+auSXm/dokIkzzCBZ+L8zQ=="
         }
       },
       "is_incremental": false,
@@ -314,7 +314,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder.html",
-          "hash": "G98A+v83OWWoa6TeVhYD/g=="
+          "hash": "oy5BpQtOvkJFOt05OJTggQ=="
         }
       },
       "is_incremental": false,
@@ -338,7 +338,31 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.html",
-          "hash": "4Up4MBtv8i6QnMIU3rK5Uw=="
+          "hash": "F2GsKBewMSA6nBR5ahZaDA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html",
+          "hash": "5Grq3fc8EkM5Bc8OJ9ILBw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder.html",
+          "hash": "zqp8cASEPazQ/BlybLGIhg=="
         }
       },
       "is_incremental": false,
@@ -350,7 +374,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.html",
-          "hash": "EchssrLj9nBsFrJNPtZjMQ=="
+          "hash": "5hkAxRrVdk7CPCe93sk+7A=="
         }
       },
       "is_incremental": false,
@@ -362,7 +386,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.html",
-          "hash": "KZofrlVIKaG95Opmo/xjFg=="
+          "hash": "d7B6iXEzWGKEsWXxuaNtXA=="
         }
       },
       "is_incremental": false,
@@ -806,7 +830,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.IAnalyticsRepository.html",
-          "hash": "Z/gArfGeJzVVb4ioqCw5PQ=="
+          "hash": "wbso/dgm8D2bDTWB7xn/NQ=="
         }
       },
       "is_incremental": false,
@@ -818,7 +842,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html",
-          "hash": "/51vsNluP9urzkjHv+R/fA=="
+          "hash": "rnH+GhojA+QlF152YBt0lA=="
         }
       },
       "is_incremental": false,
@@ -842,7 +866,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.NullRepository.html",
-          "hash": "27sBLVA/CaDB6Vuwcj2wgw=="
+          "hash": "y3SEHD56qLwqy9u0b0X8cw=="
         }
       },
       "is_incremental": false,
@@ -926,7 +950,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Caching.Memory.InMemoryCache.html",
-          "hash": "jKS8+/7lDcLwW7q9d5u3Iw=="
+          "hash": "l8tntSBH8LuBtEGvHhZ/yg=="
         }
       },
       "is_incremental": false,
@@ -950,7 +974,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.Asset.html",
-          "hash": "EZqM03eMTSTVbrcaCE+lFw=="
+          "hash": "0cwRnV5ilGJiqAZOx6OKUQ=="
         }
       },
       "is_incremental": false,
@@ -962,7 +986,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.AssetExtensions.html",
-          "hash": "2VCepFnMVY2tGjqQAosqBQ=="
+          "hash": "TMix+Gjlq6KJkbov2QHZHA=="
         }
       },
       "is_incremental": false,
@@ -974,7 +998,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationContext.html",
-          "hash": "TTAaLOP4vKHRX3WGLaIcgQ=="
+          "hash": "dYWk9Ml2mJX9e2SxxPNcuw=="
         }
       },
       "is_incremental": false,
@@ -986,7 +1010,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope.html",
-          "hash": "PK/E7I0l1w2B2Z276uTYKg=="
+          "hash": "Ixi/hAo6co4jqMl9RQMK0Q=="
         }
       },
       "is_incremental": false,
@@ -998,7 +1022,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.html",
-          "hash": "iiMLScKrh9fN/3x+9eK53Q=="
+          "hash": "/cbFoem3UsWE4oy7IZJuRg=="
         }
       },
       "is_incremental": false,
@@ -1010,7 +1034,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.HttpAssetLoader.html",
-          "hash": "Z21eDy1PDArs1CQ89K7TPQ=="
+          "hash": "ttoyn2kqZGUPrlJuNyp3EQ=="
         }
       },
       "is_incremental": false,
@@ -1022,7 +1046,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IAssetLoader.html",
-          "hash": "VoWZJBscjrfAQZAPFtf0oQ=="
+          "hash": "qD7wNI9qNroO+dpbBYoULg=="
         }
       },
       "is_incremental": false,
@@ -1034,7 +1058,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.html",
-          "hash": "NQiSD97uNvPkx3HVjxPcHg=="
+          "hash": "sNq843hXZij/UzHz/Anm4A=="
         }
       },
       "is_incremental": false,
@@ -1046,7 +1070,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder-1.html",
-          "hash": "4Z44OLPxbQUASIh0eCI6UQ=="
+          "hash": "PVCnHN0lFSisAtf/BJM07g=="
         }
       },
       "is_incremental": false,
@@ -1058,7 +1082,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationContext.html",
-          "hash": "HU5f6utRKqRjnv/vRgkbkQ=="
+          "hash": "BlLO/1Lzj77sT4r4zK10YQ=="
         }
       },
       "is_incremental": false,
@@ -1070,7 +1094,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationEvents-1.html",
-          "hash": "JFnczlfsUbx6yPEqnva5Pg=="
+          "hash": "LIS88Q/9UGWE8ORpSdt0lg=="
         }
       },
       "is_incremental": false,
@@ -1082,7 +1106,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationManager.html",
-          "hash": "9odYfn/xzXGEIzkCbiNOng=="
+          "hash": "pPLp6kBcTSFFMTIPA8ZmBA=="
         }
       },
       "is_incremental": false,
@@ -1094,7 +1118,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationResultFormatter-1.html",
-          "hash": "PtBlz8ANPl9VNRRFw1A+vw=="
+          "hash": "LB8bovXiTRD8JkJXnMQhkg=="
         }
       },
       "is_incremental": false,
@@ -1106,7 +1130,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.html",
-          "hash": "9qot6L1U7KBfYuxIYIt5Aw=="
+          "hash": "swAPSa+WQXmLL3P2a992dg=="
         }
       },
       "is_incremental": false,
@@ -1118,7 +1142,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.ITransform.html",
-          "hash": "t6qbRf8L9MUWQUoduFF7FA=="
+          "hash": "vm+9/TEB1CsE0Q0Xb6uRig=="
         }
       },
       "is_incremental": false,
@@ -1130,7 +1154,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.MergeContentTransform.html",
-          "hash": "X7qs6h10HLs7RiFYKdMCtQ=="
+          "hash": "z5xh9Op2WRUpHF7IGEbVIA=="
         }
       },
       "is_incremental": false,
@@ -1142,7 +1166,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.OptimizationException.html",
-          "hash": "LyvY+/JmvyZ5gKF444RB9w=="
+          "hash": "8LkzVXvno96GuUJKa/IWxg=="
         }
       },
       "is_incremental": false,
@@ -1154,7 +1178,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.html",
-          "hash": "RGdB4c2owVUYNTNbRHboZQ=="
+          "hash": "nBwf/dUzShZAXWA+2SfYDg=="
         }
       },
       "is_incremental": false,
@@ -1166,7 +1190,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.OptimizationResult.html",
-          "hash": "PF+w1sSd08tjLwsHIAhU9Q=="
+          "hash": "894iJ+xF2wmoHvXd6KYP8w=="
         }
       },
       "is_incremental": false,
@@ -1178,7 +1202,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.PhysicalFileAssetLoader.html",
-          "hash": "dlcmdOzCMmro5E96evVrYg=="
+          "hash": "P2exbDgI+3umNEIWK5wsnQ=="
         }
       },
       "is_incremental": false,
@@ -1190,7 +1214,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.SingleTranform.html",
-          "hash": "kgdyv/X0dMKdYbFeyOFurg=="
+          "hash": "0gSxOdtozlrdwGD47CXiww=="
         }
       },
       "is_incremental": false,
@@ -1214,7 +1238,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Transforms.JavascriptBundleTransform.html",
-          "hash": "gxz2n7T2FSfhRCCEU+3KBQ=="
+          "hash": "s5u4gFOJs7cVPITi+1Oglg=="
         }
       },
       "is_incremental": false,
@@ -1226,7 +1250,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Transforms.JavascriptMinificationTransform.html",
-          "hash": "xHSFzAqandyat36SGV3/FA=="
+          "hash": "qKyJnUiUUwgmA6+U56osPQ=="
         }
       },
       "is_incremental": false,
@@ -1238,7 +1262,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Transforms.StylesheetBundleTransform.html",
-          "hash": "1W0bgrtlbt0x+93dj079uw=="
+          "hash": "S5l5mjr7o63/stURiQOXtg=="
         }
       },
       "is_incremental": false,
@@ -1250,7 +1274,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Transforms.StylesheetMinificationTransform.html",
-          "hash": "L/cvsojg/RbIsaIAkZp+xA=="
+          "hash": "LNnZBPSIBYV93NHSu0tZ5Q=="
         }
       },
       "is_incremental": false,
@@ -1382,7 +1406,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.html",
-          "hash": "YFhYDVmsNpCr8ouGjIBtpw=="
+          "hash": "7FPUrTbhxItOXMKv9c/n/w=="
         }
       },
       "is_incremental": false,
@@ -1430,7 +1454,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.html",
-          "hash": "PvUdorlBo+DsOnS4lVdL6g=="
+          "hash": "VhL1g/KTCtXi4xy+//nw8g=="
         }
       },
       "is_incremental": false,
@@ -1442,7 +1466,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.InMemoryCacheExtensions.html",
-          "hash": "hkdLdZ8RYQee2SeB6rIkJA=="
+          "hash": "HJ1/n43XElzOhybzSQEgnw=="
         }
       },
       "is_incremental": false,
@@ -1454,7 +1478,19 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.OptimizationExtensions.html",
-          "hash": "QpuYqrS7Job4qZ1hAhrMUQ=="
+          "hash": "v4MO4p2dgMZSzPE5FBO5Xg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Extensions.DependencyInjection.SqliteRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Extensions.DependencyInjection.SqliteRepository.html",
+          "hash": "mEZCUTsFcCpwKNEqD/g5jw=="
         }
       },
       "is_incremental": false,
@@ -1466,7 +1502,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.html",
-          "hash": "v/1vwuhwPOXyFxs06tyWuA=="
+          "hash": "55CL34EirLsNYro3ggSp3g=="
         }
       },
       "is_incremental": false,
@@ -1490,7 +1526,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "drxwq1YUxTeHxrMJfeu7Iw=="
+          "hash": "7SmcoKqSVqeLBaGZNsi4Fw=="
         }
       },
       "is_incremental": false,
@@ -1602,23 +1638,25 @@
   "incremental_info": [
     {
       "status": {
-        "can_incremental": true,
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
         "incrementalPhase": "build",
         "total_file_count": 0,
-        "skipped_file_count": 0
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
       },
       "processors": {
         "ConceptualDocumentProcessor": {
-          "can_incremental": true,
+          "can_incremental": false,
           "incrementalPhase": "build",
           "total_file_count": 7,
-          "skipped_file_count": 7
+          "skipped_file_count": 0
         },
         "ManagedReferenceDocumentProcessor": {
-          "can_incremental": true,
+          "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 121,
-          "skipped_file_count": 121
+          "total_file_count": 124,
+          "skipped_file_count": 0
         },
         "TocDocumentProcessor": {
           "can_incremental": false,

@@ -98,35 +98,11 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Adriva.Extensions.Caching.Abstractions.ICache.html">ICache</a></div>
-    <div><span class="xref">System.IDisposable</span></div>
-  </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetHashCode()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ToString()</span>
-    </div>
+    <div><span class="xref">IDisposable</span></div>
   </div>
   <h5 id="Adriva_Extensions_Caching_Memory_InMemoryCache_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class InMemoryCache : ICache, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class InMemoryCache : object, ICache, IDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -215,7 +191,7 @@
     <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Memory/InMemoryCache.cs/#L41">View Source</a>
   </span>
   <a id="Adriva_Extensions_Caching_Memory_InMemoryCache_GetOrCreateAsync_" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync*"></a>
-  <h4 id="Adriva_Extensions_Caching_Memory_InMemoryCache_GetOrCreateAsync__1_System_String_System_Func_Adriva_Extensions_Caching_Abstractions_ICacheItem_System_Threading_Tasks_Task___0___Adriva_Extensions_Caching_Abstractions_EvictionCallback_System_String___" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync``1(System.String,System.Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,System.Threading.Tasks.Task{``0}},Adriva.Extensions.Caching.Abstractions.EvictionCallback,System.String[])">GetOrCreateAsync&lt;T&gt;(String, Func&lt;ICacheItem, Task&lt;T&gt;&gt;, EvictionCallback, String[])</h4>
+  <h4 id="Adriva_Extensions_Caching_Memory_InMemoryCache_GetOrCreateAsync__1_System_String_Func_Adriva_Extensions_Caching_Abstractions_ICacheItem_Task___0___Adriva_Extensions_Caching_Abstractions_EvictionCallback_System_String___" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync``1(System.String,Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,Task{``0}},Adriva.Extensions.Caching.Abstractions.EvictionCallback,System.String[])">GetOrCreateAsync&lt;T&gt;(String, Func&lt;ICacheItem, Task&lt;T&gt;&gt;, EvictionCallback, String[])</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -238,7 +214,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="Adriva.Extensions.Caching.Abstractions.ICacheItem.html">ICacheItem</a>, <span class="xref">System.Threading.Tasks.Task</span>&lt;T&gt;&gt;</td>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="Adriva.Extensions.Caching.Abstractions.ICacheItem.html">ICacheItem</a>, <span class="xref">Task</span>&lt;T&gt;&gt;</td>
         <td><span class="parametername">factory</span></td>
         <td></td>
       </tr>
@@ -264,7 +240,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;T&gt;</td>
+        <td><span class="xref">Task</span>&lt;T&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -291,7 +267,7 @@
     <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Memory/InMemoryCache.cs/#L35">View Source</a>
   </span>
   <a id="Adriva_Extensions_Caching_Memory_InMemoryCache_GetOrCreateAsync_" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync*"></a>
-  <h4 id="Adriva_Extensions_Caching_Memory_InMemoryCache_GetOrCreateAsync__1_System_String_System_Func_Adriva_Extensions_Caching_Abstractions_ICacheItem_System_Threading_Tasks_Task___0___System_String___" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync``1(System.String,System.Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,System.Threading.Tasks.Task{``0}},System.String[])">GetOrCreateAsync&lt;T&gt;(String, Func&lt;ICacheItem, Task&lt;T&gt;&gt;, String[])</h4>
+  <h4 id="Adriva_Extensions_Caching_Memory_InMemoryCache_GetOrCreateAsync__1_System_String_Func_Adriva_Extensions_Caching_Abstractions_ICacheItem_Task___0___System_String___" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync``1(System.String,Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,Task{``0}},System.String[])">GetOrCreateAsync&lt;T&gt;(String, Func&lt;ICacheItem, Task&lt;T&gt;&gt;, String[])</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -314,7 +290,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="Adriva.Extensions.Caching.Abstractions.ICacheItem.html">ICacheItem</a>, <span class="xref">System.Threading.Tasks.Task</span>&lt;T&gt;&gt;</td>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="Adriva.Extensions.Caching.Abstractions.ICacheItem.html">ICacheItem</a>, <span class="xref">Task</span>&lt;T&gt;&gt;</td>
         <td><span class="parametername">factory</span></td>
         <td></td>
       </tr>
@@ -335,7 +311,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;T&gt;</td>
+        <td><span class="xref">Task</span>&lt;T&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -427,7 +403,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td><span class="xref">Task</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -437,7 +413,7 @@
       <a class="xref" href="Adriva.Extensions.Caching.Abstractions.ICache.html">ICache</a>
   </div>
   <div>
-      <span class="xref">System.IDisposable</span>
+      <span class="xref">IDisposable</span>
   </div>
 </article>
           </div>

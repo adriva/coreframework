@@ -87,7 +87,7 @@
   </div>
   <h1 id="Microsoft_Extensions_DependencyInjection_EntityFrameworkRepositoryExtensions" data-uid="Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions" class="text-break">Class EntityFrameworkRepositoryExtensions
   </h1>
-  <div class="markdown level0 summary"><p>Provides extension methods to use Microsoft Entity Framework base repositories with the analytics server.</p>
+  <div class="markdown level0 summary"><p>Provides extension methods to use Microsoft Entity Framework based repositories with the analytics server.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -105,17 +105,17 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework/EntityFrameworkRepositoryExtensions.cs/#L29">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework/EntityFrameworkRepositoryExtensions.cs/#L49">View Source</a>
   </span>
-  <a id="Microsoft_Extensions_DependencyInjection_EntityFrameworkRepositoryExtensions_UseInMemoryRepository_" data-uid="Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseInMemoryRepository*"></a>
-  <h4 id="Microsoft_Extensions_DependencyInjection_EntityFrameworkRepositoryExtensions_UseInMemoryRepository_Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_System_String_" data-uid="Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseInMemoryRepository(Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder,System.String)">UseInMemoryRepository(IAnalyticsServerBuilder, String)</h4>
-  <div class="markdown level1 summary"><p>Registers an in-memory entity framework database to be used with the analytics server.
-<remarks>In-memory database should only be used for development / testing purposes and not in a production environment.</remarks></p>
+  <a id="Microsoft_Extensions_DependencyInjection_EntityFrameworkRepositoryExtensions_UseEntityFrameworkRepository_" data-uid="Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository*"></a>
+  <h4 id="Microsoft_Extensions_DependencyInjection_EntityFrameworkRepositoryExtensions_UseEntityFrameworkRepository__2_Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_Action_DbContextOptionsBuilder__ServiceLifetime_ServiceLifetime_" data-uid="Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository``2(Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder,Action{DbContextOptionsBuilder},ServiceLifetime,ServiceLifetime)">UseEntityFrameworkRepository&lt;TContext, TRepository&gt;(IAnalyticsServerBuilder, Action&lt;DbContextOptionsBuilder&gt;, ServiceLifetime, ServiceLifetime)</h4>
+  <div class="markdown level1 summary"><p>Registers the required services to use an EF Core based analytics repository.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IAnalyticsServerBuilder UseInMemoryRepository(this IAnalyticsServerBuilder build, string databaseName = &quot;AnalyticsDb&quot;)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IAnalyticsServerBuilder UseEntityFrameworkRepository&lt;TContext, TRepository&gt;(this IAnalyticsServerBuilder builder, Action&lt;DbContextOptionsBuilder&gt; configureContext, ServiceLifetime contextLifetime = null, ServiceLifetime optionsLifetime = null)
+    where TContext : DbContext where TRepository : class, IAnalyticsRepository</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -129,7 +129,190 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html">IAnalyticsServerBuilder</a></td>
-        <td><span class="parametername">build</span></td>
+        <td><span class="parametername">builder</span></td>
+        <td><p>Analytics server builder delegate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<span class="xref">DbContextOptionsBuilder</span>&gt;</td>
+        <td><span class="parametername">configureContext</span></td>
+        <td><p>Callback method to configure DbContextOptions.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ServiceLifetime</span></td>
+        <td><span class="parametername">contextLifetime</span></td>
+        <td><p>The lifetime with which to register the DbContext service in the container.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ServiceLifetime</span></td>
+        <td><span class="parametername">optionsLifetime</span></td>
+        <td><p>The lifetime with which to register the DbContextOptions service in the container.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html">IAnalyticsServerBuilder</a></td>
+        <td><p>The Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder so that additional calls can be chained.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TContext</span></td>
+        <td><p>The concrete implementation of a DbContext to use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TRepository</span></td>
+        <td><p>The concrete implementation of an IAnalyticsRepository to use.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework/EntityFrameworkRepositoryExtensions.cs/#L25">View Source</a>
+  </span>
+  <a id="Microsoft_Extensions_DependencyInjection_EntityFrameworkRepositoryExtensions_UseEntityFrameworkRepository_" data-uid="Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository*"></a>
+  <h4 id="Microsoft_Extensions_DependencyInjection_EntityFrameworkRepositoryExtensions_UseEntityFrameworkRepository__3_Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_Action_DbContextOptionsBuilder__ServiceLifetime_ServiceLifetime_" data-uid="Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository``3(Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder,Action{DbContextOptionsBuilder},ServiceLifetime,ServiceLifetime)">UseEntityFrameworkRepository&lt;TContext, TRepository, TModelBuilder&gt;(IAnalyticsServerBuilder, Action&lt;DbContextOptionsBuilder&gt;, ServiceLifetime, ServiceLifetime)</h4>
+  <div class="markdown level1 summary"><p>Registers the required services to use an EF Core based analytics repository.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IAnalyticsServerBuilder UseEntityFrameworkRepository&lt;TContext, TRepository, TModelBuilder&gt;(this IAnalyticsServerBuilder builder, Action&lt;DbContextOptionsBuilder&gt; configureContext, ServiceLifetime contextLifetime = null, ServiceLifetime optionsLifetime = null)
+    where TContext : DbContext where TRepository : class, IAnalyticsRepository where TModelBuilder : class, IDatabaseModelBuilder</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html">IAnalyticsServerBuilder</a></td>
+        <td><span class="parametername">builder</span></td>
+        <td><p>Analytics server builder delegate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<span class="xref">DbContextOptionsBuilder</span>&gt;</td>
+        <td><span class="parametername">configureContext</span></td>
+        <td><p>Callback method to configure DbContextOptions.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ServiceLifetime</span></td>
+        <td><span class="parametername">contextLifetime</span></td>
+        <td><p>The lifetime with which to register the DbContext service in the container.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ServiceLifetime</span></td>
+        <td><span class="parametername">optionsLifetime</span></td>
+        <td><p>The lifetime with which to register the DbContextOptions service in the container.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html">IAnalyticsServerBuilder</a></td>
+        <td><p>The Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder so that additional calls can be chained.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TContext</span></td>
+        <td><p>The concrete implementation of a DbContext to use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TRepository</span></td>
+        <td><p>The concrete implementation of an IAnalyticsRepository to use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TModelBuilder</span></td>
+        <td><p>The concrete implementation of an IDatabaseModelBuilder to configure the model of the DbContext.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework/EntityFrameworkRepositoryExtensions.cs/#L68">View Source</a>
+  </span>
+  <a id="Microsoft_Extensions_DependencyInjection_EntityFrameworkRepositoryExtensions_UseInMemoryRepository_" data-uid="Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseInMemoryRepository*"></a>
+  <h4 id="Microsoft_Extensions_DependencyInjection_EntityFrameworkRepositoryExtensions_UseInMemoryRepository_Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_System_String_" data-uid="Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseInMemoryRepository(Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder,System.String)">UseInMemoryRepository(IAnalyticsServerBuilder, String)</h4>
+  <div class="markdown level1 summary"><p>Registers an in-memory entity framework database to be used with the analytics server.
+<remarks>In-memory database should only be used for development / testing purposes and not in a production environment.</remarks></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IAnalyticsServerBuilder UseInMemoryRepository(this IAnalyticsServerBuilder builder, string databaseName = &quot;AnalyticsDb&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html">IAnalyticsServerBuilder</a></td>
+        <td><span class="parametername">builder</span></td>
         <td><p>Analytics server builder delegate.</p>
 </td>
       </tr>
@@ -165,7 +348,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework/EntityFrameworkRepositoryExtensions.cs/#L11" class="contribution-link">View Source</a>
+                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework/EntityFrameworkRepositoryExtensions.cs/#L12" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

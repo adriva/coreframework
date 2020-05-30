@@ -95,33 +95,9 @@
     <div class="level0"><span class="xref">System.Object</span></div>
     <div class="level1"><span class="xref">AssetExtensions</span></div>
   </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetHashCode()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ToString()</span>
-    </div>
-  </div>
   <h5 id="Adriva_Extensions_Optimization_Abstractions_AssetExtensions_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class AssetExtensions</code></pre>
+    <pre><code class="lang-csharp hljs">public static class AssetExtensions : object</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
@@ -174,7 +150,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Adriva.Extensions.Optimization.Abstractions.Asset.html">Asset</a>&gt;</td>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Adriva.Extensions.Optimization.Abstractions.Asset.html">Asset</a>&gt;</td>
         <td><p>A task that represents the asynchronous operation. The value of the Result parameter is the asset that is a clone of the source asset.</p>
 </td>
       </tr>
@@ -223,7 +199,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">Task</span>&lt;<span class="xref">System.String</span>&gt;</td>
         <td><p>A task that represents the asynchronous operation. The value of the Result parameter is the string representation of the content of the asset.</p>
 </td>
       </tr>

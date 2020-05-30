@@ -98,33 +98,9 @@
     <h5>Implements</h5>
     <div><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.IAssetLoader.html">IAssetLoader</a></div>
   </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetHashCode()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ToString()</span>
-    </div>
-  </div>
   <h5 id="Adriva_Extensions_Optimization_Abstractions_HttpAssetLoader_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class HttpAssetLoader : IAssetLoader</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class HttpAssetLoader : object, IAssetLoader</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -253,7 +229,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.ValueTask</span>&lt;<span class="xref">System.IO.Stream</span>&gt;</td>
+        <td><span class="xref">ValueTask</span>&lt;<span class="xref">Stream</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>

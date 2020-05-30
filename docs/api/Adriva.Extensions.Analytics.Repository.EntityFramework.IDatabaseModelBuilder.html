@@ -5,13 +5,13 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Interface IAssetOrderer
+    <title>Interface IDatabaseModelBuilder
    | Adriva Core Framework </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Interface IAssetOrderer
+    <meta name="title" content="Interface IDatabaseModelBuilder
    | Adriva Core Framework ">  
     
-    <link rel="canonical" href="https://adriva.github.io/coreframework/api/Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.html">
+    <link rel="canonical" href="https://adriva.github.io/coreframework/api/Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder.html">
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -76,22 +76,23 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Adriva.Extensions.Optimization.Abstractions.IAssetOrderer">
+            <article class="content wrap" id="_content" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder">
   
   <div style="text-align:center;margin-bottom: 20px;color: #ca3030;">
   [This is preliminary documentation and is subject to change.]
   </div>
   <div>
-    <h6><strong>Namespace</strong>: <a class="xref" href="Adriva.Extensions.Optimization.Abstractions.html">Adriva.Extensions.Optimization.Abstractions</a></h6>
-    <h6><strong>Assembly</strong>: Adriva.Extensions.Optimization.Abstractions.dll</h6>
+    <h6><strong>Namespace</strong>: <a class="xref" href="Adriva.Extensions.Analytics.Repository.EntityFramework.html">Adriva.Extensions.Analytics.Repository.EntityFramework</a></h6>
+    <h6><strong>Assembly</strong>: Adriva.Extensions.Analytics.Repository.EntityFramework.dll</h6>
   </div>
-  <h1 id="Adriva_Extensions_Optimization_Abstractions_IAssetOrderer" data-uid="Adriva.Extensions.Optimization.Abstractions.IAssetOrderer" class="text-break">Interface IAssetOrderer
+  <h1 id="Adriva_Extensions_Analytics_Repository_EntityFramework_IDatabaseModelBuilder" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder" class="text-break">Interface IDatabaseModelBuilder
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Provides methods to configure the model used by the AnalyticsDbContext for different database providers.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
-  <h5 id="Adriva_Extensions_Optimization_Abstractions_IAssetOrderer_syntax">Syntax</h5>
+  <h5 id="Adriva_Extensions_Analytics_Repository_EntityFramework_IDatabaseModelBuilder_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IAssetOrderer</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IDatabaseModelBuilder</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
@@ -99,15 +100,16 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/IAssetOrderer.cs/#L7">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework/IDatabaseModelBuilder.cs/#L15">View Source</a>
   </span>
-  <a id="Adriva_Extensions_Optimization_Abstractions_IAssetOrderer_Order_" data-uid="Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.Order*"></a>
-  <h4 id="Adriva_Extensions_Optimization_Abstractions_IAssetOrderer_Order_IEnumerable_Adriva_Extensions_Optimization_Abstractions_Asset__" data-uid="Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.Order(IEnumerable{Adriva.Extensions.Optimization.Abstractions.Asset})">Order(IEnumerable&lt;Asset&gt;)</h4>
-  <div class="markdown level1 summary"></div>
+  <a id="Adriva_Extensions_Analytics_Repository_EntityFramework_IDatabaseModelBuilder_OnModelCreating_" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder.OnModelCreating*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Repository_EntityFramework_IDatabaseModelBuilder_OnModelCreating_Adriva_Extensions_Analytics_Repository_EntityFramework_AnalyticsDatabaseContext_ModelBuilder_" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder.OnModelCreating(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext,ModelBuilder)">OnModelCreating(AnalyticsDatabaseContext, ModelBuilder)</h4>
+  <div class="markdown level1 summary"><p>Called by the system once, to let the repository configure its model according to the database provider specifications.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IEnumerable&lt;Asset&gt; Order(IEnumerable&lt;Asset&gt; assets)</code></pre>
+    <pre><code class="lang-csharp hljs">void OnModelCreating(AnalyticsDatabaseContext databaseContext, ModelBuilder modelBuilder)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -120,24 +122,16 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Adriva.Extensions.Optimization.Abstractions.Asset.html">Asset</a>&gt;</td>
-        <td><span class="parametername">assets</span></td>
-        <td></td>
+        <td><a class="xref" href="Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.html">AnalyticsDatabaseContext</a></td>
+        <td><span class="parametername">databaseContext</span></td>
+        <td><p>An instance of AnalyticsDatabaseContext that  will be used to persist analytics data.</p>
+</td>
       </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
       <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Adriva.Extensions.Optimization.Abstractions.Asset.html">Asset</a>&gt;</td>
-        <td></td>
+        <td><span class="xref">ModelBuilder</span></td>
+        <td><span class="parametername">modelBuilder</span></td>
+        <td><p>The ModelBuilder that can be used to configure the EF model.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -149,7 +143,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/IAssetOrderer.cs/#L5" class="contribution-link">View Source</a>
+                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework/IDatabaseModelBuilder.cs/#L8" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
