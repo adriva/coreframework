@@ -12,6 +12,12 @@ namespace Adriva.Extensions.Analytics.Server
     public sealed class NullRepository : IAnalyticsRepository
     {
         /// <summary>
+        /// Initializes the current instance of Adriva.Extensions.Analytics.Server.NullRepository class.
+        /// </summary>
+        /// <returns>Represents the asynchronous process operation.</returns>
+        public Task InitializeAsync() => Task.CompletedTask;
+
+        /// <summary>
         /// Called by the system when the server analytics buffer is full to persist items in the repository.
         /// </summary>
         /// <param name="items">Items that should be persisted in the repository.</param>

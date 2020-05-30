@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.Analytics
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.Analytics.Repository.EntityFramework", "src\Adriva.Extensions.Analytics.Repository.EntityFramework\Adriva.Extensions.Analytics.Repository.EntityFramework.csproj", "{9CCE0D85-7EE2-408B-853E-5D022A009506}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.Analytics.Repository.EntityFramework.SqlLite", "src\Adriva.Extensions.Analytics.Repository.EntityFramework.SqlLite\Adriva.Extensions.Analytics.Repository.EntityFramework.SqlLite.csproj", "{DE19027C-218C-49C2-A882-7D66C3E0C381}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,11 +87,24 @@ Global
 		{9CCE0D85-7EE2-408B-853E-5D022A009506}.Release|x64.Build.0 = Release|Any CPU
 		{9CCE0D85-7EE2-408B-853E-5D022A009506}.Release|x86.ActiveCfg = Release|Any CPU
 		{9CCE0D85-7EE2-408B-853E-5D022A009506}.Release|x86.Build.0 = Release|Any CPU
+		{DE19027C-218C-49C2-A882-7D66C3E0C381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE19027C-218C-49C2-A882-7D66C3E0C381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE19027C-218C-49C2-A882-7D66C3E0C381}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DE19027C-218C-49C2-A882-7D66C3E0C381}.Debug|x64.Build.0 = Debug|Any CPU
+		{DE19027C-218C-49C2-A882-7D66C3E0C381}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DE19027C-218C-49C2-A882-7D66C3E0C381}.Debug|x86.Build.0 = Debug|Any CPU
+		{DE19027C-218C-49C2-A882-7D66C3E0C381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE19027C-218C-49C2-A882-7D66C3E0C381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE19027C-218C-49C2-A882-7D66C3E0C381}.Release|x64.ActiveCfg = Release|Any CPU
+		{DE19027C-218C-49C2-A882-7D66C3E0C381}.Release|x64.Build.0 = Release|Any CPU
+		{DE19027C-218C-49C2-A882-7D66C3E0C381}.Release|x86.ActiveCfg = Release|Any CPU
+		{DE19027C-218C-49C2-A882-7D66C3E0C381}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{248E5BC3-64FD-4B0B-A51E-666618CD1EE5} = {BF45F630-9E4C-45FD-8C9B-18277AD20DF3}
 		{EB347292-68B0-4069-932E-FC9CDA9538D2} = {BF45F630-9E4C-45FD-8C9B-18277AD20DF3}
 		{49EE6ABC-EA0D-4B68-B968-06995EC47CC7} = {BF45F630-9E4C-45FD-8C9B-18277AD20DF3}
 		{9CCE0D85-7EE2-408B-853E-5D022A009506} = {BF45F630-9E4C-45FD-8C9B-18277AD20DF3}
+		{DE19027C-218C-49C2-A882-7D66C3E0C381} = {BF45F630-9E4C-45FD-8C9B-18277AD20DF3}
 	EndGlobalSection
 EndGlobal

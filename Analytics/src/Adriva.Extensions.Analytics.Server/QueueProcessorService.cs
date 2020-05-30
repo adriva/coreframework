@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Extensions.Analytics.Server.Entities;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -16,59 +17,70 @@ namespace Adriva.Extensions.Analytics.Server
     {
         private readonly ILogger Logger;
         private readonly AnalyticsServerOptions Options;
-        private readonly IAnalyticsRepository Repository;
+        private readonly IServiceProvider ServiceProvider;
         private readonly IQueueingService QueueingService;
         private readonly CancellationTokenSource StopTokenSource = new CancellationTokenSource();
         private readonly Task[] ProcessorTasks;
         private bool IsDisposed;
 
-        public QueueProcessorService(IQueueingService queueingService,
-                                    IAnalyticsRepository repository,
+        public QueueProcessorService(
+                                    IServiceProvider serviceProvider,
+                                    IQueueingService queueingService,
                                     IOptions<AnalyticsServerOptions> optionsAccessor,
                                     ILogger<QueueProcessorService> logger)
         {
+            this.ServiceProvider = serviceProvider;
             this.Options = optionsAccessor.Value;
-            this.Repository = repository;
             this.QueueingService = queueingService;
             this.Logger = logger;
 
             this.ProcessorTasks = new Task[this.Options.ProcessorThreadCount];
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
+            using (IServiceScope serviceScope = this.ServiceProvider.CreateScope())
+            {
+                IAnalyticsRepository repository = serviceScope.ServiceProvider.GetRequiredService<IAnalyticsRepository>();
+                await repository.InitializeAsync();
+            }
+
             for (int loop = 0; loop < this.Options.ProcessorThreadCount; loop++)
             {
                 this.Logger.LogInformation($"Starting queue processor instance {loop}.");
                 this.ProcessorTasks[loop] = Task.Run(async () => { await this.ProcessItemsAsync(); });
             }
-
-            return Task.CompletedTask;
         }
 
         private async Task PersistBufferAsync(List<AnalyticsItem> buffer)
         {
             if (0 == buffer.Count) return;
 
-            try
+
+            using (IServiceScope serviceScope = this.ServiceProvider.CreateScope())
             {
-                await this.Repository.StoreAsync(buffer, CancellationToken.None);
-                this.Logger.LogTrace($"AnalyticsItems persisted in repository.");
-            }
-            catch (Exception storageError)
-            {
+                IAnalyticsRepository repository = serviceScope.ServiceProvider.GetRequiredService<IAnalyticsRepository>();
+
                 try
                 {
-                    await this.Repository.HandleErrorAsync(buffer, storageError);
+                    await repository.StoreAsync(buffer, CancellationToken.None);
+                    this.Logger.LogTrace($"AnalyticsItems persisted in repository.");
                 }
-                catch (Exception errorHandlerError)
+                catch (Exception storageError)
                 {
-                    this.Logger.LogError(errorHandlerError, $"Repository '{this.Repository.GetType().FullName}' failed to handle error.");
+                    try
+                    {
+                        await repository?.HandleErrorAsync(buffer, storageError);
+                    }
+                    catch (Exception errorHandlerError)
+                    {
+                        this.Logger.LogError(errorHandlerError, $"Repository '{repository.GetType().FullName}' failed to handle error.");
+                    }
                 }
-            }
-            finally
-            {
-                buffer.Clear();
+                finally
+                {
+                    buffer.Clear();
+                }
             }
         }
 

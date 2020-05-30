@@ -55,7 +55,7 @@ namespace Adriva.Extensions.Analytics.Server
                 return (IAnalyticsHandler)ActivatorUtilities.CreateInstance(serviceProvider, this.HandlerType);
             });
 
-            this.ServiceCollection.AddSingleton<IAnalyticsRepository>(serviceProvider =>
+            this.ServiceCollection.AddScoped<IAnalyticsRepository>(serviceProvider =>
             {
                 if (null == this.RepositoryType)
                 {

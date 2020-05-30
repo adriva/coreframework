@@ -56,7 +56,7 @@ namespace demo
                     .SetProcessorThreadCount(1)
                     .SetBufferCapacity(10)
                     .UseInMemoryRepository()
-                ;
+               ;
             });
 
 

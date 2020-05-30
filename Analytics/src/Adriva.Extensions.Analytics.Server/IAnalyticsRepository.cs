@@ -12,6 +12,12 @@ namespace Adriva.Extensions.Analytics.Server
     public interface IAnalyticsRepository
     {
         /// <summary>
+        /// Called by the system once to let the repository do some initial work before accepting data.
+        /// </summary>
+        /// <returns>Represents the asynchronous process operation.</returns>
+        Task InitializeAsync();
+
+        /// <summary>
         /// Called by the system when the server analytics buffer is full to persist items in the repository.
         /// </summary>
         /// <param name="items">Items that should be persisted in the repository.</param>

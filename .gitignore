@@ -6,6 +6,9 @@
 ## dynamically generated assets
 demo/wwwroot/assets/
 
+##sqlite analytics database
+analytics.db*
+
 # User-specific files
 *.suo
 *.user

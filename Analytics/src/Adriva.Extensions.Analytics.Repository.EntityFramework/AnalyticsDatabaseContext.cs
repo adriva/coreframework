@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using Adriva.Extensions.Analytics.Server.Entities;
+using System;
 
 namespace Adriva.Extensions.Analytics.Repository.EntityFramework
 {
@@ -8,6 +10,8 @@ namespace Adriva.Extensions.Analytics.Repository.EntityFramework
     /// </summary>
     public class AnalyticsDatabaseContext : DbContext
     {
+        private readonly IDatabaseModelBuilder DatabaseModelBuilder;
+
         /// <summary>
         /// Gets or sets a collection of AnalyticsItem objects that can be used to query or save the instances.
         /// </summary>
@@ -60,11 +64,13 @@ namespace Adriva.Extensions.Analytics.Repository.EntityFramework
         /// Initializes a new instance of the Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext class using the specified options.
         /// </summary>
         /// <param name="options">The options for this context.</param>
-        public AnalyticsDatabaseContext(DbContextOptions<AnalyticsDatabaseContext> options) : base(options)
+        /// <param name="serviceProvider">The IServiceProvider instance that will be used to resolve dependencies.</param>
+        public AnalyticsDatabaseContext(DbContextOptions<AnalyticsDatabaseContext> options, IServiceProvider serviceProvider) : base(options)
         {
             this.ChangeTracker.AutoDetectChangesEnabled = false;
             this.ChangeTracker.LazyLoadingEnabled = false;
             this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            this.DatabaseModelBuilder = serviceProvider?.GetService<IDatabaseModelBuilder>();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -72,6 +78,7 @@ namespace Adriva.Extensions.Analytics.Repository.EntityFramework
             modelBuilder.Entity<AnalyticsItem>(
                 e =>
                 {
+                    e.ToTable("AnalyticsItems");
                     e.HasKey(x => x.Id);
                     e.Property(x => x.Id).ValueGeneratedOnAdd();
 
@@ -109,65 +116,82 @@ namespace Adriva.Extensions.Analytics.Repository.EntityFramework
                         .WithOne(x => x.AnalyticsItem)
                         .HasForeignKey(x => x.AnalyticsItemId)
                         .HasPrincipalKey(x => x.Id);
+
+                    e.HasIndex(x => x.InstrumentationKey);
                 }
             );
 
             modelBuilder.Entity<ExceptionItem>(
                 e =>
                 {
+                    e.ToTable("Exceptions");
                     e.HasKey(x => x.Id);
                     e.Property(x => x.Id).ValueGeneratedOnAdd();
+                    e.HasIndex(x => x.AnalyticsItemId);
                 }
             );
 
             modelBuilder.Entity<RequestItem>(
                 e =>
                 {
+                    e.ToTable("Requests");
                     e.HasKey(x => x.Id);
                     e.Property(x => x.Id).ValueGeneratedOnAdd();
+                    e.HasIndex(x => x.AnalyticsItemId);
                 }
             );
 
             modelBuilder.Entity<EventItem>(
                 e =>
                 {
+                    e.ToTable("Events");
                     e.HasKey(x => x.Id);
                     e.Property(x => x.Id).ValueGeneratedOnAdd();
+                    e.HasIndex(x => x.AnalyticsItemId);
                 }
             );
 
             modelBuilder.Entity<MetricItem>(
                 e =>
                 {
+                    e.ToTable("Metrics");
                     e.HasKey(x => x.Id);
                     e.Property(x => x.Id).ValueGeneratedOnAdd();
+                    e.HasIndex(x => x.AnalyticsItemId);
                 }
             );
 
             modelBuilder.Entity<AvailabilityItem>(
                 e =>
                 {
+                    e.ToTable("Availability");
                     e.HasKey(x => x.Id);
                     e.Property(x => x.Id).ValueGeneratedOnAdd();
+                    e.HasIndex(x => x.AnalyticsItemId);
                 }
             );
 
             modelBuilder.Entity<MessageItem>(
                 e =>
                 {
+                    e.ToTable("Messages");
                     e.HasKey(x => x.Id);
                     e.Property(x => x.Id).ValueGeneratedOnAdd();
+                    e.HasIndex(x => x.AnalyticsItemId);
                 }
             );
 
             modelBuilder.Entity<DependencyItem>(
                 e =>
                 {
+                    e.ToTable("Dependencies");
                     e.HasKey(x => x.Id);
                     e.Property(x => x.Id).ValueGeneratedOnAdd();
+                    e.HasIndex(x => x.AnalyticsItemId);
                 }
             );
-        }
 
+            this.DatabaseModelBuilder?.OnModelCreating(this, modelBuilder);
+        }
     }
 }
