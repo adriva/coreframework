@@ -29,6 +29,8 @@ This project targets ***netstandard2.1***.
 |Adriva.Extensions.Analytics.AppInsights |Microsoft AppInsights client wrapper library that can use custom server implementations.|
 |Adriva.Extensions.Analytics.Server |Base analytics server that can be used with virtually any analytics client and store incoming analytics data in virtually any repository.|
 |Adriva.Extensions.Analytics.Server.AppInsights |Analytics server services that is used to parse and store incoming Microsoft AppInsights data in virtually any data storage including on-premise systems.|
+|Adriva.Extensions.Analytics.Repository.EntityFramework|Base implementation of an analytics data repository using Entity Framework Core which other EF Core repositories can derive from. Also provides an in-memory repository for development and testing purposes.|
+|Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite|Entity Framework Core based Sqlite analytics data repository.|
 
 ### Projects Running On Adriva Core Framework
 * [adriva.com](https://adriva.com)
