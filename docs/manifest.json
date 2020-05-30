@@ -194,7 +194,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Common.Core.NdJsonSerializer.html",
-          "hash": "lQKKA5RdePHy4BhnZTDk8w=="
+          "hash": "IVJxCrvpaWJCSDK1Ou3/cA=="
         }
       },
       "is_incremental": false,
@@ -350,7 +350,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html",
-          "hash": "5Grq3fc8EkM5Bc8OJ9ILBw=="
+          "hash": "aTL4hyVq61ABHWCwhLm8fA=="
         }
       },
       "is_incremental": false,
@@ -375,6 +375,30 @@
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.html",
           "hash": "5hkAxRrVdk7CPCe93sk+7A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.html",
+          "hash": "tvgo5qLX6vp/2TX3FBFivg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.html",
+          "hash": "i4GLNfpw1iyTr00yruj8Gg=="
         }
       },
       "is_incremental": false,
@@ -494,7 +518,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.Envelope.html",
-          "hash": "G67ObjG4y25ykm3xWEzF9w=="
+          "hash": "TUD1nDJNmewx1pkywz9Piw=="
         }
       },
       "is_incremental": false,
@@ -842,7 +866,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html",
-          "hash": "rnH+GhojA+QlF152YBt0lA=="
+          "hash": "D+uctPzCjGp84wyIaTJIrg=="
         }
       },
       "is_incremental": false,
@@ -1070,7 +1094,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder-1.html",
-          "hash": "PVCnHN0lFSisAtf/BJM07g=="
+          "hash": "hp6baslue7joO0oNZbNkug=="
         }
       },
       "is_incremental": false,
@@ -1094,7 +1118,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationEvents-1.html",
-          "hash": "LIS88Q/9UGWE8ORpSdt0lg=="
+          "hash": "TE1sWVD/SljWOy3fIm3BWA=="
         }
       },
       "is_incremental": false,
@@ -1178,7 +1202,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.html",
-          "hash": "nBwf/dUzShZAXWA+2SfYDg=="
+          "hash": "N00BUzcHzacjFPStaVaQlw=="
         }
       },
       "is_incremental": false,
@@ -1442,7 +1466,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.CacheExtensions.html",
-          "hash": "DZPyQsMMrr+gmbxZ0kXxXQ=="
+          "hash": "sPNZDxi9mzWowGGpvxyO1Q=="
         }
       },
       "is_incremental": false,
@@ -1454,7 +1478,19 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.html",
-          "hash": "VhL1g/KTCtXi4xy+//nw8g=="
+          "hash": "c0wT32piisnPDkvEyikOkQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Extensions.DependencyInjection.EntityFrameworkSqliteRepositoryExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Extensions.DependencyInjection.EntityFrameworkSqliteRepositoryExtensions.html",
+          "hash": "iCDk/fqdaEbZjId1WjdVKA=="
         }
       },
       "is_incremental": false,
@@ -1478,19 +1514,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.OptimizationExtensions.html",
-          "hash": "v4MO4p2dgMZSzPE5FBO5Xg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Microsoft.Extensions.DependencyInjection.SqliteRepository.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Microsoft.Extensions.DependencyInjection.SqliteRepository.html",
-          "hash": "mEZCUTsFcCpwKNEqD/g5jw=="
+          "hash": "EcOFqWhJmAHWpHTlGEBrkw=="
         }
       },
       "is_incremental": false,
@@ -1502,7 +1526,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.html",
-          "hash": "55CL34EirLsNYro3ggSp3g=="
+          "hash": "Vpe8GeY3VUgOzBfDfq9hSA=="
         }
       },
       "is_incremental": false,
@@ -1526,7 +1550,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "7SmcoKqSVqeLBaGZNsi4Fw=="
+          "hash": "0iEW+mcIDNJ6l34KVnxr/A=="
         }
       },
       "is_incremental": false,
@@ -1638,25 +1662,23 @@
   "incremental_info": [
     {
       "status": {
-        "can_incremental": false,
-        "details": "Cannot build incrementally because last build info is missing.",
+        "can_incremental": true,
         "incrementalPhase": "build",
         "total_file_count": 0,
-        "skipped_file_count": 0,
-        "full_build_reason_code": "NoAvailableBuildCache"
+        "skipped_file_count": 0
       },
       "processors": {
         "ConceptualDocumentProcessor": {
-          "can_incremental": false,
+          "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 7,
-          "skipped_file_count": 0
+          "skipped_file_count": 7
         },
         "ManagedReferenceDocumentProcessor": {
-          "can_incremental": false,
+          "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 124,
-          "skipped_file_count": 0
+          "total_file_count": 126,
+          "skipped_file_count": 46
         },
         "TocDocumentProcessor": {
           "can_incremental": false,

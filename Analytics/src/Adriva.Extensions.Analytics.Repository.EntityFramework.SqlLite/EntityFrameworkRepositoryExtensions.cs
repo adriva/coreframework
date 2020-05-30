@@ -1,4 +1,5 @@
 ﻿using Adriva.Extensions.Analytics.Repository.EntityFramework;
+using Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite;
 using Adriva.Extensions.Analytics.Server;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,7 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection
     /// <summary>
     /// Provides extension methods to use Microsoft Entity Framework based repositories with the analytics server.
     /// </summary>
-    public static class EntityFrameworkRepositoryExtensions
+    public static class EntityFrameworkSqliteRepositoryExtensions
     {
         /// <summary>
         /// Registers a Sqlite entity framework database to be used with the analytics server.

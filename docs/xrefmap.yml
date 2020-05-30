@@ -2633,6 +2633,47 @@ references:
   isSpec: "True"
   fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.StoreAsync
   nameWithType: InMemoryRepository.StoreAsync
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite
+  name: Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.html
+  commentId: N:Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite
+  nameWithType: Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository
+  name: SqliteRepository
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.html
+  commentId: T:Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository
+  nameWithType: SqliteRepository
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.#ctor(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext,ILogger{Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository})
+  name: SqliteRepository(AnalyticsDatabaseContext, ILogger<SqliteRepository>)
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_Sqlite_SqliteRepository__ctor_Adriva_Extensions_Analytics_Repository_EntityFramework_AnalyticsDatabaseContext_ILogger_Adriva_Extensions_Analytics_Repository_EntityFramework_Sqlite_SqliteRepository__
+  commentId: M:Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.#ctor(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext,ILogger{Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository})
+  name.vb: SqliteRepository(AnalyticsDatabaseContext, ILogger(Of SqliteRepository))
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.SqliteRepository(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext, ILogger<Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository>)
+  fullName.vb: Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.SqliteRepository(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext, ILogger(Of Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository))
+  nameWithType: SqliteRepository.SqliteRepository(AnalyticsDatabaseContext, ILogger<SqliteRepository>)
+  nameWithType.vb: SqliteRepository.SqliteRepository(AnalyticsDatabaseContext, ILogger(Of SqliteRepository))
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.#ctor*
+  name: SqliteRepository
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_Sqlite_SqliteRepository__ctor_
+  commentId: Overload:Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.#ctor
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.SqliteRepository
+  nameWithType: SqliteRepository.SqliteRepository
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.InitializeAsync
+  name: InitializeAsync()
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_Sqlite_SqliteRepository_InitializeAsync
+  commentId: M:Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.InitializeAsync
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.InitializeAsync()
+  nameWithType: SqliteRepository.InitializeAsync()
+- uid: Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.InitializeAsync*
+  name: InitializeAsync
+  href: api/Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.html#Adriva_Extensions_Analytics_Repository_EntityFramework_Sqlite_SqliteRepository_InitializeAsync_
+  commentId: Overload:Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.InitializeAsync
+  isSpec: "True"
+  fullName: Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.InitializeAsync
+  nameWithType: SqliteRepository.InitializeAsync
 - uid: Adriva.Extensions.Analytics.Server
   name: Adriva.Extensions.Analytics.Server
   href: api/Adriva.Extensions.Analytics.Server.html
@@ -7722,6 +7763,25 @@ references:
   isSpec: "True"
   fullName: Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.UseInMemoryRepository
   nameWithType: EntityFrameworkRepositoryExtensions.UseInMemoryRepository
+- uid: Microsoft.Extensions.DependencyInjection.EntityFrameworkSqliteRepositoryExtensions
+  name: EntityFrameworkSqliteRepositoryExtensions
+  href: api/Microsoft.Extensions.DependencyInjection.EntityFrameworkSqliteRepositoryExtensions.html
+  commentId: T:Microsoft.Extensions.DependencyInjection.EntityFrameworkSqliteRepositoryExtensions
+  fullName: Microsoft.Extensions.DependencyInjection.EntityFrameworkSqliteRepositoryExtensions
+  nameWithType: EntityFrameworkSqliteRepositoryExtensions
+- uid: Microsoft.Extensions.DependencyInjection.EntityFrameworkSqliteRepositoryExtensions.UseSqlite(IAnalyticsServerBuilder,System.String)
+  name: UseSqlite(IAnalyticsServerBuilder, String)
+  href: api/Microsoft.Extensions.DependencyInjection.EntityFrameworkSqliteRepositoryExtensions.html#Microsoft_Extensions_DependencyInjection_EntityFrameworkSqliteRepositoryExtensions_UseSqlite_IAnalyticsServerBuilder_System_String_
+  commentId: M:Microsoft.Extensions.DependencyInjection.EntityFrameworkSqliteRepositoryExtensions.UseSqlite(IAnalyticsServerBuilder,System.String)
+  fullName: Microsoft.Extensions.DependencyInjection.EntityFrameworkSqliteRepositoryExtensions.UseSqlite(IAnalyticsServerBuilder, System.String)
+  nameWithType: EntityFrameworkSqliteRepositoryExtensions.UseSqlite(IAnalyticsServerBuilder, String)
+- uid: Microsoft.Extensions.DependencyInjection.EntityFrameworkSqliteRepositoryExtensions.UseSqlite*
+  name: UseSqlite
+  href: api/Microsoft.Extensions.DependencyInjection.EntityFrameworkSqliteRepositoryExtensions.html#Microsoft_Extensions_DependencyInjection_EntityFrameworkSqliteRepositoryExtensions_UseSqlite_
+  commentId: Overload:Microsoft.Extensions.DependencyInjection.EntityFrameworkSqliteRepositoryExtensions.UseSqlite
+  isSpec: "True"
+  fullName: Microsoft.Extensions.DependencyInjection.EntityFrameworkSqliteRepositoryExtensions.UseSqlite
+  nameWithType: EntityFrameworkSqliteRepositoryExtensions.UseSqlite
 - uid: Microsoft.Extensions.DependencyInjection.InMemoryCacheExtensions
   name: InMemoryCacheExtensions
   href: api/Microsoft.Extensions.DependencyInjection.InMemoryCacheExtensions.html
@@ -7772,38 +7832,3 @@ references:
   fullName.vb: Microsoft.Extensions.DependencyInjection.OptimizationExtensions.AddOptimization(Of TOptions)(IServiceCollection, Action(Of TOptions))
   nameWithType: OptimizationExtensions.AddOptimization<TOptions>(IServiceCollection, Action<TOptions>)
   nameWithType.vb: OptimizationExtensions.AddOptimization(Of TOptions)(IServiceCollection, Action(Of TOptions))
-- uid: Microsoft.Extensions.DependencyInjection.SqliteRepository
-  name: SqliteRepository
-  href: api/Microsoft.Extensions.DependencyInjection.SqliteRepository.html
-  commentId: T:Microsoft.Extensions.DependencyInjection.SqliteRepository
-  fullName: Microsoft.Extensions.DependencyInjection.SqliteRepository
-  nameWithType: SqliteRepository
-- uid: Microsoft.Extensions.DependencyInjection.SqliteRepository.#ctor(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext,ILogger{Microsoft.Extensions.DependencyInjection.SqliteRepository})
-  name: SqliteRepository(AnalyticsDatabaseContext, ILogger<SqliteRepository>)
-  href: api/Microsoft.Extensions.DependencyInjection.SqliteRepository.html#Microsoft_Extensions_DependencyInjection_SqliteRepository__ctor_Adriva_Extensions_Analytics_Repository_EntityFramework_AnalyticsDatabaseContext_ILogger_Microsoft_Extensions_DependencyInjection_SqliteRepository__
-  commentId: M:Microsoft.Extensions.DependencyInjection.SqliteRepository.#ctor(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext,ILogger{Microsoft.Extensions.DependencyInjection.SqliteRepository})
-  name.vb: SqliteRepository(AnalyticsDatabaseContext, ILogger(Of SqliteRepository))
-  fullName: Microsoft.Extensions.DependencyInjection.SqliteRepository.SqliteRepository(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext, ILogger<Microsoft.Extensions.DependencyInjection.SqliteRepository>)
-  fullName.vb: Microsoft.Extensions.DependencyInjection.SqliteRepository.SqliteRepository(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext, ILogger(Of Microsoft.Extensions.DependencyInjection.SqliteRepository))
-  nameWithType: SqliteRepository.SqliteRepository(AnalyticsDatabaseContext, ILogger<SqliteRepository>)
-  nameWithType.vb: SqliteRepository.SqliteRepository(AnalyticsDatabaseContext, ILogger(Of SqliteRepository))
-- uid: Microsoft.Extensions.DependencyInjection.SqliteRepository.#ctor*
-  name: SqliteRepository
-  href: api/Microsoft.Extensions.DependencyInjection.SqliteRepository.html#Microsoft_Extensions_DependencyInjection_SqliteRepository__ctor_
-  commentId: Overload:Microsoft.Extensions.DependencyInjection.SqliteRepository.#ctor
-  isSpec: "True"
-  fullName: Microsoft.Extensions.DependencyInjection.SqliteRepository.SqliteRepository
-  nameWithType: SqliteRepository.SqliteRepository
-- uid: Microsoft.Extensions.DependencyInjection.SqliteRepository.InitializeAsync
-  name: InitializeAsync()
-  href: api/Microsoft.Extensions.DependencyInjection.SqliteRepository.html#Microsoft_Extensions_DependencyInjection_SqliteRepository_InitializeAsync
-  commentId: M:Microsoft.Extensions.DependencyInjection.SqliteRepository.InitializeAsync
-  fullName: Microsoft.Extensions.DependencyInjection.SqliteRepository.InitializeAsync()
-  nameWithType: SqliteRepository.InitializeAsync()
-- uid: Microsoft.Extensions.DependencyInjection.SqliteRepository.InitializeAsync*
-  name: InitializeAsync
-  href: api/Microsoft.Extensions.DependencyInjection.SqliteRepository.html#Microsoft_Extensions_DependencyInjection_SqliteRepository_InitializeAsync_
-  commentId: Overload:Microsoft.Extensions.DependencyInjection.SqliteRepository.InitializeAsync
-  isSpec: "True"
-  fullName: Microsoft.Extensions.DependencyInjection.SqliteRepository.InitializeAsync
-  nameWithType: SqliteRepository.InitializeAsync

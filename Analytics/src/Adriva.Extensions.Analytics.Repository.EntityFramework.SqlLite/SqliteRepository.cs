@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Adriva.Extensions.Analytics.Repository.EntityFramework;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite
 {
     /// <summary>
     /// Provides a default implementation of IAnalyticsRepository that uses Sqlite as the base data store.
