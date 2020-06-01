@@ -32,6 +32,13 @@ namespace Adriva.Extensions.Caching.Abstractions
         Task<T> GetOrCreateAsync<T>(string key, Func<ICacheItem, Task<T>> factory, params string[] dependencyMonikers);
 
         /// <summary>
+        /// Removes the item with the given key from the cache.
+        /// </summary>
+        /// <param name="key">The unique key of the item to be removed.</param>
+        /// <returns>A task that represents the asynchronous cache operation.</returns>
+        ValueTask RemoveAsync(string key);
+
+        /// <summary>
         /// Notifies the given dependency item of a change so that all cache dependencies are expired in the cache.
         /// </summary>
         /// <param name="dependencyMoniker">The identifier of the dependency.</param>

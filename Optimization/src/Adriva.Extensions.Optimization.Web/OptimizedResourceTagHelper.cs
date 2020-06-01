@@ -64,6 +64,8 @@ namespace Adriva.Extensions.Optimization.Web
                 await tagBuilder.PopulateHtmlTagAsync(this, context.AllAttributes, asset, assetContentBuilder);
                 output.PostElement.AppendHtml(assetContentBuilder);
 
+                // if the asset is written out to a static file
+                // we can safely dispose the asset (the content) sine it will be served from a static file
                 if (OptimizationTagOutput.StaticFile == this.Output)
                 {
                     await asset.DisposeAsync();

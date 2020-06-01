@@ -83,6 +83,14 @@ namespace Adriva.Extensions.Caching.Memory
 
         }
 
+        public async ValueTask RemoveAsync(string key)
+        {
+            if (String.IsNullOrWhiteSpace(key)) return;
+
+            this.MemoryCache.Remove(key);
+            await Task.CompletedTask;
+        }
+
         public void NotifyChanged(string dependencyMoniker)
         {
             if (string.IsNullOrWhiteSpace(dependencyMoniker)) return;
