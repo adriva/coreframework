@@ -22,11 +22,10 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddHttpContextAccessor();
             services.AddSingleton<OptimizationMiddleware>();
-            services.AddTransient<IOptimizationContext, WebOptimizationContext>();
             services.AddSingleton<IOptimizationEvents<WebOptimizationOptions>, WebOptimizationEvents>();
             services.AddSingleton<IOptimizationResultTagBuilderFactory, OptimizationResultTagBuilderFactory>();
             return services
-                .AddOptimization<WebOptimizationOptions>(options =>
+                .AddOptimization<WebOptimizationOptions, WebOptimizationContext>(options =>
                 {
                     configure?.Invoke(options);
                 });

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Adriva.Common.Core;
 
 namespace Adriva.Extensions.Optimization.Abstractions
@@ -22,11 +23,11 @@ namespace Adriva.Extensions.Optimization.Abstractions
             this.Identifier = Utilities.CalculateBinaryHash(string.Join("|", this.AssetList.OrderBy(a => a.Name).Select(a => a.Name)));
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
             foreach (var asset in this.AssetList)
             {
-                asset.Dispose();
+                await asset.DisposeAsync();
             }
         }
     }

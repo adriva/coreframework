@@ -9,9 +9,9 @@ using NUglify.Css;
 
 namespace Adriva.Extensions.Optimization.Transforms
 {
-    public class StylesheetMinificationTransform : ITransform
+    public class StylesheetMinificationTransform : AssetDisposerTransform
     {
-        public async Task<IEnumerable<Asset>> TransformAsync(params Asset[] assets)
+        public override async Task<IEnumerable<Asset>> TransformAsync(params Asset[] assets)
         {
             CssSettings cssSettings = new CssSettings()
             {

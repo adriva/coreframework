@@ -38,6 +38,7 @@ namespace Adriva.Extensions.Optimization.Abstractions
 
             using (StreamReader reader = new StreamReader(asset.Content, Encoding.UTF8, false, 4096, true))
             {
+                asset.Content.Seek(0, SeekOrigin.Begin);
                 return await reader.ReadToEndAsync();
             }
         }

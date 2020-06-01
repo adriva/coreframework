@@ -8,11 +8,11 @@ using Adriva.Common.Core;
 
 namespace Adriva.Extensions.Optimization.Abstractions
 {
-    public class MergeContentTransform : ITransform
+    public class MergeContentTransform : AssetDisposerTransform
     {
         protected virtual string GetSeperator(Asset asset) => Environment.NewLine;
 
-        public async virtual Task<IEnumerable<Asset>> TransformAsync(params Asset[] assets)
+        public async override Task<IEnumerable<Asset>> TransformAsync(params Asset[] assets)
         {
             AutoStream outputStream = new AutoStream(1024 * 64);
 

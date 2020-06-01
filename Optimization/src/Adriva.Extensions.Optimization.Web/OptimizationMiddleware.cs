@@ -25,7 +25,8 @@ namespace Adriva.Extensions.Optimization.Web
             this.HtmlSettings = new HtmlSettings()
             {
                 IsFragmentOnly = true,
-                MinifyCssAttributes = true
+                MinifyCssAttributes = true,
+                MinifyJs = false
             };
         }
 

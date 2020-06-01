@@ -24,6 +24,11 @@ namespace Adriva.Extensions.Optimization.Abstractions
         internal Type Orderer = typeof(NullAssetOrderer);
         internal object OrdererOptions;
 
+        public OptimizationOptions()
+        {
+
+        }
+
         internal void AddTransformChain(string extension, params Type[] transforms)
         {
             if (null == extension) throw new ArgumentNullException(nameof(extension));
@@ -82,6 +87,5 @@ namespace Adriva.Extensions.Optimization.Abstractions
         {
             return this.UseOrderer<FileAssetOrderer, string>(filePath);
         }
-
     }
 }

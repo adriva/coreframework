@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Adriva.Extensions.Optimization.Abstractions;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Adriva.Extensions.Optimization.Web
 {
@@ -19,9 +20,10 @@ namespace Adriva.Extensions.Optimization.Web
         /// Generates an html tag and populates the attributes if needed for the given asset.
         /// </summary>
         /// <param name="options">A concrete implementation of ITagBuilderOptions that this tag builder may use.</param>
+        /// <param name="attributeList">A read only list of attributes and their values declared in the html file.</param>
         /// <param name="asset">The asset for which the html tag will be generated for.</param>
         /// <param name="output">A concrete implementation of IHtmlContentBuilder that the output will be written to.</param>
         /// <returns>Represents the asynchronous process operation.</returns>
-        Task PopulateHtmlTagAsync(ITagBuilderOptions options, Asset asset, IHtmlContentBuilder output);
+        Task PopulateHtmlTagAsync(ITagBuilderOptions options, ReadOnlyTagHelperAttributeList attributeList, Asset asset, IHtmlContentBuilder output);
     }
 }

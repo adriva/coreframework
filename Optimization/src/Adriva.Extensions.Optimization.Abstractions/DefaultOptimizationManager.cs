@@ -75,7 +75,7 @@ namespace Adriva.Extensions.Optimization.Abstractions
 
             if (!orderedAssets.Any())
             {
-                return new OptimizationResult(Enumerable.Empty<Asset>());
+                return OptimizationResult.Empty;
             }
 
             foreach (var asset in orderedAssets)
@@ -101,13 +101,17 @@ namespace Adriva.Extensions.Optimization.Abstractions
                 {
                     if (null == this.Events?.TransformRunning || this.Events.TransformRunning.Invoke(extension, this.Options, transform))
                     {
-                        assets = await transform.TransformAsync(assets.ToArray());
+                        var inputAssets = assets.ToArray();
+                        assets = await transform.TransformAsync(inputAssets);
+                        await transform.CleanUpAsync(inputAssets);
                     }
                 }
                 break;
             }
 
-            return new OptimizationResult(assets);
+            var optimizationResult = new OptimizationResult();
+            await optimizationResult.InitializeAsync(assets);
+            return optimizationResult;
         }
 
     }

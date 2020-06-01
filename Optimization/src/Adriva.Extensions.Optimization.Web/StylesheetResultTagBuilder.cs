@@ -5,6 +5,8 @@ using Adriva.Extensions.Optimization.Abstractions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Options;
 
 namespace Adriva.Extensions.Optimization.Web
@@ -24,7 +26,7 @@ namespace Adriva.Extensions.Optimization.Web
             this.HostingEnvironment = hostingEnvironment;
         }
 
-        public async Task PopulateHtmlTagAsync(ITagBuilderOptions options, Asset asset, IHtmlContentBuilder output)
+        public async Task PopulateHtmlTagAsync(ITagBuilderOptions options, ReadOnlyTagHelperAttributeList attributeList, Asset asset, IHtmlContentBuilder output)
         {
 
             switch (options.Output)
@@ -45,7 +47,13 @@ namespace Adriva.Extensions.Optimization.Web
                         await File.WriteAllTextAsync(assetFileInfo.PhysicalPath, content, Encoding.UTF8);
                     }
 
-                    output.AppendHtmlLine($"<link rel=\"stylesheet\" type=\"text/css\" href=\"{relativeWebPath}\">");
+                    TagBuilder tagBuilder = new TagBuilder("link");
+                    tagBuilder.TagRenderMode = TagRenderMode.SelfClosing;
+                    tagBuilder.Attributes.Add("rel", "stylesheet");
+                    tagBuilder.Attributes.Add("type", "text/css");
+                    tagBuilder.Attributes.Add("href", relativeWebPath);
+
+                    output.AppendHtml(tagBuilder);
                     break;
             }
         }

@@ -48,6 +48,7 @@ namespace Adriva.Extensions.Optimization.Web
                 throw new System.ArgumentException("<optimizedresource> tag requires a valid OptimizationContext. Have you forgotten to set the 'context' attribute ?");
 
             string cacheKey = $"{this.Context.Identifier}+{this.Extension}";
+
             OptimizationResult optimizationResult = await this.Cache.GetOrCreateAsync(cacheKey, async entry =>
             {
                 return await this.OptimizationManager.OptimizeAsync(this.Context, this.Extension);
@@ -55,14 +56,18 @@ namespace Adriva.Extensions.Optimization.Web
 
             output.SuppressOutput();
 
-
             IOptimizationResultTagBuilder tagBuilder = this.TagBuilderFactory.GetBuilder(this.Extension);
 
             foreach (var asset in optimizationResult)
             {
                 HtmlContentBuilder assetContentBuilder = new HtmlContentBuilder();
-                await tagBuilder.PopulateHtmlTagAsync(this, asset, assetContentBuilder);
+                await tagBuilder.PopulateHtmlTagAsync(this, context.AllAttributes, asset, assetContentBuilder);
                 output.PostElement.AppendHtml(assetContentBuilder);
+
+                if (OptimizationTagOutput.StaticFile == this.Output)
+                {
+                    await asset.DisposeAsync();
+                }
             }
 
         }

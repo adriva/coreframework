@@ -2,7 +2,7 @@ using System;
 
 namespace Adriva.Extensions.Optimization.Abstractions
 {
-    public interface IOptimizationScope : IDisposable
+    public interface IOptimizationScope : IAsyncDisposable
     {
         IOptimizationContext DefaultContext { get; }
 

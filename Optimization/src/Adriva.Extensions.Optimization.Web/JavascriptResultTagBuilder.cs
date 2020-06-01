@@ -5,6 +5,8 @@ using Adriva.Extensions.Optimization.Abstractions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Options;
 
 namespace Adriva.Extensions.Optimization.Web
@@ -24,14 +26,21 @@ namespace Adriva.Extensions.Optimization.Web
             this.HostingEnvironment = hostingEnvironment;
         }
 
-        public async Task PopulateHtmlTagAsync(ITagBuilderOptions options, Asset asset, IHtmlContentBuilder output)
+        public async Task PopulateHtmlTagAsync(ITagBuilderOptions options, ReadOnlyTagHelperAttributeList attributeList, Asset asset, IHtmlContentBuilder output)
         {
+
+            TagBuilder tagBuilder = new TagBuilder("script");
+            tagBuilder.TagRenderMode = TagRenderMode.Normal;
+            tagBuilder.Attributes.Add("type", "text/javascript");
+
+            if (attributeList.ContainsName("defer")) tagBuilder.Attributes.Add("defer", null);
+            else if (attributeList.ContainsName("async")) tagBuilder.Attributes.Add("async", null);
 
             switch (options.Output)
             {
                 case OptimizationTagOutput.Default: //same as OptimizationTagOutput.Inline
                     string content = await asset.ReadContentAsStringAsync();
-                    output.AppendHtmlLine($"<script defer type='text/javascript'>{content}</script>");
+                    tagBuilder.InnerHtml.SetHtmlContent(content);
                     break;
                 case OptimizationTagOutput.StaticFile:
                 case OptimizationTagOutput.Loader:
@@ -45,15 +54,18 @@ namespace Adriva.Extensions.Optimization.Web
                         await File.WriteAllTextAsync(assetFileInfo.PhysicalPath, content, Encoding.UTF8);
                     }
 
-                    output.AppendHtmlLine($"<script defer type='text/javascript' src='{relativeWebPath}'></script>");
+                    tagBuilder.Attributes.Add("src", relativeWebPath);
+
+                    if (null != asset?.Content)
+                    {
+                        await asset.Content.DisposeAsync();
+                    }
+
                     break;
 
             }
 
-            if (null != asset?.Content)
-            {
-                await asset.Content.DisposeAsync();
-            }
+            output.AppendHtml(tagBuilder);
         }
     }
 }

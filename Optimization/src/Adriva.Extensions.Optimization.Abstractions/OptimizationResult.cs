@@ -2,27 +2,39 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Adriva.Extensions.Optimization.Abstractions
 {
-    public sealed class OptimizationResult : IEnumerable<Asset>, IEnumerable, IDisposable
+    public sealed class OptimizationResult : IEnumerable<Asset>, IEnumerable, IAsyncDisposable
     {
-        private readonly IEnumerable<Asset> Assets;
+        public static OptimizationResult Empty => new OptimizationResult() { Assets = Enumerable.Empty<Asset>() };
 
-        public OptimizationResult(IEnumerable<Asset> assets)
+        private IEnumerable<Asset> Assets;
+
+        public async ValueTask InitializeAsync(IEnumerable<Asset> assets)
         {
-            this.Assets = assets ?? Enumerable.Empty<Asset>();
+            if (null == assets) return;
+
+            foreach (var asset in assets)
+            {
+                var originalContent = asset.Content;
+                await asset.SetContentAsync(originalContent, true);
+                await originalContent.DisposeAsync();
+            }
+
+            this.Assets = assets;
         }
 
         public IEnumerator<Asset> GetEnumerator() => this.Assets.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => this.Assets.GetEnumerator();
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
             foreach (var asset in this.Assets)
             {
-                asset.Dispose();
+                await asset.DisposeAsync();
             }
         }
     }

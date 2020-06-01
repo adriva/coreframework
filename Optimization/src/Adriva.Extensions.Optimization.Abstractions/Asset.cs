@@ -9,7 +9,7 @@ namespace Adriva.Extensions.Optimization.Abstractions
     /// <summary>
     /// Represents an asset resource that can be processed by the optimization transforms.
     /// </summary>
-    public sealed class Asset : IDisposable
+    public sealed class Asset : IAsyncDisposable
     {
         /// <summary>
         /// Gets the name of the asset resource.
@@ -75,7 +75,9 @@ namespace Adriva.Extensions.Optimization.Abstractions
         internal async Task SetContentAsync(string content)
         {
             content = null == content ? string.Empty : content;
+
             this.Content = new AutoStream(64 * 1024);
+
             using (StreamWriter writer = new StreamWriter(this.Content, Encoding.UTF8, 4096, true))
             {
                 await writer.WriteAsync(content);
@@ -83,11 +85,11 @@ namespace Adriva.Extensions.Optimization.Abstractions
             this.Content.Seek(0, SeekOrigin.Begin);
         }
 
-        internal async Task SetContentAsync(Stream stream)
+        internal async Task SetContentAsync(Stream stream, bool shouldStoreInMemory = false)
         {
-            if (null != this.Content) throw new InvalidOperationException("Asset content is already set.");
+            if (shouldStoreInMemory) this.Content = new MemoryStream();
+            else this.Content = new AutoStream(64 * 1024); //64K ?
 
-            this.Content = new AutoStream(64 * 1024); //64K ?
             await stream.CopyToAsync(this.Content);
             this.Content.Seek(0, SeekOrigin.Begin);
         }
@@ -95,9 +97,10 @@ namespace Adriva.Extensions.Optimization.Abstractions
         /// <summary>
         /// Releases all resources used by the asset.
         /// </summary>
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            this.Content?.Dispose();
+            if (null == this.Content) return;
+            await this.Content.DisposeAsync();
         }
 
         /// <summary>

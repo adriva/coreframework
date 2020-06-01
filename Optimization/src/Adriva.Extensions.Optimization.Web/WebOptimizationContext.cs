@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.Text;
 using Microsoft.Extensions.FileProviders;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Adriva.Extensions.Optimization.Web
 {
@@ -71,11 +72,11 @@ namespace Adriva.Extensions.Optimization.Web
             this.Identifier = Utilities.CalculateHash(string.Join("|", this.AssetList.OrderBy(a => a.Name).Select(a => a.Name)));
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
             foreach (var asset in this.AssetList)
             {
-                asset.Dispose();
+                await asset.DisposeAsync();
             }
         }
     }

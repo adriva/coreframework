@@ -8,15 +8,17 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IOptimizationBuilder<OptimizationOptions> AddOptimization(this IServiceCollection services, Action<OptimizationOptions> configure)
         {
-            return services.AddOptimization<OptimizationOptions>(configure);
+            return services.AddOptimization<OptimizationOptions, DefaultOptimizationContext>(configure);
         }
 
-        public static IOptimizationBuilder<TOptions> AddOptimization<TOptions>(this IServiceCollection services, Action<TOptions> configure) where TOptions : OptimizationOptions, new()
+        public static IOptimizationBuilder<TOptions> AddOptimization<TOptions, TContext>(this IServiceCollection services, Action<TOptions> configure)
+            where TOptions : OptimizationOptions, new()
+            where TContext : class, IOptimizationContext
         {
             IOptimizationBuilder<TOptions> builder = new OptimizationBuilder<TOptions>(services);
             services.AddHttpClient();
             services.TryAddSingleton<IOptimizationManager, DefaultOptimizationManager<TOptions>>();
-            services.TryAddScoped<IOptimizationScope, DefaultOptimizationScope>();
+            services.TryAddScoped<IOptimizationScope, DefaultOptimizationScope<TContext>>();
             services.TryAddTransient<IOptimizationContext, DefaultOptimizationContext>();
             services.AddInMemoryCache();
             services.Configure<TOptions>((options) =>

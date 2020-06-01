@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Adriva.Extensions.Optimization.Abstractions
 {
-    public class DefaultOptimizationScope : IOptimizationScope
+    public class DefaultOptimizationScope<TContext> : IOptimizationScope where TContext : class, IOptimizationContext
     {
         private readonly IDictionary<string, IOptimizationContext> Contexts = new Dictionary<string, IOptimizationContext>();
         private readonly IServiceProvider ServiceProvider;
@@ -24,16 +25,19 @@ namespace Adriva.Extensions.Optimization.Abstractions
 
             if (this.Contexts.TryGetValue(name, out IOptimizationContext context)) return context;
 
-            IOptimizationContext optimizationContext = this.ServiceProvider.GetRequiredService<IOptimizationContext>();
+            IOptimizationContext optimizationContext = ActivatorUtilities.CreateInstance<TContext>(this.ServiceProvider);
             this.Contexts.Add(name, optimizationContext);
             return optimizationContext;
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
             foreach (var entry in this.Contexts)
             {
-                entry.Value?.Dispose();
+                if (null != entry.Value)
+                {
+                    await entry.Value.DisposeAsync();
+                }
             }
 
             this.Contexts.Clear();

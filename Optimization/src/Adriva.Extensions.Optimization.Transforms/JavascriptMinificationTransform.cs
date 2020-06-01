@@ -8,9 +8,9 @@ using NUglify.JavaScript;
 
 namespace Adriva.Extensions.Optimization.Transforms
 {
-    public class JavascriptMinificationTransform : ITransform
+    public class JavascriptMinificationTransform : AssetDisposerTransform
     {
-        public async Task<IEnumerable<Asset>> TransformAsync(params Asset[] assets)
+        public override async Task<IEnumerable<Asset>> TransformAsync(params Asset[] assets)
         {
             CodeSettings codeSettings = new CodeSettings()
             {
