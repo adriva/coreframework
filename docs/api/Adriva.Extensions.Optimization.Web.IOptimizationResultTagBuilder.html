@@ -100,7 +100,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Web/IOptimizationResultTagBuilder.cs/#L16">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Web/IOptimizationResultTagBuilder.cs/#L17">View Source</a>
   </span>
   <a id="Adriva_Extensions_Optimization_Web_IOptimizationResultTagBuilder_Extension_" data-uid="Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilder.Extension*"></a>
   <h4 id="Adriva_Extensions_Optimization_Web_IOptimizationResultTagBuilder_Extension" data-uid="Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilder.Extension">Extension</h4>
@@ -122,7 +122,8 @@
     <tbody>
       <tr>
         <td><span class="xref">System.String</span></td>
-        <td></td>
+        <td><p>A string value that represents the extension of the assets, which this tag builder can process.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -132,15 +133,16 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Web/IOptimizationResultTagBuilder.cs/#L18">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Web/IOptimizationResultTagBuilder.cs/#L27">View Source</a>
   </span>
   <a id="Adriva_Extensions_Optimization_Web_IOptimizationResultTagBuilder_PopulateHtmlTagAsync_" data-uid="Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilder.PopulateHtmlTagAsync*"></a>
-  <h4 id="Adriva_Extensions_Optimization_Web_IOptimizationResultTagBuilder_PopulateHtmlTagAsync_Adriva_Extensions_Optimization_Web_ITagBuilderOptions_Asset_IHtmlContentBuilder_" data-uid="Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilder.PopulateHtmlTagAsync(Adriva.Extensions.Optimization.Web.ITagBuilderOptions,Asset,IHtmlContentBuilder)">PopulateHtmlTagAsync(ITagBuilderOptions, Asset, IHtmlContentBuilder)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Adriva_Extensions_Optimization_Web_IOptimizationResultTagBuilder_PopulateHtmlTagAsync_Adriva_Extensions_Optimization_Web_ITagBuilderOptions_ReadOnlyTagHelperAttributeList_Asset_IHtmlContentBuilder_" data-uid="Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilder.PopulateHtmlTagAsync(Adriva.Extensions.Optimization.Web.ITagBuilderOptions,ReadOnlyTagHelperAttributeList,Asset,IHtmlContentBuilder)">PopulateHtmlTagAsync(ITagBuilderOptions, ReadOnlyTagHelperAttributeList, Asset, IHtmlContentBuilder)</h4>
+  <div class="markdown level1 summary"><p>Generates an html tag and populates the attributes if needed for the given asset.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task PopulateHtmlTagAsync(ITagBuilderOptions options, Asset asset, IHtmlContentBuilder output)</code></pre>
+    <pre><code class="lang-csharp hljs">Task PopulateHtmlTagAsync(ITagBuilderOptions options, ReadOnlyTagHelperAttributeList attributeList, Asset asset, IHtmlContentBuilder output)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -155,17 +157,26 @@
       <tr>
         <td><a class="xref" href="Adriva.Extensions.Optimization.Web.ITagBuilderOptions.html">ITagBuilderOptions</a></td>
         <td><span class="parametername">options</span></td>
-        <td></td>
+        <td><p>A concrete implementation of ITagBuilderOptions that this tag builder may use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ReadOnlyTagHelperAttributeList</span></td>
+        <td><span class="parametername">attributeList</span></td>
+        <td><p>A read only list of attributes and their values declared in the html file.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">Asset</span></td>
         <td><span class="parametername">asset</span></td>
-        <td></td>
+        <td><p>The asset for which the html tag will be generated for.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">IHtmlContentBuilder</span></td>
         <td><span class="parametername">output</span></td>
-        <td></td>
+        <td><p>A concrete implementation of IHtmlContentBuilder that the output will be written to.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -180,7 +191,8 @@
     <tbody>
       <tr>
         <td><span class="xref">Task</span></td>
-        <td></td>
+        <td><p>Represents the asynchronous process operation.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -192,7 +204,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Web/IOptimizationResultTagBuilder.cs/#L10" class="contribution-link">View Source</a>
+                    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Web/IOptimizationResultTagBuilder.cs/#L11" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

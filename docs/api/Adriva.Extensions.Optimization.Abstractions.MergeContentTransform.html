@@ -92,17 +92,45 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><span class="xref">MergeContentTransform</span></div>
-      <div class="level2"><a class="xref" href="Adriva.Extensions.Optimization.Transforms.JavascriptBundleTransform.html">JavascriptBundleTransform</a></div>
-      <div class="level2"><a class="xref" href="Adriva.Extensions.Optimization.Transforms.StylesheetBundleTransform.html">StylesheetBundleTransform</a></div>
+    <div class="level1"><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.AssetDisposerTransform.html">AssetDisposerTransform</a></div>
+    <div class="level2"><span class="xref">MergeContentTransform</span></div>
+      <div class="level3"><a class="xref" href="Adriva.Extensions.Optimization.Transforms.JavascriptBundleTransform.html">JavascriptBundleTransform</a></div>
+      <div class="level3"><a class="xref" href="Adriva.Extensions.Optimization.Transforms.StylesheetBundleTransform.html">StylesheetBundleTransform</a></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.ITransform.html">ITransform</a></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Adriva.Extensions.Optimization.Abstractions.AssetDisposerTransform.html#Adriva_Extensions_Optimization_Abstractions_AssetDisposerTransform_CleanUpAsync_Adriva_Extensions_Optimization_Abstractions_Asset___">AssetDisposerTransform.CleanUpAsync(Asset[])</a>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
   <h5 id="Adriva_Extensions_Optimization_Abstractions_MergeContentTransform_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class MergeContentTransform : object, ITransform</code></pre>
+    <pre><code class="lang-csharp hljs">public class MergeContentTransform : AssetDisposerTransform, ITransform</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
@@ -164,7 +192,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual Task&lt;IEnumerable&lt;Asset&gt;&gt; TransformAsync(params Asset[] assets)</code></pre>
+    <pre><code class="lang-csharp hljs">public override Task&lt;IEnumerable&lt;Asset&gt;&gt; TransformAsync(params Asset[] assets)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -193,11 +221,13 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Task</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="Adriva.Extensions.Optimization.Abstractions.Asset.html">Asset</a>&gt;&gt;</td>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Adriva.Extensions.Optimization.Abstractions.Asset.html">Asset</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.AssetDisposerTransform.html#Adriva_Extensions_Optimization_Abstractions_AssetDisposerTransform_TransformAsync_Adriva_Extensions_Optimization_Abstractions_Asset___">AssetDisposerTransform.TransformAsync(Asset[])</a></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Adriva.Extensions.Optimization.Abstractions.ITransform.html">ITransform</a>

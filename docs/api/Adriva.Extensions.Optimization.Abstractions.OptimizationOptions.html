@@ -94,9 +94,49 @@
     <div class="level0"><span class="xref">System.Object</span></div>
     <div class="level1"><span class="xref">OptimizationOptions</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
   <h5 id="Adriva_Extensions_Optimization_Abstractions_OptimizationOptions_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class OptimizationOptions : object</code></pre>
+    <pre><code class="lang-csharp hljs">public class OptimizationOptions</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/OptimizationOptions.cs/#L27">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Optimization_Abstractions_OptimizationOptions__ctor_" data-uid="Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.#ctor*"></a>
+  <h4 id="Adriva_Extensions_Optimization_Abstractions_OptimizationOptions__ctor" data-uid="Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.#ctor">OptimizationOptions()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public OptimizationOptions()</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
@@ -104,7 +144,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/OptimizationOptions.cs/#L56">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/OptimizationOptions.cs/#L61">View Source</a>
   </span>
   <a id="Adriva_Extensions_Optimization_Abstractions_OptimizationOptions_AddLoader_" data-uid="Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.AddLoader*"></a>
   <h4 id="Adriva_Extensions_Optimization_Abstractions_OptimizationOptions_AddLoader__1" data-uid="Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.AddLoader``1">AddLoader&lt;T&gt;()</h4>
@@ -113,7 +153,6 @@
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public OptimizationOptions AddLoader&lt;T&gt;()
-
     where T : class, IAssetLoader</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
@@ -150,7 +189,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/OptimizationOptions.cs/#L81">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/OptimizationOptions.cs/#L86">View Source</a>
   </span>
   <a id="Adriva_Extensions_Optimization_Abstractions_OptimizationOptions_UseFileOrderer_" data-uid="Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.UseFileOrderer*"></a>
   <h4 id="Adriva_Extensions_Optimization_Abstractions_OptimizationOptions_UseFileOrderer_System_String_" data-uid="Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.UseFileOrderer(System.String)">UseFileOrderer(String)</h4>
@@ -196,7 +235,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/OptimizationOptions.cs/#L69">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/OptimizationOptions.cs/#L74">View Source</a>
   </span>
   <a id="Adriva_Extensions_Optimization_Abstractions_OptimizationOptions_UseOrderer_" data-uid="Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.UseOrderer*"></a>
   <h4 id="Adriva_Extensions_Optimization_Abstractions_OptimizationOptions_UseOrderer__1" data-uid="Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.UseOrderer``1">UseOrderer&lt;TOrderer&gt;()</h4>
@@ -205,7 +244,6 @@
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public OptimizationOptions UseOrderer&lt;TOrderer&gt;()
-
     where TOrderer : class, IAssetOrderer</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
@@ -242,7 +280,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/OptimizationOptions.cs/#L74">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/OptimizationOptions.cs/#L79">View Source</a>
   </span>
   <a id="Adriva_Extensions_Optimization_Abstractions_OptimizationOptions_UseOrderer_" data-uid="Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.UseOrderer*"></a>
   <h4 id="Adriva_Extensions_Optimization_Abstractions_OptimizationOptions_UseOrderer__2___1_" data-uid="Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.UseOrderer``2(``1)">UseOrderer&lt;TOrderer, TOptions&gt;(TOptions)</h4>
@@ -251,7 +289,6 @@
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public OptimizationOptions UseOrderer&lt;TOrderer, TOptions&gt;(TOptions options)
-
     where TOrderer : class, IAssetOrderer</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>

@@ -95,9 +95,34 @@
     <div class="level0"><span class="xref">System.Object</span></div>
     <div class="level1"><span class="xref">Asset</span></div>
   </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">System.IAsyncDisposable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+  </div>
   <h5 id="Adriva_Extensions_Optimization_Abstractions_Asset_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class Asset : IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class Asset : IAsyncDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -141,7 +166,7 @@
     <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/Asset.cs/#L62">View Source</a>
   </span>
   <a id="Adriva_Extensions_Optimization_Abstractions_Asset__ctor_" data-uid="Adriva.Extensions.Optimization.Abstractions.Asset.#ctor*"></a>
-  <h4 id="Adriva_Extensions_Optimization_Abstractions_Asset__ctor_System_String_Stream_" data-uid="Adriva.Extensions.Optimization.Abstractions.Asset.#ctor(System.String,Stream)">Asset(String, Stream)</h4>
+  <h4 id="Adriva_Extensions_Optimization_Abstractions_Asset__ctor_System_String_System_IO_Stream_" data-uid="Adriva.Extensions.Optimization.Abstractions.Asset.#ctor(System.String,System.IO.Stream)">Asset(String, Stream)</h4>
   <div class="markdown level1 summary"><p>Initiates a new instance of an asset resource that has a specific name and content.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -166,7 +191,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Stream</span></td>
+        <td><span class="xref">System.IO.Stream</span></td>
         <td><span class="parametername">content</span></td>
         <td><p>The content of the asset resource.</p>
 </td>
@@ -180,7 +205,7 @@
     <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/Asset.cs/#L36">View Source</a>
   </span>
   <a id="Adriva_Extensions_Optimization_Abstractions_Asset__ctor_" data-uid="Adriva.Extensions.Optimization.Abstractions.Asset.#ctor*"></a>
-  <h4 id="Adriva_Extensions_Optimization_Abstractions_Asset__ctor_Uri_" data-uid="Adriva.Extensions.Optimization.Abstractions.Asset.#ctor(Uri)">Asset(Uri)</h4>
+  <h4 id="Adriva_Extensions_Optimization_Abstractions_Asset__ctor_System_Uri_" data-uid="Adriva.Extensions.Optimization.Abstractions.Asset.#ctor(System.Uri)">Asset(Uri)</h4>
   <div class="markdown level1 summary"><p>Initiates a new instance of an asset resource that has a specific location.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -199,7 +224,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Uri</span></td>
+        <td><span class="xref">System.Uri</span></td>
         <td><span class="parametername">uri</span></td>
         <td><p>The location of the asset resource.</p>
 </td>
@@ -233,7 +258,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Stream</span></td>
+        <td><span class="xref">System.IO.Stream</span></td>
         <td><p>A Stream that returns the content of the asset resource.</p>
 </td>
       </tr>
@@ -264,7 +289,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Uri</span></td>
+        <td><span class="xref">System.Uri</span></td>
         <td><p>A Uri that represents the locations a local or remote asset.</p>
 </td>
       </tr>
@@ -307,22 +332,37 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/Asset.cs/#L98">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/Asset.cs/#L100">View Source</a>
   </span>
-  <a id="Adriva_Extensions_Optimization_Abstractions_Asset_Dispose_" data-uid="Adriva.Extensions.Optimization.Abstractions.Asset.Dispose*"></a>
-  <h4 id="Adriva_Extensions_Optimization_Abstractions_Asset_Dispose" data-uid="Adriva.Extensions.Optimization.Abstractions.Asset.Dispose">Dispose()</h4>
+  <a id="Adriva_Extensions_Optimization_Abstractions_Asset_DisposeAsync_" data-uid="Adriva.Extensions.Optimization.Abstractions.Asset.DisposeAsync*"></a>
+  <h4 id="Adriva_Extensions_Optimization_Abstractions_Asset_DisposeAsync" data-uid="Adriva.Extensions.Optimization.Abstractions.Asset.DisposeAsync">DisposeAsync()</h4>
   <div class="markdown level1 summary"><p>Releases all resources used by the asset.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+    <pre><code class="lang-csharp hljs">public ValueTask DisposeAsync()</code></pre>
   </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.ValueTask</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/Asset.cs/#L107">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/Asset.cs/#L110">View Source</a>
   </span>
   <a id="Adriva_Extensions_Optimization_Abstractions_Asset_ToString_" data-uid="Adriva.Extensions.Optimization.Abstractions.Asset.ToString*"></a>
   <h4 id="Adriva_Extensions_Optimization_Abstractions_Asset_ToString" data-uid="Adriva.Extensions.Optimization.Abstractions.Asset.ToString">ToString()</h4>
@@ -349,6 +389,12 @@
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.ToString()</span></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">System.IAsyncDisposable</span>
+  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Adriva.Extensions.Optimization.Abstractions.AssetExtensions.html#Adriva_Extensions_Optimization_Abstractions_AssetExtensions_CloneWithContentAsync_Adriva_Extensions_Optimization_Abstractions_Asset_System_String_">AssetExtensions.CloneWithContentAsync(Asset, String)</a>

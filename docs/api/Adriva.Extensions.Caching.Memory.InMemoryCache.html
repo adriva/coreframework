@@ -98,11 +98,35 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Adriva.Extensions.Caching.Abstractions.ICache.html">ICache</a></div>
-    <div><span class="xref">IDisposable</span></div>
+    <div><span class="xref">System.IDisposable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
   </div>
   <h5 id="Adriva_Extensions_Caching_Memory_InMemoryCache_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class InMemoryCache : object, ICache, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class InMemoryCache : ICache, IDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -143,7 +167,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Memory/InMemoryCache.cs/#L127">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Memory/InMemoryCache.cs/#L135">View Source</a>
   </span>
   <a id="Adriva_Extensions_Caching_Memory_InMemoryCache_Dispose_" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.Dispose*"></a>
   <h4 id="Adriva_Extensions_Caching_Memory_InMemoryCache_Dispose" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.Dispose">Dispose()</h4>
@@ -157,7 +181,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Memory/InMemoryCache.cs/#L112">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Memory/InMemoryCache.cs/#L120">View Source</a>
   </span>
   <a id="Adriva_Extensions_Caching_Memory_InMemoryCache_Dispose_" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.Dispose*"></a>
   <h4 id="Adriva_Extensions_Caching_Memory_InMemoryCache_Dispose_System_Boolean_" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.Dispose(System.Boolean)">Dispose(Boolean)</h4>
@@ -191,7 +215,7 @@
     <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Memory/InMemoryCache.cs/#L41">View Source</a>
   </span>
   <a id="Adriva_Extensions_Caching_Memory_InMemoryCache_GetOrCreateAsync_" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync*"></a>
-  <h4 id="Adriva_Extensions_Caching_Memory_InMemoryCache_GetOrCreateAsync__1_System_String_Func_Adriva_Extensions_Caching_Abstractions_ICacheItem_Task___0___Adriva_Extensions_Caching_Abstractions_EvictionCallback_System_String___" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync``1(System.String,Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,Task{``0}},Adriva.Extensions.Caching.Abstractions.EvictionCallback,System.String[])">GetOrCreateAsync&lt;T&gt;(String, Func&lt;ICacheItem, Task&lt;T&gt;&gt;, EvictionCallback, String[])</h4>
+  <h4 id="Adriva_Extensions_Caching_Memory_InMemoryCache_GetOrCreateAsync__1_System_String_System_Func_Adriva_Extensions_Caching_Abstractions_ICacheItem_System_Threading_Tasks_Task___0___Adriva_Extensions_Caching_Abstractions_EvictionCallback_System_String___" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync``1(System.String,System.Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,System.Threading.Tasks.Task{``0}},Adriva.Extensions.Caching.Abstractions.EvictionCallback,System.String[])">GetOrCreateAsync&lt;T&gt;(String, Func&lt;ICacheItem, Task&lt;T&gt;&gt;, EvictionCallback, String[])</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -214,7 +238,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="Adriva.Extensions.Caching.Abstractions.ICacheItem.html">ICacheItem</a>, <span class="xref">Task</span>&lt;T&gt;&gt;</td>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="Adriva.Extensions.Caching.Abstractions.ICacheItem.html">ICacheItem</a>, <span class="xref">System.Threading.Tasks.Task</span>&lt;T&gt;&gt;</td>
         <td><span class="parametername">factory</span></td>
         <td></td>
       </tr>
@@ -240,7 +264,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Task</span>&lt;T&gt;</td>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;T&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -267,7 +291,7 @@
     <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Memory/InMemoryCache.cs/#L35">View Source</a>
   </span>
   <a id="Adriva_Extensions_Caching_Memory_InMemoryCache_GetOrCreateAsync_" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync*"></a>
-  <h4 id="Adriva_Extensions_Caching_Memory_InMemoryCache_GetOrCreateAsync__1_System_String_Func_Adriva_Extensions_Caching_Abstractions_ICacheItem_Task___0___System_String___" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync``1(System.String,Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,Task{``0}},System.String[])">GetOrCreateAsync&lt;T&gt;(String, Func&lt;ICacheItem, Task&lt;T&gt;&gt;, String[])</h4>
+  <h4 id="Adriva_Extensions_Caching_Memory_InMemoryCache_GetOrCreateAsync__1_System_String_System_Func_Adriva_Extensions_Caching_Abstractions_ICacheItem_System_Threading_Tasks_Task___0___System_String___" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.GetOrCreateAsync``1(System.String,System.Func{Adriva.Extensions.Caching.Abstractions.ICacheItem,System.Threading.Tasks.Task{``0}},System.String[])">GetOrCreateAsync&lt;T&gt;(String, Func&lt;ICacheItem, Task&lt;T&gt;&gt;, String[])</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -290,7 +314,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="Adriva.Extensions.Caching.Abstractions.ICacheItem.html">ICacheItem</a>, <span class="xref">Task</span>&lt;T&gt;&gt;</td>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="Adriva.Extensions.Caching.Abstractions.ICacheItem.html">ICacheItem</a>, <span class="xref">System.Threading.Tasks.Task</span>&lt;T&gt;&gt;</td>
         <td><span class="parametername">factory</span></td>
         <td></td>
       </tr>
@@ -311,7 +335,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Task</span>&lt;T&gt;</td>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;T&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -335,7 +359,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Memory/InMemoryCache.cs/#L86">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Memory/InMemoryCache.cs/#L94">View Source</a>
   </span>
   <a id="Adriva_Extensions_Caching_Memory_InMemoryCache_NotifyChanged_" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.NotifyChanged*"></a>
   <h4 id="Adriva_Extensions_Caching_Memory_InMemoryCache_NotifyChanged_System_String_" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.NotifyChanged(System.String)">NotifyChanged(String)</h4>
@@ -366,7 +390,7 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Memory/InMemoryCache.cs/#L104">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Memory/InMemoryCache.cs/#L112">View Source</a>
   </span>
   <a id="Adriva_Extensions_Caching_Memory_InMemoryCache_NotifyChangedAsync_" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.NotifyChangedAsync*"></a>
   <h4 id="Adriva_Extensions_Caching_Memory_InMemoryCache_NotifyChangedAsync_System_String_" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.NotifyChangedAsync(System.String)">NotifyChangedAsync(String)</h4>
@@ -403,7 +427,53 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Task</span></td>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Caching/src/Adriva.Extensions.Caching.Memory/InMemoryCache.cs/#L86">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Caching_Memory_InMemoryCache_RemoveAsync_" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.RemoveAsync*"></a>
+  <h4 id="Adriva_Extensions_Caching_Memory_InMemoryCache_RemoveAsync_System_String_" data-uid="Adriva.Extensions.Caching.Memory.InMemoryCache.RemoveAsync(System.String)">RemoveAsync(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ValueTask RemoveAsync(string key)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.ValueTask</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -413,7 +483,7 @@
       <a class="xref" href="Adriva.Extensions.Caching.Abstractions.ICache.html">ICache</a>
   </div>
   <div>
-      <span class="xref">IDisposable</span>
+      <span class="xref">System.IDisposable</span>
   </div>
 </article>
           </div>

@@ -115,7 +115,6 @@
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static IAnalyticsServerBuilder UseEntityFrameworkRepository&lt;TContext, TRepository&gt;(this IAnalyticsServerBuilder builder, Action&lt;DbContextOptionsBuilder&gt; configureContext, ServiceLifetime contextLifetime = null, ServiceLifetime optionsLifetime = null)
-
     where TContext : DbContext where TRepository : class, IAnalyticsRepository</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -205,7 +204,6 @@
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static IAnalyticsServerBuilder UseEntityFrameworkRepository&lt;TContext, TRepository, TModelBuilder&gt;(this IAnalyticsServerBuilder builder, Action&lt;DbContextOptionsBuilder&gt; configureContext, ServiceLifetime contextLifetime = null, ServiceLifetime optionsLifetime = null)
-
     where TContext : DbContext where TRepository : class, IAnalyticsRepository where TModelBuilder : class, IDatabaseModelBuilder</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>

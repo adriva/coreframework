@@ -5,13 +5,13 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class StylesheetMinificationTransform
+    <title>Class AssetDisposerTransform
    | Adriva Core Framework </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class StylesheetMinificationTransform
+    <meta name="title" content="Class AssetDisposerTransform
    | Adriva Core Framework ">  
     
-    <link rel="canonical" href="https://adriva.github.io/coreframework/api/Adriva.Extensions.Optimization.Transforms.StylesheetMinificationTransform.html">
+    <link rel="canonical" href="https://adriva.github.io/coreframework/api/Adriva.Extensions.Optimization.Abstractions.AssetDisposerTransform.html">
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -76,24 +76,26 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Adriva.Extensions.Optimization.Transforms.StylesheetMinificationTransform">
+            <article class="content wrap" id="_content" data-uid="Adriva.Extensions.Optimization.Abstractions.AssetDisposerTransform">
   
   <div style="text-align:center;margin-bottom: 20px;color: #ca3030;">
   [This is preliminary documentation and is subject to change.]
   </div>
   <div>
-    <h6><strong>Namespace</strong>: <a class="xref" href="Adriva.Extensions.Optimization.Transforms.html">Adriva.Extensions.Optimization.Transforms</a></h6>
-    <h6><strong>Assembly</strong>: Adriva.Extensions.Optimization.Transforms.dll</h6>
+    <h6><strong>Namespace</strong>: <a class="xref" href="Adriva.Extensions.Optimization.Abstractions.html">Adriva.Extensions.Optimization.Abstractions</a></h6>
+    <h6><strong>Assembly</strong>: Adriva.Extensions.Optimization.Abstractions.dll</h6>
   </div>
-  <h1 id="Adriva_Extensions_Optimization_Transforms_StylesheetMinificationTransform" data-uid="Adriva.Extensions.Optimization.Transforms.StylesheetMinificationTransform" class="text-break">Class StylesheetMinificationTransform
+  <h1 id="Adriva_Extensions_Optimization_Abstractions_AssetDisposerTransform" data-uid="Adriva.Extensions.Optimization.Abstractions.AssetDisposerTransform" class="text-break">Class AssetDisposerTransform
   </h1>
   <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.AssetDisposerTransform.html">AssetDisposerTransform</a></div>
-    <div class="level2"><span class="xref">StylesheetMinificationTransform</span></div>
+    <div class="level1"><span class="xref">AssetDisposerTransform</span></div>
+      <div class="level2"><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.MergeContentTransform.html">MergeContentTransform</a></div>
+      <div class="level2"><a class="xref" href="Adriva.Extensions.Optimization.Transforms.JavascriptMinificationTransform.html">JavascriptMinificationTransform</a></div>
+      <div class="level2"><a class="xref" href="Adriva.Extensions.Optimization.Transforms.StylesheetMinificationTransform.html">StylesheetMinificationTransform</a></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -101,9 +103,6 @@
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="Adriva.Extensions.Optimization.Abstractions.AssetDisposerTransform.html#Adriva_Extensions_Optimization_Abstractions_AssetDisposerTransform_CleanUpAsync_Adriva_Extensions_Optimization_Abstractions_Asset___">AssetDisposerTransform.CleanUpAsync(Asset[])</a>
-    </div>
     <div>
       <span class="xref">System.Object.Equals(System.Object)</span>
     </div>
@@ -126,9 +125,9 @@
       <span class="xref">System.Object.ToString()</span>
     </div>
   </div>
-  <h5 id="Adriva_Extensions_Optimization_Transforms_StylesheetMinificationTransform_syntax">Syntax</h5>
+  <h5 id="Adriva_Extensions_Optimization_Abstractions_AssetDisposerTransform_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class StylesheetMinificationTransform : AssetDisposerTransform, ITransform</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class AssetDisposerTransform : ITransform</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
@@ -136,15 +135,61 @@
     <span class="divider">|</span>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Transforms/StylesheetMinificationTransform.cs/#L14">View Source</a>
+    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/AssetDisposerTransform.cs/#L10">View Source</a>
   </span>
-  <a id="Adriva_Extensions_Optimization_Transforms_StylesheetMinificationTransform_TransformAsync_" data-uid="Adriva.Extensions.Optimization.Transforms.StylesheetMinificationTransform.TransformAsync*"></a>
-  <h4 id="Adriva_Extensions_Optimization_Transforms_StylesheetMinificationTransform_TransformAsync_Adriva_Extensions_Optimization_Abstractions_Asset___" data-uid="Adriva.Extensions.Optimization.Transforms.StylesheetMinificationTransform.TransformAsync(Adriva.Extensions.Optimization.Abstractions.Asset[])">TransformAsync(Asset[])</h4>
+  <a id="Adriva_Extensions_Optimization_Abstractions_AssetDisposerTransform_CleanUpAsync_" data-uid="Adriva.Extensions.Optimization.Abstractions.AssetDisposerTransform.CleanUpAsync*"></a>
+  <h4 id="Adriva_Extensions_Optimization_Abstractions_AssetDisposerTransform_CleanUpAsync_Adriva_Extensions_Optimization_Abstractions_Asset___" data-uid="Adriva.Extensions.Optimization.Abstractions.AssetDisposerTransform.CleanUpAsync(Adriva.Extensions.Optimization.Abstractions.Asset[])">CleanUpAsync(Asset[])</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override Task&lt;IEnumerable&lt;Asset&gt;&gt; TransformAsync(params Asset[] assets)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual ValueTask CleanUpAsync(params Asset[] assets)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.Asset.html">Asset</a>[]</td>
+        <td><span class="parametername">assets</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.ValueTask</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/AssetDisposerTransform.cs/#L8">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Optimization_Abstractions_AssetDisposerTransform_TransformAsync_" data-uid="Adriva.Extensions.Optimization.Abstractions.AssetDisposerTransform.TransformAsync*"></a>
+  <h4 id="Adriva_Extensions_Optimization_Abstractions_AssetDisposerTransform_TransformAsync_Adriva_Extensions_Optimization_Abstractions_Asset___" data-uid="Adriva.Extensions.Optimization.Abstractions.AssetDisposerTransform.TransformAsync(Adriva.Extensions.Optimization.Abstractions.Asset[])">TransformAsync(Asset[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract Task&lt;IEnumerable&lt;Asset&gt;&gt; TransformAsync(params Asset[] assets)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -178,8 +223,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Adriva.Extensions.Optimization.Abstractions.AssetDisposerTransform.html#Adriva_Extensions_Optimization_Abstractions_AssetDisposerTransform_TransformAsync_Adriva_Extensions_Optimization_Abstractions_Asset___">AssetDisposerTransform.TransformAsync(Asset[])</a></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Adriva.Extensions.Optimization.Abstractions.ITransform.html">ITransform</a>
@@ -192,7 +235,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Transforms/StylesheetMinificationTransform.cs/#L12" class="contribution-link">View Source</a>
+                    <a href="https://github.com/adriva/coreframework/blob/master/Optimization/src/Adriva.Extensions.Optimization.Abstractions/AssetDisposerTransform.cs/#L6" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
