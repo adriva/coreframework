@@ -1,8 +1,9 @@
+using Adriva.Common.Core;
 using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Adriva.Common.Core
+namespace Adriva.Storage.Abstractions
 {
     /// <summary>
     /// The base class for processor classes that can process QueueMessages.

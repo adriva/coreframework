@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Adriva.Common.Core
+namespace Adriva.Storage.Abstractions
 {
     /// <summary>
     /// Represents a message that can be used in a queue system.

@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Adriva.Common.Core
+namespace Adriva.Storage.Abstractions
 {
     [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class QueueMessageFlags

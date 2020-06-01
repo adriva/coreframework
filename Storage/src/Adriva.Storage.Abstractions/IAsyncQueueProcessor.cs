@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Adriva.Common.Core
+namespace Adriva.Storage.Abstractions
 {
     /// <summary>
     /// Represents a processor class that is capable of processing queue messages.
