@@ -194,7 +194,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Common.Core.NdJsonSerializer.html",
-          "hash": "lQKKA5RdePHy4BhnZTDk8w=="
+          "hash": "IVJxCrvpaWJCSDK1Ou3/cA=="
         }
       },
       "is_incremental": false,
@@ -518,7 +518,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.Envelope.html",
-          "hash": "G67ObjG4y25ykm3xWEzF9w=="
+          "hash": "TUD1nDJNmewx1pkywz9Piw=="
         }
       },
       "is_incremental": false,
@@ -866,7 +866,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html",
-          "hash": "rnH+GhojA+QlF152YBt0lA=="
+          "hash": "D+uctPzCjGp84wyIaTJIrg=="
         }
       },
       "is_incremental": false,
@@ -1106,7 +1106,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder-1.html",
-          "hash": "4Z44OLPxbQUASIh0eCI6UQ=="
+          "hash": "37CWVxo8POoS2Z92Dz/P4g=="
         }
       },
       "is_incremental": false,
@@ -1130,7 +1130,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationEvents-1.html",
-          "hash": "JFnczlfsUbx6yPEqnva5Pg=="
+          "hash": "Syby+Qx/hli0duXeoFIllQ=="
         }
       },
       "is_incremental": false,
@@ -1214,7 +1214,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.html",
-          "hash": "oo56CvkLivNKxGrpdGRL5w=="
+          "hash": "I6VExc8DE5MjtXoswKSWcQ=="
         }
       },
       "is_incremental": false,
@@ -1466,7 +1466,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.CacheExtensions.html",
-          "hash": "DZPyQsMMrr+gmbxZ0kXxXQ=="
+          "hash": "sPNZDxi9mzWowGGpvxyO1Q=="
         }
       },
       "is_incremental": false,
@@ -1478,7 +1478,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.html",
-          "hash": "VhL1g/KTCtXi4xy+//nw8g=="
+          "hash": "c0wT32piisnPDkvEyikOkQ=="
         }
       },
       "is_incremental": false,
@@ -1514,7 +1514,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Extensions.DependencyInjection.OptimizationExtensions.html",
-          "hash": "a+GvZO2Zky4wdsn6zfIiIQ=="
+          "hash": "hYcVDuGqMc1VdBX5e5TsoA=="
         }
       },
       "is_incremental": false,
@@ -1574,7 +1574,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/analytics-server.html",
-          "hash": "ebUGOvnMZams4PW6gbP61w=="
+          "hash": "dhVIKJhLLob/o4AYGAXgkQ=="
         }
       },
       "is_incremental": false,
@@ -1678,7 +1678,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 126,
-          "skipped_file_count": 89
+          "skipped_file_count": 126
         },
         "TocDocumentProcessor": {
           "can_incremental": false,

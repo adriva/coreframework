@@ -188,7 +188,9 @@
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static IOptimizationBuilder&lt;TOptions&gt; AddOptimization&lt;TOptions, TContext&gt;(this IServiceCollection services, Action&lt;TOptions&gt; configure)
+
     where TOptions : OptimizationOptions, new()
+
     where TContext : class, IOptimizationContext</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
