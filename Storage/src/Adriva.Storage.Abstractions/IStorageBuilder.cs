@@ -2,8 +2,6 @@ namespace Adriva.Storage.Abstractions
 {
     public interface IStorageBuilder
     {
-        IStorageBuilder AddQueueManager<T>();
-
-        IStorageBuilder AddQueueManager<T>(string name);
+        IStorageBuilder AddQueueManager<T>(string name) where T : class, IQueueManager;
     }
 }

@@ -1,3 +1,4 @@
+using Adriva.Storage.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,8 @@ namespace demo
 {
     public class Startup
     {
+        private bool DisableAnalytics = true;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -42,24 +45,29 @@ namespace demo
                 options.MinifyHtml = true;
             });
 
-            services.AddAppInsightsWebAnalytics(options =>
+            services
+                .AddStorage()
+                .AddQueueManager<NullQueueManager>("nullq");
+
+            if (!DisableAnalytics)
             {
-                options.InstrumentationKey = "Deneme";
-                options.IsDeveloperMode = true;
-                options.Capacity = 10;
-                options.EndPointAddress = "https://localhost:5001/analytics/track";
-            });
+                services.AddAppInsightsWebAnalytics(options =>
+                {
+                    options.InstrumentationKey = "Deneme";
+                    options.IsDeveloperMode = true;
+                    options.Capacity = 10;
+                    options.EndPointAddress = "https://localhost:5001/analytics/track";
+                });
 
-            services.AddAppInsightsAnalyticsServer(builder =>
-            {
-                builder
-                    .SetProcessorThreadCount(1)
-                    .SetBufferCapacity(10)
-                    .UseInMemoryRepository()
-               ;
-            });
-
-
+                services.AddAppInsightsAnalyticsServer(builder =>
+                {
+                    builder
+                        .SetProcessorThreadCount(1)
+                        .SetBufferCapacity(10)
+                        .UseInMemoryRepository()
+                   ;
+                });
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,7 +88,7 @@ namespace demo
 
             app.UseResponseCompression();
 
-            app.UseAnalyticsServer("/analytics");
+            if (!DisableAnalytics) app.UseAnalyticsServer("/analytics");
 
             app.UseStaticFiles();
 
