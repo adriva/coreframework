@@ -28,7 +28,7 @@ namespace demo.Controllers
                 tc.TrackAvailability("AVAILABILITY DEMO", DateTimeOffset.Now, TimeSpan.FromSeconds(10), "RUN LOCATION", true, "MESSAGE HERE");
             }
             var sm = this.HttpContext.RequestServices.GetService<IStorageClientFactory>();
-            var qm = await sm.GetQueueClientAsync("nullq");
+            var qm = await sm.GetBlobClientAsync("nullq");
 
             return View();
         }

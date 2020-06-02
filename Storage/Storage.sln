@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{003C86E0-192
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Storage.InMemory", "src\Adriva.Storage.InMemory\Adriva.Storage.InMemory.csproj", "{F5ECF13F-4E99-4AFF-BA3A-79B324C94FEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Storage.Azure", "src\Adriva.Storage.Azure\Adriva.Storage.Azure.csproj", "{CD5C585E-F64D-479E-8D3F-CD78825D50CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,8 +34,21 @@ Global
 		{F5ECF13F-4E99-4AFF-BA3A-79B324C94FEF}.Release|x64.Build.0 = Release|Any CPU
 		{F5ECF13F-4E99-4AFF-BA3A-79B324C94FEF}.Release|x86.ActiveCfg = Release|Any CPU
 		{F5ECF13F-4E99-4AFF-BA3A-79B324C94FEF}.Release|x86.Build.0 = Release|Any CPU
+		{CD5C585E-F64D-479E-8D3F-CD78825D50CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD5C585E-F64D-479E-8D3F-CD78825D50CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD5C585E-F64D-479E-8D3F-CD78825D50CA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CD5C585E-F64D-479E-8D3F-CD78825D50CA}.Debug|x64.Build.0 = Debug|Any CPU
+		{CD5C585E-F64D-479E-8D3F-CD78825D50CA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CD5C585E-F64D-479E-8D3F-CD78825D50CA}.Debug|x86.Build.0 = Debug|Any CPU
+		{CD5C585E-F64D-479E-8D3F-CD78825D50CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD5C585E-F64D-479E-8D3F-CD78825D50CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD5C585E-F64D-479E-8D3F-CD78825D50CA}.Release|x64.ActiveCfg = Release|Any CPU
+		{CD5C585E-F64D-479E-8D3F-CD78825D50CA}.Release|x64.Build.0 = Release|Any CPU
+		{CD5C585E-F64D-479E-8D3F-CD78825D50CA}.Release|x86.ActiveCfg = Release|Any CPU
+		{CD5C585E-F64D-479E-8D3F-CD78825D50CA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F5ECF13F-4E99-4AFF-BA3A-79B324C94FEF} = {003C86E0-192A-4C96-A194-7CAE5C566491}
+		{CD5C585E-F64D-479E-8D3F-CD78825D50CA} = {003C86E0-192A-4C96-A194-7CAE5C566491}
 	EndGlobalSection
 EndGlobal

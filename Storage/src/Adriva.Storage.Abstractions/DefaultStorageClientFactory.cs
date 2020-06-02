@@ -12,12 +12,14 @@ namespace Adriva.Storage.Abstractions
         private sealed class StorageClientWrapper : IDisposable
         {
             private readonly IStorageClient StorageClient;
+            private readonly string Name;
             private bool IsInitialized = false;
             private SemaphoreSlim InitializerSemaphore = new SemaphoreSlim(1, 1);
 
-            public StorageClientWrapper(IStorageClient storageClient)
+            public StorageClientWrapper(string name, IStorageClient storageClient)
             {
                 this.StorageClient = storageClient;
+                this.Name = name;
             }
 
             public async Task<IStorageClient> UnwrapAsync()
@@ -29,7 +31,7 @@ namespace Adriva.Storage.Abstractions
                 {
                     if (!this.IsInitialized)
                     {
-                        await this.StorageClient.InitializeAsync();
+                        await this.StorageClient.InitializeAsync(this.Name);
                         this.IsInitialized = true;
                     }
                 }
@@ -48,20 +50,21 @@ namespace Adriva.Storage.Abstractions
         }
 
         private readonly IServiceProvider ServiceProvider;
-        private readonly IOptionsMonitor<StorageClientFactoryOptions> OptionsMonitor;
+        private readonly IOptionsMonitor<StorageClientFactoryOptions> FactoryOptionsMonitor;
         private readonly ConcurrentDictionary<string, StorageClientWrapper> ReusableClients = new ConcurrentDictionary<string, StorageClientWrapper>();
 
-        public DefaultStorageClientFactory(IServiceProvider serviceProvider, IOptionsMonitor<StorageClientFactoryOptions> optionsMonitor)
+        public DefaultStorageClientFactory(IServiceProvider serviceProvider,
+            IOptionsMonitor<StorageClientFactoryOptions> factoryOptionsMonitor)
         {
             this.ServiceProvider = serviceProvider;
-            this.OptionsMonitor = optionsMonitor;
+            this.FactoryOptionsMonitor = factoryOptionsMonitor;
         }
 
         private async Task<T> GetOrCreateStorageClientAsync<T>(string name) where T : IStorageClient
         {
-            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
+            if (null == name) throw new ArgumentNullException(nameof(name));
 
-            var options = this.OptionsMonitor.Get(name);
+            var options = this.FactoryOptionsMonitor.Get(name);
 
             if (null == options.ManagerType)
             {
@@ -79,16 +82,16 @@ namespace Adriva.Storage.Abstractions
             }
             else
             {
-                var storageClientWrapper = this.ReusableClients.GetOrAdd(name, (key) => new StorageClientWrapper(factoryMethod.Invoke()));
+                var storageClientWrapper = this.ReusableClients.GetOrAdd(name, (key) => new StorageClientWrapper(name, factoryMethod.Invoke()));
                 return (T)await storageClientWrapper.UnwrapAsync();
             }
         }
 
-        public Task<IQueueClient> GetQueueClientAsync() => this.GetQueueClientAsync("Default");
+        public Task<IQueueClient> GetQueueClientAsync() => this.GetQueueClientAsync(Options.DefaultName);
 
         public Task<IQueueClient> GetQueueClientAsync(string name) => this.GetOrCreateStorageClientAsync<IQueueClient>(name);
 
-        public Task<IBlobClient> GetBlobClientAsync() => this.GetBlobClientAsync("Default");
+        public Task<IBlobClient> GetBlobClientAsync() => this.GetBlobClientAsync(Options.DefaultName);
 
         public Task<IBlobClient> GetBlobClientAsync(string name) => this.GetOrCreateStorageClientAsync<IBlobClient>(name);
 

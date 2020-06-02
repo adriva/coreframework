@@ -13,6 +13,7 @@
     <ProjectReference Include="..\Analytics\src\Adriva.Extensions.Analytics.Repository.EntityFramework\Adriva.Extensions.Analytics.Repository.EntityFramework.csproj" />
     <ProjectReference Include="..\Analytics\src\Adriva.Extensions.Analytics.Repository.EntityFramework.SqlLite\Adriva.Extensions.Analytics.Repository.EntityFramework.SqlLite.csproj" />
     <ProjectReference Include="..\Storage\src\Adriva.Storage.InMemory\Adriva.Storage.InMemory.csproj" />
+    <ProjectReference Include="..\Storage\src\Adriva.Storage.Azure\Adriva.Storage.Azure.csproj" />
   </ItemGroup>
 
 

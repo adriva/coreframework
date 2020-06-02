@@ -5,7 +5,7 @@ namespace Adriva.Storage.Abstractions
 {
     public sealed class NullQueueClient : IQueueClient
     {
-        public ValueTask InitializeAsync()
+        public ValueTask InitializeAsync(string name)
         {
             return new ValueTask();
         }

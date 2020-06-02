@@ -1,4 +1,5 @@
 using Adriva.Storage.Abstractions;
+using Adriva.Storage.Azure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -47,8 +48,9 @@ namespace demo
 
             services
                 .AddStorage()
-                .AddQueueClient<NullQueueClient>("nullq", true)
-                .AddQueueClient<NullQueueClient>("nullq2", false);
+                    .AddBlobClient<AzureBlobClient>("nullq", true)
+                    .Configure<AzureBlobConfiguration>(b => b.ContainerName = "hello world");
+            ;
 
             if (!DisableAnalytics)
             {

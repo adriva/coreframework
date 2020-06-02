@@ -1,9 +1,17 @@
+using Microsoft.Extensions.DependencyInjection;
+
 namespace Adriva.Storage.Abstractions
 {
     public interface IStorageBuilder
     {
-        IStorageBuilder AddQueueClient<T>(bool isSingleton = false) where T : class, IQueueClient;
+        IServiceCollection Services { get; }
 
-        IStorageBuilder AddQueueClient<T>(string name, bool isSingleton = false) where T : class, IQueueClient;
+        IStorageClientBuilder AddQueueClient<T>(bool isSingleton = false) where T : class, IQueueClient;
+
+        IStorageClientBuilder AddQueueClient<T>(string name, bool isSingleton = false) where T : class, IQueueClient;
+
+        IStorageClientBuilder AddBlobClient<T>(bool isSingleton = false) where T : class, IBlobClient;
+
+        IStorageClientBuilder AddBlobClient<T>(string name, bool isSingleton = false) where T : class, IBlobClient;
     }
 }
