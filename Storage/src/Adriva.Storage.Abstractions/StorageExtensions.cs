@@ -8,7 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IStorageBuilder AddStorage(this IServiceCollection services)
         {
             services.AddOptions();
-            services.TryAddSingleton<IStorageManagerFactory, DefaultStorageManagerFactory>();
+            services.TryAddSingleton<IStorageClientFactory, DefaultStorageClientFactory>();
 
             return new DefaultStorageBuilder(services);
         }

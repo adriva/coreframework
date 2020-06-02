@@ -1,9 +1,9 @@
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 namespace Adriva.Storage.Abstractions
 {
-    public sealed class NullQueueManager : IQueueManager
+    public sealed class NullQueueClient : IQueueClient
     {
         public ValueTask InitializeAsync()
         {

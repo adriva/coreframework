@@ -18,7 +18,7 @@ namespace demo.Controllers
         {
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var tc = this.HttpContext.RequestServices.GetService<Microsoft.ApplicationInsights.TelemetryClient>();
             if (null != tc)
@@ -27,7 +27,9 @@ namespace demo.Controllers
                 tc.TrackEvent("EVENT NAME");
                 tc.TrackAvailability("AVAILABILITY DEMO", DateTimeOffset.Now, TimeSpan.FromSeconds(10), "RUN LOCATION", true, "MESSAGE HERE");
             }
-            var sm = this.HttpContext.RequestServices.GetService<IStorageManagerFactory>();
+            var sm = this.HttpContext.RequestServices.GetService<IStorageClientFactory>();
+            var qm = await sm.GetQueueClientAsync("nullq");
+
             return View();
         }
     }

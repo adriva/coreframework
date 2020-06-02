@@ -12,17 +12,25 @@ namespace Adriva.Storage.Abstractions
             this.Services = services;
         }
 
-        private IStorageBuilder AddManager<T>(string name) where T : class, IStorageManager
+        private IStorageBuilder AddStorageClient<T>(string name, bool isSingleton = false) where T : class, IStorageClient
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
 
-            this.Services.Configure<StorageManagerFactoryOptions>(name, options => options.AddManager<T>());
+            this.Services.Configure<StorageClientFactoryOptions>(name, options =>
+            {
+                options.AddStorageClient<T>(isSingleton);
+            });
             return this;
         }
 
-        public IStorageBuilder AddQueueManager<T>(string name) where T : class, IQueueManager
+        public IStorageBuilder AddQueueClient<T>(bool isSingleton = false) where T : class, IQueueClient
         {
-            return this.AddManager<T>(name);
+            return this.AddQueueClient<T>("Default", isSingleton);
+        }
+
+        public IStorageBuilder AddQueueClient<T>(string name, bool isSingleton = false) where T : class, IQueueClient
+        {
+            return this.AddStorageClient<T>(name, isSingleton);
         }
     }
 }

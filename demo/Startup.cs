@@ -47,7 +47,8 @@ namespace demo
 
             services
                 .AddStorage()
-                .AddQueueManager<NullQueueManager>("nullq");
+                .AddQueueClient<NullQueueClient>("nullq", true)
+                .AddQueueClient<NullQueueClient>("nullq2", false);
 
             if (!DisableAnalytics)
             {
