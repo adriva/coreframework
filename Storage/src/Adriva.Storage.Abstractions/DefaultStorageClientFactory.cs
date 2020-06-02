@@ -84,10 +84,13 @@ namespace Adriva.Storage.Abstractions
             }
         }
 
-
         public Task<IQueueClient> GetQueueClientAsync() => this.GetQueueClientAsync("Default");
 
         public Task<IQueueClient> GetQueueClientAsync(string name) => this.GetOrCreateStorageClientAsync<IQueueClient>(name);
+
+        public Task<IBlobClient> GetBlobClientAsync() => this.GetBlobClientAsync("Default");
+
+        public Task<IBlobClient> GetBlobClientAsync(string name) => this.GetOrCreateStorageClientAsync<IBlobClient>(name);
 
         public void Dispose()
         {

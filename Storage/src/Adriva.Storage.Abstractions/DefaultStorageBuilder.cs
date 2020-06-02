@@ -32,5 +32,15 @@ namespace Adriva.Storage.Abstractions
         {
             return this.AddStorageClient<T>(name, isSingleton);
         }
+
+        public IStorageBuilder AddBlobClient<T>(bool isSingleton = false) where T : class, IBlobClient
+        {
+            return this.AddBlobClient<T>("Default", isSingleton);
+        }
+
+        public IStorageBuilder AddBlobClient<T>(string name, bool isSingleton = false) where T : class, IBlobClient
+        {
+            return this.AddStorageClient<T>(name, isSingleton);
+        }
     }
 }
