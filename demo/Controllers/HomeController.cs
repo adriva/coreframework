@@ -29,8 +29,10 @@ namespace demo.Controllers
             }
             var sm = this.HttpContext.RequestServices.GetService<IStorageClientFactory>();
             var qm = await sm.GetBlobClientAsync("nullq");
-
-            return View();
+            string t = "Hello world";
+            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(t);
+            await qm.DeleteAsync("blog/deneme");
+            return this.View();
         }
     }
 }

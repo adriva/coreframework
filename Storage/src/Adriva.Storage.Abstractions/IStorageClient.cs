@@ -5,6 +5,6 @@ namespace Adriva.Storage.Abstractions
 {
     public interface IStorageClient : IAsyncDisposable
     {
-        ValueTask InitializeAsync(string name);
+        ValueTask InitializeAsync(string clientName);
     }
 }

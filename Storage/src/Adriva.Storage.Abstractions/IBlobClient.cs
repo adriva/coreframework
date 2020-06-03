@@ -10,7 +10,7 @@ namespace Adriva.Storage.Abstractions
 
         Task<string> UpsertAsync(string name, Stream stream, int cacheDuration = 0);
 
-        Task<string> UpsertAsync(string name, ReadOnlySpan<byte> data, int cacheDuration = 0);
+        Task<string> UpsertAsync(string name, ReadOnlyMemory<byte> data, int cacheDuration = 0);
 
         Task<Stream> OpenReadStreamAsync(string name);
 

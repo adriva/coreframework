@@ -1,7 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.IO.Pipelines;
 using System.Threading.Tasks;
+using Adriva.Common.Core;
 using Adriva.Storage.Abstractions;
+using Microsoft.Azure.Storage;
+using Microsoft.Azure.Storage.Blob;
 using Microsoft.Extensions.Options;
 
 namespace Adriva.Storage.Azure
@@ -12,51 +16,84 @@ namespace Adriva.Storage.Azure
         private readonly IOptionsMonitor<AzureBlobConfiguration> ConfigurationAccessor;
 
         private AzureBlobConfiguration Configuration;
+        private CloudBlobContainer Container;
 
         public AzureBlobClient(IOptionsMonitor<AzureBlobConfiguration> configuration)
         {
             this.ConfigurationAccessor = configuration;
         }
 
-        public ValueTask InitializeAsync(string name)
+        public async ValueTask InitializeAsync(string clientName)
         {
-            this.Configuration = this.ConfigurationAccessor.Get(name);
-            return new ValueTask();
+            this.Configuration = this.ConfigurationAccessor.Get(clientName);
+
+            if (!CloudStorageAccount.TryParse(this.Configuration.ConnectionString, out CloudStorageAccount account))
+            {
+                throw new InvalidDataException($"Azure blob connection string for blob client '{clientName}' could not be parsed.");
+            }
+            var blobClient = account.CreateCloudBlobClient();
+            this.Container = blobClient.GetContainerReference(this.Configuration.ContainerName);
+            await this.Container.CreateIfNotExistsAsync();
         }
 
-        public ValueTask<bool> ExistsAsync(string name)
+        public async ValueTask<bool> ExistsAsync(string name)
         {
-            throw new NotImplementedException();
+            return await this.Container.ExistsAsync();
         }
 
-        public Task<Stream> OpenReadStreamAsync(string name)
+        public async Task<Stream> OpenReadStreamAsync(string name)
         {
-            throw new NotImplementedException();
+            var blob = this.Container.GetBlobReference(name);
+            return await blob.OpenReadAsync();
         }
 
-        public Task<ReadOnlyMemory<byte>> ReadAllBytesAsync(string name)
+        public async Task<ReadOnlyMemory<byte>> ReadAllBytesAsync(string name)
         {
-            throw new NotImplementedException();
+            var blob = this.Container.GetBlobReference(name);
+            await blob.FetchAttributesAsync();
+            if (1 > blob.Properties.Length) return new ReadOnlyMemory<byte>();
+
+            byte[] buffer = new byte[blob.Properties.Length];
+            await blob.DownloadToByteArrayAsync(buffer, 0);
+            return new ReadOnlyMemory<byte>(buffer);
         }
 
-        public Task<string> UpsertAsync(string name, Stream stream, int cacheDuration = 0)
+        public async Task<string> UpsertAsync(string name, Stream stream, int cacheDuration = 0)
         {
-            throw new NotImplementedException();
+            var blob = this.Container.GetBlockBlobReference(name);
+            var mimeType = MimeTypes.GetMimeType(name);
+            blob.Properties.ContentType = mimeType;
+
+            if (0 < cacheDuration)
+            {
+                blob.Properties.CacheControl = $"public, max-age={cacheDuration}";
+            }
+
+            await blob.UploadFromStreamAsync(stream);
+            return blob.Uri.ToString();
         }
 
-        public Task<string> UpsertAsync(string name, ReadOnlySpan<byte> data, int cacheDuration = 0)
+        public async Task<string> UpsertAsync(string name, ReadOnlyMemory<byte> data, int cacheDuration = 0)
         {
-            throw new NotImplementedException();
+            using (var stream = new MemoryStream())
+            {
+                PipeWriter writer = PipeWriter.Create(stream);
+                var result = await writer.WriteAsync(data);
+                stream.Seek(0, SeekOrigin.Begin);
+                return await this.UpsertAsync(name, stream, cacheDuration);
+            }
         }
 
-        public ValueTask DeleteAsync(string name)
+        public async ValueTask DeleteAsync(string name)
         {
-            throw new NotImplementedException();
+            var blob = this.Container.GetBlobReference(name);
+            await blob.DeleteIfExistsAsync();
         }
 
         public ValueTask DisposeAsync()
         {
-            throw new NotImplementedException();
+            this.Container = null;
+            return new ValueTask();
         }
     }
 }
