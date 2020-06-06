@@ -1,3 +1,4 @@
+using System;
 using Adriva.Storage.Abstractions;
 using Adriva.Storage.Azure;
 using Microsoft.AspNetCore.Builder;
@@ -47,13 +48,25 @@ namespace demo
             });
 
             services
-                .AddStorage()
-                    .AddBlobClient<AzureBlobClient>("nullq", true)
-                    .Configure<AzureBlobConfiguration>(b =>
-                    {
-                        b.ConnectionString = "DefaultEndpointsProtocol=https;AccountName=adriva;AccountKey=nQTYr6G1G00k+mUR370Ar7J0Spv+gbPWRCAyeTILHMF8KdHElRmy/xhiik8Uz1CQ2vohOzP6DsJUzGylFiTDlw==";
-                        b.ContainerName = "jarrtcontent";
-                    });
+                .AddStorage(builder =>
+                {
+                    builder
+                        .AddBlobClient<AzureBlobClient>("nullq", true)
+                        .Configure<AzureBlobConfiguration>(b =>
+                        {
+                            b.ConnectionString = "DefaultEndpointsProtocol=https;AccountName=adriva;AccountKey=nQTYr6G1G00k+mUR370Ar7J0Spv+gbPWRCAyeTILHMF8KdHElRmy/xhiik8Uz1CQ2vohOzP6DsJUzGylFiTDlw==";
+                            b.ContainerName = "jarrtcontent";
+                        });
+
+                    builder.AddQueueClient<AzureQueueClient>(true)
+                        .Configure<AzureQueueConfiguration>(q =>
+                        {
+                            q.ConnectionString = "DefaultEndpointsProtocol=https;AccountName=adriva;AccountKey=nQTYr6G1G00k+mUR370Ar7J0Spv+gbPWRCAyeTILHMF8KdHElRmy/xhiik8Uz1CQ2vohOzP6DsJUzGylFiTDlw==";
+                            q.DefaultTimeToLive = TimeSpan.FromMinutes(1);
+                            q.QueueName = "deneme";
+                            q.UseSerializer<DefaultQueueMessageSerializer>();
+                        });
+                });
             ;
 
             if (!DisableAnalytics)

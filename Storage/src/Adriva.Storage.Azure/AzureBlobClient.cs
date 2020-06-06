@@ -10,8 +10,7 @@ using Microsoft.Extensions.Options;
 
 namespace Adriva.Storage.Azure
 {
-
-    public class AzureBlobClient : IBlobClient
+    public sealed class AzureBlobClient : IBlobClient
     {
         private readonly IOptionsMonitor<AzureBlobConfiguration> ConfigurationAccessor;
 

@@ -15,8 +15,6 @@ namespace Adriva.Storage.Abstractions
 
         private IStorageClientBuilder AddStorageClient<T>(string name, bool isSingleton = false) where T : class, IStorageClient
         {
-            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
-
             IStorageClientBuilder storageClientBuilder = new DefaultStorageClientBuilder(name, this.Services);
 
             this.Services.Configure<StorageClientFactoryOptions>(name, options =>

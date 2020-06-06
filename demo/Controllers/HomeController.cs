@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Storage.Abstractions;
 using Microsoft.AspNetCore.Mvc;
@@ -28,10 +29,11 @@ namespace demo.Controllers
                 tc.TrackAvailability("AVAILABILITY DEMO", DateTimeOffset.Now, TimeSpan.FromSeconds(10), "RUN LOCATION", true, "MESSAGE HERE");
             }
             var sm = this.HttpContext.RequestServices.GetService<IStorageClientFactory>();
-            var qm = await sm.GetBlobClientAsync("nullq");
-            string t = "Hello world";
-            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(t);
-            await qm.DeleteAsync("blog/deneme");
+            var qm = await sm.GetQueueClientAsync();
+            await qm.AddAsync(new QueueMessage(QueueMessageFlags.Default, "COMMAND", "Hello World", "GH"));
+            var m = await qm.GetNextAsync(CancellationToken.None);
+            bool b = QueueMessageFlags.Default == m.Flags;
+            b = m.Flags == null;
             return this.View();
         }
     }

@@ -7,6 +7,7 @@ namespace Adriva.Storage.Abstractions
     public class QueueMessageFlags
     {
         public static QueueMessageFlags None = new QueueMessageFlags(0);
+        public static QueueMessageFlags Default = new QueueMessageFlags(1);
 
         [JsonProperty("v")]
         public long Value { get; private set; }
@@ -25,6 +26,32 @@ namespace Adriva.Storage.Abstractions
         {
             if (0 == value) return QueueMessageFlags.None;
             return new QueueMessageFlags(value);
+        }
+
+        public static bool operator ==(QueueMessageFlags first, QueueMessageFlags second)
+        {
+            if (object.ReferenceEquals(first, null) && object.ReferenceEquals(second, null)) return true;
+            else if (!object.ReferenceEquals(first, null) && !object.ReferenceEquals(second, null))
+            {
+                return first.Value == second.Value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool operator !=(QueueMessageFlags first, QueueMessageFlags second)
+        {
+            if (object.ReferenceEquals(first, null) && object.ReferenceEquals(second, null)) return false;
+            else if (!object.ReferenceEquals(first, null) && !object.ReferenceEquals(second, null))
+            {
+                return first.Value != second.Value;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public override bool Equals(object obj)

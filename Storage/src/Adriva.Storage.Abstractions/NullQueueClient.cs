@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Adriva.Storage.Abstractions
@@ -10,12 +11,12 @@ namespace Adriva.Storage.Abstractions
             return new ValueTask();
         }
 
-        public ValueTask AddAsync(QueueMessage message, int ttlMinutes, int visibilityDelaySeconds)
+        public ValueTask AddAsync(QueueMessage message, TimeSpan? timeToLive, TimeSpan? visibilityDelay)
         {
             return new ValueTask();
         }
 
-        public Task<QueueMessage> GetNextAsync(int timeout, CancellationToken cancellationToken)
+        public Task<QueueMessage> GetNextAsync(CancellationToken cancellationToken)
         {
             return Task.FromResult((QueueMessage)null);
         }
