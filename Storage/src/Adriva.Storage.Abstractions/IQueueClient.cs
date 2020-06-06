@@ -6,7 +6,7 @@ namespace Adriva.Storage.Abstractions
 {
     public interface IQueueClient : IStorageClient
     {
-        ValueTask AddAsync(QueueMessage message, TimeSpan? timeToLive = null, TimeSpan? visibilityDelay = null);
+        ValueTask AddAsync(QueueMessage message, TimeSpan? timeToLive = null, TimeSpan? initialVisibilityDelay = null);
 
         Task<QueueMessage> GetNextAsync(CancellationToken cancellationToken);
     }

@@ -40,7 +40,7 @@ namespace Adriva.Storage.Azure
             await this.Queue.CreateIfNotExistsAsync();
         }
 
-        public async ValueTask AddAsync(QueueMessage message, TimeSpan? timeToLive = null, TimeSpan? visibilityDelay = null)
+        public async ValueTask AddAsync(QueueMessage message, TimeSpan? timeToLive = null, TimeSpan? initialVisibilityDelay = null)
         {
             if (null == message) throw new ArgumentNullException(nameof(message));
 
@@ -48,7 +48,7 @@ namespace Adriva.Storage.Azure
 
             byte[] content = await this.Serializer.SerializeAsync(message);
             CloudQueueMessage cloudQueueMessage = new CloudQueueMessage(content);
-            await this.Queue.AddMessageAsync(cloudQueueMessage, timeToLive, visibilityDelay, null, null);
+            await this.Queue.AddMessageAsync(cloudQueueMessage, timeToLive, initialVisibilityDelay, null, null);
         }
 
         public async Task<QueueMessage> GetNextAsync(CancellationToken cancellationToken)
