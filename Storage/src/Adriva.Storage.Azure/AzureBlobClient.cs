@@ -74,6 +74,12 @@ namespace Adriva.Storage.Azure
             return blob.Uri.ToString();
         }
 
+        public async Task DeneAsync()
+        {
+            var result = await this.Container.ListBlobsSegmentedAsync(null, true, BlobListingDetails.Metadata, 100, null, null, null);
+            var hede = result.Results.OfType<CloudBlob>().ToArray();
+        }
+
         public async Task<string> UpsertAsync(string name, ReadOnlyMemory<byte> data, int cacheDuration = 0)
         {
             using (var stream = new MemoryStream())

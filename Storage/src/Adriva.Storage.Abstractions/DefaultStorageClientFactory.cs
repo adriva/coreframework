@@ -60,9 +60,11 @@ namespace Adriva.Storage.Abstractions
             this.FactoryOptionsMonitor = factoryOptionsMonitor;
         }
 
-        private async Task<T> GetOrCreateStorageClientAsync<T>(string name) where T : IStorageClient
+        private async Task<T> GetOrCreateStorageClientAsync<T>(string prefix, string name) where T : IStorageClient
         {
             if (null == name) throw new ArgumentNullException(nameof(name));
+
+            name = string.Concat(prefix, ":", name);
 
             var options = this.FactoryOptionsMonitor.Get(name);
 
@@ -87,13 +89,9 @@ namespace Adriva.Storage.Abstractions
             }
         }
 
-        public Task<IQueueClient> GetQueueClientAsync() => this.GetQueueClientAsync(Options.DefaultName);
+        public Task<IQueueClient> GetQueueClientAsync(string name) => this.GetOrCreateStorageClientAsync<IQueueClient>("queue", name);
 
-        public Task<IQueueClient> GetQueueClientAsync(string name) => this.GetOrCreateStorageClientAsync<IQueueClient>(name);
-
-        public Task<IBlobClient> GetBlobClientAsync() => this.GetBlobClientAsync(Options.DefaultName);
-
-        public Task<IBlobClient> GetBlobClientAsync(string name) => this.GetOrCreateStorageClientAsync<IBlobClient>(name);
+        public Task<IBlobClient> GetBlobClientAsync(string name) => this.GetOrCreateStorageClientAsync<IBlobClient>("blob", name);
 
         public void Dispose()
         {
@@ -104,5 +102,9 @@ namespace Adriva.Storage.Abstractions
 
             this.ReusableClients.Clear();
         }
+
+        public Task<IQueueClient> GetQueueClientAsync() => this.GetQueueClientAsync(Options.DefaultName);
+
+        public Task<IBlobClient> GetBlobClientAsync() => this.GetBlobClientAsync(Options.DefaultName);
     }
 }

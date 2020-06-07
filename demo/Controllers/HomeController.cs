@@ -29,11 +29,8 @@ namespace demo.Controllers
                 tc.TrackAvailability("AVAILABILITY DEMO", DateTimeOffset.Now, TimeSpan.FromSeconds(10), "RUN LOCATION", true, "MESSAGE HERE");
             }
             var sm = this.HttpContext.RequestServices.GetService<IStorageClientFactory>();
-            var qm = await sm.GetQueueClientAsync();
-            await qm.AddAsync(new QueueMessage(QueueMessageFlags.Default, "COMMAND", "Hello World", "GH"));
-            var m = await qm.GetNextAsync(CancellationToken.None);
-            bool b = QueueMessageFlags.Default == m.Flags;
-            b = m.Flags == null;
+            var mm = await sm.GetBlobClientAsync();
+            await mm.DeneAsync();
             return this.View();
         }
     }

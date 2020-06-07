@@ -17,5 +17,7 @@ namespace Adriva.Storage.Abstractions
         Task<ReadOnlyMemory<byte>> ReadAllBytesAsync(string name);
 
         ValueTask DeleteAsync(string name);
+
+        Task DeneAsync();
     }
 }
