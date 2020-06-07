@@ -248,9 +248,8 @@ namespace Adriva.Common.Core
         /// </summary>
         /// <param name="data">The byte array that will be used to construct a base string for.</param>
         /// <param name="alphabet">The alphabet that will be used to translate the input data.</param>
-        /// <param name="blockSize">Minimum length of the output string desired.</param>
         /// <returns>A string representing the translated value of the given byte array.</returns>
-        public static string GetBaseString(byte[] data, string alphabet, int blockSize = 0)
+        public static string GetBaseString(byte[] data, string alphabet)
         {
             if (null == data) return string.Empty;
 
@@ -265,11 +264,6 @@ namespace Adriva.Common.Core
                 bigint = bigint / (ulong)alphabet.Length;
             } while (0 < bigint);
 
-            while (blockSize > buffer.Length)
-            {
-                buffer.Insert(0, alphabet[0]);
-            }
-
             return buffer.ToString();
         }
 
@@ -281,9 +275,8 @@ namespace Adriva.Common.Core
         /// </summary>
         /// <param name="number">The ulong value that will be used to construct a base string for.</param>
         /// <param name="alphabet">The alphabet that will be used to translate the input data.</param>
-        /// <param name="blockSize">Minimum length of the output string desired.</param>
         /// <returns>A string representing the translated value of the given ulong value.</returns>
-        public static string GetBaseString(ulong number, string alphabet, int blockSize = 0)
+        public static string GetBaseString(ulong number, string alphabet)
         {
             StringBuilder buffer = new StringBuilder();
 
@@ -293,13 +286,27 @@ namespace Adriva.Common.Core
                 number = number / (ulong)alphabet.Length;
             } while (0 < number);
 
-            while (blockSize > buffer.Length)
-            {
-                buffer.Insert(0, alphabet[0]);
-            }
-
             return buffer.ToString();
         }
+
+        public static byte[] FromBaseString(string baseString, string alphabet)
+        {
+            if (string.IsNullOrWhiteSpace(baseString)) return null;
+            if (string.IsNullOrEmpty(alphabet)) throw new ArgumentNullException("Specified alphabet is null of empty string.");
+
+            BigInteger bigint = new BigInteger(0);
+
+            for (int loop = 0; loop < baseString.Length; loop++)
+            {
+                bigint *= alphabet.Length;
+                int mod = alphabet.IndexOf(baseString[loop]);
+                bigint += mod;
+            }
+
+            return bigint.ToByteArray(true);
+        }
+
+
 
         public static string RestoreNegatedString(string input)
         {
@@ -517,7 +524,7 @@ namespace Adriva.Common.Core
             using (var generator = RandomNumberGenerator.Create())
             {
                 byte[] buffer = Utilities.GetRandomBytes(sizeInBytes);
-                return Utilities.GetBaseString(buffer, Utilities.Base63Alphabet, 0);
+                return Utilities.GetBaseString(buffer, Utilities.Base63Alphabet);
             }
         }
 
@@ -630,7 +637,7 @@ namespace Adriva.Common.Core
             {
                 hashAlgorithm.Initialize();
                 var hashBytes = hashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(input));
-                return Utilities.GetBaseString(hashBytes, Utilities.Base63Alphabet, 0);
+                return Utilities.GetBaseString(hashBytes, Utilities.Base63Alphabet);
             }
         }
 

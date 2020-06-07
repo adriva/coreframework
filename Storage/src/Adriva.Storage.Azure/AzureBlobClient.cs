@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.IO.Pipelines;
+using System.Linq;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
 using Adriva.Storage.Abstractions;
@@ -37,7 +38,8 @@ namespace Adriva.Storage.Azure
 
         public async ValueTask<bool> ExistsAsync(string name)
         {
-            return await this.Container.ExistsAsync();
+            var blob = this.Container.GetBlobReference(name);
+            return await blob.ExistsAsync();
         }
 
         public async Task<Stream> OpenReadStreamAsync(string name)

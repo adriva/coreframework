@@ -28,7 +28,7 @@ namespace Adriva.Extensions.Optimization.Abstractions
             }
             outputStream.Seek(0, SeekOrigin.Begin);
 
-            string hashName = Utilities.GetBaseString(Utilities.CalculateStreamHash(outputStream), Utilities.Base63Alphabet, 0);
+            string hashName = Utilities.GetBaseString(Utilities.CalculateStreamHash(outputStream), Utilities.Base63Alphabet);
 
             outputStream.Seek(0, SeekOrigin.Begin);
 
