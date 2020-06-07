@@ -17,9 +17,9 @@ namespace Adriva.Storage.Azure
         private AzureBlobConfiguration Configuration;
         private CloudBlobContainer Container;
 
-        public AzureBlobClient(IOptionsMonitor<AzureBlobConfiguration> configuration)
+        public AzureBlobClient(IOptionsMonitor<AzureBlobConfiguration> configurationAccessor)
         {
-            this.ConfigurationAccessor = configuration;
+            this.ConfigurationAccessor = configurationAccessor;
         }
 
         public async ValueTask InitializeAsync(string clientName)
