@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Adriva.Common.Core;
 
 namespace Adriva.Storage.Abstractions
 {
@@ -18,6 +19,6 @@ namespace Adriva.Storage.Abstractions
 
         ValueTask DeleteAsync(string name);
 
-        Task DeneAsync();
+        Task<SegmentedResult<string>> ListAllAsync(string continuationToken, string prefix = null, int count = 500);
     }
 }

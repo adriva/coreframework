@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Adriva.Common.Core;
 using Adriva.Storage.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +31,13 @@ namespace demo.Controllers
             }
             var sm = this.HttpContext.RequestServices.GetService<IStorageClientFactory>();
             var mm = await sm.GetBlobClientAsync();
-            await mm.DeneAsync();
+            string token = null;
+
+            SegmentedResult<string> sr = SegmentedResult<string>.Empty;
+            do
+            {
+                sr = await mm.ListAllAsync(sr.ContinuationToken, null, 50);
+            } while (sr.HasMore);
             return this.View();
         }
     }

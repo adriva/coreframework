@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Pipelines;
 using System.Linq;
@@ -74,10 +75,13 @@ namespace Adriva.Storage.Azure
             return blob.Uri.ToString();
         }
 
-        public async Task DeneAsync()
+        public async Task<SegmentedResult<string>> ListAllAsync(string continuationToken, string prefix = null, int count = 500)
         {
-            var result = await this.Container.ListBlobsSegmentedAsync(null, true, BlobListingDetails.Metadata, 100, null, null, null);
-            var hede = result.Results.OfType<CloudBlob>().ToArray();
+            count = Math.Min(1000, Math.Max(1, count));
+            var blobContinuationToken = AzureStorageUtilities.DeserializeBlobContinuationToken(continuationToken);
+            var result = await this.Container.ListBlobsSegmentedAsync(prefix, true, BlobListingDetails.None, count, blobContinuationToken, null, null);
+            string nextPageToken = result.ContinuationToken.Serialize();
+            return new SegmentedResult<string>(result.Results.OfType<CloudBlob>().Select(b => b.Name), nextPageToken, null != result.ContinuationToken);
         }
 
         public async Task<string> UpsertAsync(string name, ReadOnlyMemory<byte> data, int cacheDuration = 0)
