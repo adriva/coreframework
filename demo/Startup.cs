@@ -45,6 +45,10 @@ namespace demo
                 options.BundleJavascripts = true;
                 options.MinifyJavascripts = true;
                 options.MinifyHtml = true;
+            })
+            .ConfigureStyleSheetMinification(cssOptions =>
+            {
+                cssOptions.Substitutions.Add("deneme", "ahahahaha");
             });
 
             services

@@ -6,17 +6,30 @@ using Adriva.Extensions.Optimization.Abstractions;
 using NUglify;
 using NUglify.JavaScript;
 using NUglify.Css;
+using Microsoft.Extensions.Options;
 
 namespace Adriva.Extensions.Optimization.Transforms
 {
     public class StylesheetMinificationTransform : AssetDisposerTransform
     {
+        private readonly StylesheetMinificationOptions MinificationOptions;
+
+        public StylesheetMinificationTransform(IOptions<StylesheetMinificationOptions> optionsAccessor)
+        {
+            this.MinificationOptions = optionsAccessor.Value;
+        }
+
         public override async Task<IEnumerable<Asset>> TransformAsync(params Asset[] assets)
         {
             CssSettings cssSettings = new CssSettings()
             {
                 CommentMode = CssComment.None
             };
+
+            if (0 < this.MinificationOptions.Substitutions.Count)
+            {
+                cssSettings.ReplacementTokensApplyDefaults(this.MinificationOptions.Substitutions);
+            }
 
             CodeSettings codeSettings = new CodeSettings()
             {

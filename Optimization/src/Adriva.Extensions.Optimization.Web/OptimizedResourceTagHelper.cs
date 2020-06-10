@@ -3,6 +3,7 @@ using Adriva.Extensions.Caching.Abstractions;
 using Adriva.Extensions.Optimization.Abstractions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.Extensions.Options;
 
 namespace Adriva.Extensions.Optimization.Web
 {
@@ -34,7 +35,12 @@ namespace Adriva.Extensions.Optimization.Web
         [HtmlAttributeName("Output")]
         public OptimizationTagOutput Output { get; set; }
 
-        public OptimizedResourceTagHelper(IOptimizationManager optimizationManager, IOptimizationScope optimizationScope, IOptimizationResultTagBuilderFactory tagBuilderFactory, ICache cache)
+        public OptimizedResourceTagHelper(
+                    IOptimizationManager optimizationManager,
+                    IOptimizationScope optimizationScope,
+                    IOptimizationResultTagBuilderFactory tagBuilderFactory,
+                    IOptions<WebOptimizationOptions> optionsAccessor,
+                    ICache cache)
         {
             this.OptimizationScope = optimizationScope;
             this.OptimizationManager = optimizationManager;

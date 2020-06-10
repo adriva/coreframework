@@ -6,7 +6,7 @@ using Adriva.Extensions.Optimization.Abstractions;
 namespace Adriva.Extensions.Optimization.Transforms
 {
     /// <summary>
-    /// Bundle transform to create a bundled asset from other style sheet assets.
+    /// Bundle transform to create a bundled asset from multiple style sheet assets.
     /// </summary>
     public class StylesheetBundleTransform : MergeContentTransform
     {

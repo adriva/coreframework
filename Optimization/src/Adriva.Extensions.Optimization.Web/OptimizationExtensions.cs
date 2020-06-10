@@ -71,5 +71,17 @@ namespace Microsoft.Extensions.DependencyInjection
             app.UseMiddleware<OptimizationMiddleware>();
             return app;
         }
+
+        /// <summary>
+        /// Registers the configuration delegate for StylesheetMinificationOptions instances.
+        /// </summary>
+        /// <param name="builder">The Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder that the configuration will be applied to.</param>
+        /// <param name="configure">The StylesheetMinificationOptions configuration delegate.</param>
+        /// <returns>The Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder so that additional calls can be chained.</returns>
+        public static IOptimizationBuilder<WebOptimizationOptions> ConfigureStyleSheetMinification(this IOptimizationBuilder<WebOptimizationOptions> builder, Action<StylesheetMinificationOptions> configure)
+        {
+            builder.Services.Configure(configure);
+            return builder;
+        }
     }
 }
