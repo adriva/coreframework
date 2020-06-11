@@ -11,5 +11,9 @@ namespace Adriva.Storage.Abstractions
         Task<IBlobClient> GetBlobClientAsync();
 
         Task<IBlobClient> GetBlobClientAsync(string name);
+
+        Task<ITableClient> GetTableClientAsync();
+
+        Task<ITableClient> GetTableClientAsync(string name);
     }
 }

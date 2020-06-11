@@ -12,6 +12,19 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace demo.Controllers
 {
+    public class Test
+    {
+        private string PartitionKey { get; set; }
+
+        public string RowKey { get; set; }
+
+        public string DomainName
+        {
+            get => this.RowKey;
+            set => this.RowKey = value;
+        }
+    }
+
     public class HomeController : Controller
     {
         private static readonly Random Rnd = new Random();
@@ -30,14 +43,8 @@ namespace demo.Controllers
                 tc.TrackAvailability("AVAILABILITY DEMO", DateTimeOffset.Now, TimeSpan.FromSeconds(10), "RUN LOCATION", true, "MESSAGE HERE");
             }
             var sm = this.HttpContext.RequestServices.GetService<IStorageClientFactory>();
-            var mm = await sm.GetBlobClientAsync();
-            string token = null;
-
-            SegmentedResult<string> sr = SegmentedResult<string>.Empty;
-            do
-            {
-                sr = await mm.ListAllAsync(sr.ContinuationToken, null, 50);
-            } while (sr.HasMore);
+            var tac = await sm.GetTableClientAsync();
+            var r = await tac.GetAsync<Test>("DomainInfo", "korayspor.com");
             return this.View();
         }
     }

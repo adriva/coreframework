@@ -80,7 +80,9 @@ namespace Adriva.Storage.Abstractions
 
             if (!options.IsSingleton)
             {
-                return factoryMethod.Invoke();
+                T clientInstance = factoryMethod.Invoke();
+                await clientInstance.InitializeAsync(name);
+                return clientInstance;
             }
             else
             {
@@ -93,6 +95,14 @@ namespace Adriva.Storage.Abstractions
 
         public Task<IBlobClient> GetBlobClientAsync(string name) => this.GetOrCreateStorageClientAsync<IBlobClient>("blob", name);
 
+        public Task<IQueueClient> GetQueueClientAsync() => this.GetQueueClientAsync(Options.DefaultName);
+
+        public Task<IBlobClient> GetBlobClientAsync() => this.GetBlobClientAsync(Options.DefaultName);
+
+        public Task<ITableClient> GetTableClientAsync() => this.GetTableClientAsync(Options.DefaultName);
+
+        public Task<ITableClient> GetTableClientAsync(string name) => this.GetOrCreateStorageClientAsync<ITableClient>("table", name);
+
         public void Dispose()
         {
             foreach (var entry in this.ReusableClients)
@@ -102,9 +112,5 @@ namespace Adriva.Storage.Abstractions
 
             this.ReusableClients.Clear();
         }
-
-        public Task<IQueueClient> GetQueueClientAsync() => this.GetQueueClientAsync(Options.DefaultName);
-
-        public Task<IBlobClient> GetBlobClientAsync() => this.GetBlobClientAsync(Options.DefaultName);
     }
 }

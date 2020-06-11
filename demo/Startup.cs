@@ -70,6 +70,12 @@ namespace demo
                             q.QueueName = "deneme";
                             q.UseSerializer<DefaultQueueMessageSerializer>();
                         });
+
+                    builder.AddTableClient<AzureTableClient>().Configure<AzureTableConfiguration>(t =>
+                    {
+                        t.ConnectionString = "DefaultEndpointsProtocol=https;AccountName=adriva;AccountKey=nQTYr6G1G00k+mUR370Ar7J0Spv+gbPWRCAyeTILHMF8KdHElRmy/xhiik8Uz1CQ2vohOzP6DsJUzGylFiTDlw==";
+                        t.TableName = "JarrtDomainInfo";
+                    });
                 });
             ;
 

@@ -36,5 +36,13 @@ namespace Adriva.Storage.Azure
             this.Table = null;
             return new ValueTask();
         }
+
+        public async Task<TItem> GetAsync<TItem>(string partitionKey, string rowKey) where TItem : class
+        {
+            TableOperation retrieveOperation = TableOperation.Retrieve(partitionKey, rowKey);
+            var tableResult = await this.Table.ExecuteAsync(retrieveOperation);
+            TableEntityBuilder builder = new TableEntityBuilder();
+            return builder.Build<TItem>(tableResult.Result as DynamicTableEntity);
+        }
     }
 }
