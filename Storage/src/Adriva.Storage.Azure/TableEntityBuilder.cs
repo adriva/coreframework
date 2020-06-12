@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.Serialization;
 using Adriva.Storage.Abstractions;
 using Microsoft.Azure.Cosmos.Table;
 
@@ -95,7 +94,7 @@ namespace Adriva.Storage.Azure
             return mappings;
         }
 
-        public TItem Build<TItem>(DynamicTableEntity tableEntity) where TItem : class
+        public TItem Build<TItem>(DynamicTableEntity tableEntity) where TItem : class, new()
         {
             if (null == tableEntity) return default;
 
@@ -139,7 +138,7 @@ namespace Adriva.Storage.Azure
                 this.MapActionsCache.Add(typeOfT, populateAction);
             }
 
-            TItem item = (TItem)FormatterServices.GetSafeUninitializedObject(typeOfT);
+            TItem item = new TItem();
             populateAction.Invoke(item);
             return item;
         }

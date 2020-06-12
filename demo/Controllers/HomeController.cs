@@ -14,6 +14,8 @@ namespace demo.Controllers
 {
     public class Test
     {
+        public int X;
+
         private string PartitionKey { get; set; }
 
         public string RowKey { get; set; }
@@ -29,6 +31,11 @@ namespace demo.Controllers
 
         [TableField("Timestamp")]
         public DateTimeOffset Zaman { get; set; }
+
+        public Test()
+        {
+            this.X = 23402;
+        }
     }
 
     public class HomeController : Controller

@@ -4,6 +4,6 @@ namespace Adriva.Storage.Abstractions
 {
     public interface ITableClient : IStorageClient
     {
-        Task<TItem> GetAsync<TItem>(string partitionKey, string rowKey) where TItem : class;
+        Task<TItem> GetAsync<TItem>(string partitionKey, string rowKey) where TItem : class, new();
     }
 }

@@ -39,7 +39,7 @@ namespace Adriva.Storage.Azure
             return new ValueTask();
         }
 
-        public async Task<TItem> GetAsync<TItem>(string partitionKey, string rowKey) where TItem : class
+        public async Task<TItem> GetAsync<TItem>(string partitionKey, string rowKey) where TItem : class, new()
         {
             TableOperation retrieveOperation = TableOperation.Retrieve(partitionKey, rowKey);
             var tableResult = await this.Table.ExecuteAsync(retrieveOperation);
