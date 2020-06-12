@@ -28,7 +28,7 @@ namespace demo.Controllers
         public int Count { get; private set; }
 
         [TableField("Timestamp")]
-        public long Zaman { get; set; }
+        public DateTimeOffset Zaman { get; set; }
     }
 
     public class HomeController : Controller

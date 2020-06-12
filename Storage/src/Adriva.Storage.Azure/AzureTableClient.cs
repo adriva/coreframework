@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 using Adriva.Storage.Abstractions;
 using Microsoft.Extensions.Options;
 using Microsoft.Azure.Cosmos.Table;
+using System.Diagnostics;
 
 namespace Adriva.Storage.Azure
 {
     public sealed class AzureTableClient : ITableClient
     {
+        private static readonly TableEntityBuilder Builder = new TableEntityBuilder();
         private readonly IOptionsMonitor<AzureTableConfiguration> ConfigurationAccessor;
         private AzureTableConfiguration Configuration;
         private CloudTable Table;
@@ -41,8 +43,11 @@ namespace Adriva.Storage.Azure
         {
             TableOperation retrieveOperation = TableOperation.Retrieve(partitionKey, rowKey);
             var tableResult = await this.Table.ExecuteAsync(retrieveOperation);
-            TableEntityBuilder builder = new TableEntityBuilder();
-            return builder.Build<TItem>(tableResult.Result as DynamicTableEntity);
+            Stopwatch sw = Stopwatch.StartNew();
+            TItem titem = AzureTableClient.Builder.Build<TItem>(tableResult.Result as DynamicTableEntity);
+            sw.Stop();
+            System.Console.WriteLine("BUILDER TOOKE : " + sw.Elapsed.ToString());
+            return titem;
         }
     }
 }

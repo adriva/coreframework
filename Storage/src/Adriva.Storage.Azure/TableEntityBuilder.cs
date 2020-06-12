@@ -11,6 +11,14 @@ namespace Adriva.Storage.Azure
 {
     internal class TableEntityBuilder
     {
+        private readonly static MethodInfo CastMethod;
+        private readonly IDictionary<Type, Action<object>> MapActionsCache = new Dictionary<Type, Action<object>>();
+
+        static TableEntityBuilder()
+        {
+            TableEntityBuilder.CastMethod = typeof(TableEntityBuilder).GetMethod("CastEntityProperty", BindingFlags.Static | BindingFlags.NonPublic);
+        }
+
         private static TType CastEntityProperty<TType>(EntityProperty entityProperty)
         {
             if (typeof(TType) == typeof(object)) return (TType)entityProperty.PropertyAsObject;
@@ -97,29 +105,42 @@ namespace Adriva.Storage.Azure
             tableEntity.Properties.Add("RowKey", EntityProperty.GeneratePropertyForString(tableEntity.RowKey));
             tableEntity.Properties.Add("Timestamp", EntityProperty.GeneratePropertyForDateTimeOffset(tableEntity.Timestamp));
 
-            var properties = typeOfT.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            var mappings = TableEntityBuilder.GetPropertyMappings(properties, tableEntity.Properties.Keys);
+            Action<object> populateAction = null;
 
-            TItem item = (TItem)FormatterServices.GetSafeUninitializedObject(typeOfT);
-
-            foreach (var mapping in mappings)
+            if (!this.MapActionsCache.TryGetValue(typeOfT, out populateAction))
             {
-                foreach (var property in mapping.Value)
-                {
-                    var castMethod = typeof(TableEntityBuilder).GetMethod("CastEntityProperty", BindingFlags.Static | BindingFlags.NonPublic);
-                    castMethod = castMethod.MakeGenericMethod(property.PropertyType);
-                    var itemParameter = Expression.Parameter(typeOfT, "x");
-                    var itemProperty = Expression.Property(itemParameter, property.Name);
-                    var propertyValue = Expression.Parameter(typeof(EntityProperty), "value");
-                    var castEntityProperty = Expression.Call(null, castMethod, propertyValue);
-                    var body = Expression.Assign(itemProperty, castEntityProperty);
-                    var exp = Expression.Lambda<Action<TItem, EntityProperty>>(body, itemParameter, propertyValue);
-                    System.Console.WriteLine($"{property.Name}  : " + exp.ToString());
+                var properties = typeOfT.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                var mappings = TableEntityBuilder.GetPropertyMappings(properties, tableEntity.Properties.Keys);
 
-                    exp.Compile().Invoke(item, tableEntity.Properties[mapping.Key]);
+                foreach (var mapping in mappings)
+                {
+                    foreach (var property in mapping.Value)
+                    {
+                        var castMethod = TableEntityBuilder.CastMethod.MakeGenericMethod(property.PropertyType);
+                        var itemParameter = Expression.Parameter(typeOfT, "x");
+                        var itemProperty = Expression.Property(itemParameter, property.Name);
+                        var propertyValue = Expression.Parameter(typeof(EntityProperty), "value");
+                        var castEntityProperty = Expression.Call(null, castMethod, propertyValue);
+                        var body = Expression.Assign(itemProperty, castEntityProperty);
+                        var exp = Expression.Lambda<Action<TItem, EntityProperty>>(body, itemParameter, propertyValue);
+
+                        Action<TItem, EntityProperty> mapAction = exp.Compile();
+
+                        Action<object> wrapperAction = (objectItem) =>
+                        {
+                            TItem item = (TItem)objectItem;
+                            mapAction.Invoke(item, tableEntity.Properties[mapping.Key]);
+                        };
+
+                        if (null == populateAction) populateAction = wrapperAction;
+                        else populateAction += wrapperAction;
+                    }
                 }
+                this.MapActionsCache.Add(typeOfT, populateAction);
             }
 
+            TItem item = (TItem)FormatterServices.GetSafeUninitializedObject(typeOfT);
+            populateAction.Invoke(item);
             return item;
         }
     }
