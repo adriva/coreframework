@@ -23,6 +23,12 @@ namespace demo.Controllers
             get => this.RowKey;
             set => this.RowKey = value;
         }
+
+        [TableField("PromotionCount")]
+        public int Count { get; private set; }
+
+        [TableField("Timestamp")]
+        public long Zaman { get; set; }
     }
 
     public class HomeController : Controller
@@ -44,7 +50,7 @@ namespace demo.Controllers
             }
             var sm = this.HttpContext.RequestServices.GetService<IStorageClientFactory>();
             var tac = await sm.GetTableClientAsync();
-            var r = await tac.GetAsync<Test>("DomainInfo", "korayspor.com");
+            var r = await tac.GetAsync<Test>("DomainInfo", "boyner.com.tr");
             return this.View();
         }
     }
