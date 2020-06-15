@@ -11,7 +11,7 @@ namespace Adriva.Storage.Azure
     internal class TableEntityBuilder
     {
         private readonly static MethodInfo CastMethod;
-        private readonly IDictionary<Type, Action<object>> MapActionsCache = new Dictionary<Type, Action<object>>();
+        private readonly IDictionary<Type, Action<object, DynamicTableEntity>> MapActionsCache = new Dictionary<Type, Action<object, DynamicTableEntity>>();
 
         static TableEntityBuilder()
         {
@@ -104,7 +104,7 @@ namespace Adriva.Storage.Azure
             tableEntity.Properties.Add("RowKey", EntityProperty.GeneratePropertyForString(tableEntity.RowKey));
             tableEntity.Properties.Add("Timestamp", EntityProperty.GeneratePropertyForDateTimeOffset(tableEntity.Timestamp));
 
-            Action<object> populateAction = null;
+            Action<object, DynamicTableEntity> populateAction = null;
 
             if (!this.MapActionsCache.TryGetValue(typeOfT, out populateAction))
             {
@@ -125,10 +125,10 @@ namespace Adriva.Storage.Azure
 
                         Action<TItem, EntityProperty> mapAction = exp.Compile();
 
-                        Action<object> wrapperAction = (objectItem) =>
+                        Action<object, DynamicTableEntity> wrapperAction = (objectItem, dynamicTableEntity) =>
                         {
                             TItem item = (TItem)objectItem;
-                            mapAction.Invoke(item, tableEntity.Properties[mapping.Key]);
+                            mapAction.Invoke(item, dynamicTableEntity.Properties[mapping.Key]);
                         };
 
                         if (null == populateAction) populateAction = wrapperAction;
@@ -139,7 +139,7 @@ namespace Adriva.Storage.Azure
             }
 
             TItem item = new TItem();
-            populateAction.Invoke(item);
+            populateAction.Invoke(item, tableEntity);
             return item;
         }
     }

@@ -57,7 +57,9 @@ namespace demo.Controllers
             }
             var sm = this.HttpContext.RequestServices.GetService<IStorageClientFactory>();
             var tac = await sm.GetTableClientAsync();
-            var r = await tac.GetAsync<Test>("DomainInfo", "boyner.com.tr");
+            // var r = await tac.GetAsync<Test>("DomainInfo", "boyner.com.tr");
+            var s = await tac.GetAllAsync<Test>(null, "DomainInfo", "boynder.com.tr", 1000);
+            var eben = s.Items.Where(x => 0 < x.Count).ToArray();
             return this.View();
         }
     }
