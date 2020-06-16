@@ -14,7 +14,7 @@ namespace Adriva.Storage.Azure
 {
     public sealed class AzureTableClient : ITableClient
     {
-        private static readonly TableEntityBuilder Builder = new TableEntityBuilder();
+        //private static readonly TableEntityBuilder Builder = new TableEntityBuilder();
         private readonly IOptionsMonitor<AzureTableConfiguration> ConfigurationAccessor;
         private AzureTableConfiguration Configuration;
         private CloudTable Table;
@@ -44,14 +44,14 @@ namespace Adriva.Storage.Azure
             return new ValueTask();
         }
 
-        public async Task<TItem> GetAsync<TItem>(string partitionKey, string rowKey) where TItem : class, new()
+        public async Task<TItem> GetAsync<TItem>(string partitionKey, string rowKey) where TItem : class, ITableRow, new()
         {
             TableOperation retrieveOperation = TableOperation.Retrieve(partitionKey, rowKey);
             var tableResult = await this.Table.ExecuteAsync(retrieveOperation);
-            return AzureTableClient.Builder.Build<TItem>(tableResult.Result as DynamicTableEntity);
+            return (tableResult.Result as DynamicTableEntity).ConvertToObject<TItem>();
         }
 
-        public async Task<SegmentedResult<TItem>> GetAllAsync<TItem>(string continuationToken = null, string partitionKey = null, string rowKey = null, int rowCount = 500) where TItem : class, new()
+        public async Task<SegmentedResult<TItem>> GetAllAsync<TItem>(string continuationToken = null, string partitionKey = null, string rowKey = null, int rowCount = 500) where TItem : class, ITableRow, new()
         {
             string partitionQuery = null, rowQuery = null;
 
@@ -62,11 +62,11 @@ namespace Adriva.Storage.Azure
 
             if (null != partitionQuery) query = query.Where(partitionQuery);
             if (null != rowQuery) query = query.Where(rowQuery);
-
+            query.TakeCount = rowCount;
             var token = AzureStorageUtilities.DeserializeTableContinuationToken(continuationToken);
             var azureResult = await this.Table.ExecuteQuerySegmentedAsync(query, token);
 
-            IEnumerable<TItem> itemsList = azureResult.Results.Select(x => AzureTableClient.Builder.Build<TItem>(x as DynamicTableEntity));
+            IEnumerable<TItem> itemsList = azureResult.Results.Select(x => (x as DynamicTableEntity).ConvertToObject<TItem>());
             string nextPageToken = azureResult.ContinuationToken.Serialize();
             return new SegmentedResult<TItem>(itemsList, nextPageToken, null != nextPageToken);
         }

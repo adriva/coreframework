@@ -12,29 +12,33 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace demo.Controllers
 {
-    public class Test
+    public class Test : ITableRow
     {
-        public int X;
-
-        private string PartitionKey { get; set; }
-
+        [NotMapped]
+        public int X { get; set; }
+        public string PartitionKey { get; set; }
         public string RowKey { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
+        public string ETag { get; set; }
 
-        public string DomainName
-        {
-            get => this.RowKey;
-            set => this.RowKey = value;
-        }
-
-        [TableField("PromotionCount")]
-        public int Count { get; private set; }
-
-        [TableField("Timestamp")]
-        public DateTimeOffset Zaman { get; set; }
+        public int Count { get; set; }
 
         public Test()
         {
             this.X = 23402;
+        }
+
+        public void ReadEntity(PropertyBag properties)
+        {
+            if (properties.ContainsKey("PromotionCount"))
+            {
+                this.Count = (int)properties["PromotionCount"];
+            }
+        }
+
+        public PropertyBag WriteEntity()
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -58,8 +62,8 @@ namespace demo.Controllers
             var sm = this.HttpContext.RequestServices.GetService<IStorageClientFactory>();
             var tac = await sm.GetTableClientAsync();
             // var r = await tac.GetAsync<Test>("DomainInfo", "boyner.com.tr");
-            var s = await tac.GetAllAsync<Test>(null, "DomainInfo", "boynder.com.tr", 1000);
-            var eben = s.Items.Where(x => 0 < x.Count).ToArray();
+            var s = await tac.GetAllAsync<Test>(null, null, null, 1);
+            var eben = s.Items.ToArray();
             return this.View();
         }
     }

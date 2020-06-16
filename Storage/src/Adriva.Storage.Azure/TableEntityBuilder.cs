@@ -66,18 +66,17 @@ namespace Adriva.Storage.Azure
                 if (null != property.GetCustomAttribute<IgnorePropertyAttribute>(true)) continue; //ignored (not mapped)
 
                 TableFieldAttribute tableFieldAttribute = property.GetCustomAttribute<TableFieldAttribute>();
+                NotMappedAttribute notMappedAttribute = property.GetCustomAttribute<NotMappedAttribute>();
+
+                if (null != notMappedAttribute) continue; //if not mapped then ignore
 
                 if (null != tableFieldAttribute)
                 {
-                    if (!tableFieldAttribute.IsMapped) continue; //ignored (not mapped)
-                    else
+                    string propertyName = propertyNames.FirstOrDefault(pn => 0 == string.Compare(pn, tableFieldAttribute.FieldName, StringComparison.OrdinalIgnoreCase));
+                    if (null != propertyName)
                     {
-                        string propertyName = propertyNames.FirstOrDefault(pn => 0 == string.Compare(pn, tableFieldAttribute.FieldName, StringComparison.OrdinalIgnoreCase));
-                        if (null != propertyName)
-                        {
-                            if (!mappings.ContainsKey(propertyName)) mappings[propertyName] = new List<PropertyInfo>();
-                            mappings[propertyName].Add(property);
-                        }
+                        if (!mappings.ContainsKey(propertyName)) mappings[propertyName] = new List<PropertyInfo>();
+                        mappings[propertyName].Add(property);
                     }
                 }
                 else
@@ -94,15 +93,15 @@ namespace Adriva.Storage.Azure
             return mappings;
         }
 
-        public TItem Build<TItem>(DynamicTableEntity tableEntity) where TItem : class, new()
+        public TItem Build<TItem>(DynamicTableEntity tableEntity) where TItem : ITableRow, new()
         {
             if (null == tableEntity) return default;
 
             Type typeOfT = typeof(TItem);
 
-            tableEntity.Properties.Add("PartitionKey", EntityProperty.GeneratePropertyForString(tableEntity.PartitionKey));
-            tableEntity.Properties.Add("RowKey", EntityProperty.GeneratePropertyForString(tableEntity.RowKey));
-            tableEntity.Properties.Add("Timestamp", EntityProperty.GeneratePropertyForDateTimeOffset(tableEntity.Timestamp));
+            tableEntity.Properties.TryAdd("PartitionKey", EntityProperty.GeneratePropertyForString(tableEntity.PartitionKey));
+            tableEntity.Properties.TryAdd("RowKey", EntityProperty.GeneratePropertyForString(tableEntity.RowKey));
+            tableEntity.Properties.TryAdd("Timestamp", EntityProperty.GeneratePropertyForDateTimeOffset(tableEntity.Timestamp));
 
             Action<object, DynamicTableEntity> populateAction = null;
 
@@ -141,6 +140,60 @@ namespace Adriva.Storage.Azure
             TItem item = new TItem();
             populateAction.Invoke(item, tableEntity);
             return item;
+        }
+
+    }
+
+    public static class TableEntityExtensions
+    {
+
+        public static PropertyBag ToPropertyBag(this IDictionary<string, EntityProperty> properties)
+        {
+            if (null == properties) throw new ArgumentNullException(nameof(properties));
+
+            PropertyBag propertyBag = new PropertyBag();
+
+            foreach (var propertyEntry in properties)
+            {
+                propertyBag.Add(propertyEntry.Key, propertyEntry.Value.PropertyAsObject);
+            }
+
+            return propertyBag;
+        }
+
+        public static TItem ConvertToObject<TItem>(this DynamicTableEntity tableEntity) where TItem : class, ITableRow, new()
+        {
+            if (null == tableEntity) return null;
+
+            TItem item = new TItem();
+
+            item.ETag = tableEntity.ETag;
+            item.PartitionKey = tableEntity.PartitionKey;
+            item.RowKey = tableEntity.RowKey;
+            item.Timestamp = tableEntity.Timestamp;
+
+            PropertyBag objectStateData = tableEntity.Properties.ToPropertyBag();
+            item.ReadEntity(objectStateData);
+            return item;
+        }
+
+        public static ITableEntity ConvertFromObject<TItem>(this TItem item) where TItem : class, ITableRow
+        {
+            if (null == item) throw new ArgumentNullException(nameof(item));
+
+            DynamicTableEntity tableEntity = new DynamicTableEntity(item.PartitionKey, item.RowKey);
+            tableEntity.Timestamp = item.Timestamp;
+            tableEntity.ETag = item.ETag;
+
+            IDictionary<string, object> objectStateData = item.WriteEntity();
+
+            if (null != objectStateData)
+            {
+                IDictionary<string, EntityProperty> entityStateData = objectStateData.ToDictionary(x => x.Key, x => EntityProperty.CreateEntityPropertyFromObject(x.Value));
+                tableEntity.ReadEntity(entityStateData, null);
+            }
+
+            return tableEntity;
         }
     }
 }
