@@ -43,6 +43,25 @@ namespace Adriva.Storage.Azure
             return await blob.ExistsAsync();
         }
 
+        public async Task<BlobItemProperties> GetPropertiesAsync(string name)
+        {
+            var blob = this.Container.GetBlobReference(name);
+
+            BlobItemProperties properties = null;
+
+            if (await blob.ExistsAsync())
+            {
+                await blob.FetchAttributesAsync();
+                properties = new BlobItemProperties(blob.Properties.Length, blob.Properties.ETag, blob.Properties.LastModified);
+            }
+            else
+            {
+                properties = BlobItemProperties.NotExists;
+            }
+
+            return properties;
+        }
+
         public async Task<Stream> OpenReadStreamAsync(string name)
         {
             var blob = this.Container.GetBlobReference(name);

@@ -63,8 +63,8 @@ namespace demo.Controllers
 
             var sm = this.HttpContext.RequestServices.GetService<IStorageClientFactory>();
             var tac = await sm.GetTableClientAsync();
-            await tac.UpsertAsync(new Test() { PartitionKey = "PK", RowKey = "RK", PromotionCount = 99, ETag = "non" });
-            await tac.DeleteAsync("PK", "RK");
+            var bac = await sm.GetBlobClientAsync();
+            var pro = await bac.GetPropertiesAsync("blog/yilbasi.html");
             return this.View();
         }
     }

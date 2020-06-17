@@ -9,6 +9,8 @@ namespace Adriva.Storage.Abstractions
     {
         ValueTask<bool> ExistsAsync(string name);
 
+        Task<BlobItemProperties> GetPropertiesAsync(string name);
+
         Task<string> UpsertAsync(string name, Stream stream, int cacheDuration = 0);
 
         Task<string> UpsertAsync(string name, ReadOnlyMemory<byte> data, int cacheDuration = 0);
