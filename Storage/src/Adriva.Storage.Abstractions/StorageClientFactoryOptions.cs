@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Adriva.Storage.Abstractions
 {
@@ -6,12 +7,12 @@ namespace Adriva.Storage.Abstractions
     {
         internal Type ManagerType { get; private set; }
 
-        internal bool IsSingleton { get; private set; }
+        internal ServiceLifetime ServiceLifetime { get; private set; }
 
-        internal void AddStorageClient<T>(bool isSingleton = false) where T : class, IStorageClient
+        internal void AddStorageClient<T>(ServiceLifetime serviceLifetime) where T : class, IStorageClient
         {
             this.ManagerType = typeof(T);
-            this.IsSingleton = isSingleton;
+            this.ServiceLifetime = serviceLifetime;
         }
     }
 }

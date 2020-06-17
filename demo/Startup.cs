@@ -54,15 +54,13 @@ namespace demo
             services
                 .AddStorage(builder =>
                 {
-                    builder
-                        .AddBlobClient<AzureBlobClient>(true)
-                        .Configure<AzureBlobConfiguration>(b =>
-                        {
-                            b.ConnectionString = "DefaultEndpointsProtocol=https;AccountName=adriva;AccountKey=nQTYr6G1G00k+mUR370Ar7J0Spv+gbPWRCAyeTILHMF8KdHElRmy/xhiik8Uz1CQ2vohOzP6DsJUzGylFiTDlw==";
-                            b.ContainerName = "jarrtcontent";
-                        });
+                    builder.AddAzureBlob(ServiceLifetime.Singleton, (b) =>
+                    {
+                        b.ConnectionString = "DefaultEndpointsProtocol=https;AccountName=adriva;AccountKey=nQTYr6G1G00k+mUR370Ar7J0Spv+gbPWRCAyeTILHMF8KdHElRmy/xhiik8Uz1CQ2vohOzP6DsJUzGylFiTDlw==";
+                        b.ContainerName = "jarrtcontent";
+                    });
 
-                    builder.AddQueueClient<AzureQueueClient>(true)
+                    builder.AddQueueClient<AzureQueueClient>(ServiceLifetime.Singleton)
                         .Configure<AzureQueueConfiguration>(q =>
                         {
                             q.ConnectionString = "DefaultEndpointsProtocol=https;AccountName=adriva;AccountKey=nQTYr6G1G00k+mUR370Ar7J0Spv+gbPWRCAyeTILHMF8KdHElRmy/xhiik8Uz1CQ2vohOzP6DsJUzGylFiTDlw==";
@@ -71,7 +69,7 @@ namespace demo
                             q.UseSerializer<DefaultQueueMessageSerializer>();
                         });
 
-                    builder.AddTableClient<AzureTableClient>().Configure<AzureTableConfiguration>(t =>
+                    builder.AddAzureTable(ServiceLifetime.Singleton, t =>
                     {
                         t.ConnectionString = "DefaultEndpointsProtocol=https;AccountName=adriva;AccountKey=nQTYr6G1G00k+mUR370Ar7J0Spv+gbPWRCAyeTILHMF8KdHElRmy/xhiik8Uz1CQ2vohOzP6DsJUzGylFiTDlw==";
                         t.TableName = "JarrtDomainInfo";

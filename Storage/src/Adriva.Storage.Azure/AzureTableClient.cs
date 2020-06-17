@@ -17,14 +17,15 @@ namespace Adriva.Storage.Azure
     public sealed class AzureTableClient : ITableClient
     {
         private readonly ILogger Logger;
-        private readonly TableEntityBuilder Builder = new TableEntityBuilder();
+        private readonly ITableEntityBuilder Builder;
         private readonly IOptionsMonitor<AzureTableConfiguration> ConfigurationAccessor;
         private AzureTableConfiguration Configuration;
         private CloudTable Table;
 
-        public AzureTableClient(IOptionsMonitor<AzureTableConfiguration> configurationAccessor, ILogger<AzureTableClient> logger)
+        public AzureTableClient(IOptionsMonitor<AzureTableConfiguration> configurationAccessor, ITableEntityBuilder builder, ILogger<AzureTableClient> logger)
         {
             this.Logger = logger;
+            this.Builder = builder;
             this.ConfigurationAccessor = configurationAccessor;
         }
 

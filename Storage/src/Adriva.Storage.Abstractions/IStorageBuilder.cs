@@ -6,16 +6,16 @@ namespace Adriva.Storage.Abstractions
     {
         IServiceCollection Services { get; }
 
-        IStorageClientBuilder AddQueueClient<T>(bool isSingleton = false) where T : class, IQueueClient;
+        IStorageClientBuilder AddQueueClient<T>(ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, IQueueClient;
 
-        IStorageClientBuilder AddQueueClient<T>(string name, bool isSingleton = false) where T : class, IQueueClient;
+        IStorageClientBuilder AddQueueClient<T>(string name, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, IQueueClient;
 
-        IStorageClientBuilder AddBlobClient<T>(bool isSingleton = false) where T : class, IBlobClient;
+        IStorageClientBuilder AddBlobClient<T>(ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, IBlobClient;
 
-        IStorageClientBuilder AddBlobClient<T>(string name, bool isSingleton = false) where T : class, IBlobClient;
+        IStorageClientBuilder AddBlobClient<T>(string name, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, IBlobClient;
 
-        IStorageClientBuilder AddTableClient<T>(bool isSingleton = false) where T : class, ITableClient;
+        IStorageClientBuilder AddTableClient<T>(ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, ITableClient;
 
-        IStorageClientBuilder AddTableClient<T>(string name, bool isSingleton = false) where T : class, ITableClient;
+        IStorageClientBuilder AddTableClient<T>(string name, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, ITableClient;
     }
 }

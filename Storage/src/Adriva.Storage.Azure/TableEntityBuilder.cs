@@ -1,17 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using Adriva.Common.Core;
 using Adriva.Storage.Abstractions;
 using Microsoft.Azure.Cosmos.Table;
 
 namespace Adriva.Storage.Azure
 {
-    internal class TableEntityBuilder
+    internal sealed class TableEntityBuilder : ITableEntityBuilder
     {
         private readonly static MethodInfo CastMethod;
         private readonly IDictionary<Type, Action<object, DynamicTableEntity>> MapActionsCache = new Dictionary<Type, Action<object, DynamicTableEntity>>();
@@ -130,6 +127,12 @@ namespace Adriva.Storage.Azure
 
             TItem item = new TItem();
             populateAction.Invoke(item, tableEntity);
+
+            if (item is ITableEntity azureTableEntity)
+            {
+                azureTableEntity.ReadEntity(tableEntity.Properties, null);
+            }
+
             return item;
         }
     }

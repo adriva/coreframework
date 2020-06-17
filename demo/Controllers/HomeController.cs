@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 using Adriva.Common.Core;
 using Adriva.Storage.Abstractions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace demo.Controllers
 {
-    public class Test
+    public class Test : ITableEntity
     {
         [NotMapped]
         public string DomainName
@@ -29,10 +30,15 @@ namespace demo.Controllers
 
         public int PromotionCount { get; set; }
 
-        public Test()
+        public void ReadEntity(IDictionary<string, EntityProperty> properties, OperationContext operationContext)
         {
+
         }
 
+        public IDictionary<string, EntityProperty> WriteEntity(OperationContext operationContext)
+        {
+            return new Dictionary<string, EntityProperty>();
+        }
     }
 
     public class HomeController : Controller

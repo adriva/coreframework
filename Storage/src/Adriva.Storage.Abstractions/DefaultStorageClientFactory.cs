@@ -78,7 +78,7 @@ namespace Adriva.Storage.Abstractions
                 return (T)ActivatorUtilities.CreateInstance(this.ServiceProvider, options.ManagerType);
             });
 
-            if (!options.IsSingleton)
+            if (ServiceLifetime.Singleton != options.ServiceLifetime)
             {
                 T clientInstance = factoryMethod.Invoke();
                 await clientInstance.InitializeAsync(name);

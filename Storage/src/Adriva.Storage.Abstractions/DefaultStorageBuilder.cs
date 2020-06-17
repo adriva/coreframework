@@ -13,7 +13,7 @@ namespace Adriva.Storage.Abstractions
             this.Services = services;
         }
 
-        private IStorageClientBuilder AddStorageClient<T>(string prefix, string name, bool isSingleton = false) where T : class, IStorageClient
+        private IStorageClientBuilder AddStorageClient<T>(string prefix, string name, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, IStorageClient
         {
             if (null == name) throw new ArgumentNullException(nameof(name));
 
@@ -23,40 +23,40 @@ namespace Adriva.Storage.Abstractions
 
             this.Services.Configure<StorageClientFactoryOptions>(name, options =>
             {
-                options.AddStorageClient<T>(isSingleton);
+                options.AddStorageClient<T>(serviceLifetime);
             });
 
             return storageClientBuilder;
         }
 
-        public IStorageClientBuilder AddQueueClient<T>(bool isSingleton = false) where T : class, IQueueClient
+        public IStorageClientBuilder AddQueueClient<T>(ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, IQueueClient
         {
-            return this.AddQueueClient<T>(Options.DefaultName, isSingleton);
+            return this.AddQueueClient<T>(Options.DefaultName, serviceLifetime);
         }
 
-        public IStorageClientBuilder AddQueueClient<T>(string name, bool isSingleton = false) where T : class, IQueueClient
+        public IStorageClientBuilder AddQueueClient<T>(string name, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, IQueueClient
         {
-            return this.AddStorageClient<T>("queue", name, isSingleton);
+            return this.AddStorageClient<T>("queue", name, serviceLifetime);
         }
 
-        public IStorageClientBuilder AddBlobClient<T>(bool isSingleton = false) where T : class, IBlobClient
+        public IStorageClientBuilder AddBlobClient<T>(ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, IBlobClient
         {
-            return this.AddBlobClient<T>(Options.DefaultName, isSingleton);
+            return this.AddBlobClient<T>(Options.DefaultName, serviceLifetime);
         }
 
-        public IStorageClientBuilder AddBlobClient<T>(string name, bool isSingleton = false) where T : class, IBlobClient
+        public IStorageClientBuilder AddBlobClient<T>(string name, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, IBlobClient
         {
-            return this.AddStorageClient<T>("blob", name, isSingleton);
+            return this.AddStorageClient<T>("blob", name, serviceLifetime);
         }
 
-        public IStorageClientBuilder AddTableClient<T>(bool isSingleton) where T : class, ITableClient
+        public IStorageClientBuilder AddTableClient<T>(ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, ITableClient
         {
-            return this.AddTableClient<T>(Options.DefaultName, isSingleton);
+            return this.AddTableClient<T>(Options.DefaultName, serviceLifetime);
         }
 
-        public IStorageClientBuilder AddTableClient<T>(string name, bool isSingleton) where T : class, ITableClient
+        public IStorageClientBuilder AddTableClient<T>(string name, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, ITableClient
         {
-            return this.AddStorageClient<T>("table", name, isSingleton);
+            return this.AddStorageClient<T>("table", name, serviceLifetime);
         }
     }
 }
