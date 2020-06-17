@@ -14,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace demo.Controllers
 {
-    public class Test : ITableEntity
+    public class Test : ITableItem
     {
         [NotMapped]
         public string DomainName
@@ -63,9 +63,7 @@ namespace demo.Controllers
 
             var sm = this.HttpContext.RequestServices.GetService<IStorageClientFactory>();
             var tac = await sm.GetTableClientAsync();
-            var r = await tac.GetAsync<Test>("DomainInfo", "boyner.com.tr");
-            var rr = await tac.GetAllAsync<Test>();
-            var fafa = await tac.SelectAsync<Test>(t => this.X <= t.PromotionCount && t.PartitionKey == "DomainInfo");
+            await tac.UpsertAsync(new Test() { PartitionKey = "PK", RowKey = "RK", PromotionCount = 99, ETag = "non" });
             return this.View();
         }
     }

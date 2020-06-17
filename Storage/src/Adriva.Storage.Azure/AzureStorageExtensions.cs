@@ -36,13 +36,13 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IStorageBuilder AddAzureTable(this IStorageBuilder storageBuilder, string name, ServiceLifetime serviceLifetime, Action<AzureTableConfiguration> configure)
         {
-            return storageBuilder.AddAzureTable<TableEntityBuilder>(name, serviceLifetime, configure);
+            return storageBuilder.AddAzureTable<TableItemAssembler>(name, serviceLifetime, configure);
         }
 
-        public static IStorageBuilder AddAzureTable<TTableEntityBuilder>(this IStorageBuilder storageBuilder, string name, ServiceLifetime serviceLifetime, Action<AzureTableConfiguration> configure) where TTableEntityBuilder : class, ITableEntityBuilder
+        public static IStorageBuilder AddAzureTable<TTableItemAssembler>(this IStorageBuilder storageBuilder, string name, ServiceLifetime serviceLifetime, Action<AzureTableConfiguration> configure) where TTableItemAssembler : class, ITableItemAssembler
         {
             storageBuilder.AddTableClient<AzureTableClient>(name, serviceLifetime).Configure(configure);
-            storageBuilder.Services.AddSingleton<ITableEntityBuilder, TTableEntityBuilder>();
+            storageBuilder.Services.AddSingleton<ITableItemAssembler, TTableItemAssembler>();
             return storageBuilder;
         }
     }

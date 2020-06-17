@@ -17,15 +17,15 @@ namespace Adriva.Storage.Azure
     public sealed class AzureTableClient : ITableClient
     {
         private readonly ILogger Logger;
-        private readonly ITableEntityBuilder Builder;
+        private readonly ITableItemAssembler Assembler;
         private readonly IOptionsMonitor<AzureTableConfiguration> ConfigurationAccessor;
         private AzureTableConfiguration Configuration;
         private CloudTable Table;
 
-        public AzureTableClient(IOptionsMonitor<AzureTableConfiguration> configurationAccessor, ITableEntityBuilder builder, ILogger<AzureTableClient> logger)
+        public AzureTableClient(IOptionsMonitor<AzureTableConfiguration> configurationAccessor, ITableItemAssembler builder, ILogger<AzureTableClient> logger)
         {
             this.Logger = logger;
-            this.Builder = builder;
+            this.Assembler = builder;
             this.ConfigurationAccessor = configurationAccessor;
         }
 
@@ -43,14 +43,14 @@ namespace Adriva.Storage.Azure
             await this.Table.CreateIfNotExistsAsync();
         }
 
-        public async Task<TItem> GetAsync<TItem>(string partitionKey, string rowKey) where TItem : class, new()
+        public async Task<TItem> GetAsync<TItem>(string partitionKey, string rowKey) where TItem : class, ITableItem, new()
         {
             TableOperation retrieveOperation = TableOperation.Retrieve(partitionKey, rowKey);
             var tableResult = await this.Table.ExecuteAsync(retrieveOperation);
-            return this.Builder.Build<TItem>(tableResult.Result as DynamicTableEntity);
+            return this.Assembler.Assemble<TItem>(tableResult.Result as DynamicTableEntity);
         }
 
-        public async Task<SegmentedResult<TItem>> GetAllAsync<TItem>(string continuationToken = null, string partitionKey = null, string rowKey = null, int rowCount = 500) where TItem : class, new()
+        public async Task<SegmentedResult<TItem>> GetAllAsync<TItem>(string continuationToken = null, string partitionKey = null, string rowKey = null, int rowCount = 500) where TItem : class, ITableItem, new()
         {
             string partitionQuery = null, rowQuery = null;
 
@@ -66,12 +66,12 @@ namespace Adriva.Storage.Azure
             var token = AzureStorageUtilities.DeserializeTableContinuationToken(continuationToken);
             var azureResult = await this.Table.ExecuteQuerySegmentedAsync(query, token);
 
-            IEnumerable<TItem> itemsList = azureResult.Results.Select(x => this.Builder.Build<TItem>(x as DynamicTableEntity));
+            IEnumerable<TItem> itemsList = azureResult.Results.Select(x => this.Assembler.Assemble<TItem>(x as DynamicTableEntity));
             string nextPageToken = azureResult.ContinuationToken.Serialize();
             return new SegmentedResult<TItem>(itemsList, nextPageToken, null != nextPageToken);
         }
 
-        public async Task<SegmentedResult<TItem>> SelectAsync<TItem>(Expression<Func<TItem, bool>> queryExpression, string continuationToken = null, int rowCount = 500) where TItem : class, new()
+        public async Task<SegmentedResult<TItem>> SelectAsync<TItem>(Expression<Func<TItem, bool>> queryExpression, string continuationToken = null, int rowCount = 500) where TItem : class, ITableItem, new()
         {
             QueryExpressionVisitor<TItem> visitor = new QueryExpressionVisitor<TItem>();
             _ = (Expression<Func<TItem, bool>>)visitor.Visit(queryExpression);
@@ -92,9 +92,18 @@ namespace Adriva.Storage.Azure
             var token = AzureStorageUtilities.DeserializeTableContinuationToken(continuationToken);
             var azureResult = await this.Table.ExecuteQuerySegmentedAsync(query, token);
 
-            IEnumerable<TItem> itemsList = azureResult.Results.Select(x => this.Builder.Build<TItem>(x as DynamicTableEntity));
+            IEnumerable<TItem> itemsList = azureResult.Results.Select(x => this.Assembler.Assemble<TItem>(x as DynamicTableEntity));
             string nextPageToken = azureResult.ContinuationToken.Serialize();
             return new SegmentedResult<TItem>(itemsList, nextPageToken, null != nextPageToken);
+        }
+
+        public async Task UpsertAsync<TItem>(TItem item) where TItem : class, ITableItem
+        {
+            if (null == item) throw new ArgumentNullException(nameof(item));
+
+            var entity = this.Assembler.Disassemble(item);
+            var tableOperation = TableOperation.InsertOrReplace(entity);
+            await this.Table.ExecuteAsync(tableOperation);
         }
 
         public ValueTask DisposeAsync()

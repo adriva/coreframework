@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -8,14 +8,16 @@ using Microsoft.Azure.Cosmos.Table;
 
 namespace Adriva.Storage.Azure
 {
-    internal sealed class TableEntityBuilder : ITableEntityBuilder
+    internal sealed class TableItemAssembler : ITableItemAssembler
     {
         private readonly static MethodInfo CastMethod;
-        private readonly IDictionary<Type, Action<object, DynamicTableEntity>> MapActionsCache = new Dictionary<Type, Action<object, DynamicTableEntity>>();
+        private readonly static MethodInfo CreateEntityPropertyMethod;
+        private readonly IDictionary<Type, Action<object, DynamicTableEntity>> AssemblerCache = new Dictionary<Type, Action<object, DynamicTableEntity>>();
 
-        static TableEntityBuilder()
+        static TableItemAssembler()
         {
-            TableEntityBuilder.CastMethod = typeof(TableEntityBuilder).GetMethod("CastEntityProperty", BindingFlags.Static | BindingFlags.NonPublic);
+            TableItemAssembler.CastMethod = typeof(TableItemAssembler).GetMethod("CastEntityProperty", BindingFlags.Static | BindingFlags.NonPublic);
+            TableItemAssembler.CreateEntityPropertyMethod = typeof(EntityProperty).GetMethod("CreateEntityPropertyFromObject", BindingFlags.Static | BindingFlags.Public);
         }
 
         private static TType CastEntityProperty<TType>(EntityProperty entityProperty)
@@ -80,7 +82,7 @@ namespace Adriva.Storage.Azure
             return mappings;
         }
 
-        public TItem Build<TItem>(DynamicTableEntity tableEntity) where TItem : class, new()
+        public TItem Assemble<TItem>(DynamicTableEntity tableEntity) where TItem : class, new()
         {
             if (null == tableEntity) return default;
 
@@ -93,16 +95,16 @@ namespace Adriva.Storage.Azure
 
             Action<object, DynamicTableEntity> populateAction = null;
 
-            if (!this.MapActionsCache.TryGetValue(typeOfT, out populateAction))
+            if (!this.AssemblerCache.TryGetValue(typeOfT, out populateAction))
             {
                 var properties = typeOfT.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                var mappings = TableEntityBuilder.GetPropertyMappings(properties, tableEntity.Properties.Keys);
+                var mappings = TableItemAssembler.GetPropertyMappings(properties, tableEntity.Properties.Keys);
 
                 foreach (var mapping in mappings)
                 {
                     foreach (var property in mapping.Value)
                     {
-                        var castMethod = TableEntityBuilder.CastMethod.MakeGenericMethod(property.PropertyType);
+                        var castMethod = TableItemAssembler.CastMethod.MakeGenericMethod(property.PropertyType);
                         var itemParameter = Expression.Parameter(typeOfT, "x");
                         var itemProperty = Expression.Property(itemParameter, property.Name);
                         var propertyValue = Expression.Parameter(typeof(EntityProperty), "value");
@@ -122,7 +124,7 @@ namespace Adriva.Storage.Azure
                         else populateAction += wrapperAction;
                     }
                 }
-                this.MapActionsCache.Add(typeOfT, populateAction);
+                this.AssemblerCache.Add(typeOfT, populateAction);
             }
 
             TItem item = new TItem();
@@ -135,5 +137,59 @@ namespace Adriva.Storage.Azure
 
             return item;
         }
+
+        public ITableEntity Disassemble<TItem>(TItem item) where TItem : class, ITableItem
+        {
+            if (null == item) throw new ArgumentNullException(nameof(item));
+
+            Type typeOfT = typeof(TItem);
+
+            DynamicTableEntity tableEntity = new DynamicTableEntity();
+
+            var properties = typeOfT.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+            Action<TItem, DynamicTableEntity> propertyPopulator = null;
+
+            foreach (var property in properties)
+            {
+                if (null != property.GetCustomAttribute<NotMappedAttribute>()) continue;
+                if (!property.CanRead || !property.CanWrite) continue;
+
+
+                var itemParameter = Expression.Parameter(typeOfT, "x");
+                var propertyAccessor = Expression.Property(itemParameter, property);
+                var dynamicEntityParameter = Expression.Parameter(typeof(DynamicTableEntity), "d");
+
+                if (0 != string.Compare("PartitionKey", property.Name, StringComparison.OrdinalIgnoreCase)
+                    && 0 != string.Compare("RowKey", property.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    var dynamicEntityProperties = Expression.Property(dynamicEntityParameter, "Properties");
+
+                    var objectPropertyAccessor = Expression.Convert(propertyAccessor, typeof(object));
+                    var createEntityPropertyExpression = Expression.Call(null, TableItemAssembler.CreateEntityPropertyMethod, objectPropertyAccessor);
+
+                    var addPropertyExpression = Expression.Call(dynamicEntityProperties, "Add", null, Expression.Constant(property.Name), createEntityPropertyExpression);
+
+                    var lambda = Expression.Lambda<Action<TItem, DynamicTableEntity>>(addPropertyExpression, itemParameter, dynamicEntityParameter);
+
+                    if (null == propertyPopulator) propertyPopulator = lambda.Compile();
+                    else propertyPopulator += lambda.Compile();
+                }
+            }
+
+            Action<TItem, DynamicTableEntity> basePropertyPopulator = (x, d) =>
+            {
+                d.PartitionKey = x.PartitionKey;
+                d.RowKey = x.RowKey;
+            };
+
+            if (null == propertyPopulator) propertyPopulator = basePropertyPopulator;
+            else propertyPopulator += basePropertyPopulator;
+
+            propertyPopulator.Invoke(item, tableEntity);
+
+            return tableEntity;
+        }
+
     }
 }
