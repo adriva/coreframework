@@ -152,7 +152,6 @@ namespace Adriva.Storage.Azure
 
             if (!this.DisassemblerCache.TryGetValue(typeOfT, out wrapperAction))
             {
-
                 Action<TItem, DynamicTableEntity> propertyPopulator = null;
                 var properties = typeOfT.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
@@ -15,6 +16,10 @@ namespace Adriva.Storage.Abstractions
 
         Task UpsertAsync<TItem>(TItem item) where TItem : class, ITableItem;
 
-        Task DeleteAsync(string partitionKey, string rowKey);
+        Task BatchUpsertAsync<TItem>(IEnumerable<TItem> items, int batchSize = 100) where TItem : class, ITableItem;
+
+        Task DeleteAsync(string partitionKey, string rowKey, string etag = "*");
+
+        Task BatchDeleteAsync<TItem>(IEnumerable<TItem> items, bool forceDelete = false, int batchSize = 100) where TItem : class, ITableItem;
     }
 }

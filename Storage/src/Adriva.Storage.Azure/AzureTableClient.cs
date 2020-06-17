@@ -43,6 +43,34 @@ namespace Adriva.Storage.Azure
             await this.Table.CreateIfNotExistsAsync();
         }
 
+        private async Task BatchExecuteAsync<TItem>(IEnumerable<TItem> items, int batchSize, Action<TableBatchOperation, ITableEntity> batchStepCallback) where TItem : class, ITableItem
+        {
+            if (null == items) throw new ArgumentNullException(nameof(items));
+
+            batchSize = Math.Min(100, batchSize);
+
+            var partitionedItems = items.GroupBy(x => x.PartitionKey);
+
+            foreach (var partitionedItem in partitionedItems)
+            {
+                int pageIndex = 0;
+
+                var deleteItems = partitionedItem.Skip(pageIndex * batchSize).Take(batchSize);
+
+                if (!deleteItems.Any()) continue;
+
+                TableBatchOperation batchOperation = new TableBatchOperation();
+                foreach (var deleteItem in deleteItems)
+                {
+                    var tableEntity = this.Assembler.Disassemble(deleteItem);
+                    batchStepCallback.Invoke(batchOperation, tableEntity);
+                }
+
+                ++pageIndex;
+                await this.Table.ExecuteBatchAsync(batchOperation);
+            }
+        }
+
         public async Task<TItem> GetAsync<TItem>(string partitionKey, string rowKey) where TItem : class, ITableItem, new()
         {
             TableOperation retrieveOperation = TableOperation.Retrieve(partitionKey, rowKey);
@@ -61,6 +89,7 @@ namespace Adriva.Storage.Azure
 
             if (null != partitionQuery) query = query.Where(partitionQuery);
             if (null != rowQuery) query = query.Where(rowQuery);
+
             query.TakeCount = rowCount;
 
             var token = AzureStorageUtilities.DeserializeTableContinuationToken(continuationToken);
@@ -108,12 +137,29 @@ namespace Adriva.Storage.Azure
             this.Logger.LogInformation($"Upserted entity with PartitionKey = '{entity.PartitionKey}' and RowKey = '{entity.RowKey}'.");
         }
 
-        public async Task DeleteAsync(string partitionKey, string rowKey)
+        public async Task BatchUpsertAsync<TItem>(IEnumerable<TItem> items, int batchSize = 100) where TItem : class, ITableItem
+        {
+            await this.BatchExecuteAsync(items, batchSize, (operation, entity) =>
+            {
+                operation.InsertOrReplace(entity);
+            });
+        }
+
+        public async Task DeleteAsync(string partitionKey, string rowKey, string etag = "*")
         {
             DynamicTableEntity dynamicTableEntity = new DynamicTableEntity(partitionKey, rowKey);
-            dynamicTableEntity.ETag = "*";
+            dynamicTableEntity.ETag = etag;
             TableOperation deleteOperation = TableOperation.Delete(dynamicTableEntity);
             await this.Table.ExecuteAsync(deleteOperation);
+        }
+
+        public async Task BatchDeleteAsync<TItem>(IEnumerable<TItem> items, bool forceDelete = false, int batchSize = 100) where TItem : class, ITableItem
+        {
+            await this.BatchExecuteAsync(items, batchSize, (operation, entity) =>
+            {
+                if (forceDelete) entity.ETag = "*";
+                operation.Delete(entity);
+            });
         }
 
         public ValueTask DisposeAsync()
