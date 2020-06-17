@@ -3,24 +3,28 @@ using System.Threading.Tasks;
 using Adriva.Storage.Abstractions;
 using Microsoft.Extensions.Options;
 using Microsoft.Azure.Cosmos.Table;
-using System.Diagnostics;
 using Adriva.Common.Core;
 using System.Linq;
 using System.Linq.Expressions;
 using System;
 using System.Collections.Generic;
+using Microsoft.OData.Client;
+using Microsoft.Extensions.Logging;
+using System.Web;
 
 namespace Adriva.Storage.Azure
 {
     public sealed class AzureTableClient : ITableClient
     {
-        //private static readonly TableEntityBuilder Builder = new TableEntityBuilder();
+        private readonly ILogger Logger;
+        private readonly TableEntityBuilder Builder = new TableEntityBuilder();
         private readonly IOptionsMonitor<AzureTableConfiguration> ConfigurationAccessor;
         private AzureTableConfiguration Configuration;
         private CloudTable Table;
 
-        public AzureTableClient(IOptionsMonitor<AzureTableConfiguration> configurationAccessor)
+        public AzureTableClient(IOptionsMonitor<AzureTableConfiguration> configurationAccessor, ILogger<AzureTableClient> logger)
         {
+            this.Logger = logger;
             this.ConfigurationAccessor = configurationAccessor;
         }
 
@@ -38,20 +42,14 @@ namespace Adriva.Storage.Azure
             await this.Table.CreateIfNotExistsAsync();
         }
 
-        public ValueTask DisposeAsync()
-        {
-            this.Table = null;
-            return new ValueTask();
-        }
-
-        public async Task<TItem> GetAsync<TItem>(string partitionKey, string rowKey) where TItem : class, ITableRow, new()
+        public async Task<TItem> GetAsync<TItem>(string partitionKey, string rowKey) where TItem : class, new()
         {
             TableOperation retrieveOperation = TableOperation.Retrieve(partitionKey, rowKey);
             var tableResult = await this.Table.ExecuteAsync(retrieveOperation);
-            return (tableResult.Result as DynamicTableEntity).ConvertToObject<TItem>();
+            return this.Builder.Build<TItem>(tableResult.Result as DynamicTableEntity);
         }
 
-        public async Task<SegmentedResult<TItem>> GetAllAsync<TItem>(string continuationToken = null, string partitionKey = null, string rowKey = null, int rowCount = 500) where TItem : class, ITableRow, new()
+        public async Task<SegmentedResult<TItem>> GetAllAsync<TItem>(string continuationToken = null, string partitionKey = null, string rowKey = null, int rowCount = 500) where TItem : class, new()
         {
             string partitionQuery = null, rowQuery = null;
 
@@ -63,12 +61,45 @@ namespace Adriva.Storage.Azure
             if (null != partitionQuery) query = query.Where(partitionQuery);
             if (null != rowQuery) query = query.Where(rowQuery);
             query.TakeCount = rowCount;
+
             var token = AzureStorageUtilities.DeserializeTableContinuationToken(continuationToken);
             var azureResult = await this.Table.ExecuteQuerySegmentedAsync(query, token);
 
-            IEnumerable<TItem> itemsList = azureResult.Results.Select(x => (x as DynamicTableEntity).ConvertToObject<TItem>());
+            IEnumerable<TItem> itemsList = azureResult.Results.Select(x => this.Builder.Build<TItem>(x as DynamicTableEntity));
             string nextPageToken = azureResult.ContinuationToken.Serialize();
             return new SegmentedResult<TItem>(itemsList, nextPageToken, null != nextPageToken);
+        }
+
+        public async Task<SegmentedResult<TItem>> SelectAsync<TItem>(Expression<Func<TItem, bool>> queryExpression, string continuationToken = null, int rowCount = 500) where TItem : class, new()
+        {
+            QueryExpressionVisitor<TItem> visitor = new QueryExpressionVisitor<TItem>();
+            _ = (Expression<Func<TItem, bool>>)visitor.Visit(queryExpression);
+
+            DataServiceContext context = new DataServiceContext(new Uri("https://tempuri.org"));
+            var dataServiceQuery = context.CreateQuery<TItem>("/items").Where(queryExpression);
+            string queryString = (((DataServiceQuery)dataServiceQuery).RequestUri).Query;
+            var queryCollection = HttpUtility.ParseQueryString(queryString);
+
+            TableQuery query = new TableQuery()
+            {
+                FilterString = queryCollection.Get("$filter"),
+                TakeCount = rowCount,
+            };
+
+            this.Logger.LogInformation($"Azure Table Query: {query.FilterString}");
+
+            var token = AzureStorageUtilities.DeserializeTableContinuationToken(continuationToken);
+            var azureResult = await this.Table.ExecuteQuerySegmentedAsync(query, token);
+
+            IEnumerable<TItem> itemsList = azureResult.Results.Select(x => this.Builder.Build<TItem>(x as DynamicTableEntity));
+            string nextPageToken = azureResult.ContinuationToken.Serialize();
+            return new SegmentedResult<TItem>(itemsList, nextPageToken, null != nextPageToken);
+        }
+
+        public ValueTask DisposeAsync()
+        {
+            this.Table = null;
+            return new ValueTask();
         }
     }
 }
