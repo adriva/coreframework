@@ -47,7 +47,7 @@ namespace Adriva.Storage.Azure
         {
             TableOperation retrieveOperation = TableOperation.Retrieve(partitionKey, rowKey);
             var tableResult = await this.Table.ExecuteAsync(retrieveOperation);
-            return this.Assembler.Assemble<TItem>(tableResult.Result as DynamicTableEntity);
+            return this.Assembler.Assemble<TItem>((DynamicTableEntity)tableResult.Result);
         }
 
         public async Task<SegmentedResult<TItem>> GetAllAsync<TItem>(string continuationToken = null, string partitionKey = null, string rowKey = null, int rowCount = 500) where TItem : class, ITableItem, new()
@@ -66,7 +66,7 @@ namespace Adriva.Storage.Azure
             var token = AzureStorageUtilities.DeserializeTableContinuationToken(continuationToken);
             var azureResult = await this.Table.ExecuteQuerySegmentedAsync(query, token);
 
-            IEnumerable<TItem> itemsList = azureResult.Results.Select(x => this.Assembler.Assemble<TItem>(x as DynamicTableEntity));
+            IEnumerable<TItem> itemsList = azureResult.Results.Select(x => this.Assembler.Assemble<TItem>((DynamicTableEntity)x));
             string nextPageToken = azureResult.ContinuationToken.Serialize();
             return new SegmentedResult<TItem>(itemsList, nextPageToken, null != nextPageToken);
         }
@@ -87,12 +87,12 @@ namespace Adriva.Storage.Azure
                 TakeCount = rowCount,
             };
 
-            this.Logger.LogInformation($"Azure Table Query: {query.FilterString}");
+            this.Logger.LogInformation($"Running Azure table query: {query.FilterString}");
 
             var token = AzureStorageUtilities.DeserializeTableContinuationToken(continuationToken);
             var azureResult = await this.Table.ExecuteQuerySegmentedAsync(query, token);
 
-            IEnumerable<TItem> itemsList = azureResult.Results.Select(x => this.Assembler.Assemble<TItem>(x as DynamicTableEntity));
+            IEnumerable<TItem> itemsList = azureResult.Results.Select(x => this.Assembler.Assemble<TItem>((DynamicTableEntity)x));
             string nextPageToken = azureResult.ContinuationToken.Serialize();
             return new SegmentedResult<TItem>(itemsList, nextPageToken, null != nextPageToken);
         }
@@ -103,7 +103,17 @@ namespace Adriva.Storage.Azure
 
             var entity = this.Assembler.Disassemble(item);
             var tableOperation = TableOperation.InsertOrReplace(entity);
+            this.Logger.LogInformation($"Upserting entity with PartitionKey = '{entity.PartitionKey}' and RowKey = '{entity.RowKey}'.");
             await this.Table.ExecuteAsync(tableOperation);
+            this.Logger.LogInformation($"Upserted entity with PartitionKey = '{entity.PartitionKey}' and RowKey = '{entity.RowKey}'.");
+        }
+
+        public async Task DeleteAsync(string partitionKey, string rowKey)
+        {
+            DynamicTableEntity dynamicTableEntity = new DynamicTableEntity(partitionKey, rowKey);
+            dynamicTableEntity.ETag = "*";
+            TableOperation deleteOperation = TableOperation.Delete(dynamicTableEntity);
+            await this.Table.ExecuteAsync(deleteOperation);
         }
 
         public ValueTask DisposeAsync()

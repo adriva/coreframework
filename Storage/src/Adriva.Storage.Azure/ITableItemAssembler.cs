@@ -5,7 +5,7 @@ namespace Adriva.Storage.Azure
 {
     public interface ITableItemAssembler
     {
-        TItem Assemble<TItem>(DynamicTableEntity tableEntity) where TItem : class, new();
+        TItem Assemble<TItem>(DynamicTableEntity tableEntity) where TItem : class, ITableItem, new();
 
         ITableEntity Disassemble<TItem>(TItem item) where TItem : class, ITableItem;
     }

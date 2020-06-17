@@ -13,6 +13,7 @@ namespace Adriva.Storage.Azure
         private readonly static MethodInfo CastMethod;
         private readonly static MethodInfo CreateEntityPropertyMethod;
         private readonly IDictionary<Type, Action<object, DynamicTableEntity>> AssemblerCache = new Dictionary<Type, Action<object, DynamicTableEntity>>();
+        private readonly IDictionary<Type, Action<object, DynamicTableEntity>> DisassemblerCache = new Dictionary<Type, Action<object, DynamicTableEntity>>();
 
         static TableItemAssembler()
         {
@@ -82,14 +83,14 @@ namespace Adriva.Storage.Azure
             return mappings;
         }
 
-        public TItem Assemble<TItem>(DynamicTableEntity tableEntity) where TItem : class, new()
+        public TItem Assemble<TItem>(DynamicTableEntity tableEntity) where TItem : class, ITableItem, new()
         {
             if (null == tableEntity) return default;
 
             Type typeOfT = typeof(TItem);
 
-            tableEntity.Properties.TryAdd("PartitionKey", EntityProperty.GeneratePropertyForString(tableEntity.PartitionKey));
-            tableEntity.Properties.TryAdd("RowKey", EntityProperty.GeneratePropertyForString(tableEntity.RowKey));
+            // tableEntity.Properties.TryAdd("PartitionKey", EntityProperty.GeneratePropertyForString(tableEntity.PartitionKey));
+            // tableEntity.Properties.TryAdd("RowKey", EntityProperty.GeneratePropertyForString(tableEntity.RowKey));
             tableEntity.Properties.TryAdd("Timestamp", EntityProperty.GeneratePropertyForDateTimeOffset(tableEntity.Timestamp));
             tableEntity.Properties.TryAdd("Etag", EntityProperty.GeneratePropertyForString(tableEntity.ETag));
 
@@ -128,6 +129,8 @@ namespace Adriva.Storage.Azure
             }
 
             TItem item = new TItem();
+            item.PartitionKey = tableEntity.PartitionKey;
+            item.RowKey = tableEntity.RowKey;
             populateAction.Invoke(item, tableEntity);
 
             if (item is ITableEntity azureTableEntity)
@@ -143,51 +146,62 @@ namespace Adriva.Storage.Azure
             if (null == item) throw new ArgumentNullException(nameof(item));
 
             Type typeOfT = typeof(TItem);
+            Action<object, DynamicTableEntity> wrapperAction = null;
 
             DynamicTableEntity tableEntity = new DynamicTableEntity();
 
-            var properties = typeOfT.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-
-            Action<TItem, DynamicTableEntity> propertyPopulator = null;
-
-            foreach (var property in properties)
+            if (!this.DisassemblerCache.TryGetValue(typeOfT, out wrapperAction))
             {
-                if (null != property.GetCustomAttribute<NotMappedAttribute>()) continue;
-                if (!property.CanRead || !property.CanWrite) continue;
 
+                Action<TItem, DynamicTableEntity> propertyPopulator = null;
+                var properties = typeOfT.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
-                var itemParameter = Expression.Parameter(typeOfT, "x");
-                var propertyAccessor = Expression.Property(itemParameter, property);
-                var dynamicEntityParameter = Expression.Parameter(typeof(DynamicTableEntity), "d");
-
-                if (0 != string.Compare("PartitionKey", property.Name, StringComparison.OrdinalIgnoreCase)
-                    && 0 != string.Compare("RowKey", property.Name, StringComparison.OrdinalIgnoreCase))
+                foreach (var property in properties)
                 {
-                    var dynamicEntityProperties = Expression.Property(dynamicEntityParameter, "Properties");
+                    if (null != property.GetCustomAttribute<NotMappedAttribute>()) continue;
+                    if (!property.CanRead || !property.CanWrite) continue;
 
-                    var objectPropertyAccessor = Expression.Convert(propertyAccessor, typeof(object));
-                    var createEntityPropertyExpression = Expression.Call(null, TableItemAssembler.CreateEntityPropertyMethod, objectPropertyAccessor);
 
-                    var addPropertyExpression = Expression.Call(dynamicEntityProperties, "Add", null, Expression.Constant(property.Name), createEntityPropertyExpression);
+                    var itemParameter = Expression.Parameter(typeOfT, "x");
+                    var propertyAccessor = Expression.Property(itemParameter, property);
+                    var dynamicEntityParameter = Expression.Parameter(typeof(DynamicTableEntity), "d");
 
-                    var lambda = Expression.Lambda<Action<TItem, DynamicTableEntity>>(addPropertyExpression, itemParameter, dynamicEntityParameter);
+                    if (0 != string.Compare("PartitionKey", property.Name, StringComparison.OrdinalIgnoreCase)
+                        && 0 != string.Compare("RowKey", property.Name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        var dynamicEntityProperties = Expression.Property(dynamicEntityParameter, "Properties");
 
-                    if (null == propertyPopulator) propertyPopulator = lambda.Compile();
-                    else propertyPopulator += lambda.Compile();
+                        var objectPropertyAccessor = Expression.Convert(propertyAccessor, typeof(object));
+                        var createEntityPropertyExpression = Expression.Call(null, TableItemAssembler.CreateEntityPropertyMethod, objectPropertyAccessor);
+
+                        var addPropertyExpression = Expression.Call(dynamicEntityProperties, "Add", null, Expression.Constant(property.Name), createEntityPropertyExpression);
+
+                        var lambda = Expression.Lambda<Action<TItem, DynamicTableEntity>>(addPropertyExpression, itemParameter, dynamicEntityParameter);
+
+                        if (null == propertyPopulator) propertyPopulator = lambda.Compile();
+                        else propertyPopulator += lambda.Compile();
+                    }
                 }
+
+                Action<TItem, DynamicTableEntity> basePropertyPopulator = (x, d) =>
+                {
+                    d.PartitionKey = x.PartitionKey;
+                    d.RowKey = x.RowKey;
+                };
+
+                if (null == propertyPopulator) propertyPopulator = basePropertyPopulator;
+                else propertyPopulator += basePropertyPopulator;
+
+                wrapperAction = (objectItem, dynamicExpressionVisitor) =>
+                {
+                    TItem inputItem = (TItem)objectItem;
+                    propertyPopulator.Invoke(inputItem, dynamicExpressionVisitor);
+                };
+
+                this.DisassemblerCache.Add(typeOfT, wrapperAction);
             }
 
-            Action<TItem, DynamicTableEntity> basePropertyPopulator = (x, d) =>
-            {
-                d.PartitionKey = x.PartitionKey;
-                d.RowKey = x.RowKey;
-            };
-
-            if (null == propertyPopulator) propertyPopulator = basePropertyPopulator;
-            else propertyPopulator += basePropertyPopulator;
-
-            propertyPopulator.Invoke(item, tableEntity);
-
+            wrapperAction.Invoke(item, tableEntity);
             return tableEntity;
         }
 
