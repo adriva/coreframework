@@ -16,6 +16,8 @@ namespace Adriva.Storage.Abstractions
 
         Task UpsertAsync<TItem>(TItem item) where TItem : class, ITableItem;
 
+        Task UpdateAsync<TItem>(TItem item, string etag = "*") where TItem : class, ITableItem;
+
         Task BatchUpsertAsync<TItem>(IEnumerable<TItem> items, int batchSize = 100) where TItem : class, ITableItem;
 
         Task DeleteAsync(string partitionKey, string rowKey, string etag = "*");

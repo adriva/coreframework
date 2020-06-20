@@ -137,6 +137,17 @@ namespace Adriva.Storage.Azure
             this.Logger.LogInformation($"Upserted entity with PartitionKey = '{entity.PartitionKey}' and RowKey = '{entity.RowKey}'.");
         }
 
+        public async Task UpdateAsync<TItem>(TItem item, string etag = "*") where TItem : class, ITableItem
+        {
+            if (null == item) throw new ArgumentNullException(nameof(item));
+
+            var tableEntity = this.Assembler.Disassemble(item);
+            tableEntity.ETag = etag;
+
+            TableOperation updateOperation = TableOperation.Replace(tableEntity);
+            await this.Table.ExecuteAsync(updateOperation);
+        }
+
         public async Task BatchUpsertAsync<TItem>(IEnumerable<TItem> items, int batchSize = 100) where TItem : class, ITableItem
         {
             await this.BatchExecuteAsync(items, batchSize, (operation, entity) =>
