@@ -18,5 +18,9 @@ namespace Adriva.Extensions.Optimization.Web
         public bool MinifyJavascripts { get; set; }
 
         public bool MinifyHtml { get; set; }
+
+        public int HtmlBufferSize { get; set; } = 102400;
+
+        public string AssetRootUrl { get; set; }
     }
 }

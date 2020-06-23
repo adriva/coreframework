@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,9 +45,9 @@ namespace Adriva.Extensions.Optimization.Web
                     break;
                 case OptimizationTagOutput.StaticFile:
                 case OptimizationTagOutput.Loader:
-                    PathString relativeFilePath = new PathString(this.Options.StaticAssetsPath).Add($"/{asset.Name}");
-                    PathString relativeWebPath = this.HttpContextAccessor.HttpContext.Request.PathBase.Add(relativeFilePath);
 
+                    string webPath = null;
+                    PathString relativeFilePath = new PathString(this.Options.StaticAssetsPath).Add($"/{asset.Name}");
                     var assetFileInfo = this.HostingEnvironment.WebRootFileProvider.GetFileInfo(relativeFilePath);
                     if (!assetFileInfo.Exists)
                     {
@@ -54,7 +55,23 @@ namespace Adriva.Extensions.Optimization.Web
                         await File.WriteAllTextAsync(assetFileInfo.PhysicalPath, content, Encoding.UTF8);
                     }
 
-                    tagBuilder.Attributes.Add("src", relativeWebPath);
+
+                    if (string.IsNullOrWhiteSpace(this.Options.AssetRootUrl))
+                    {
+                        webPath = this.HttpContextAccessor.HttpContext.Request.PathBase.Add(relativeFilePath);
+
+                    }
+                    else
+                    {
+                        if (!Uri.TryCreate(this.Options.AssetRootUrl, UriKind.Absolute, out Uri cdnRootUri))
+                        {
+                            throw new UriFormatException($"'{this.Options.AssetRootUrl}' is an invalid Uri. An absolute Uri is expected.");
+                        }
+                        Uri.TryCreate(cdnRootUri, $"{asset.Name}", out Uri webPathUri);
+                        webPath = webPathUri.ToString();
+                    }
+
+                    tagBuilder.Attributes.Add("src", webPath);
 
                     if (null != asset?.Content)
                     {
