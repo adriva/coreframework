@@ -26,7 +26,7 @@ namespace Adriva.Web.Controls
 
         protected TagHelperContext TagHelperContext { get; private set; }
 
-        protected static string GetOrGenerateControlId(TagHelperOutput output, string prefix = "ctrl_")
+        private static string GetOrGenerateControlId(TagHelperOutput output, string prefix = "ctrl_")
         {
             string controlId = $"{prefix}{Utilities.GetRandomId(6)}";
 
@@ -51,7 +51,9 @@ namespace Adriva.Web.Controls
 
         private ControlOutputContext GetContext(TagHelperContext tagHelperContext, TagHelperOutput output)
         {
-            ControlOutputContext currentContext = new ControlOutputContext(output) { Control = this };
+            string id = ControlTagHelper.GetOrGenerateControlId(output);
+
+            ControlOutputContext currentContext = new ControlOutputContext(id, output) { Control = this };
 
             if (tagHelperContext.Items.TryGetValue(ControlTagHelper.RandomContextKey, out object obj))
             {

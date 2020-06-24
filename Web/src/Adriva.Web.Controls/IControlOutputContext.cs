@@ -5,6 +5,8 @@ namespace Adriva.Web.Controls
 {
     public interface IControlOutputContext
     {
+        string Id { get; }
+
         TagHelperOutput Output { get; }
 
         ControlTagHelper Control { get; }

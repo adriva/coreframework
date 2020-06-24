@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Adriva.Web.Controls
 {
     internal class ControlOutputContext : IControlOutputContext
     {
+        public string Id { get; private set; }
+
         public ControlTagHelper Control { get; set; }
 
         public IControlOutputContext Parent { get; set; }
@@ -15,8 +15,9 @@ namespace Adriva.Web.Controls
 
         public IList<IControlOutputContext> Children { get; private set; }
 
-        public ControlOutputContext(TagHelperOutput output)
+        public ControlOutputContext(string id, TagHelperOutput output)
         {
+            this.Id = id;
             this.Output = output;
             this.Children = new List<IControlOutputContext>();
         }
