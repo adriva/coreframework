@@ -44,7 +44,7 @@ namespace demo
                 options.MinifyStylesheets = true;
                 options.BundleJavascripts = true;
                 options.MinifyJavascripts = true;
-                options.MinifyHtml = true;
+                options.MinifyHtml = false;
                 //options.AssetRootUrl = "https://localhost:5001/assets/";
             })
             .ConfigureStyleSheetMinification(cssOptions =>

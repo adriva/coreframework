@@ -61,10 +61,10 @@ namespace demo.Controllers
                 tc.TrackAvailability("AVAILABILITY DEMO", DateTimeOffset.Now, TimeSpan.FromSeconds(10), "RUN LOCATION", true, "MESSAGE HERE");
             }
 
-            var sm = this.HttpContext.RequestServices.GetService<IStorageClientFactory>();
-            var tac = await sm.GetTableClientAsync();
-            var bac = await sm.GetBlobClientAsync();
-            var pro = await bac.GetPropertiesAsync("blog/yilbasi.html");
+            // var sm = this.HttpContext.RequestServices.GetService<IStorageClientFactory>();
+            // var tac = await sm.GetTableClientAsync();
+            // var bac = await sm.GetBlobClientAsync();
+            // var pro = await bac.GetPropertiesAsync("blog/yilbasi.html");
             return this.View();
         }
     }
