@@ -11,9 +11,9 @@
   <PropertyGroup>
     <!-- <TargetFramework>netstandard2.1</TargetFramework> -->
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <Title>Adriva AspNet Core Web Controls Abstractions Library</Title>
-    <PackageDescription></PackageDescription>    
-    <Version>3.0.0-rc03</Version>
+    <Title>Adriva Web Controls Abstractions Library</Title>
+    <PackageDescription>Base library providing abstractions and common components and tag helpers to implement and consume aspnet core web controls.</PackageDescription>    
+    <Version>3.0.0-rc01</Version>
   </PropertyGroup>
 
 </Project>
