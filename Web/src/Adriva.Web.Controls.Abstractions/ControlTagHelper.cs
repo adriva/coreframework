@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,18 +13,18 @@ namespace Adriva.Web.Controls.Abstractions
     {
         private static readonly string RandomContextKey;
 
-        protected IControlRenderer ControlRenderer;
+        [HtmlAttributeNotBound]
+        protected virtual bool RequiresRenderer { get => false; }
+
+        [ViewContext]
+        [HtmlAttributeNotBound]
+        public ViewContext ViewContext { get; set; }
 
         static ControlTagHelper()
         {
             ControlTagHelper.RandomContextKey = $"controlContext_{Guid.NewGuid()}";
         }
 
-        [ViewContext]
-        [HtmlAttributeNotBound]
-        public ViewContext ViewContext { get; set; }
-
-        protected TagHelperContext TagHelperContext { get; private set; }
 
         private static string GetOrGenerateControlId(TagHelperOutput output, string prefix = "ctrl_")
         {
@@ -40,9 +42,10 @@ namespace Adriva.Web.Controls.Abstractions
             return controlId;
         }
 
+        protected TagHelperContext TagHelperContext { get; private set; }
+
         public override void Init(TagHelperContext context)
         {
-            this.ControlRenderer = new DefaultControlRenderer();
             base.Init(context);
             this.TagHelperContext = context;
         }
@@ -63,25 +66,41 @@ namespace Adriva.Web.Controls.Abstractions
             return currentContext;
         }
 
+        private bool EnsureRenderer(IControlOutputContext context)
+        {
+            if (this.RequiresRenderer && !(context.Parent?.Control is RendererTagHelper))
+            {
+                context.Output.Content.Clear();
+                context.Output.SuppressOutput();
+                context.Output.Content.SetHtmlContent($"<div>'{this.GetType().FullName}' requires a parent &lt;renderer&gt; since it doesn't have any default rendering logic.</div>");
+                return false;
+            }
+
+            return true;
+        }
+
         public sealed override void Process(TagHelperContext context, TagHelperOutput output)
         {
             ControlOutputContext controlOutputContext = this.GetContext(context, output);
-            this.Process(controlOutputContext);
 
-            context.Items[ControlTagHelper.RandomContextKey] = controlOutputContext;
+            if (this.EnsureRenderer(controlOutputContext))
+            {
+                this.Process(controlOutputContext);
+                context.Items[ControlTagHelper.RandomContextKey] = controlOutputContext;
+            }
         }
 
         public sealed override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             ControlOutputContext currentContext = this.GetContext(context, output);
 
+            if (this.EnsureRenderer(currentContext))
+            {
+                context.Items[ControlTagHelper.RandomContextKey] = currentContext;
 
-            context.Items[ControlTagHelper.RandomContextKey] = currentContext;
-
-            _ = await output.GetChildContentAsync();
-            await this.ProcessAsync(currentContext);
-
-            await this.ControlRenderer.RenderAsync(currentContext);
+                _ = await output.GetChildContentAsync();
+                await this.ProcessAsync(currentContext);
+            }
         }
 
         protected virtual void Process(IControlOutputContext context) { }

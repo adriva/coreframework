@@ -18,12 +18,12 @@ namespace Adriva.Web.Controls.Abstractions
             this.RendererFactory = rendererFactory;
         }
 
-        protected override Task ProcessAsync(IControlOutputContext context)
+        protected override async Task ProcessAsync(IControlOutputContext context)
         {
             if (string.IsNullOrWhiteSpace(this.Name)) this.Name = Options.DefaultName;
 
-            this.ControlRenderer = this.RendererFactory.GetRenderer(this.Name);
-            return Task.CompletedTask;
+            var controlRenderer = this.RendererFactory.GetRenderer(this.Name);
+            await controlRenderer.RenderAsync(context);
         }
     }
 }

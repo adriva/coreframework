@@ -24,7 +24,7 @@ namespace Adriva.Web.Controls.Abstractions
         }
     }
 
-    internal class WebControlsRendererOptions
+    public class WebControlsRendererOptions
     {
         public Type RendererType { get; set; }
     }

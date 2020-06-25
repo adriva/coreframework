@@ -78,7 +78,7 @@ namespace demo
                 });
             ;
 
-            services.AddWebControls().AddRenderer<Adriva.Web.Controls.Abstractions.NullControlRenderer>("nullrenderer");
+            services.AddWebControls(options => { }).AddRenderer<Adriva.Web.Controls.Abstractions.NullControlRenderer>("nullrenderer");
 
             if (!DisableAnalytics)
             {

@@ -1,3 +1,5 @@
+using System;
+
 namespace Adriva.Web.Controls.Abstractions
 {
     public enum HorizontalAlignment
@@ -5,5 +7,13 @@ namespace Adriva.Web.Controls.Abstractions
         Left,
         Center,
         Right
+    }
+
+    [Flags]
+    public enum AssetDeliveryMethod : int
+    {
+        Inline = 0,
+        OptimizationContext = 1,
+        Sectionriter = 2
     }
 }
