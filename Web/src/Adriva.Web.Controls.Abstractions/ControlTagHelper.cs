@@ -81,7 +81,7 @@ namespace Adriva.Web.Controls.Abstractions
             _ = await output.GetChildContentAsync();
             await this.ProcessAsync(currentContext);
 
-            this.ControlRenderer.Render(currentContext);
+            await this.ControlRenderer.RenderAsync(currentContext);
         }
 
         protected virtual void Process(IControlOutputContext context) { }

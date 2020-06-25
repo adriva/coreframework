@@ -1,8 +1,10 @@
+using System.Threading.Tasks;
+
 namespace Adriva.Web.Controls.Abstractions
 {
     public class DefaultControlRenderer : IControlRenderer
     {
-        public virtual void RenderRootControl(IControlOutputContext context)
+        protected virtual void RenderRootControl(IControlOutputContext context)
         {
 
         }
@@ -10,6 +12,12 @@ namespace Adriva.Web.Controls.Abstractions
         public virtual void Render(IControlOutputContext context)
         {
             if (null == context.Parent) this.RenderRootControl(context);
+        }
+
+        public Task RenderAsync(IControlOutputContext context)
+        {
+            if (null == context.Parent) this.RenderRootControl(context);
+            return Task.CompletedTask;
         }
     }
 }
