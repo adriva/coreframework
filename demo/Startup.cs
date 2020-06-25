@@ -78,6 +78,8 @@ namespace demo
                 });
             ;
 
+            services.AddWebControls().AddRenderer<Adriva.Web.Controls.Abstractions.NullControlRenderer>("nullrenderer");
+
             if (!DisableAnalytics)
             {
                 services.AddAppInsightsWebAnalytics(options =>

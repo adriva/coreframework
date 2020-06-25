@@ -2,12 +2,14 @@ namespace Adriva.Web.Controls.Abstractions
 {
     public class DefaultControlRenderer : IControlRenderer
     {
-        public void Render(IControlOutputContext context)
+        public virtual void RenderRootControl(IControlOutputContext context)
         {
-            if (null == context.Parent)
-            {
-                var nop = 3;
-            }
+
+        }
+
+        public virtual void Render(IControlOutputContext context)
+        {
+            if (null == context.Parent) this.RenderRootControl(context);
         }
     }
 }
