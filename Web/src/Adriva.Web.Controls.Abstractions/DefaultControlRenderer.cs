@@ -14,7 +14,7 @@ namespace Adriva.Web.Controls.Abstractions
             if (null == context.Parent) this.RenderRootControl(context);
         }
 
-        public Task RenderAsync(IControlOutputContext context)
+        public virtual Task RenderAsync(IControlOutputContext context)
         {
             if (null == context.Parent) this.RenderRootControl(context);
             return Task.CompletedTask;
