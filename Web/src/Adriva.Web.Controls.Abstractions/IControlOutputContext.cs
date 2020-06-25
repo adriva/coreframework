@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Adriva.Web.Controls
+namespace Adriva.Web.Controls.Abstractions
 {
     public interface IControlOutputContext
     {

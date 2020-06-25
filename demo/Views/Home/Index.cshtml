@@ -2,11 +2,13 @@
     ViewData["Title"] = "Home Page";
 }
 
-<grid class="p-4 bg-warning" id="deneme">
-    <grid-column>
-        <column-template></column-template>
-    </grid-column>
-    <grid-column>
-        <column-template></column-template>
-    </grid-column>
-</grid>
+    <grid class="p-4 bg-warning" id="deneme">
+        <grid-column>
+            <column-template>
+                <p>Hello {field}. Naber ?</p>
+            </column-template>
+        </grid-column>
+        <grid-column>
+            <column-template></column-template>
+        </grid-column>
+    </grid>

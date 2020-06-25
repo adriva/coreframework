@@ -1,19 +1,17 @@
 using System;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Adriva.Web.Controls
+namespace Adriva.Web.Controls.Abstractions
 {
-
     public abstract class ControlTagHelper : TagHelper
     {
         private static readonly string RandomContextKey;
 
-        private IControlRenderer ControlRenderer;
+        protected IControlRenderer ControlRenderer;
 
         static ControlTagHelper()
         {
@@ -77,13 +75,13 @@ namespace Adriva.Web.Controls
         {
             ControlOutputContext currentContext = this.GetContext(context, output);
 
-            await this.ProcessAsync(currentContext);
 
             context.Items[ControlTagHelper.RandomContextKey] = currentContext;
 
             _ = await output.GetChildContentAsync();
+            await this.ProcessAsync(currentContext);
 
-            if (null == currentContext.Parent) this.ControlRenderer.Render(currentContext);
+            this.ControlRenderer.Render(currentContext);
         }
 
         protected virtual void Process(IControlOutputContext context) { }

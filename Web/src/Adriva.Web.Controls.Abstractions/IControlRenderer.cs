@@ -1,4 +1,4 @@
-namespace Adriva.Web.Controls
+namespace Adriva.Web.Controls.Abstractions
 {
     public interface IControlRenderer
     {
