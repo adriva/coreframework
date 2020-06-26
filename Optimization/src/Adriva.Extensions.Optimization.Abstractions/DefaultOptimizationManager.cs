@@ -71,12 +71,12 @@ namespace Adriva.Extensions.Optimization.Abstractions
             if (null == extension) extension = string.Empty;
             string fileExtension = "." + extension;
 
-            var orderedAssets = this.Orderer.Order(context.Assets.Where(a => 0 == string.Compare(Path.GetExtension(a.Location.ToString()), fileExtension, StringComparison.OrdinalIgnoreCase)));
-
-            if (!orderedAssets.Any())
+            if (!context.Assets.Any())
             {
                 return OptimizationResult.Empty;
             }
+
+            var orderedAssets = this.Orderer.Order(context.Assets.Where(a => 0 == string.Compare(Path.GetExtension(a.Location.ToString()), fileExtension, StringComparison.OrdinalIgnoreCase)));
 
             foreach (var asset in orderedAssets)
             {

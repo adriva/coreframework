@@ -1,14 +1,10 @@
 using System;
 using Adriva.Web.Controls.Abstractions;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-
-    public class WebControlsOptions
-    {
-        public AssetDeliveryMethod AssetDeliveryMethod { get; set; }
-    }
-
     public static class WebControlsServiceExtensions
     {
         public static IWebControlsBuilder AddWebControls(this IServiceCollection services, Action<WebControlsOptions> configure)
@@ -18,6 +14,17 @@ namespace Microsoft.Extensions.DependencyInjection
             DefaultWebControlsBuilder builder = new DefaultWebControlsBuilder(services);
             builder.AddRenderer<DefaultControlRenderer>(Options.Options.DefaultName);
             return builder;
+        }
+
+        public static IApplicationBuilder UseWebControls(this IApplicationBuilder app)
+        {
+            var options = app.ApplicationServices.GetService<IOptions<WebControlsOptions>>().Value;
+
+            app.Map(options.AssetsRootPath, (applicationBuilder) =>
+            {
+                applicationBuilder.UseMiddleware<ResourceLoaderMiddleware>();
+            });
+            return app;
         }
     }
 }

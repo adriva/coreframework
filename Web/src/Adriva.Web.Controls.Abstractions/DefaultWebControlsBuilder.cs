@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Runtime.Loader;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Adriva.Web.Controls.Abstractions
@@ -10,6 +12,19 @@ namespace Adriva.Web.Controls.Abstractions
         public DefaultWebControlsBuilder(IServiceCollection services)
         {
             this.Services = services;
+        }
+
+        public IWebControlsBuilder AddAssembly(string assemblyPath)
+        {
+            var controlLibrary = AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath);
+            this.Services.Configure<WebControlsOptions>(options =>
+            {
+                if (!options.ControlLibraries.Any(x => x.Equals(controlLibrary)))
+                {
+                    options.ControlLibraries.Add(controlLibrary);
+                }
+            });
+            return this;
         }
 
         public IWebControlsBuilder AddRenderer<TRenderer>(string name) where TRenderer : class, IControlRenderer

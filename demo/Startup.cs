@@ -78,7 +78,9 @@ namespace demo
                 });
             ;
 
-            services.AddWebControls(options => { }).AddRenderer<Adriva.Web.Controls.Abstractions.NullControlRenderer>("nullrenderer");
+            services.AddWebControls(options => { })
+                .AddAssembly(typeof(Adriva.Web.Controls.Grid).Assembly.Location)
+                .AddRenderer<Adriva.Web.Controls.Abstractions.NullControlRenderer>("nullrenderer");
 
             if (!DisableAnalytics)
             {
@@ -128,6 +130,9 @@ namespace demo
             app.UseAuthorization();
 
             app.UseOptimization();
+
+            app.UseWebControls();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

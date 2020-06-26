@@ -1,11 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\Adriva.Web.Controls.Abstractions\Adriva.Web.Controls.Abstractions.csproj" />
-  </ItemGroup>
+  
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
     <Title>Adriva Web Controls Library</Title>
     <PackageDescription>Includes common (shared) asp net core web controls.</PackageDescription>    
     <Version>3.0.0-rc01</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets/*.js" />
+    <EmbeddedResource Include="Assets/*.css" />
+    <EmbeddedResource Include="Assets/*.eot" />
+    <EmbeddedResource Include="Assets/*.woff" />
+    <EmbeddedResource Include="Assets/*.ttf" />
+    <EmbeddedResource Include="Assets/*.svg" />
+    <EmbeddedResource Include="Assets/lang.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Adriva.Web.Controls.Abstractions\Adriva.Web.Controls.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>

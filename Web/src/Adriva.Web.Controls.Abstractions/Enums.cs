@@ -14,6 +14,6 @@ namespace Adriva.Web.Controls.Abstractions
     {
         Inline = 0,
         OptimizationContext = 1,
-        Sectionriter = 2
+        SectionWriter = 2
     }
 }
