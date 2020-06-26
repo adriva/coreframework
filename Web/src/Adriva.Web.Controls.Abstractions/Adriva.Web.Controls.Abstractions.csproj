@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\src\Adriva.Common.Core.csproj" />
+    <ProjectReference Include="..\..\..\Optimization\src\Adriva.Extensions.Optimization.Abstractions\Adriva.Extensions.Optimization.Abstractions.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -1,8 +1,10 @@
 using System;
 using System.Threading.Tasks;
+using Adriva.Extensions.Optimization.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Adriva.Web.Controls.Abstractions
 {
@@ -15,12 +17,13 @@ namespace Adriva.Web.Controls.Abstractions
         {
             this.Options = optionsAccessor.Value;
             this.RendererOptions = rendererOptionsAccessor.Value;
+
+            this.Options.ContainerName = this.Options.ContainerName ?? string.Empty;
         }
 
         protected virtual void RenderRootControl(IControlOutputContext context)
         {
-            // var v = context.Control.ViewContext.View as Microsoft.AspNetCore.Mvc.Razor.RazorView;
-
+            var v = context.Control.ViewContext.View as Microsoft.AspNetCore.Mvc.Razor.RazorView;
             // v.RazorPage.SectionWriters.Add("Scripts", async () =>
             // {
             //     (v.RazorPage as RazorPage).WriteLiteral("<script defer src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'></script>");
@@ -31,7 +34,11 @@ namespace Adriva.Web.Controls.Abstractions
 
         private void RenderAssets(IControlOutputContext context)
         {
-
+            var httpContext = context.GetHttpContext();
+            var optimizationScope = httpContext.RequestServices.GetService<IOptimizationScope>();
+            var optimizationContext = optimizationScope.AddOrGetContext(this.Options.ContainerName);
+            optimizationContext.AddAsset("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js");
+            optimizationContext.AddAsset("https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js");
         }
 
         public virtual void Render(IControlOutputContext context)

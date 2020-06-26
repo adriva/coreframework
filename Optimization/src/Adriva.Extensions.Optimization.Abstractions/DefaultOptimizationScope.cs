@@ -21,7 +21,7 @@ namespace Adriva.Extensions.Optimization.Abstractions
 
         public IOptimizationContext AddOrGetContext(string name)
         {
-            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
+            if (null == name) throw new ArgumentNullException(nameof(name));
 
             if (this.Contexts.TryGetValue(name, out IOptimizationContext context)) return context;
 
