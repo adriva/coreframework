@@ -12,9 +12,9 @@ namespace Adriva.Extensions.Optimization.Transforms
     {
         protected override string GetSeperator(Asset asset) => Environment.NewLine;
 
-        public async override Task<IEnumerable<Asset>> TransformAsync(params Asset[] assets)
+        public async override Task<IEnumerable<Asset>> TransformAsync(string extension, params Asset[] assets)
         {
-            return await base.TransformAsync(assets);
+            return await base.TransformAsync(extension, assets);
         }
     }
 }

@@ -102,7 +102,7 @@ namespace Adriva.Extensions.Optimization.Abstractions
                     if (null == this.Events?.TransformRunning || this.Events.TransformRunning.Invoke(extension, this.Options, transform))
                     {
                         var inputAssets = assets.ToArray();
-                        assets = await transform.TransformAsync(inputAssets);
+                        assets = await transform.TransformAsync(fileExtension, inputAssets);
                         await transform.CleanUpAsync(inputAssets);
                     }
                 }

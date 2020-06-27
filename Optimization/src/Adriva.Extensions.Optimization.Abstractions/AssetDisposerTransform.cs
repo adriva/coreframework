@@ -5,7 +5,7 @@ namespace Adriva.Extensions.Optimization.Abstractions
 {
     public abstract class AssetDisposerTransform : ITransform
     {
-        public abstract Task<IEnumerable<Asset>> TransformAsync(params Asset[] assets);
+        public abstract Task<IEnumerable<Asset>> TransformAsync(string extension, params Asset[] assets);
 
         public virtual async ValueTask CleanUpAsync(params Asset[] assets)
         {

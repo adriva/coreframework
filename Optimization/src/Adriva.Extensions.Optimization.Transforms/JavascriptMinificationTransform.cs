@@ -10,7 +10,7 @@ namespace Adriva.Extensions.Optimization.Transforms
 {
     public class JavascriptMinificationTransform : AssetDisposerTransform
     {
-        public override async Task<IEnumerable<Asset>> TransformAsync(params Asset[] assets)
+        public override async Task<IEnumerable<Asset>> TransformAsync(string extension, params Asset[] assets)
         {
             CodeSettings codeSettings = new CodeSettings()
             {

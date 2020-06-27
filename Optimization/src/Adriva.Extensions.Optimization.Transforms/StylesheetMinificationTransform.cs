@@ -19,7 +19,7 @@ namespace Adriva.Extensions.Optimization.Transforms
             this.MinificationOptions = optionsAccessor.Value;
         }
 
-        public override async Task<IEnumerable<Asset>> TransformAsync(params Asset[] assets)
+        public override async Task<IEnumerable<Asset>> TransformAsync(string extension, params Asset[] assets)
         {
             CssSettings cssSettings = new CssSettings()
             {

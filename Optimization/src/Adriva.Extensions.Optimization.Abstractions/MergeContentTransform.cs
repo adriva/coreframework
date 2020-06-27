@@ -12,7 +12,7 @@ namespace Adriva.Extensions.Optimization.Abstractions
     {
         protected virtual string GetSeperator(Asset asset) => Environment.NewLine;
 
-        public async override Task<IEnumerable<Asset>> TransformAsync(params Asset[] assets)
+        public async override Task<IEnumerable<Asset>> TransformAsync(string extension, params Asset[] assets)
         {
             AutoStream outputStream = new AutoStream(1024 * 64);
 
@@ -32,9 +32,7 @@ namespace Adriva.Extensions.Optimization.Abstractions
 
             outputStream.Seek(0, SeekOrigin.Begin);
 
-            string outputExtension = Path.GetExtension(assets.FirstOrDefault()?.Name ?? string.Empty);
-
-            return new[] { new Asset($"{hashName}{outputExtension}", outputStream) };
+            return new[] { new Asset($"{hashName}{extension}", outputStream) };
         }
     }
 }
