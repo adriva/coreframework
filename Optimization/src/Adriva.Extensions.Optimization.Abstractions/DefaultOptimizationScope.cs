@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Adriva.Extensions.Optimization.Abstractions
 {
@@ -16,7 +17,7 @@ namespace Adriva.Extensions.Optimization.Abstractions
         {
             this.ServiceProvider = serviceProvider;
 
-            this.DefaultContext = this.AddOrGetContext("Default");
+            this.DefaultContext = this.AddOrGetContext(Options.DefaultName);
         }
 
         public IOptimizationContext AddOrGetContext(string name)
