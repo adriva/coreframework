@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Options;
@@ -22,8 +24,12 @@ namespace Adriva.Web.Controls.Abstractions
         {
             if (string.IsNullOrWhiteSpace(this.Name)) this.Name = Options.DefaultName;
 
+            IDictionary<string, object> rendererAttributes = this.TagHelperContext.AllAttributes
+                .Where(attr => 0 != string.Compare(attr.Name, nameof(this.Name), StringComparison.OrdinalIgnoreCase))
+                .ToDictionary(attr => attr.Name, attr => attr.Value);
+
             var controlRenderer = this.RendererFactory.GetRenderer(this.Name);
-            await controlRenderer.RenderAsync(context);
+            await controlRenderer.RenderAsync(context, rendererAttributes);
         }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 
 namespace Adriva.Web.Controls.Abstractions
 {
@@ -41,7 +42,7 @@ namespace Adriva.Web.Controls.Abstractions
             optimizationContext.AddAsset("https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js");
         }
 
-        public virtual void Render(IControlOutputContext context)
+        public virtual void Render(IControlOutputContext context, IDictionary<string, object> attributes)
         {
             if (null == context.Parent)
             {
@@ -50,7 +51,7 @@ namespace Adriva.Web.Controls.Abstractions
             }
         }
 
-        public virtual Task RenderAsync(IControlOutputContext context)
+        public virtual Task RenderAsync(IControlOutputContext context, IDictionary<string, object> attributes)
         {
             if (null == context.Parent)
             {
