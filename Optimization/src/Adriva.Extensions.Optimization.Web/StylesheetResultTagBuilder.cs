@@ -18,7 +18,7 @@ namespace Adriva.Extensions.Optimization.Web
         private readonly WebOptimizationOptions Options;
         private readonly IWebHostEnvironment HostingEnvironment;
 
-        public string Extension => "css";
+        public AssetFileExtension Extension => AssetFileExtension.Stylesheet;
 
         public StylesheetResultTagBuilder(IOptions<WebOptimizationOptions> optionsAccessor, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment hostingEnvironment)
         {

@@ -12,7 +12,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - demo</title>       
-    <optimizedresource context="@this.OptimizationScope.DefaultContext" extension="css" output="StaticFile" />    
+    <optimizedresource context="@this.OptimizationScope.DefaultContext" extension="@AssetFileExtension.Stylesheet" output="StaticFile" />    
 </head>
 <body>
     <header>
@@ -47,8 +47,8 @@
             &copy; 2020 - demo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <optimizedresource context="oc" extension="js" defer output="StaticFile" />
-    <optimizedresource context="OptimizationScope.DefaultContext" extension="js" defer output="StaticFile" />
+    <optimizedresource context="oc" extension="@AssetFileExtension.Javascript" defer output="StaticFile" />
+    <optimizedresource context="OptimizationScope.DefaultContext" extension="@AssetFileExtension.Javascript" defer output="StaticFile" />
     @RenderSection("Scripts", required: false)
 </body>
 </html>

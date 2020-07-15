@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Adriva.Web.Controls.Abstractions
 {
@@ -35,6 +36,7 @@ namespace Adriva.Web.Controls.Abstractions
 
         private void RenderAssets(IControlOutputContext context)
         {
+
             var httpContext = context.GetHttpContext();
             var optimizationScope = httpContext.RequestServices.GetService<IOptimizationScope>();
             var optimizationContext = optimizationScope.AddOrGetContext(this.Options.ContainerName);

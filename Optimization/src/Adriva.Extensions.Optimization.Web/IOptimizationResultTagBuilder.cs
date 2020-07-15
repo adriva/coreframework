@@ -13,8 +13,8 @@ namespace Adriva.Extensions.Optimization.Web
         /// <summary>
         /// Gets a value representing the supported extension by this tag builder.
         /// </summary>
-        /// <value>A string value that represents the extension of the assets, which this tag builder can process.</value>
-        string Extension { get; }
+        /// <value>An instance of AssetFileExtension that represents the extension of the assets, which this tag builder can process.</value>
+        AssetFileExtension Extension { get; }
 
         /// <summary>
         /// Generates an html tag and populates the attributes if needed for the given asset.

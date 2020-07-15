@@ -4,7 +4,7 @@ namespace Adriva.Extensions.Optimization.Abstractions
 {
     public interface IOptimizationManager
     {
-        Task<OptimizationResult> OptimizeAsync(IOptimizationContext context, string extension);
+        Task<OptimizationResult> OptimizeAsync(IOptimizationContext context, AssetFileExtension assetFileExtension);
 
     }
 }

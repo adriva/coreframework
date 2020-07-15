@@ -66,17 +66,16 @@ namespace Adriva.Extensions.Optimization.Abstractions
             this.Events.ServiceInitialized?.Invoke(this.ServiceProvider, this.Options);
         }
 
-        public async Task<OptimizationResult> OptimizeAsync(IOptimizationContext context, string extension)
+        public async Task<OptimizationResult> OptimizeAsync(IOptimizationContext context, AssetFileExtension assetFileExtension)
         {
-            if (null == extension) extension = string.Empty;
-            string fileExtension = "." + extension;
+            if (null == assetFileExtension) assetFileExtension = string.Empty;
 
             if (!context.Assets.Any())
             {
                 return OptimizationResult.Empty;
             }
 
-            var orderedAssets = this.Orderer.Order(context.Assets.Where(a => 0 == string.Compare(Path.GetExtension(a.Location.ToString()), fileExtension, StringComparison.OrdinalIgnoreCase)));
+            var orderedAssets = this.Orderer.Order(context.Assets.Where(a => 0 == string.Compare(Path.GetExtension(a.Location.ToString()), assetFileExtension, StringComparison.OrdinalIgnoreCase)));
 
             foreach (var asset in orderedAssets)
             {
@@ -95,14 +94,14 @@ namespace Adriva.Extensions.Optimization.Abstractions
 
             IEnumerable<Asset> assets = orderedAssets;
 
-            foreach (var transformPair in this.TransformChains.Where(x => 0 == string.Compare(x.Key, fileExtension, StringComparison.OrdinalIgnoreCase)))
+            foreach (var transformPair in this.TransformChains.Where(x => 0 == string.Compare(x.Key, assetFileExtension, StringComparison.OrdinalIgnoreCase)))
             {
                 foreach (ITransform transform in transformPair.Value)
                 {
-                    if (null == this.Events?.TransformRunning || this.Events.TransformRunning.Invoke(extension, this.Options, transform))
+                    if (null == this.Events?.TransformRunning || this.Events.TransformRunning.Invoke(assetFileExtension, this.Options, transform))
                     {
                         var inputAssets = assets.ToArray();
-                        assets = await transform.TransformAsync(fileExtension, inputAssets);
+                        assets = await transform.TransformAsync(assetFileExtension, inputAssets);
                         await transform.CleanUpAsync(inputAssets);
                     }
                 }

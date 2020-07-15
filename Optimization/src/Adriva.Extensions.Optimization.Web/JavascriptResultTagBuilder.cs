@@ -18,7 +18,7 @@ namespace Adriva.Extensions.Optimization.Web
         private readonly WebOptimizationOptions Options;
         private readonly IWebHostEnvironment HostingEnvironment;
 
-        public string Extension => "js";
+        public AssetFileExtension Extension => AssetFileExtension.Javascript;
 
         public JavascriptResultTagBuilder(IOptions<WebOptimizationOptions> optionsAccessor, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment hostingEnvironment)
         {

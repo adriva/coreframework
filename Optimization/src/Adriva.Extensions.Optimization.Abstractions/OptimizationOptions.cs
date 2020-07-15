@@ -29,9 +29,9 @@ namespace Adriva.Extensions.Optimization.Abstractions
 
         }
 
-        internal void AddTransformChain(string extension, params Type[] transforms)
+        internal void AddTransformChain(AssetFileExtension assetFileExtension, params Type[] transforms)
         {
-            if (null == extension) throw new ArgumentNullException(nameof(extension));
+            if (null == assetFileExtension) throw new ArgumentNullException(nameof(assetFileExtension));
             if (null == transforms || 0 == transforms.Length) throw new ArgumentException($"No transforms specified for the predicate.");
 
             Type typeOfITransform = typeof(ITransform);
@@ -44,7 +44,7 @@ namespace Adriva.Extensions.Optimization.Abstractions
                 throw new InvalidCastException("All transform types must be concrete public classes.");
             }
 
-            this.TransformChains[extension] = transforms.ToList(); // calling this method for the same key will overwrite the existing chain
+            this.TransformChains[assetFileExtension] = transforms.ToList(); // calling this method for the same key will overwrite the existing chain
         }
 
         internal void AddFormatter(int order, Type formatterType)

@@ -26,7 +26,7 @@ namespace Adriva.Extensions.Optimization.Web
         /// </summary>
         /// <value>A string value representing the extension of the assets.</value>
         [HtmlAttributeName("extension")]
-        public string Extension { get; set; }
+        public AssetFileExtension Extension { get; set; }
 
         /// <summary>
         /// Gets or sets the output mode of the tag.
