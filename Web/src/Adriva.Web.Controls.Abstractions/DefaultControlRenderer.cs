@@ -37,11 +37,29 @@ namespace Adriva.Web.Controls.Abstractions
         private void RenderAssets(IControlOutputContext context)
         {
 
+            var assetPaths = this.ResolveAssetPaths(context.Control);
             var httpContext = context.GetHttpContext();
             var optimizationScope = httpContext.RequestServices.GetService<IOptimizationScope>();
             var optimizationContext = optimizationScope.AddOrGetContext(this.Options.ContainerName);
             optimizationContext.AddAsset("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js");
             optimizationContext.AddAsset("https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js");
+        }
+
+        protected virtual IEnumerable<string> ResolveAssetPaths(ControlTagHelper controlTagHelper)
+        {
+            if (!(controlTagHelper is IAssetProvider assetProvider)) yield break;
+
+            var extensions = assetProvider.GetAssetFileExtensions();
+
+            foreach (var extension in extensions)
+            {
+                var paths = assetProvider.GetAssetPaths(extension);
+
+                foreach (var path in paths)
+                {
+                    yield return path;
+                }
+            }
         }
 
         public virtual void Render(IControlOutputContext context, IDictionary<string, object> attributes)
