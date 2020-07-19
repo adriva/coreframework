@@ -5,8 +5,8 @@ namespace Adriva.Web.Controls.Abstractions
 {
     public interface IControlRenderer
     {
-        void Render(IControlOutputContext context, IDictionary<string, object> attributes);
+        void Render(IControlOutputContext context, RendererTagAttributes attributes);
 
-        Task RenderAsync(IControlOutputContext context, IDictionary<string, object> attributes);
+        Task RenderAsync(IControlOutputContext context, RendererTagAttributes attributes);
     }
 }

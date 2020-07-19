@@ -43,6 +43,10 @@ namespace Adriva.Extensions.Optimization.Web
                     string content = await asset.ReadContentAsStringAsync();
                     tagBuilder.InnerHtml.SetHtmlContent(content);
                     break;
+                case OptimizationTagOutput.Tag:
+                    tagBuilder.Attributes.Add("src", asset.GetWebLocation());
+                    if (null != asset?.Content) await asset.Content.DisposeAsync();
+                    break;
                 case OptimizationTagOutput.StaticFile:
                 case OptimizationTagOutput.Loader:
 
@@ -73,11 +77,7 @@ namespace Adriva.Extensions.Optimization.Web
 
                     tagBuilder.Attributes.Add("src", webPath);
 
-                    if (null != asset?.Content)
-                    {
-                        await asset.Content.DisposeAsync();
-                    }
-
+                    if (null != asset?.Content) await asset.Content.DisposeAsync();
                     break;
 
             }

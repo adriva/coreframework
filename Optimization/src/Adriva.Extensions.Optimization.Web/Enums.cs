@@ -23,6 +23,11 @@ namespace Adriva.Extensions.Optimization.Web
         /// <summary>
         /// Reserved for future use.
         /// </summary>
-        Loader = 3
+        Loader = 3,
+
+        /// <summary>
+        /// Uses the source path to generate an asset tag.
+        /// </summary>
+        Tag = 4,
     }
 }

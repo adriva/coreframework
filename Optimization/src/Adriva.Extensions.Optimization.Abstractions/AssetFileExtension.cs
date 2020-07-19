@@ -54,5 +54,7 @@ namespace Adriva.Extensions.Optimization.Abstractions
         }
 
         public override int GetHashCode() => this.FileExtension.GetHashCode();
+
+        public override string ToString() => $"*{this.FileExtension}, [AssetFileExtension]";
     }
 }

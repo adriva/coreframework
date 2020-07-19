@@ -42,5 +42,20 @@ namespace Adriva.Extensions.Optimization.Abstractions
                 return await reader.ReadToEndAsync();
             }
         }
+        /// <summary>
+        /// Gets the location of the asset that represents either the absolute or relative path that can be used in html.
+        /// </summary>
+        /// <param name="asset">The asset that the content will be read.</param>
+        /// <returns><A string that represents either the relative or the absolute path of the asset.</returns>
+        public static string GetWebLocation(this Asset asset)
+        {
+            if (null == asset) throw new ArgumentNullException(nameof(asset));
+            if (null == asset.Location) throw new ArgumentNullException(nameof(asset.Location));
+
+            if (!asset.Location.IsAbsoluteUri) return Convert.ToString(asset.Location);
+
+            if (asset.Location.IsFile) return asset.Location.PathAndQuery;
+            return Convert.ToString(asset.Location);
+        }
     }
 }

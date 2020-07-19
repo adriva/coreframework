@@ -30,11 +30,22 @@ namespace Adriva.Extensions.Optimization.Web
         public async Task PopulateHtmlTagAsync(ITagBuilderOptions options, ReadOnlyTagHelperAttributeList attributeList, Asset asset, IHtmlContentBuilder output)
         {
 
+            TagBuilder tagBuilder = null;
+
             switch (options.Output)
             {
                 case OptimizationTagOutput.Default: //same as OptimizationTagOutput.Inline
                     string content = await asset.ReadContentAsStringAsync();
                     output.AppendHtmlLine($"<style>{content}</style>");
+                    break;
+                case OptimizationTagOutput.Tag:
+                    tagBuilder = new TagBuilder("link");
+                    tagBuilder.TagRenderMode = TagRenderMode.SelfClosing;
+                    tagBuilder.Attributes.Add("rel", "stylesheet");
+                    tagBuilder.Attributes.Add("type", "text/css");
+                    tagBuilder.Attributes.Add("href", asset.GetWebLocation());
+
+                    output.AppendHtml(tagBuilder);
                     break;
                 case OptimizationTagOutput.StaticFile:
                 case OptimizationTagOutput.Loader:
@@ -63,7 +74,7 @@ namespace Adriva.Extensions.Optimization.Web
                         webPath = webPathUri.ToString();
                     }
 
-                    TagBuilder tagBuilder = new TagBuilder("link");
+                    tagBuilder = new TagBuilder("link");
                     tagBuilder.TagRenderMode = TagRenderMode.SelfClosing;
                     tagBuilder.Attributes.Add("rel", "stylesheet");
                     tagBuilder.Attributes.Add("type", "text/css");

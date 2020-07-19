@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -29,10 +28,9 @@ namespace Adriva.Web.Controls.Abstractions
         protected override async Task ProcessAsync(IControlOutputContext context)
         {
             if (string.IsNullOrWhiteSpace(this.Name)) this.Name = Options.DefaultName;
-
-            IDictionary<string, object> rendererAttributes = this.TagHelperContext.AllAttributes
-                .Where(attr => 0 != string.Compare(attr.Name, nameof(this.Name), StringComparison.OrdinalIgnoreCase))
-                .ToDictionary(attr => attr.Name, attr => attr.Value);
+            RendererTagAttributes rendererAttributes = new RendererTagAttributes(
+                this.TagHelperContext.AllAttributes.Where(attr => 0 != string.Compare(attr.Name, nameof(this.Name), StringComparison.OrdinalIgnoreCase))
+            );
 
             var controlRenderer = this.RendererFactory.GetRenderer(this.Name);
             await controlRenderer.RenderAsync(context, rendererAttributes);

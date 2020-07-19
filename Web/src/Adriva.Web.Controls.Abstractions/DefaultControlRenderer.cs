@@ -12,12 +12,24 @@ using System.IO;
 using Microsoft.AspNetCore.Html;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Razor.Runtime.TagHelpers;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Adriva.Web.Controls.Abstractions
 {
-    public class DefaultControlRenderer : IControlRenderer
+    public partial class DefaultControlRenderer : IControlRenderer
     {
+        private class TagBuilderOptions : ITagBuilderOptions
+        {
+            public AssetFileExtension Extension { get; private set; }
+
+            public OptimizationTagOutput Output { get; private set; }
+
+            public TagBuilderOptions(AssetFileExtension extension, OptimizationTagOutput output)
+            {
+                this.Extension = extension;
+                this.Output = output;
+            }
+        }
+
         private readonly WebControlsRendererOptions RendererOptions;
         private readonly WebControlsOptions Options;
 
@@ -54,7 +66,7 @@ namespace Adriva.Web.Controls.Abstractions
             {
                 if (null == this.ContainerNameField)
                 {
-                    if (string.IsNullOrWhiteSpace(this.RendererControl.ContainerName))
+                    if (null == this.RendererControl.ContainerName)
                     {
                         this.ContainerNameField = this.Options.ContainerName ?? string.Empty;
                     }
@@ -79,15 +91,43 @@ namespace Adriva.Web.Controls.Abstractions
 
         }
 
-        private void RenderAssets(IControlOutputContext context)
+        private async Task RenderAssetsAsync(IControlOutputContext context, RendererTagAttributes attributes)
         {
-            var assetPaths = this.ResolveAssetPaths(context.Children.FirstOrDefault().Control);
+            var assetPaths = this.ResolveAssetPaths(context);
+            var view = context.Control.ViewContext.View as RazorView;
+            RazorPage razorPage = view.RazorPage as RazorPage;
 
-            switch (this.Options.AssetDeliveryMethod)
+            async Task RenderAssetTagsInPageAsync()
+            {
+                var httpContext = context.GetHttpContext();
+                var tagBuilderFactory = httpContext.RequestServices.GetService<IOptimizationResultTagBuilderFactory>();
+
+                HtmlContentBuilder htmlContentBuilder = new HtmlContentBuilder();
+
+                foreach (var assetPath in assetPaths)
+                {
+                    var extension = Path.GetExtension(assetPath);
+                    var optimizationResultTagBuilder = tagBuilderFactory.GetBuilder(extension);
+                    Asset asset = new Asset(assetPath);
+                    await this.RenderAssetAsync(optimizationResultTagBuilder, attributes, asset, extension, htmlContentBuilder);
+                }
+
+                htmlContentBuilder.WriteTo(razorPage);
+            };
+
+            switch (this.AssetDeliveryMethod)
             {
                 case AssetDeliveryMethod.InlineTag:
+                    await RenderAssetTagsInPageAsync();
                     break;
                 case AssetDeliveryMethod.OptimizationContext:
+                    var currentHttpContext = context.GetHttpContext();
+                    var optimizationScope = currentHttpContext.RequestServices.GetRequiredService<IOptimizationScope>();
+                    var optimizationContext = optimizationScope.AddOrGetContext(this.ContainerName);
+                    foreach (var assetPath in assetPaths)
+                    {
+                        optimizationContext.AddAsset(assetPath);
+                    }
                     break;
                 case AssetDeliveryMethod.SectionWriterTag:
                     if (string.IsNullOrWhiteSpace(this.ContainerName))
@@ -95,46 +135,32 @@ namespace Adriva.Web.Controls.Abstractions
                         throw new ArgumentNullException(nameof(this.ContainerName), "ContainerName should have a valid section name.");
                     }
 
-                    var view = context.Control.ViewContext.View as RazorView;
-                    RazorPage razorPage = view.RazorPage as RazorPage;
-
                     razorPage.SectionWriters[this.ContainerName] = async () =>
                     {
-                        var httpContext = context.GetHttpContext();
-                        var tagBuilderFactory = httpContext.RequestServices.GetService<IOptimizationResultTagBuilderFactory>();
-
-                        HtmlContentBuilder htmlContentBuilder = new HtmlContentBuilder();
-
-                        foreach (var assetPath in assetPaths)
-                        {
-                            var extension = Path.GetExtension(assetPath);
-                            var optimizationResultTagBuilder = tagBuilderFactory.GetBuilder(extension);
-                            Asset asset = new Asset(assetPath);
-                            await this.RenderAssetAsync(optimizationResultTagBuilder, asset, htmlContentBuilder);
-                        }
-
-                        htmlContentBuilder.WriteTo(razorPage);
+                        await RenderAssetTagsInPageAsync();
                     };
                     break;
             }
-            var httpContext = context.GetHttpContext();
-            var optimizationScope = httpContext.RequestServices.GetService<IOptimizationScope>();
-            var optimizationContext = optimizationScope.AddOrGetContext(this.ContainerName);
         }
 
-        protected virtual async Task RenderAssetAsync(IOptimizationResultTagBuilder optimizationResultTagBuilder, Asset asset, IHtmlContentBuilder htmlContentBuilder)
+        protected virtual async Task RenderAssetAsync(IOptimizationResultTagBuilder optimizationResultTagBuilder, RendererTagAttributes attributes, Asset asset, string extension, IHtmlContentBuilder htmlContentBuilder)
         {
-            htmlContentBuilder.AppendHtmlLine("<optimizedresource />");
+            TagBuilderOptions options = new TagBuilderOptions(extension, OptimizationTagOutput.Tag);
+            await optimizationResultTagBuilder.PopulateHtmlTagAsync(options, attributes, asset, htmlContentBuilder);
             await Task.CompletedTask;
         }
 
-        protected virtual IEnumerable<string> ResolveAssetPaths(ControlTagHelper controlTagHelper)
+        protected virtual IEnumerable<string> ResolveAssetPaths(IControlOutputContext context)
         {
-            if (!(controlTagHelper is IAssetProvider assetProvider)) yield break;
+            IAssetProvider assetProvider = (context.Control as IAssetProvider) ?? (context.Children.FirstOrDefault()?.Control as IAssetProvider);
+
+            if (null == assetProvider) yield break;
 
             var extensions = assetProvider.GetAssetFileExtensions();
 
             if (null == extensions) yield break;
+
+            extensions = extensions.Distinct();
 
             foreach (var extension in extensions)
             {
@@ -149,26 +175,24 @@ namespace Adriva.Web.Controls.Abstractions
             }
         }
 
-        public virtual void Render(IControlOutputContext context, IDictionary<string, object> attributes)
+        public virtual void Render(IControlOutputContext context, RendererTagAttributes attributes)
         {
             this.RendererControl = context.Control as RendererTagHelper;
             if (null == context.Parent)
             {
                 this.RenderRootControl(context);
-                this.RenderAssets(context);
+                this.RenderAssetsAsync(context, attributes).GetAwaiter().GetResult();
             }
         }
 
-        public virtual Task RenderAsync(IControlOutputContext context, IDictionary<string, object> attributes)
+        public virtual async Task RenderAsync(IControlOutputContext context, RendererTagAttributes attributes)
         {
             this.RendererControl = context.Control as RendererTagHelper;
             if (null == context.Parent)
             {
                 this.RenderRootControl(context);
-                this.RenderAssets(context);
+                await this.RenderAssetsAsync(context, attributes);
             }
-
-            return Task.CompletedTask;
         }
     }
 

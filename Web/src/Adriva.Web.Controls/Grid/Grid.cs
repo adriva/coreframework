@@ -17,7 +17,8 @@ namespace Adriva.Web.Controls
         public object DataSource { get; set; }
 
         public IEnumerable<AssetFileExtension> GetAssetFileExtensions() => new[] {
-            AssetFileExtension.Javascript
+            AssetFileExtension.Javascript,
+            AssetFileExtension.Stylesheet
         };
 
         public IEnumerable<string> GetAssetPaths(AssetFileExtension extension)
@@ -27,6 +28,12 @@ namespace Adriva.Web.Controls
                 return new[]{
                     "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js",
                     "https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"
+                };
+            }
+            else if (extension == AssetFileExtension.Stylesheet)
+            {
+                return new[]{
+                    "/css/site.css"
                 };
             }
 
