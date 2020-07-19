@@ -1,3 +1,5 @@
+using Adriva.Extensions.Optimization.Abstractions;
+
 namespace Adriva.Extensions.Optimization.Web
 {
     /// <summary>
@@ -10,6 +12,6 @@ namespace Adriva.Extensions.Optimization.Web
         /// </summary>
         /// <param name="extension">The extension of the assets that the returned tag builder can process.</param>
         /// <returns>A concrete implementation of Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilder interface that will be used to generate html tags.</returns>
-        IOptimizationResultTagBuilder GetBuilder(string extension);
+        IOptimizationResultTagBuilder GetBuilder(AssetFileExtension extension);
     }
 }

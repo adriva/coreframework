@@ -12,8 +12,9 @@ namespace Adriva.Web.Controls.Abstractions
     [Flags]
     public enum AssetDeliveryMethod : int
     {
-        Inline = 0,
-        OptimizationContext = 1,
-        SectionWriter = 2
+        Unspecified = 0,
+        InlineTag = 1,
+        OptimizationContext = 2,
+        SectionWriterTag = 3
     }
 }

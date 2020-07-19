@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Adriva.Extensions.Optimization.Abstractions;
 
 namespace Adriva.Extensions.Optimization.Web
 {
@@ -18,7 +19,7 @@ namespace Adriva.Extensions.Optimization.Web
             }
         }
 
-        public IOptimizationResultTagBuilder GetBuilder(string extension)
+        public IOptimizationResultTagBuilder GetBuilder(AssetFileExtension extension)
         {
             if (!this.BuilderCache.ContainsKey(extension)) throw new ArgumentOutOfRangeException($"Could not locate a tag builder for extension '{extension}'.");
             return this.BuilderCache[extension];

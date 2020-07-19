@@ -1,6 +1,7 @@
 using System;
 using Adriva.Storage.Abstractions;
 using Adriva.Storage.Azure;
+using Adriva.Web.Controls.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -78,9 +79,13 @@ namespace demo
                 });
             ;
 
-            services.AddWebControls(options => { })
-                .AddAssembly(typeof(Adriva.Web.Controls.Grid).Assembly.Location)
-                .AddRenderer<Adriva.Web.Controls.Abstractions.NullControlRenderer>("nullrenderer");
+            services.AddWebControls(options =>
+            {
+                options.AssetDeliveryMethod = AssetDeliveryMethod.SectionWriterTag;
+                options.ContainerName = "WebControls";
+            })
+            .AddAssembly(typeof(Adriva.Web.Controls.Grid).Assembly.Location)
+            .AddRenderer<Adriva.Web.Controls.Abstractions.NullControlRenderer>("nullrenderer");
 
             if (!DisableAnalytics)
             {
