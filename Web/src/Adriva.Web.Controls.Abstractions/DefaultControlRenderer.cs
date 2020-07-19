@@ -10,7 +10,6 @@ using System.Linq;
 using Adriva.Extensions.Optimization.Web;
 using System.IO;
 using Microsoft.AspNetCore.Html;
-using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Razor.Runtime.TagHelpers;
 
 namespace Adriva.Web.Controls.Abstractions
@@ -192,19 +191,6 @@ namespace Adriva.Web.Controls.Abstractions
             {
                 this.RenderRootControl(context);
                 await this.RenderAssetsAsync(context, attributes);
-            }
-        }
-    }
-
-    internal static class Extensions
-    {
-        public static void WriteTo(this IHtmlContent htmlContent, RazorPageBase razorPageBase)
-        {
-            using (StringWriter writer = new StringWriter())
-            {
-                htmlContent.WriteTo(writer, HtmlEncoder.Default);
-                var buffer = writer.GetStringBuilder();
-                razorPageBase.WriteLiteral(buffer);
             }
         }
     }
