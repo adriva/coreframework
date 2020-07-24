@@ -176,12 +176,7 @@ namespace Adriva.Web.Controls.Abstractions
 
         public virtual void Render(IControlOutputContext context, RendererTagAttributes attributes)
         {
-            this.RendererControl = context.Control as RendererTagHelper;
-            if (null == context.Parent)
-            {
-                this.RenderRootControl(context);
-                this.RenderAssetsAsync(context, attributes).GetAwaiter().GetResult();
-            }
+            this.RenderAsync(context, attributes).GetAwaiter().GetResult();
         }
 
         public virtual async Task RenderAsync(IControlOutputContext context, RendererTagAttributes attributes)
@@ -189,7 +184,10 @@ namespace Adriva.Web.Controls.Abstractions
             this.RendererControl = context.Control as RendererTagHelper;
             if (null == context.Parent)
             {
-                this.RenderRootControl(context);
+                if (1 != context.Children.Count) throw new Exception();
+                context.Output.TagName = string.Empty;
+                this.RenderRootControl(context.Children[0]);
+                context.Children[0].Output.Content.MoveTo(context.Output.Content);
                 await this.RenderAssetsAsync(context, attributes);
             }
         }
