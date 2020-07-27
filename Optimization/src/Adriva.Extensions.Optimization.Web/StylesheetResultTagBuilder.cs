@@ -32,7 +32,11 @@ namespace Adriva.Extensions.Optimization.Web
 
             TagBuilder tagBuilder = null;
 
-            switch (options.Output)
+            var outputMode = options.Output;
+            if (!this.Options.BundleStylesheets && !this.Options.MinifyStylesheets) outputMode = OptimizationTagOutput.Tag;
+            else if (OptimizationTagOutput.Tag == outputMode && (this.Options.BundleStylesheets || this.Options.MinifyStylesheets)) outputMode = OptimizationTagOutput.StaticFile;
+
+            switch (outputMode)
             {
                 case OptimizationTagOutput.Default: //same as OptimizationTagOutput.Inline
                     string content = await asset.ReadContentAsStringAsync();

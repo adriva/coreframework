@@ -41,13 +41,13 @@ namespace demo
 
             services.AddOptimization(options =>
             {
-                bool enableOpt = false;
+                bool enableOpt = true;
                 options.BundleStylesheets = enableOpt;
                 options.MinifyStylesheets = enableOpt;
                 options.BundleJavascripts = enableOpt;
                 options.MinifyJavascripts = enableOpt;
-                options.MinifyHtml = false;
-                //options.AssetRootUrl = "https://localhost:5001/assets/";
+                options.MinifyHtml = true;
+                // options.AssetRootUrl = "https://www.adriva.com";
             })
             .ConfigureStyleSheetMinification(cssOptions =>
             {

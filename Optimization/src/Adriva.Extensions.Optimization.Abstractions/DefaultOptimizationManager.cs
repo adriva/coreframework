@@ -83,6 +83,7 @@ namespace Adriva.Extensions.Optimization.Abstractions
                 {
                     if (loader.CanLoad(asset))
                     {
+                        this.Logger.LogTrace($"Loading asset '{asset.Location}' using '{nameof(loader)}'.");
                         using (var stream = await loader.OpenReadStreamAsync(asset))
                         {
                             await asset.SetContentAsync(stream);

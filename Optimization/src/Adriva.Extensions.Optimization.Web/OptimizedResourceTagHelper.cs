@@ -53,7 +53,7 @@ namespace Adriva.Extensions.Optimization.Web
             if (null == this.Context)
                 throw new System.ArgumentException("<optimizedresource> tag requires a valid OptimizationContext. Have you forgotten to set the 'context' attribute ?");
 
-            string cacheKey = $"{this.Context.Identifier}+{(string)this.Extension}";
+            string cacheKey = $"{this.Context.Identifier}+{this.Output}+{(string)this.Extension}";
 
             OptimizationResult optimizationResult = await this.Cache.GetOrCreateAsync(cacheKey, async entry =>
             {

@@ -37,7 +37,12 @@ namespace Adriva.Extensions.Optimization.Web
             if (attributeList.ContainsName("defer")) tagBuilder.Attributes.Add("defer", null);
             else if (attributeList.ContainsName("async")) tagBuilder.Attributes.Add("async", null);
 
-            switch (options.Output)
+            var outputMode = options.Output;
+
+            if (!this.Options.BundleJavascripts && !this.Options.MinifyJavascripts) outputMode = OptimizationTagOutput.Tag;
+            else if (OptimizationTagOutput.Tag == outputMode && (this.Options.BundleStylesheets || this.Options.MinifyStylesheets)) outputMode = OptimizationTagOutput.StaticFile;
+
+            switch (outputMode)
             {
                 case OptimizationTagOutput.Default: //same as OptimizationTagOutput.Inline
                     string content = await asset.ReadContentAsStringAsync();
