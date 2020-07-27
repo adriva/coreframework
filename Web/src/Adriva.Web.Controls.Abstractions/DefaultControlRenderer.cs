@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Adriva.Extensions.Optimization.Abstractions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,11 +9,10 @@ using System.Linq;
 using Adriva.Extensions.Optimization.Web;
 using System.IO;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Razor.Runtime.TagHelpers;
 
 namespace Adriva.Web.Controls.Abstractions
 {
-    public partial class DefaultControlRenderer : IControlRenderer
+    public abstract class DefaultControlRenderer : IControlRenderer
     {
         private class TagBuilderOptions : ITagBuilderOptions
         {

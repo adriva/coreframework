@@ -46,7 +46,7 @@ namespace demo
                 options.MinifyStylesheets = enableOpt;
                 options.BundleJavascripts = enableOpt;
                 options.MinifyJavascripts = enableOpt;
-                options.MinifyHtml = true;
+                options.MinifyHtml = false;
                 // options.AssetRootUrl = "https://www.adriva.com";
             })
             .ConfigureStyleSheetMinification(cssOptions =>
@@ -86,7 +86,8 @@ namespace demo
                 options.ContainerName = "WebControls";
             })
             .AddAssembly(typeof(Adriva.Web.Controls.Grid).Assembly.Location)
-            .AddRenderer<Adriva.Web.Controls.Abstractions.NullControlRenderer>("nullrenderer");
+            .AddRenderer<Adriva.Web.Controls.Abstractions.NullControlRenderer>("nullrenderer")
+            .AddRenderer<Adriva.Web.Controls.BootstrapGridRenderer>();
 
             if (!DisableAnalytics)
             {

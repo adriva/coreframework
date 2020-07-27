@@ -39,15 +39,5 @@ namespace Adriva.Web.Controls
 
             return null;
         }
-
-        protected override async Task ProcessAsync(IControlOutputContext context)
-        {
-            context.Output.TagName = "div";
-            context.Output.TagMode = TagMode.StartTagAndEndTag;
-
-            await Task.CompletedTask;
-        }
-
-
     }
 }

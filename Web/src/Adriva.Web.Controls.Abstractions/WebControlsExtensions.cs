@@ -12,7 +12,6 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<IControlRendererFactory, DefaultControlRendererFactory>();
             services.Configure(configure);
             DefaultWebControlsBuilder builder = new DefaultWebControlsBuilder(services);
-            builder.AddRenderer<DefaultControlRenderer>(Options.Options.DefaultName);
             return builder;
         }
 
