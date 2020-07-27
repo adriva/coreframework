@@ -55,11 +55,12 @@ namespace Adriva.Extensions.Optimization.Web
             }
 
             IFileInfo fileInfo = this.HostingEnvironment.WebRootFileProvider.GetFileInfo(buffer.ToString());
-            if (fileInfo.Exists)
-            {
+            // if (fileInfo.Exists)
+            // {
 
-                return new Uri(fileInfo.PhysicalPath);
-            }
+            //     return new Uri(fileInfo.PhysicalPath);
+            // }
+            if (Uri.TryCreate(buffer.ToString(), UriKind.RelativeOrAbsolute, out Uri assetUri)) return assetUri;
             return null;
         }
 

@@ -41,10 +41,11 @@ namespace demo
 
             services.AddOptimization(options =>
             {
-                options.BundleStylesheets = true;
-                options.MinifyStylesheets = true;
-                options.BundleJavascripts = true;
-                options.MinifyJavascripts = true;
+                bool enableOpt = false;
+                options.BundleStylesheets = enableOpt;
+                options.MinifyStylesheets = enableOpt;
+                options.BundleJavascripts = enableOpt;
+                options.MinifyJavascripts = enableOpt;
                 options.MinifyHtml = false;
                 //options.AssetRootUrl = "https://localhost:5001/assets/";
             })

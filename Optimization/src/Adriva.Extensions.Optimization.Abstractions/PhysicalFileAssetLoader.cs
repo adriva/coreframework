@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 
 namespace Adriva.Extensions.Optimization.Abstractions
 {
-    public sealed class PhysicalFileAssetLoader : IAssetLoader
+    public class PhysicalFileAssetLoader : IAssetLoader
     {
-        public bool CanLoad(Asset asset)
+        public virtual bool CanLoad(Asset asset)
         {
-            return asset.Location.IsFile;
+            return asset.Location.IsAbsoluteUri && asset.Location.IsFile;
         }
 
-        public ValueTask<Stream> OpenReadStreamAsync(Asset asset)
+        public virtual ValueTask<Stream> OpenReadStreamAsync(Asset asset)
         {
             return new ValueTask<Stream>(File.Open(asset.Location.AbsolutePath, FileMode.Open, FileAccess.Read, FileShare.Read));
         }

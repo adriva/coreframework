@@ -27,6 +27,7 @@ namespace Microsoft.Extensions.DependencyInjection
             return services
                 .AddOptimization<WebOptimizationOptions, WebOptimizationContext>(options =>
                 {
+                    options.AddLoader<PhysicalWebFileAssetLoader>();
                     configure?.Invoke(options);
                 });
         }
