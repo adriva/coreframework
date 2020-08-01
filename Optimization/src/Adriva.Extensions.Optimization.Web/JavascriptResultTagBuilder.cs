@@ -39,7 +39,7 @@ namespace Adriva.Extensions.Optimization.Web
 
             var outputMode = options.Output;
 
-            if (!this.Options.BundleJavascripts && !this.Options.MinifyJavascripts) outputMode = OptimizationTagOutput.Tag;
+            if (!this.Options.BundleJavascripts && !this.Options.MinifyJavascripts && OptimizationTagOutput.Loader != outputMode) outputMode = OptimizationTagOutput.Tag;
             else if (OptimizationTagOutput.Tag == outputMode && (this.Options.BundleStylesheets || this.Options.MinifyStylesheets)) outputMode = OptimizationTagOutput.StaticFile;
 
             switch (outputMode)
@@ -80,7 +80,14 @@ namespace Adriva.Extensions.Optimization.Web
                         webPath = webPathUri.ToString();
                     }
 
-                    tagBuilder.Attributes.Add("src", webPath);
+                    if (OptimizationTagOutput.StaticFile == outputMode)
+                    {
+                        tagBuilder.Attributes.Add("src", webPath);
+                    }
+                    else
+                    {
+                        tagBuilder.InnerHtml.SetHtmlContent($"adriva.loader.pushScript('{webPath}')");
+                    }
 
                     if (null != asset?.Content) await asset.Content.DisposeAsync();
                     break;

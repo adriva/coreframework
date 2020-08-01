@@ -47,8 +47,35 @@
             &copy; 2020 - demo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <optimizedresource context="oc" extension="@AssetFileExtension.Javascript" defer output="Tag" />
-    <optimizedresource context="OptimizationScope.DefaultContext" extension="@AssetFileExtension.Javascript" defer output="Tag" />
+    <script defer>
+        var adriva = adriva || {};
+        adriva.loader = adriva.loader || {
+            scripts: [],
+            pushScript: function(path){
+                adriva.loader.scripts.push(path);
+            }
+        };
+        window.addEventListener('load', function(){
+            function loadNextScript(){
+                if (0 == adriva.loader.scripts.length) return;
+
+                var script = document.createElement("script")
+                script.type = "text/javascript";
+
+                script.onload = function(){
+                    loadNextScript();
+                };
+                
+                script.src = adriva.loader.scripts.pop();
+                document.getElementsByTagName("head")[0].appendChild(script);
+            }
+
+            adriva.loader.scripts.reverse();
+            loadNextScript();
+        });
+    </script>
+    <optimizedresource context="oc" extension="@AssetFileExtension.Javascript" defer output="Loader" />
+    <optimizedresource context="OptimizationScope.DefaultContext" extension="@AssetFileExtension.Javascript" defer output="Loader" />
     @RenderSection("WebControls", required: false)
     @RenderSection("Scripts", required: false)
 </body>
