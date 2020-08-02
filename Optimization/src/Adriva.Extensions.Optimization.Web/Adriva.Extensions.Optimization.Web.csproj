@@ -8,6 +8,14 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="loader.js" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="tsc -p &quot;$(MSBuildThisFileDirectory)tsconfig.json&quot;" />
+  </Target>
+
   <PropertyGroup>
     <!-- <TargetFramework>netstandard2.1</TargetFramework> -->
     <TargetFramework>netcoreapp3.0</TargetFramework>

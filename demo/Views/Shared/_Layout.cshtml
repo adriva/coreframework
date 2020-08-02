@@ -11,8 +11,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - demo</title>       
+    <title>@ViewData["Title"] - demo</title>
     <optimizedresource context="@this.OptimizationScope.DefaultContext" extension="@AssetFileExtension.Stylesheet" output="Tag" />    
+    <resourceloader />
 </head>
 <body>
     <header>
@@ -47,33 +48,6 @@
             &copy; 2020 - demo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script defer>
-        var adriva = adriva || {};
-        adriva.loader = adriva.loader || {
-            scripts: [],
-            pushScript: function(path){
-                adriva.loader.scripts.push(path);
-            }
-        };
-        window.addEventListener('load', function(){
-            function loadNextScript(){
-                if (0 == adriva.loader.scripts.length) return;
-
-                var script = document.createElement("script")
-                script.type = "text/javascript";
-
-                script.onload = function(){
-                    loadNextScript();
-                };
-                
-                script.src = adriva.loader.scripts.pop();
-                document.getElementsByTagName("head")[0].appendChild(script);
-            }
-
-            adriva.loader.scripts.reverse();
-            loadNextScript();
-        });
-    </script>
     <optimizedresource context="oc" extension="@AssetFileExtension.Javascript" defer output="Loader" />
     <optimizedresource context="OptimizationScope.DefaultContext" extension="@AssetFileExtension.Javascript" defer output="Loader" />
     @RenderSection("WebControls", required: false)

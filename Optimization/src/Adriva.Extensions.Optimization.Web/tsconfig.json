@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "module": "None",
+        "target": "ES5"
+    },
+    "include": [
+        "**/*.ts"
+    ]
+}

@@ -86,7 +86,7 @@ namespace Adriva.Extensions.Optimization.Web
                     }
                     else
                     {
-                        tagBuilder.InnerHtml.SetHtmlContent($"adriva.loader.pushScript('{webPath}')");
+                        tagBuilder.InnerHtml.SetHtmlContent($"adriva.optimization.loader.push('{webPath}', 1)");
                     }
 
                     if (null != asset?.Content) await asset.Content.DisposeAsync();
