@@ -5,8 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Adriva.Web.Controls
 {
-    [HtmlTargetElement("head")]
-    public class HeadControl : ControlTagHelper
+    [HtmlTargetElement("body")]
+    public class BodyControl : ControlTagHelper
     {
         protected override bool RequiresRenderer => false;
 
