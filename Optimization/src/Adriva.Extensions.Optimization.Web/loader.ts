@@ -42,6 +42,8 @@ namespace adriva {
             private static loadScriptAssets(assets: Array<assetReference>): void {
                 if (!assets || 0 == assets.length) return;
 
+                var assetReference = assets.pop();
+                if (!assetReference) return;
                 var script = document.createElement("script")
                 script.type = "text/javascript";
 
@@ -49,7 +51,7 @@ namespace adriva {
                     loader.loadScriptAssets(assets);
                 };
 
-                script.src = assets.pop().path;
+                script.src = assetReference.path;
                 document.getElementsByTagName("head")[0].appendChild(script);
             }
         }
