@@ -1,5 +1,6 @@
 using System;
 using Adriva.Extensions.Optimization.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -23,10 +24,9 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddInMemoryCache();
             services.Configure<TOptions>((options) =>
             {
-                options.AddLoader<PhysicalFileAssetLoader>();
-                options.AddLoader<HttpAssetLoader>();
                 configure.Invoke(options);
             });
+
             return builder;
         }
     }

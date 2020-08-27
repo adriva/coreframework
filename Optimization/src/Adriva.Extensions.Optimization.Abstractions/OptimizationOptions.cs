@@ -9,8 +9,6 @@ namespace Adriva.Extensions.Optimization.Abstractions
     {
         private Dictionary<int, Type> OrderedFormatters = new Dictionary<int, Type>();
 
-        internal List<Type> Loaders { get; private set; } = new List<Type>();
-
         internal ReadOnlyCollection<Type> Formatters
         {
             get
@@ -56,19 +54,6 @@ namespace Adriva.Extensions.Optimization.Abstractions
             if (this.OrderedFormatters.Any(p => p.Value.Equals(formatterType))) return;
 
             this.OrderedFormatters.Add(order, formatterType);
-        }
-
-        public OptimizationOptions AddLoader<T>() where T : class, IAssetLoader
-        {
-            Type typeOfItem = typeof(T);
-
-            foreach (var item in this.Loaders)
-            {
-                if (item.GetType().Equals(typeOfItem)) return this;
-            }
-
-            this.Loaders.Add(typeOfItem);
-            return this;
         }
 
         public OptimizationOptions UseOrderer<TOrderer>() where TOrderer : class, IAssetOrderer

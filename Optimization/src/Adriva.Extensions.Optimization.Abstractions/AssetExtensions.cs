@@ -1,7 +1,9 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Adriva.Extensions.Optimization.Abstractions
 {
@@ -40,6 +42,27 @@ namespace Adriva.Extensions.Optimization.Abstractions
             {
                 asset.Content.Seek(0, SeekOrigin.Begin);
                 return await reader.ReadToEndAsync();
+            }
+        }
+
+        public static async Task LoadContentAsync(this Asset asset, IServiceProvider serviceProvider)
+        {
+            var assetLoaders = serviceProvider.GetServices<IAssetLoader>();
+            if (null == assetLoaders || !assetLoaders.Any())
+            {
+                throw new InvalidOperationException($"No asset loaders could be found. Make sure you add asset loaders using the 'services.AddSingleton<IAssetLoader, LOADER_TYPE>()' method.");
+            }
+
+            foreach (var assetLoader in assetLoaders)
+            {
+                if (assetLoader.CanLoad(asset))
+                {
+                    using (var stream = await assetLoader.OpenReadStreamAsync(asset))
+                    {
+                        await asset.SetContentAsync(stream);
+                    }
+                    return;
+                }
             }
         }
 

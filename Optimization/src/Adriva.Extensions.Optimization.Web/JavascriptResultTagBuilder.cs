@@ -40,7 +40,7 @@ namespace Adriva.Extensions.Optimization.Web
             var outputMode = options.Output;
 
             if (!this.Options.BundleJavascripts && !this.Options.MinifyJavascripts && OptimizationTagOutput.Loader != outputMode) outputMode = OptimizationTagOutput.Tag;
-            else if (OptimizationTagOutput.Tag == outputMode && (this.Options.BundleStylesheets || this.Options.MinifyStylesheets)) outputMode = OptimizationTagOutput.StaticFile;
+            else if (OptimizationTagOutput.Tag == outputMode && (this.Options.BundleJavascripts || this.Options.MinifyJavascripts)) outputMode = OptimizationTagOutput.StaticFile;
 
             switch (outputMode)
             {

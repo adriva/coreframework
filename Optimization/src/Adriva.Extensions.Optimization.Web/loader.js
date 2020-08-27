@@ -40,12 +40,15 @@ var adriva;
             loader.loadScriptAssets = function (assets) {
                 if (!assets || 0 == assets.length)
                     return;
+                var assetReference = assets.pop();
+                if (!assetReference)
+                    return;
                 var script = document.createElement("script");
                 script.type = "text/javascript";
                 script.onload = function () {
                     loader.loadScriptAssets(assets);
                 };
-                script.src = assets.pop().path;
+                script.src = assetReference.path;
                 document.getElementsByTagName("head")[0].appendChild(script);
             };
             loader.isAttached = false;

@@ -25,9 +25,10 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<IOptimizationEvents<WebOptimizationOptions>, WebOptimizationEvents>();
             services.AddSingleton<IOptimizationResultTagBuilderFactory, OptimizationResultTagBuilderFactory>();
             return services
+                .AddSingleton<IAssetLoader, PhysicalFileAssetLoader>()
+                .AddSingleton<IAssetLoader, HttpAssetLoader>()
                 .AddOptimization<WebOptimizationOptions, WebOptimizationContext>(options =>
                 {
-                    options.AddLoader<PhysicalWebFileAssetLoader>();
                     configure?.Invoke(options);
                 });
         }

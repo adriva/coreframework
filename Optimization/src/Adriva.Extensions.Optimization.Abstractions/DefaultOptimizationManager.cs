@@ -28,17 +28,13 @@ namespace Adriva.Extensions.Optimization.Abstractions
             this.Options = optionsAccessor.Value;
             this.Events = this.ServiceProvider.GetService<IOptimizationEvents<TOptions>>(); //optional
             this.Logger = logger;
+            this.Loaders = this.ServiceProvider.GetServices<IAssetLoader>().ToList();
 
             this.Initialize();
         }
 
         private void Initialize()
         {
-            this.Options.Loaders.ForEach(t =>
-            {
-                this.Loaders.Add((IAssetLoader)ActivatorUtilities.CreateInstance(this.ServiceProvider, t));
-            });
-
             foreach (var pair in this.Options.TransformChains)
             {
                 List<ITransform> transforms = new List<ITransform>();
@@ -79,6 +75,8 @@ namespace Adriva.Extensions.Optimization.Abstractions
 
             foreach (var asset in orderedAssets)
             {
+                bool isAssetLoaded = false;
+
                 foreach (var loader in this.Loaders)
                 {
                     if (loader.CanLoad(asset))
@@ -87,9 +85,15 @@ namespace Adriva.Extensions.Optimization.Abstractions
                         using (var stream = await loader.OpenReadStreamAsync(asset))
                         {
                             await asset.SetContentAsync(stream);
+                            isAssetLoaded = true;
                         }
                         break;
                     }
+                }
+
+                if (!isAssetLoaded)
+                {
+                    throw new InvalidOperationException($"Couldn't find an asset loader to load the asset from '{asset.Location}'.");
                 }
             }
 

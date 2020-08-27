@@ -3,6 +3,7 @@
 <!DOCTYPE html>
  @{        
     IOptimizationContext oc = this.OptimizationScope.AddOrGetContext("Deneme");
+    IOptimizationContext woc = this.OptimizationScope.AddOrGetContext("WebControls");
     oc.AddAsset("~/js/jquery.js");
     oc.AddAsset("~/js/site.js");
     this.OptimizationScope.DefaultContext.AddAsset("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.css");
@@ -13,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - demo</title>
     <optimizedresource context="@this.OptimizationScope.DefaultContext" extension="@AssetFileExtension.Stylesheet" output="Tag" />    
+    <optimizedresource context="woc" extension="@AssetFileExtension.Stylesheet" output="Tag" />
     <resourceloader />
 </head>
 <body>
@@ -49,8 +51,8 @@
         </div>
     </footer>
     <optimizedresource context="oc" extension="@AssetFileExtension.Javascript" defer output="Loader" />
-    <optimizedresource context="OptimizationScope.DefaultContext" extension="@AssetFileExtension.Javascript" defer output="Loader" />
-    @RenderSection("WebControls", required: false)
+    <optimizedresource context="OptimizationScope.DefaultContext" extension="@AssetFileExtension.Stylesheet" defer output="Loader" />
+    <optimizedresource context="woc" extension="@AssetFileExtension.Javascript" defer output="Loader" />    
     @RenderSection("Scripts", required: false)
 </body>
 </html>

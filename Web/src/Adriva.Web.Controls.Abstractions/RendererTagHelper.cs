@@ -14,11 +14,8 @@ namespace Adriva.Web.Controls.Abstractions
         [HtmlAttributeName("name")]
         public string Name { get; set; }
 
-        [HtmlAttributeName("asset-delivery-method")]
-        public AssetDeliveryMethod AssetDeliveryMethod { get; set; }
-
-        [HtmlAttributeName("container-name")]
-        public string ContainerName { get; set; }
+        [HtmlAttributeName("optimization-context-name")]
+        public string OptimizationContextName { get; set; }
 
         public RendererTagHelper(IControlRendererFactory rendererFactory)
         {

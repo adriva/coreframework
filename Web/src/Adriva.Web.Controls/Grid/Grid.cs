@@ -32,9 +32,7 @@ namespace Adriva.Web.Controls
             }
             else if (extension == AssetFileExtension.Stylesheet)
             {
-                return new[]{
-                    "/css/site.css"
-                };
+                return null;
             }
 
             return null;

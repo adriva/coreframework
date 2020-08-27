@@ -1,13 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using Adriva.Extensions.Optimization.Abstractions;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
 using Adriva.Extensions.Optimization.Web;
-using System.IO;
 using Microsoft.AspNetCore.Html;
 
 namespace Adriva.Web.Controls.Abstractions
@@ -29,56 +27,30 @@ namespace Adriva.Web.Controls.Abstractions
 
         private readonly WebControlsRendererOptions RendererOptions;
         private readonly WebControlsOptions Options;
+        private readonly IServiceProvider ServiceProvider;
 
-        private string ContainerNameField;
-        private AssetDeliveryMethod AssetDeliveryMethodField;
         private RendererTagHelper RendererControl;
 
-        private AssetDeliveryMethod AssetDeliveryMethod
+        private string OptimizationContextName
         {
             get
             {
-                if (AssetDeliveryMethod.Unspecified == this.AssetDeliveryMethodField)
+                string optimizationContextName = null;
+
+                if (string.IsNullOrWhiteSpace(this.RendererControl.OptimizationContextName))
                 {
-                    if (AssetDeliveryMethod.Unspecified == this.RendererControl.AssetDeliveryMethod)
-                    {
-                        this.AssetDeliveryMethodField = this.Options.AssetDeliveryMethod;
-                    }
-
-                    this.AssetDeliveryMethodField = this.RendererControl.AssetDeliveryMethod;
-
-                    if (AssetDeliveryMethod.Unspecified == this.AssetDeliveryMethodField)
-                    {
-                        this.AssetDeliveryMethodField = AssetDeliveryMethod.InlineTag;
-                    }
+                    optimizationContextName = this.Options.OptimizationContextName;
                 }
 
-                return this.AssetDeliveryMethodField;
+                if (null == optimizationContextName) optimizationContextName = Microsoft.Extensions.Options.Options.DefaultName;
+
+                return optimizationContextName;
             }
         }
 
-        private string ContainerName
+        public DefaultControlRenderer(IServiceProvider serviceProvider, IOptions<WebControlsRendererOptions> rendererOptionsAccessor, IOptions<WebControlsOptions> optionsAccessor)
         {
-            get
-            {
-                if (null == this.ContainerNameField)
-                {
-                    if (null == this.RendererControl.ContainerName)
-                    {
-                        this.ContainerNameField = this.Options.ContainerName ?? string.Empty;
-                    }
-                    else
-                    {
-                        this.ContainerNameField = this.RendererControl.ContainerName ?? string.Empty;
-                    }
-                }
-
-                return this.ContainerNameField;
-            }
-        }
-
-        public DefaultControlRenderer(IOptions<WebControlsRendererOptions> rendererOptionsAccessor, IOptions<WebControlsOptions> optionsAccessor)
-        {
+            this.ServiceProvider = serviceProvider;
             this.Options = optionsAccessor.Value;
             this.RendererOptions = rendererOptionsAccessor.Value;
         }
@@ -88,55 +60,16 @@ namespace Adriva.Web.Controls.Abstractions
 
         }
 
-        private async Task RenderAssetsAsync(IControlOutputContext context, RendererTagAttributes attributes)
+        private void RenderAssets(IControlOutputContext context, RendererTagAttributes attributes)
         {
             var assetPaths = this.ResolveAssetPaths(context);
-            var view = context.Control.ViewContext.View as RazorView;
-            RazorPage razorPage = view.RazorPage as RazorPage;
 
-            async Task RenderAssetTagsInPageAsync()
+            var currentHttpContext = context.GetHttpContext();
+            var optimizationScope = currentHttpContext.RequestServices.GetRequiredService<IOptimizationScope>();
+            var optimizationContext = optimizationScope.AddOrGetContext(this.OptimizationContextName);
+            foreach (var assetPath in assetPaths)
             {
-                var httpContext = context.GetHttpContext();
-                var tagBuilderFactory = httpContext.RequestServices.GetService<IOptimizationResultTagBuilderFactory>();
-
-                HtmlContentBuilder htmlContentBuilder = new HtmlContentBuilder();
-
-                foreach (var assetPath in assetPaths)
-                {
-                    var extension = Path.GetExtension(assetPath);
-                    var optimizationResultTagBuilder = tagBuilderFactory.GetBuilder(extension);
-                    Asset asset = new Asset(assetPath);
-                    await this.RenderAssetAsync(optimizationResultTagBuilder, attributes, asset, extension, htmlContentBuilder);
-                }
-
-                htmlContentBuilder.WriteTo(razorPage);
-            };
-
-            switch (this.AssetDeliveryMethod)
-            {
-                case AssetDeliveryMethod.InlineTag:
-                    await RenderAssetTagsInPageAsync();
-                    break;
-                case AssetDeliveryMethod.OptimizationContext:
-                    var currentHttpContext = context.GetHttpContext();
-                    var optimizationScope = currentHttpContext.RequestServices.GetRequiredService<IOptimizationScope>();
-                    var optimizationContext = optimizationScope.AddOrGetContext(this.ContainerName);
-                    foreach (var assetPath in assetPaths)
-                    {
-                        optimizationContext.AddAsset(assetPath);
-                    }
-                    break;
-                case AssetDeliveryMethod.SectionWriterTag:
-                    if (string.IsNullOrWhiteSpace(this.ContainerName))
-                    {
-                        throw new ArgumentNullException(nameof(this.ContainerName), "ContainerName should have a valid section name.");
-                    }
-
-                    razorPage.SectionWriters[this.ContainerName] = async () =>
-                    {
-                        await RenderAssetTagsInPageAsync();
-                    };
-                    break;
+                optimizationContext.AddAsset(assetPath);
             }
         }
 
@@ -144,7 +77,6 @@ namespace Adriva.Web.Controls.Abstractions
         {
             TagBuilderOptions options = new TagBuilderOptions(extension, OptimizationTagOutput.Tag);
             await optimizationResultTagBuilder.PopulateHtmlTagAsync(options, attributes, asset, htmlContentBuilder);
-            await Task.CompletedTask;
         }
 
         protected virtual IEnumerable<string> ResolveAssetPaths(IControlOutputContext context)
@@ -174,11 +106,6 @@ namespace Adriva.Web.Controls.Abstractions
 
         public virtual void Render(IControlOutputContext context, RendererTagAttributes attributes)
         {
-            this.RenderAsync(context, attributes).GetAwaiter().GetResult();
-        }
-
-        public virtual async Task RenderAsync(IControlOutputContext context, RendererTagAttributes attributes)
-        {
             this.RendererControl = context.Control as RendererTagHelper;
             if (null == context.Parent)
             {
@@ -186,8 +113,14 @@ namespace Adriva.Web.Controls.Abstractions
                 context.Output.TagName = string.Empty;
                 this.RenderRootControl(context.Children[0]);
                 context.Children[0].Output.Content.MoveTo(context.Output.Content);
-                await this.RenderAssetsAsync(context, attributes);
+                this.RenderAssets(context, attributes);
             }
+        }
+
+        public virtual async Task RenderAsync(IControlOutputContext context, RendererTagAttributes attributes)
+        {
+            await Task.CompletedTask;
+            this.Render(context, attributes);
         }
     }
 }

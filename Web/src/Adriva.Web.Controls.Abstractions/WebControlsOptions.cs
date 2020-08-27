@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 
 namespace Adriva.Web.Controls.Abstractions
 {
     public class WebControlsOptions
     {
-        public AssetDeliveryMethod AssetDeliveryMethod { get; set; }
-
-        public string ContainerName { get; set; }
+        public string OptimizationContextName { get; set; } = Options.DefaultName;
 
         public PathString AssetsRootPath { get; set; } = "/webcontrols/assets";
 

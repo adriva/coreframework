@@ -47,6 +47,7 @@ namespace demo
                 options.BundleJavascripts = enableOpt;
                 options.MinifyJavascripts = enableOpt;
                 options.MinifyHtml = false;
+                options.UseFileOrderer("assetorder.txt");
                 // options.AssetRootUrl = "https://www.adriva.com";
             })
             .ConfigureStyleSheetMinification(cssOptions =>
@@ -82,8 +83,7 @@ namespace demo
 
             services.AddWebControls(options =>
             {
-                options.AssetDeliveryMethod = AssetDeliveryMethod.SectionWriterTag;
-                options.ContainerName = "WebControls";
+                options.OptimizationContextName = "WebControls";
             })
             .AddAssembly(typeof(Adriva.Web.Controls.Grid).Assembly.Location)
             .AddRenderer<Adriva.Web.Controls.Abstractions.NullControlRenderer>("nullrenderer")
