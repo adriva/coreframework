@@ -56,7 +56,10 @@ namespace Adriva.Extensions.Optimization.Abstractions
 
             using (var response = await this.HttpClient.GetAsync(asset.Location, HttpCompletionOption.ResponseHeadersRead))
             {
-                response.EnsureSuccessStatusCode();
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new HttpRequestException($"Failed to load asset from '{asset.Location}'. Response code is '{response.StatusCode}'.");
+                }
                 await response.Content.CopyToAsync(fileStream);
                 await fileStream.FlushAsync();
                 fileStream.Seek(0, SeekOrigin.Begin);

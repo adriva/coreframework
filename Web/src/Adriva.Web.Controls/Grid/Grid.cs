@@ -26,8 +26,8 @@ namespace Adriva.Web.Controls
             if (extension == AssetFileExtension.Javascript)
             {
                 return new[]{
-                    "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js",
-                    "https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"
+                    "bootstrap.bundle.js",
+                    "bootstrap.table.js"
                 };
             }
             else if (extension == AssetFileExtension.Stylesheet)

@@ -49,7 +49,7 @@ namespace Adriva.Extensions.Optimization.Web
                     tagBuilder.InnerHtml.SetHtmlContent(content);
                     break;
                 case OptimizationTagOutput.Tag:
-                    tagBuilder.Attributes.Add("src", asset.GetWebLocation(this.Options));
+                    tagBuilder.Attributes.Add("src", asset.GetWebLocation(this.HostingEnvironment, this.Options));
                     if (null != asset?.Content) await asset.Content.DisposeAsync();
                     break;
                 case OptimizationTagOutput.StaticFile:

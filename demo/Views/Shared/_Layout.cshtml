@@ -50,9 +50,9 @@
             &copy; 2020 - demo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <optimizedresource context="oc" extension="@AssetFileExtension.Javascript" defer output="Loader" />
-    <optimizedresource context="OptimizationScope.DefaultContext" extension="@AssetFileExtension.Stylesheet" defer output="Loader" />
-    <optimizedresource context="woc" extension="@AssetFileExtension.Javascript" defer output="Loader" />    
+    <optimizedresource context="oc" extension="@AssetFileExtension.Javascript" output="Loader" />
+    <optimizedresource context="OptimizationScope.DefaultContext" extension="@AssetFileExtension.Stylesheet" output="Tag" />
+    <optimizedresource context="woc" extension="@AssetFileExtension.Javascript" output="Loader" />    
     @RenderSection("Scripts", required: false)
 </body>
 </html>

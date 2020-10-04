@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Adriva.Extensions.Optimization.Web;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Http;
 
 namespace Adriva.Web.Controls.Abstractions
 {
@@ -37,7 +38,7 @@ namespace Adriva.Web.Controls.Abstractions
             {
                 string optimizationContextName = null;
 
-                if (string.IsNullOrWhiteSpace(this.RendererControl.OptimizationContextName))
+                if (!string.IsNullOrWhiteSpace(this.RendererControl.OptimizationContextName))
                 {
                     optimizationContextName = this.Options.OptimizationContextName;
                 }
@@ -99,7 +100,13 @@ namespace Adriva.Web.Controls.Abstractions
 
                 foreach (var path in paths)
                 {
-                    yield return path;
+                    if (null == path) throw new ArgumentNullException($"Null resource path specified in web control '{context.Control?.GetType().FullName}'.");
+
+                    if (Uri.TryCreate(path, UriKind.Absolute, out Uri tempUri)) yield return path;
+                    else
+                    {
+                        yield return $"{this.Options.AssetsRootPath.Value.TrimEnd('/')}/{path.TrimStart('/')}";
+                    }
                 }
             }
         }

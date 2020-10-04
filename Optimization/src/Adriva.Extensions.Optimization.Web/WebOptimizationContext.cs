@@ -9,7 +9,7 @@ using System.Text;
 using Microsoft.Extensions.FileProviders;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Html;
+using Microsoft.Extensions.Options;
 
 namespace Adriva.Extensions.Optimization.Web
 {
@@ -25,7 +25,8 @@ namespace Adriva.Extensions.Optimization.Web
 
         public ReadOnlyCollection<Asset> Assets => new ReadOnlyCollection<Asset>(this.AssetList);
 
-        public WebOptimizationContext(IHttpContextAccessor httpContextAccessor, IWebHostEnvironment hostingEnvironment)
+        public WebOptimizationContext(IHttpContextAccessor httpContextAccessor,
+            IWebHostEnvironment hostingEnvironment)
         {
             this.HttpContext = httpContextAccessor.HttpContext;
             this.HostingEnvironment = hostingEnvironment;
@@ -60,7 +61,17 @@ namespace Adriva.Extensions.Optimization.Web
             {
                 return new Uri(fileInfo.PhysicalPath);
             }
-            if (Uri.TryCreate(buffer.ToString(), UriKind.RelativeOrAbsolute, out Uri assetUri)) return assetUri;
+            if (Uri.TryCreate(buffer.ToString(), UriKind.RelativeOrAbsolute, out Uri assetUri))
+            {
+                if (assetUri.IsAbsoluteUri) return assetUri;
+                else
+                {
+                    buffer.Clear();
+                    var request = this.HttpContext.Request;
+                    buffer.Append($"{request.Scheme}://{request.Host.Value}{request.PathBase}/{pathOrUrl.TrimStart('/')}");
+                    if (Uri.TryCreate(buffer.ToString(), UriKind.Absolute, out assetUri)) return assetUri;
+                }
+            }
             return null;
         }
 

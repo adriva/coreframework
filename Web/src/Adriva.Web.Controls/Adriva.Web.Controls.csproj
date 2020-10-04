@@ -9,13 +9,27 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Assets/*.js" />
-    <EmbeddedResource Include="Assets/*.css" />
-    <EmbeddedResource Include="Assets/*.eot" />
-    <EmbeddedResource Include="Assets/*.woff" />
-    <EmbeddedResource Include="Assets/*.ttf" />
-    <EmbeddedResource Include="Assets/*.svg" />
-    <EmbeddedResource Include="Assets/lang.*" />
+    <EmbeddedResource Include="Assets/*.js">
+      <LogicalName>Adriva.Web.Controls.%(filename)%(extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets/*.css">
+      <LogicalName>Adriva.Web.Controls.%(filename)%(extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets/*.eot">
+      <LogicalName>Adriva.Web.Controls.%(filename)%(extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets/*.woff">
+      <LogicalName>Adriva.Web.Controls.%(filename)%(extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets/*.ttf">
+      <LogicalName>Adriva.Web.Controls.%(filename)%(extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets/*.svg">
+      <LogicalName>Adriva.Web.Controls.%(filename)%(extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets/lang.*">
+      <LogicalName>Adriva.Web.Controls.%(filename)%(extension)</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

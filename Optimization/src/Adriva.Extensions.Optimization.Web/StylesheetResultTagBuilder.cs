@@ -47,7 +47,7 @@ namespace Adriva.Extensions.Optimization.Web
                     tagBuilder.TagRenderMode = TagRenderMode.SelfClosing;
                     tagBuilder.Attributes.Add("rel", "stylesheet");
                     tagBuilder.Attributes.Add("type", "text/css");
-                    tagBuilder.Attributes.Add("href", asset.GetWebLocation(this.Options));
+                    tagBuilder.Attributes.Add("href", asset.GetWebLocation(this.HostingEnvironment, this.Options));
 
                     output.AppendHtml(tagBuilder);
                     break;

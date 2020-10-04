@@ -20,5 +20,6 @@ namespace Adriva.Extensions.Optimization.Web
         public int HtmlBufferSize { get; set; } = 102400;
 
         public string AssetRootUrl { get; set; }
+
     }
 }

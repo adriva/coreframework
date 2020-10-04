@@ -724,12 +724,28 @@ namespace Adriva.Common.Core
             return 200 <= statusCode && 299 >= statusCode;
         }
 
+        /// <summary>
+        /// Checks if the given Uri represents a valid http or https url.
+        /// </summary>
+        /// <param name="uri">The uri to be checked for.</param>
+        /// <returns>True is the given uri is a valid http or https Url, otherwise False.</returns>
         public static bool IsValidHttpUri(Uri uri)
         {
             if (null == uri) return false;
             if (!uri.IsAbsoluteUri) return false;
             return 0 == string.Compare(Uri.UriSchemeHttp, uri.Scheme, StringComparison.Ordinal)
                 || 0 == string.Compare(Uri.UriSchemeHttps, uri.Scheme, StringComparison.Ordinal);
+        }
+
+        /// <summary>
+        /// Checks if the given Uri string represents a valid http or https url.
+        /// </summary>
+        /// <param name="uri">The string uri to be checked for.</param>
+        /// <returns>True is the given string is a valid http or https Url, otherwise False.</returns>
+        public static bool IsValidHttpUri(string uri)
+        {
+            if (!Uri.TryCreate(uri, UriKind.Absolute, out Uri tempUri)) return false;
+            return Utilities.IsValidHttpUri(tempUri);
         }
 
         #endregion
