@@ -7,34 +7,18 @@ using System.Collections.Generic;
 using System.Linq;
 using Adriva.Extensions.Optimization.Web;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Http;
-using Adriva.Common.Core;
-using System.Text;
 
 namespace Adriva.Web.Controls.Abstractions
 {
     public abstract class DefaultControlRenderer<TControl> : IControlRenderer where TControl : ControlTagHelper
     {
-        private class TagBuilderOptions : ITagBuilderOptions
-        {
-            public AssetFileExtension Extension { get; private set; }
-
-            public OptimizationTagOutput Output { get; private set; }
-
-            public TagBuilderOptions(AssetFileExtension extension, OptimizationTagOutput output)
-            {
-                this.Extension = extension;
-                this.Output = output;
-            }
-        }
-
         private readonly WebControlsRendererOptions RendererOptions;
         private readonly WebControlsOptions Options;
         private readonly IServiceProvider ServiceProvider;
 
         private RendererTagHelper RendererControl;
 
-        private string OptimizationContextName
+        protected string OptimizationContextName
         {
             get
             {
@@ -74,12 +58,6 @@ namespace Adriva.Web.Controls.Abstractions
             {
                 optimizationContext.AddAsset(assetPath);
             }
-        }
-
-        protected virtual async Task RenderAssetAsync(IOptimizationResultTagBuilder optimizationResultTagBuilder, RendererTagAttributes attributes, Asset asset, string extension, IHtmlContentBuilder htmlContentBuilder)
-        {
-            TagBuilderOptions options = new TagBuilderOptions(extension, OptimizationTagOutput.Tag);
-            await optimizationResultTagBuilder.PopulateHtmlTagAsync(options, attributes, asset, htmlContentBuilder);
         }
 
         protected virtual IEnumerable<string> ResolveAssetPaths(IControlOutputContext context)
@@ -133,27 +111,6 @@ namespace Adriva.Web.Controls.Abstractions
         {
             await Task.CompletedTask;
             this.Render(context, attributes);
-        }
-
-        protected string GenerateInitializerScript(IControlOutputContext context, string startupScript)
-        {
-            string initializerScript = $"function initialize{context.Id}(){{ {startupScript} }};";
-            string loaderScript = $"if('complete'===document.readyState) {{ initialize{context.Id}(); }}"
-                                    + $"else {{ window.addEventListener('load', initialize{context.Id}); }}";
-
-            return $"<script>{initializerScript}{Environment.NewLine}{loaderScript}</script>";
-        }
-
-        protected string GenerateWrappedScriptCall(string inlineScript, int parameterCount, out string functionName)
-        {
-            functionName = "formatter_" + Utilities.GetRandomId(8);
-            List<string> argumentsList = new List<string>();
-            for (int loop = 0; loop < parameterCount; loop++)
-            {
-                argumentsList.Add($"arguments[{loop}]");
-            }
-
-            return $"function {functionName}(){{ return ({inlineScript})({string.Join(",", argumentsList)})}}";
         }
     }
 }

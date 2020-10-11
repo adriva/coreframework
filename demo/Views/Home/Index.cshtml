@@ -13,6 +13,11 @@
         </grid-column>
         <grid-column title="Name" field="title" width=450></grid-column>
         <grid-column title="Content" field="body" alignment="Right"></grid-column>
+        <grid-column title="zsdad" alignment="Center">
+            <column-formatter>
+            (v,r)=>'<input type="checkbox" title="' + r.id + '" />'
+            </column-formatter>
+        </grid-column>
     </grid>
     </div>
 </renderer>

@@ -35,6 +35,12 @@ namespace Adriva.Extensions.Optimization.Web
         [HtmlAttributeName("Output")]
         public OptimizationTagOutput Output { get; set; }
 
+        /// <summary>
+        /// Gets the name of the OptimizationContext being used.
+        /// </summary>
+        /// <returns>A string value representing the name of the current OptimizationContext.</returns>
+        public string ContextName => this.Context?.Name;
+
         public OptimizedResourceTagHelper(
                     IOptimizationManager optimizationManager,
                     IOptimizationScope optimizationScope,

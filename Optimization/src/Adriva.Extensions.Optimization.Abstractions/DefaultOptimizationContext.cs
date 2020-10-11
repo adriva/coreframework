@@ -14,6 +14,8 @@ namespace Adriva.Extensions.Optimization.Abstractions
 
         public string Identifier { get; private set; }
 
+        public string Name { get; private set; }
+
         public void AddAsset(string pathOrUrl)
         {
             Asset asset = new Asset(pathOrUrl);
@@ -21,6 +23,11 @@ namespace Adriva.Extensions.Optimization.Abstractions
             this.AssetList.Add(asset);
 
             this.Identifier = Utilities.CalculateBinaryHash(string.Join("|", this.AssetList.OrderBy(a => a.Name).Select(a => a.Name)));
+        }
+
+        public void SetName(string name)
+        {
+            if (null == this.Name) this.Name = name;
         }
 
         public async ValueTask DisposeAsync()

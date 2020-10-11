@@ -32,13 +32,13 @@ namespace Adriva.Web.Controls
 
         protected override void RenderRootControl(Grid grid, IControlOutputContext context)
         {
-            foreach (var c in grid.Columns)
+            foreach (var column in grid.Columns)
             {
-                if (!string.IsNullOrWhiteSpace(c.Formatter))
+                if (!string.IsNullOrWhiteSpace(column.Formatter))
                 {
-                    var s = base.GenerateWrappedScriptCall(c.Formatter, 2, out string fn);
-                    c.Formatter = fn;
-                    context.Output.PostContent.AppendHtml($"<script>{s}</script>");
+                    var formatterScript = RendererUtilities.GenerateWrappedScriptCall(column.Formatter, 2, out string formatterFunctionName);
+                    column.Formatter = formatterFunctionName;
+                    context.Output.PostContent.AppendHtml($"<script>{formatterScript}</script>");
                 }
             }
 
@@ -70,7 +70,7 @@ namespace Adriva.Web.Controls
 
             var json = Utilities.SafeSerialize(grid, jsonSerializerSettings);
 
-            context.Output.PostContent.AppendHtml(base.GenerateInitializerScript(context, $"$('#{context.Id}').bootstrapTable({json});"));
+            context.Output.PostContent.AppendHtml(RendererUtilities.GenerateInitializerScript(context, this.OptimizationContextName, $"var grid = $('#{context.Id}').bootstrapTable({json});"));
         }
     }
 }

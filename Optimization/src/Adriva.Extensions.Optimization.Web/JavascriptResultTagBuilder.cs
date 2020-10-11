@@ -64,7 +64,6 @@ namespace Adriva.Extensions.Optimization.Web
                         await File.WriteAllTextAsync(assetFileInfo.PhysicalPath, content, Encoding.UTF8);
                     }
 
-
                     if (string.IsNullOrWhiteSpace(this.Options.AssetRootUrl))
                     {
                         webPath = this.HttpContextAccessor.HttpContext.Request.PathBase.Add(relativeFilePath);
@@ -86,7 +85,7 @@ namespace Adriva.Extensions.Optimization.Web
                     }
                     else
                     {
-                        tagBuilder.InnerHtml.SetHtmlContent($"adriva.optimization.loader.push('{webPath}', 1)");
+                        tagBuilder.InnerHtml.SetHtmlContent($"adriva.optimization.loader.push('{webPath}', '{options.ContextName}', 1)");
                     }
 
                     if (null != asset?.Content) await asset.Content.DisposeAsync();

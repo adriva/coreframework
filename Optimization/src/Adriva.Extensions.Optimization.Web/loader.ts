@@ -7,7 +7,7 @@ namespace adriva {
         }
 
         class assetReference {
-            constructor(public path: string, public type: assetType) {
+            constructor(public path: string, public contextName: string, public type: assetType) {
 
             }
         }
@@ -15,8 +15,9 @@ namespace adriva {
         export class loader {
             private static isAttached: boolean = false;
             private static assetPaths: Array<assetReference> = [];
+            private static loadedContextNames: Array<string> = [];
 
-            public static push(path: string, type: assetType): void {
+            public static push(path: string, contextName: string, type: assetType): void {
                 if (!path) return;
                 if (!loader.isAttached) {
                     window.addEventListener('load', loader.loadAssets);
@@ -24,11 +25,11 @@ namespace adriva {
                 }
 
                 var matchingElement = loader.assetPaths.filter((value) => {
-                    return value.type === type && value.path.toUpperCase() === path.toUpperCase();
+                    return value.type === type && value.path.toUpperCase() === path.toUpperCase() && value.contextName.toUpperCase() === contextName.toUpperCase();
                 });
 
                 if (0 < matchingElement.length) return;
-                loader.assetPaths.push(new assetReference(path, type));
+                loader.assetPaths.push(new assetReference(path, contextName, type));
             }
 
             private static loadAssets() {
@@ -48,11 +49,22 @@ namespace adriva {
                 script.type = "text/javascript";
 
                 script.onload = function () {
+                    if (0 == assets.length) {
+                        //load completed
+                        loader.loadedContextNames.push(assetReference.contextName);
+                        let contextReadyEvent = new CustomEvent('contextReady', { detail: assetReference.contextName });
+                        document.dispatchEvent(contextReadyEvent);
+                    }
                     loader.loadScriptAssets(assets);
                 };
 
                 script.src = assetReference.path;
                 document.getElementsByTagName("head")[0].appendChild(script);
+            }
+
+            public static isReady(contextName: string): boolean {
+                var readyNames = loader.loadedContextNames.filter((value) => contextName.toUpperCase() === value.toUpperCase());
+                return 1 == readyNames.length;
             }
         }
     }

@@ -7,5 +7,7 @@ namespace Adriva.Extensions.Optimization.Web
         AssetFileExtension Extension { get; }
 
         OptimizationTagOutput Output { get; }
+
+        string ContextName { get; }
     }
 }

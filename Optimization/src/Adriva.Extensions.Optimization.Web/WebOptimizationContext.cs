@@ -21,6 +21,8 @@ namespace Adriva.Extensions.Optimization.Web
 
         public string Identifier { get; private set; }
 
+        public string Name { get; private set; }
+
         private readonly List<Asset> AssetList = new List<Asset>();
 
         public ReadOnlyCollection<Asset> Assets => new ReadOnlyCollection<Asset>(this.AssetList);
@@ -82,6 +84,11 @@ namespace Adriva.Extensions.Optimization.Web
             this.AssetList.Add(asset);
 
             this.Identifier = Utilities.CalculateHash(string.Join("|", this.AssetList.OrderBy(a => a.Name).Select(a => a.Name)));
+        }
+
+        public void SetName(string name)
+        {
+            if (null == this.Name) this.Name = name;
         }
 
         public async ValueTask DisposeAsync()

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Adriva.Web.Controls.Abstractions;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -39,14 +38,10 @@ namespace Adriva.Web.Controls
         [HtmlAttributeNotBound]
         public IDictionary<string, string> Events { get; private set; } = new Dictionary<string, string>();
 
-        protected override async Task ProcessAsync(IControlOutputContext context)
+        protected override void Process(IControlOutputContext context)
         {
             Grid grid = (Grid)context.Parent.Control;
-
-
             grid.Columns.Add(this);
-
-            await Task.CompletedTask;
         }
     }
 }

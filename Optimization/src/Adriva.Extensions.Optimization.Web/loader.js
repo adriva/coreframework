@@ -8,8 +8,9 @@ var adriva;
             assetType[assetType["css"] = 2] = "css";
         })(assetType = optimization.assetType || (optimization.assetType = {}));
         var assetReference = /** @class */ (function () {
-            function assetReference(path, type) {
+            function assetReference(path, contextName, type) {
                 this.path = path;
+                this.contextName = contextName;
                 this.type = type;
             }
             return assetReference;
@@ -17,7 +18,7 @@ var adriva;
         var loader = /** @class */ (function () {
             function loader() {
             }
-            loader.push = function (path, type) {
+            loader.push = function (path, contextName, type) {
                 if (!path)
                     return;
                 if (!loader.isAttached) {
@@ -25,11 +26,11 @@ var adriva;
                     loader.isAttached = true;
                 }
                 var matchingElement = loader.assetPaths.filter(function (value) {
-                    return value.type === type && value.path.toUpperCase() === path.toUpperCase();
+                    return value.type === type && value.path.toUpperCase() === path.toUpperCase() && value.contextName.toUpperCase() === contextName.toUpperCase();
                 });
                 if (0 < matchingElement.length)
                     return;
-                loader.assetPaths.push(new assetReference(path, type));
+                loader.assetPaths.push(new assetReference(path, contextName, type));
             };
             loader.loadAssets = function () {
                 var scriptAssets = loader.assetPaths.filter(function (value) {
@@ -46,13 +47,24 @@ var adriva;
                 var script = document.createElement("script");
                 script.type = "text/javascript";
                 script.onload = function () {
+                    if (0 == assets.length) {
+                        //load completed
+                        loader.loadedContextNames.push(assetReference.contextName);
+                        var contextReadyEvent = new CustomEvent('contextReady', { detail: assetReference.contextName });
+                        document.dispatchEvent(contextReadyEvent);
+                    }
                     loader.loadScriptAssets(assets);
                 };
                 script.src = assetReference.path;
                 document.getElementsByTagName("head")[0].appendChild(script);
             };
+            loader.isReady = function (contextName) {
+                var readyNames = loader.loadedContextNames.filter(function (value) { return contextName.toUpperCase() === value.toUpperCase(); });
+                return 1 == readyNames.length;
+            };
             loader.isAttached = false;
             loader.assetPaths = [];
+            loader.loadedContextNames = [];
             return loader;
         }());
         optimization.loader = loader;

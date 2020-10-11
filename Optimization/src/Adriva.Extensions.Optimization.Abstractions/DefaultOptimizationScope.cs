@@ -27,6 +27,7 @@ namespace Adriva.Extensions.Optimization.Abstractions
             if (this.Contexts.TryGetValue(name, out IOptimizationContext context)) return context;
 
             IOptimizationContext optimizationContext = ActivatorUtilities.CreateInstance<TContext>(this.ServiceProvider);
+            optimizationContext.SetName(name);
             this.Contexts.Add(name, optimizationContext);
             return optimizationContext;
         }

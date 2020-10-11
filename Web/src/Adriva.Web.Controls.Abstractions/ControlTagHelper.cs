@@ -106,6 +106,10 @@ namespace Adriva.Web.Controls.Abstractions
 
         protected virtual void Process(IControlOutputContext context) { }
 
-        protected virtual Task ProcessAsync(IControlOutputContext context) => Task.CompletedTask;
+        protected virtual Task ProcessAsync(IControlOutputContext context)
+        {
+            this.Process(context);
+            return Task.CompletedTask;
+        }
     }
 }
