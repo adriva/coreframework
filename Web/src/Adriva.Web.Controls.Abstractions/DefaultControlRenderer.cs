@@ -8,10 +8,12 @@ using System.Linq;
 using Adriva.Extensions.Optimization.Web;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
+using Adriva.Common.Core;
+using System.Text;
 
 namespace Adriva.Web.Controls.Abstractions
 {
-    public abstract class DefaultControlRenderer : IControlRenderer
+    public abstract class DefaultControlRenderer<TControl> : IControlRenderer where TControl : ControlTagHelper
     {
         private class TagBuilderOptions : ITagBuilderOptions
         {
@@ -56,7 +58,7 @@ namespace Adriva.Web.Controls.Abstractions
             this.RendererOptions = rendererOptionsAccessor.Value;
         }
 
-        protected virtual void RenderRootControl(IControlOutputContext context)
+        protected virtual void RenderRootControl(TControl control, IControlOutputContext context)
         {
 
         }
@@ -118,8 +120,11 @@ namespace Adriva.Web.Controls.Abstractions
             {
                 if (1 != context.Children.Count) throw new Exception();
                 context.Output.TagName = string.Empty;
-                this.RenderRootControl(context.Children[0]);
+                this.RenderRootControl((TControl)context.Children[0].Control, context.Children[0]);
+                context.Children[0].Output.PreContent.MoveTo(context.Output.PreContent);
                 context.Children[0].Output.Content.MoveTo(context.Output.Content);
+                context.Children[0].Output.PostContent.MoveTo(context.Output.PostContent);
+
                 this.RenderAssets(context, attributes);
             }
         }
@@ -128,6 +133,27 @@ namespace Adriva.Web.Controls.Abstractions
         {
             await Task.CompletedTask;
             this.Render(context, attributes);
+        }
+
+        protected string GenerateInitializerScript(IControlOutputContext context, string startupScript)
+        {
+            string initializerScript = $"function initialize{context.Id}(){{ {startupScript} }};";
+            string loaderScript = $"if('complete'===document.readyState) {{ initialize{context.Id}(); }}"
+                                    + $"else {{ window.addEventListener('load', initialize{context.Id}); }}";
+
+            return $"<script>{initializerScript}{Environment.NewLine}{loaderScript}</script>";
+        }
+
+        protected string GenerateWrappedScriptCall(string inlineScript, int parameterCount, out string functionName)
+        {
+            functionName = "formatter_" + Utilities.GetRandomId(8);
+            List<string> argumentsList = new List<string>();
+            for (int loop = 0; loop < parameterCount; loop++)
+            {
+                argumentsList.Add($"arguments[{loop}]");
+            }
+
+            return $"function {functionName}(){{ return ({inlineScript})({string.Join(",", argumentsList)})}}";
         }
     }
 }

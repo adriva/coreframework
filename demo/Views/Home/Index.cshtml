@@ -5,15 +5,14 @@
 <renderer defer name="bootstrap-grid" property1="test1" property2="test2" optimization-context-name="WebControls">
     <div></div>
     <div>
-    <grid class="p-4 bg-warning" id="deneme">
-        <grid-column>
-            <column-template>
-                <p>Hello {field}. Naber ?</p>
-            </column-template>
+    <grid id="dd" source="https://jsonplaceholder.typicode.com/posts" height="600">
+        <grid-column title="Id" field="id" ishidden="false">
+            <column-formatter>
+                (v,r)=>'<b>' + v + '</b>'
+            </column-formatter>
         </grid-column>
-        <grid-column>
-            <column-template></column-template>
-        </grid-column>
+        <grid-column title="Name" field="title" width=450></grid-column>
+        <grid-column title="Content" field="body" alignment="Right"></grid-column>
     </grid>
     </div>
 </renderer>

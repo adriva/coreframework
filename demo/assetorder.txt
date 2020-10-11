@@ -1,4 +1,7 @@
 jquery.js
+jquery.min.js
+popper.min.js
+bootstrap.min.js
 bootstrap.bundle.min.js
 bootstrap-table.min.js
 site.js

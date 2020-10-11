@@ -4,9 +4,11 @@ using Adriva.Common.Core;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Newtonsoft.Json;
 
 namespace Adriva.Web.Controls.Abstractions
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public abstract class ControlTagHelper : TagHelper
     {
         private static readonly string RandomContextKey;
@@ -17,6 +19,8 @@ namespace Adriva.Web.Controls.Abstractions
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext ViewContext { get; set; }
+
+        protected TagHelperContext TagHelperContext { get; private set; }
 
         static ControlTagHelper()
         {
@@ -40,7 +44,6 @@ namespace Adriva.Web.Controls.Abstractions
             return controlId;
         }
 
-        protected TagHelperContext TagHelperContext { get; private set; }
 
         public override void Init(TagHelperContext context)
         {

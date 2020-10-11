@@ -9,33 +9,18 @@ namespace Adriva.Web.Controls
 {
     [HtmlTargetElement("grid")]
     [RestrictChildren("grid-column", "grid-pager", "grid-grouping")]
-    public class Grid : ControlTagHelper, IAssetProvider
+    public class Grid : ControlTagHelper
     {
         protected override bool RequiresRenderer => true;
 
-        [HtmlAttributeName("datasource")]
-        public object DataSource { get; set; }
+        [HtmlAttributeName("source")]
+        public string DataSource { get; set; }
 
-        public IEnumerable<AssetFileExtension> GetAssetFileExtensions() => new[] {
-            AssetFileExtension.Javascript,
-            AssetFileExtension.Stylesheet
-        };
+        [HtmlAttributeName("height")]
+        public int Height { get; set; }
 
-        public IEnumerable<string> GetAssetPaths(AssetFileExtension extension)
-        {
-            if (extension == AssetFileExtension.Javascript)
-            {
-                return new[]{
-                    "bootstrap.bundle.js",
-                    "bootstrap.table.js"
-                };
-            }
-            else if (extension == AssetFileExtension.Stylesheet)
-            {
-                return null;
-            }
+        [HtmlAttributeNotBound]
+        public IList<GridColumn> Columns { get; private set; } = new List<GridColumn>();
 
-            return null;
-        }
     }
 }

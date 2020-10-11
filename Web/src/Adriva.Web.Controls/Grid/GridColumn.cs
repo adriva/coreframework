@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace Adriva.Web.Controls
 {
     [HtmlTargetElement("grid-column", ParentTag = "grid")]
-    [RestrictChildren("column-template")]
+    [RestrictChildren("column-formatter")]
     public class GridColumn : ControlTagHelper
     {
         [HtmlAttributeName("field")]
@@ -24,12 +24,6 @@ namespace Adriva.Web.Controls
         [HtmlAttributeName("minWidth")]
         public int MinWidth { get; set; }
 
-        [HtmlAttributeNotBound]
-        public string Template { get; set; }
-
-        // [HtmlAttributeNotBound]
-        // public RawString Renderer { get; set; }
-
         [HtmlAttributeName("priority")]
         public int Priority { get; set; }
 
@@ -40,10 +34,18 @@ namespace Adriva.Web.Controls
         public string Format { get; set; }
 
         [HtmlAttributeNotBound]
+        public string Formatter { get; set; }
+
+        [HtmlAttributeNotBound]
         public IDictionary<string, string> Events { get; private set; } = new Dictionary<string, string>();
 
         protected override async Task ProcessAsync(IControlOutputContext context)
         {
+            Grid grid = (Grid)context.Parent.Control;
+
+
+            grid.Columns.Add(this);
+
             await Task.CompletedTask;
         }
     }
