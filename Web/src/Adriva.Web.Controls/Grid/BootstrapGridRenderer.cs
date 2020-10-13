@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Adriva.Common.Core;
 using Adriva.Web.Controls.Abstractions;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,14 +19,22 @@ namespace Adriva.Web.Controls
 
         protected override IEnumerable<string> ResolveAssetPaths(IControlOutputContext context)
         {
+            // return new[]{
+            //     "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css",
+            //     "https://use.fontawesome.com/releases/v5.6.3/css/all.css",
+            //     "https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.css",
+            //     "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js",
+            //     "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js",
+            //     "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js",
+            //     "https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.js"
+            // };
+
             return new[]{
-                "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css",
-                "https://use.fontawesome.com/releases/v5.6.3/css/all.css",
-                "https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.css",
-                "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js",
-                "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js",
-                "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js",
-                "https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.js"
+                $"{base.WebControlsOptions.AssetsRootPath}/jquery.js",
+                $"{base.WebControlsOptions.AssetsRootPath}/bootstrap.bundle.js",
+                $"{base.WebControlsOptions.AssetsRootPath}/bootstrap.table.js",
+                $"{base.WebControlsOptions.AssetsRootPath}/bootstrap.min.css",
+                $"{base.WebControlsOptions.AssetsRootPath}/bootstrap.table.css",
             };
         }
 

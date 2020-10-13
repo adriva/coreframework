@@ -5,18 +5,17 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
-using Adriva.Extensions.Optimization.Web;
-using Microsoft.AspNetCore.Html;
 
 namespace Adriva.Web.Controls.Abstractions
 {
     public abstract class DefaultControlRenderer<TControl> : IControlRenderer where TControl : ControlTagHelper
     {
         private readonly WebControlsRendererOptions RendererOptions;
-        private readonly WebControlsOptions Options;
         private readonly IServiceProvider ServiceProvider;
 
         private RendererTagHelper RendererControl;
+
+        protected WebControlsOptions WebControlsOptions { get; private set; }
 
         protected string OptimizationContextName
         {
@@ -26,7 +25,7 @@ namespace Adriva.Web.Controls.Abstractions
 
                 if (!string.IsNullOrWhiteSpace(this.RendererControl.OptimizationContextName))
                 {
-                    optimizationContextName = this.Options.OptimizationContextName;
+                    optimizationContextName = this.WebControlsOptions.OptimizationContextName;
                 }
 
                 if (null == optimizationContextName) optimizationContextName = Microsoft.Extensions.Options.Options.DefaultName;
@@ -38,7 +37,7 @@ namespace Adriva.Web.Controls.Abstractions
         public DefaultControlRenderer(IServiceProvider serviceProvider, IOptions<WebControlsRendererOptions> rendererOptionsAccessor, IOptions<WebControlsOptions> optionsAccessor)
         {
             this.ServiceProvider = serviceProvider;
-            this.Options = optionsAccessor.Value;
+            this.WebControlsOptions = optionsAccessor.Value;
             this.RendererOptions = rendererOptionsAccessor.Value;
         }
 
@@ -47,7 +46,7 @@ namespace Adriva.Web.Controls.Abstractions
 
         }
 
-        private void RenderAssets(IControlOutputContext context, RendererTagAttributes attributes)
+        private void RenderAssets(IControlOutputContext context)
         {
             var assetPaths = this.ResolveAssetPaths(context);
 
@@ -85,7 +84,7 @@ namespace Adriva.Web.Controls.Abstractions
                     if (Uri.TryCreate(path, UriKind.Absolute, out Uri tempUri)) yield return path;
                     else
                     {
-                        yield return $"{this.Options.AssetsRootPath.Value.TrimEnd('/')}/{path.TrimStart('/')}";
+                        yield return $"{this.WebControlsOptions.AssetsRootPath.Value.TrimEnd('/')}/{path.TrimStart('/')}";
                     }
                 }
             }
@@ -103,7 +102,7 @@ namespace Adriva.Web.Controls.Abstractions
                 context.Children[0].Output.Content.MoveTo(context.Output.Content);
                 context.Children[0].Output.PostContent.MoveTo(context.Output.PostContent);
 
-                this.RenderAssets(context, attributes);
+                this.RenderAssets(context);
             }
         }
 
