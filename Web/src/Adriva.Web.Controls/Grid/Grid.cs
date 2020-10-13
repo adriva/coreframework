@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace Adriva.Web.Controls
 {
     [HtmlTargetElement("grid")]
-    [RestrictChildren("grid-column", "grid-pager", "grid-grouping")]
+    [RestrictChildren("grid-column", "grid-pager")]
     public class Grid : ControlTagHelper
     {
         protected override bool RequiresRenderer => true;
@@ -16,8 +16,14 @@ namespace Adriva.Web.Controls
         [HtmlAttributeName("height")]
         public int Height { get; set; }
 
+        [HtmlAttributeName("oninitialized")]
+        public string OnInitialized { get; set; }
+
         [HtmlAttributeNotBound]
         public IList<GridColumn> Columns { get; private set; } = new List<GridColumn>();
+
+        [HtmlAttributeNotBound]
+        public GridPager Pager { get; set; }
 
     }
 }

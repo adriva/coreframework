@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Adriva.Common.Core;
 using Adriva.Web.Controls.Abstractions;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -53,7 +54,8 @@ namespace Adriva.Web.Controls
             contractResolver.AddTypeMapping<Grid>()
                 .MapProperty(x => x.DataSource, "url")
                 .MapProperty(x => x.Columns, "columns")
-                .MapProperty(x => x.Height, "height");
+                .MapProperty(x => x.Height, "height")
+                ;
 
             contractResolver.AddTypeMapping<GridColumn>()
                 .MapProperty(x => x.Field, "field")
@@ -63,6 +65,7 @@ namespace Adriva.Web.Controls
                 .MapProperty(x => x.Alignment, "align")
                 .MapProperty(x => x.IsHidden, "visible", shouldNegate: true);
 
+
             JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings()
             {
                 ContractResolver = contractResolver
@@ -70,7 +73,21 @@ namespace Adriva.Web.Controls
 
             var json = Utilities.SafeSerialize(grid, jsonSerializerSettings);
 
-            context.Output.PostContent.AppendHtml(RendererUtilities.GenerateInitializerScript(context, this.OptimizationContextName, $"var grid = $('#{context.Id}').bootstrapTable({json});"));
+            var postStartupFunction = RendererUtilities.GenerateWrappedScriptCall(grid.OnInitialized, new[] { "grid" }, out string postStartupFunctionName);
+
+            context.Output.PostContent.AppendHtml(
+                RendererUtilities.GenerateInitializerScript(
+                    context,
+                    this.OptimizationContextName,
+                    $"var grid = $('#{context.Id}').bootstrapTable({json});",
+                    string.IsNullOrWhiteSpace(grid.OnInitialized) ? null : $"{postStartupFunctionName}(grid);"
+                )
+            );
+
+            if (!string.IsNullOrWhiteSpace(grid.OnInitialized))
+            {
+                context.Output.PreContent.AppendHtml($"<script>{postStartupFunction}</script>");
+            }
         }
     }
 }

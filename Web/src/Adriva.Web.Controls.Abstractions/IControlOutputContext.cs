@@ -7,6 +7,8 @@ namespace Adriva.Web.Controls.Abstractions
     {
         string Id { get; }
 
+        TagHelperAttribute[] Attributes { get; }
+
         TagHelperOutput Output { get; }
 
         ControlTagHelper Control { get; }

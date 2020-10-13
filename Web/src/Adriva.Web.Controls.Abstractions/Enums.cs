@@ -8,4 +8,10 @@ namespace Adriva.Web.Controls.Abstractions
         Center,
         Right
     }
+
+    public enum ProcessLocation
+    {
+        Client = 0,
+        Server = 1
+    }
 }
