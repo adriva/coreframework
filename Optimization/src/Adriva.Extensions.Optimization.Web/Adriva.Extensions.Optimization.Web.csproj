@@ -21,7 +21,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Title>Adriva Core Framework Optimization Web Library</Title>
     <PackageDescription>TagHelpers, middleware and utility classes that can be used in asp.net applications to optimize resource delivery.</PackageDescription>    
-    <Version>3.0.0-rc03</Version>
+    <Version>3.0.0-rc04</Version>
   </PropertyGroup>
 
 </Project>
