@@ -7,5 +7,6 @@
     <PackageProjectUrl>https://github.com/adriva/coreframework</PackageProjectUrl>
     <RepositoryBranch>master</RepositoryBranch>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <langversion>latest</langversion>
   </PropertyGroup>
 </Project>
