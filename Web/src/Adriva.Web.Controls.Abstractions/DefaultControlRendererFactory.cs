@@ -24,7 +24,16 @@ namespace Adriva.Web.Controls.Abstractions
                 throw new InvalidOperationException($"A control renderer with name '{name}' not found. Have you forgotten to call AddRenderer<T>(string) on IWebControlsBuilder ?");
             }
 
-            return (IControlRenderer)ActivatorUtilities.CreateInstance(this.ServiceProvider, options.RendererType);
+            IControlRendererEvents eventClassInstance = null;
+
+            if (null != options.EventClass)
+            {
+                eventClassInstance = ActivatorUtilities.CreateInstance<IControlRendererEvents>(this.ServiceProvider);
+            }
+
+            eventClassInstance = eventClassInstance ?? NullControlRendererEvents.Current;
+
+            return (IControlRenderer)ActivatorUtilities.CreateInstance(this.ServiceProvider, options.RendererType, options, eventClassInstance);
         }
     }
 }

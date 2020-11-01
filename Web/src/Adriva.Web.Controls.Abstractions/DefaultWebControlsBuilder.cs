@@ -41,6 +41,20 @@ namespace Adriva.Web.Controls.Abstractions
             return this.AddRenderer<TRenderer>(defaultNameAttributeData.ConstructorArguments[0].Value as string);
         }
 
+        public IWebControlsBuilder AddRenderer<TRenderer, TEventClass>() where TRenderer : class, IControlRenderer
+                                                                            where TEventClass : class, IControlRendererEvents
+        {
+            var attributeData = typeof(TRenderer).GetCustomAttributesData();
+            var defaultNameAttributeData = attributeData.FirstOrDefault(x => x.AttributeType == typeof(DefaultNameAttribute));
+
+            if (null == defaultNameAttributeData)
+            {
+                throw new ArgumentException($"Renderer {typeof(TRenderer).FullName} does not have a DefaultNameAttribute and its name cannot be determined. Have you considered using AddRenderer<TRenderer>(string) overload ?");
+            }
+
+            return this.AddRenderer<TRenderer, TEventClass>(defaultNameAttributeData.ConstructorArguments[0].Value as string);
+        }
+
         public IWebControlsBuilder AddRenderer<TRenderer>(string name) where TRenderer : class, IControlRenderer
         {
             if (null == name) throw new ArgumentNullException(nameof(name));
@@ -51,10 +65,18 @@ namespace Adriva.Web.Controls.Abstractions
             });
             return this;
         }
-    }
 
-    public class WebControlsRendererOptions
-    {
-        public Type RendererType { get; set; }
+        public IWebControlsBuilder AddRenderer<TRenderer, TEventClass>(string name) where TRenderer : class, IControlRenderer
+                                                                                    where TEventClass : class, IControlRendererEvents
+        {
+            if (null == name) throw new ArgumentNullException(nameof(name));
+
+            this.Services.Configure<WebControlsRendererOptions>(name, options =>
+            {
+                options.RendererType = typeof(TRenderer);
+                options.EventClass = typeof(TEventClass);
+            });
+            return this;
+        }
     }
 }

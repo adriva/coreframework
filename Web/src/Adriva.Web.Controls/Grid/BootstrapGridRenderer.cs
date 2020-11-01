@@ -11,8 +11,8 @@ namespace Adriva.Web.Controls
     [DefaultName("bootstrap-grid")]
     public partial class BootstrapGridRenderer : DefaultControlRenderer<Grid>
     {
-        public BootstrapGridRenderer(IServiceProvider serviceProvider, IOptions<WebControlsRendererOptions> rendererOptionsAccessor, IOptions<WebControlsOptions> optionsAccessor)
-            : base(serviceProvider, rendererOptionsAccessor, optionsAccessor)
+        public BootstrapGridRenderer(IServiceProvider serviceProvider, WebControlsRendererOptions rendererOptions, IControlRendererEvents events, IOptions<WebControlsOptions> optionsAccessor)
+            : base(serviceProvider, rendererOptions, events, optionsAccessor)
         {
 
         }

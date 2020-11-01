@@ -17,6 +17,8 @@ namespace Adriva.Web.Controls.Abstractions
 
         protected WebControlsOptions WebControlsOptions { get; private set; }
 
+        protected IControlRendererEvents Events { get; private set; }
+
         protected string OptimizationContextName
         {
             get
@@ -34,11 +36,12 @@ namespace Adriva.Web.Controls.Abstractions
             }
         }
 
-        public DefaultControlRenderer(IServiceProvider serviceProvider, IOptions<WebControlsRendererOptions> rendererOptionsAccessor, IOptions<WebControlsOptions> optionsAccessor)
+        public DefaultControlRenderer(IServiceProvider serviceProvider, WebControlsRendererOptions rendererOptions, IControlRendererEvents events, IOptions<WebControlsOptions> optionsAccessor)
         {
             this.ServiceProvider = serviceProvider;
             this.WebControlsOptions = optionsAccessor.Value;
-            this.RendererOptions = rendererOptionsAccessor.Value;
+            this.RendererOptions = rendererOptions;
+            this.Events = events;
         }
 
         protected virtual void RenderRootControl(TControl control, IControlOutputContext context)
@@ -46,9 +49,11 @@ namespace Adriva.Web.Controls.Abstractions
 
         }
 
-        private void RenderAssets(IControlOutputContext context)
+        private async Task RenderAssetsAsync(IControlOutputContext context)
         {
             var assetPaths = this.ResolveAssetPaths(context);
+
+            assetPaths = await this.Events.OnAssetPathsResolved(assetPaths);
 
             var currentHttpContext = context.GetHttpContext();
             var optimizationScope = currentHttpContext.RequestServices.GetRequiredService<IOptimizationScope>();
@@ -92,6 +97,12 @@ namespace Adriva.Web.Controls.Abstractions
 
         public virtual void Render(IControlOutputContext context, RendererTagAttributes attributes)
         {
+            Task renderTask = this.RenderAsync(context, attributes);
+            renderTask.GetAwaiter().GetResult();
+        }
+
+        public virtual async Task RenderAsync(IControlOutputContext context, RendererTagAttributes attributes)
+        {
             this.RendererControl = context.Control as RendererTagHelper;
             if (null == context.Parent)
             {
@@ -102,14 +113,8 @@ namespace Adriva.Web.Controls.Abstractions
                 context.Children[0].Output.Content.MoveTo(context.Output.Content);
                 context.Children[0].Output.PostContent.MoveTo(context.Output.PostContent);
 
-                this.RenderAssets(context);
+                await this.RenderAssetsAsync(context);
             }
-        }
-
-        public virtual async Task RenderAsync(IControlOutputContext context, RendererTagAttributes attributes)
-        {
-            await Task.CompletedTask;
-            this.Render(context, attributes);
         }
     }
 }
