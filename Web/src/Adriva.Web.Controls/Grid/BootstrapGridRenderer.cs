@@ -5,6 +5,7 @@ using Adriva.Web.Controls.Abstractions;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Adriva.Web.Controls
 {
@@ -49,8 +50,7 @@ namespace Adriva.Web.Controls
 
             var contractResolver = new BootstrapGridRenderer.GridContractResolver();
 
-            contractResolver.AddTypeMapping<Grid>()
-                .MapProperty(x => x.DataSource, "url")
+            var mappingBuilder = contractResolver.AddTypeMapping<Grid>()
                 .MapProperty(x => x.Columns, "columns")
                 .MapProperty(x => x.Height, "height")
                 ;
@@ -62,6 +62,16 @@ namespace Adriva.Web.Controls
                 .MapProperty(x => x.Formatter, "formatter")
                 .MapProperty(x => x.Alignment, "align")
                 .MapProperty(x => x.IsHidden, "visible", shouldNegate: true);
+
+
+            if (grid.DataSource is string)
+            {
+                mappingBuilder.MapProperty(x => x.DataSource, "url");
+            }
+            else
+            {
+                mappingBuilder.MapProperty(x => x.DataSource, "data", new DataSourceConverter());
+            }
 
 
             JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings()

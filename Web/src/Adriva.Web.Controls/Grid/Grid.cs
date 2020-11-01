@@ -11,7 +11,7 @@ namespace Adriva.Web.Controls
         protected override bool RequiresRenderer => true;
 
         [HtmlAttributeName("source")]
-        public string DataSource { get; set; }
+        public object DataSource { get; set; }
 
         [HtmlAttributeName("height")]
         public int Height { get; set; }

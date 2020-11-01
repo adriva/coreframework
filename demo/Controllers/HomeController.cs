@@ -41,6 +41,18 @@ namespace demo.Controllers
         }
     }
 
+    [Serializable]
+    public class TestDataItem
+    {
+        public long Id { get; set; }
+
+        public string Name { get; set; }
+
+        public bool IsSelected { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+    }
+
     public class HomeController : Controller
     {
         private static readonly Random Rnd = new Random();

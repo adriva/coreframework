@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace Adriva.Common.Core.Serialization.Json
 {
     public sealed class PropertyContract
@@ -7,6 +9,8 @@ namespace Adriva.Common.Core.Serialization.Json
         public bool ShouldNegate { get; set; }
 
         public bool IgnoreDefaultValue { get; set; }
+
+        public JsonConverter Converter { get; set; }
 
         public PropertyContract(string overridenName)
         {

@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Adriva.Common.Core.Serialization.Json;
 using Newtonsoft.Json.Converters;
+using System.Reflection;
 
 namespace Adriva.Web.Controls
 {
@@ -35,13 +36,6 @@ namespace Adriva.Web.Controls
                             ShouldSerialize = x => null != ((Grid)x).Pager,
                             Converter = new StringEnumConverter(new CamelCaseNamingStrategy(), true)
                         },
-                        // new JsonProperty(){
-                        //     PropertyName = "queryParams",
-                        //     PropertyType = typeof(RawString),
-                        //     ValueProvider = new DynamicValueProvider<Grid, RawString>(x => "function hede(p){debugger;}", null),
-                        //     Readable = true,
-                        //     ShouldSerialize = x => null != ((Grid)x).Pager,
-                        // },
                     };
                 }
 

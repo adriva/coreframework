@@ -38,11 +38,19 @@ namespace Adriva.Web.Controls.Abstractions
                     {
                         property.Ignored = false;
                         property.PropertyName = propertyContract.OverridenName;
-                        property.DefaultValueHandling = propertyContract.IgnoreDefaultValue ? DefaultValueHandling.Ignore : DefaultValueHandling.Include;
+                        if (!property.DefaultValueHandling.HasValue)
+                        {
+                            property.DefaultValueHandling = propertyContract.IgnoreDefaultValue ? DefaultValueHandling.Ignore : DefaultValueHandling.Include;
+                        }
 
                         if (property.PropertyType.IsEnum)
                         {
                             property.Converter = new StringEnumConverter(new CamelCaseNamingStrategy(), true);
+                        }
+
+                        if (null != propertyContract.Converter)
+                        {
+                            property.Converter = propertyContract.Converter;
                         }
 
                         if (propertyContract.ShouldNegate && property.PropertyType.Equals(typeof(bool)))

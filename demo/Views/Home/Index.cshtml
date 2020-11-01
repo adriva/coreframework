@@ -6,7 +6,7 @@
 assets-only="true">
     <div></div>
     <div>
-        <grid id="dd" source="https://jsonplaceholder.typicode.com/posts" height="600" class="table-striped">
+        <grid id="dd" source="@("https://jsonplaceholder.typicode.com/posts")" height="600" class="table-striped">
             <grid-column title="Id" field="id" ishidden="false">
                 <column-formatter>
                     (v,r)=>'<b>' + v + '</b>'
