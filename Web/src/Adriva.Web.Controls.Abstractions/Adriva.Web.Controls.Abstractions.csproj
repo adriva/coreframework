@@ -5,8 +5,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\src\Adriva.Common.Core.csproj" />
     <ProjectReference Include="..\..\..\Optimization\src\Adriva.Extensions.Optimization.Web\Adriva.Extensions.Optimization.Web.csproj" />
+    <ProjectReference Include="..\Adriva.Web.Common\Adriva.Web.Common.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

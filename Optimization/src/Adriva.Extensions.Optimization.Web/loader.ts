@@ -17,6 +17,10 @@ namespace adriva {
             private static assetPaths: Array<assetReference> = [];
             private static loadedContextNames: Array<string> = [];
 
+            public static get hasAssets(): boolean {
+                return 0 < loader.assetPaths.length;
+            }
+
             public static push(path: string, contextName: string, type: assetType): void {
                 if (!path) return;
                 if (!loader.isAttached) {

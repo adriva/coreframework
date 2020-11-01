@@ -11,7 +11,7 @@ namespace Adriva.Web.Controls.Abstractions
             if (null != startupScript && !startupScript.EndsWith(';')) startupScript = startupScript + ";";
 
             string initializerScript = $"function initialize{context.Id}(){{ {startupScript}{postStartupScript} }};";
-            string loaderScript = "if (adriva && adriva.optimization && adriva.optimization.loader){"
+            string loaderScript = "if (adriva && adriva.optimization && adriva.optimization.loader && adriva.optimization.loader.hasAssets){"
                                     + $"if (adriva.optimization.loader.isReady('{optimizationContextName}')) {{ initialize{context.Id}(); }}"
                                     + $"else {{ document.addEventListener('contextReady', function(e){{ if('{optimizationContextName}'===e.detail){{ initialize{context.Id}(); }}; }}); }}"
                                 + "}"

@@ -18,6 +18,13 @@ var adriva;
         var loader = /** @class */ (function () {
             function loader() {
             }
+            Object.defineProperty(loader, "hasAssets", {
+                get: function () {
+                    return 0 < loader.assetPaths.length;
+                },
+                enumerable: true,
+                configurable: true
+            });
             loader.push = function (path, contextName, type) {
                 if (!path)
                     return;

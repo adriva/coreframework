@@ -19,22 +19,13 @@ namespace Adriva.Web.Controls
 
         protected override IEnumerable<string> ResolveAssetPaths(IControlOutputContext context)
         {
-            // return new[]{
-            //     "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css",
-            //     "https://use.fontawesome.com/releases/v5.6.3/css/all.css",
-            //     "https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.css",
-            //     "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js",
-            //     "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js",
-            //     "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js",
-            //     "https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.js"
-            // };
-
+            var viewContext = context.Control.ViewContext;
             return new[]{
-                $"{base.WebControlsOptions.AssetsRootPath}/jquery.js",
-                $"{base.WebControlsOptions.AssetsRootPath}/bootstrap.bundle.js",
-                $"{base.WebControlsOptions.AssetsRootPath}/bootstrap.table.js",
-                $"{base.WebControlsOptions.AssetsRootPath}/bootstrap.min.css",
-                $"{base.WebControlsOptions.AssetsRootPath}/bootstrap.table.css",
+                viewContext.Asset("jquery.js"),
+                viewContext.Asset("bootstrap.bundle.js"),
+                viewContext.Asset("bootstrap.table.js"),
+                viewContext.Asset("bootstrap.min.css"),
+                viewContext.Asset("bootstrap.table.css"),
             };
         }
 
