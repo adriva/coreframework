@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Routing;
+using System;
 
 namespace Adriva.Web.Controls.Abstractions
 {
@@ -30,19 +31,19 @@ namespace Adriva.Web.Controls.Abstractions
             }
         }
 
-        public static string Asset(this IUrlHelper url, string resourceName)
+        public static string Asset(this IUrlHelper url, string resourceName, UriKind outputType = UriKind.Relative)
         {
             WebControlsUrlExtensions.PopulateWebControlsOptionsOnce(url.ActionContext.HttpContext);
 
-            return url.ActionContext.Asset(resourceName);
+            return url.ActionContext.Asset(resourceName, outputType);
         }
 
-        public static string Asset(this ActionContext actionContext, string resourceName)
+        public static string Asset(this ActionContext actionContext, string resourceName, UriKind outputType = UriKind.Relative)
         {
             WebControlsUrlExtensions.PopulateWebControlsOptionsOnce(actionContext.HttpContext);
 
             var urlHelper = WebControlsUrlExtensions.UrlHelperFactory.GetUrlHelper(actionContext);
-            var assetsRoot = actionContext.HttpContext.Request.GetApplicationUri(WebControlsUrlExtensions.WebControlsOptions.AssetsRootPath, resourceName);
+            var assetsRoot = actionContext.HttpContext.Request.GetApplicationUri(UriKind.Relative, WebControlsUrlExtensions.WebControlsOptions.AssetsRootPath, resourceName);
             return assetsRoot.ToString();
         }
     }

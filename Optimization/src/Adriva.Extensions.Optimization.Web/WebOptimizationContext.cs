@@ -9,7 +9,7 @@ using System.Text;
 using Microsoft.Extensions.FileProviders;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
+using Adriva.Web.Common;
 
 namespace Adriva.Extensions.Optimization.Web
 {
@@ -70,8 +70,7 @@ namespace Adriva.Extensions.Optimization.Web
                 {
                     buffer.Clear();
                     var request = this.HttpContext.Request;
-                    buffer.Append($"{request.Scheme}://{request.Host.Value}{request.PathBase}/{pathOrUrl.TrimStart('/')}");
-                    if (Uri.TryCreate(buffer.ToString(), UriKind.Absolute, out assetUri)) return assetUri;
+                    return request.GetApplicationUri(UriKind.Absolute, pathOrUrl);
                 }
             }
             return null;

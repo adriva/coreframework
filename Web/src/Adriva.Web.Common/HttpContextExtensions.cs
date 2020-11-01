@@ -5,7 +5,7 @@ namespace Adriva.Web.Common
 {
     public static class HttpContextExtensions
     {
-        public static Uri GetApplicationUri(this HttpRequest request, params string[] paths)
+        public static Uri GetApplicationUri(this HttpRequest request, UriKind outputType, params string[] paths)
         {
             if (null == request) throw new ArgumentNullException(nameof(request));
 
@@ -30,7 +30,16 @@ namespace Adriva.Web.Common
             UriBuilder builder = new UriBuilder(request.Scheme, request.Host.Host);
             builder.Port = request.Host.Port ?? -1;
             builder.Path = request.PathBase.Add(normalizedPath);
-            return builder.Uri;
+
+            switch (outputType)
+            {
+                case UriKind.Absolute:
+                    return builder.Uri;
+                default:
+                    var requestUri = request.GetApplicationUri(UriKind.Absolute, request.Path);
+                    return requestUri.MakeRelativeUri(builder.Uri);
+            }
+
         }
     }
 }

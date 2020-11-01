@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Adriva.Extensions.Optimization.Transforms\Adriva.Extensions.Optimization.Transforms.csproj" />
+    <ProjectReference Include="..\..\..\Web\src\Adriva.Web.Common\Adriva.Web.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
