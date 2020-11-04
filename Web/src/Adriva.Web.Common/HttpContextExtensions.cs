@@ -7,6 +7,7 @@ namespace Adriva.Web.Common
     {
         public static Uri GetApplicationUri(this HttpRequest request, UriKind outputType, params string[] paths)
         {
+
             if (null == request) throw new ArgumentNullException(nameof(request));
 
             PathString normalizedPath = new PathString(string.Empty);
