@@ -9,6 +9,9 @@ demo/wwwroot/assets/
 ##sqlite analytics database
 analytics.db*
 
+## project specific files
+Adriva.Extensions.Optimization.Web/loader.js
+
 # User-specific files
 *.suo
 *.user
