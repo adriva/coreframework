@@ -10,7 +10,7 @@ demo/wwwroot/assets/
 analytics.db*
 
 ## project specific files
-Adriva.Extensions.Optimization.Web/loader.js
+/Optimization/src/Adriva.Extensions.Optimization.Web/loader.js
 
 # User-specific files
 *.suo
