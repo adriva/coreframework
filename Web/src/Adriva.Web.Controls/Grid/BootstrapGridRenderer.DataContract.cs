@@ -36,6 +36,27 @@ namespace Adriva.Web.Controls
                             ShouldSerialize = x => null != ((Grid)x).Pager,
                             Converter = new StringEnumConverter(new CamelCaseNamingStrategy(), true)
                         },
+                        new JsonProperty(){
+                            PropertyName = "queryParamsType",
+                            PropertyType = typeof(string),
+                            ValueProvider = new DynamicValueProvider<Grid, string>(x => string.Empty, null),
+                            Readable = true,
+                            ShouldSerialize = x => true
+                        },
+                        new JsonProperty(){
+                            PropertyName = "detailViewIcon",
+                            PropertyType = typeof(bool),
+                            ValueProvider = new DynamicValueProvider<Grid, bool>(x => x.ShowDetails, null),
+                            Readable = true,
+                            ShouldSerialize = x => ((Grid)x).ShowDetails
+                        },
+                        new JsonProperty(){
+                            PropertyName = "detailFormatter",
+                            PropertyType = typeof(RawString),
+                            ValueProvider = new DynamicValueProvider<Grid, RawString>(x => x.DetailsFormatter, null),
+                            Readable = true,
+                            ShouldSerialize = x => ((Grid)x).ShowDetails
+                        }
                     };
                 }
 

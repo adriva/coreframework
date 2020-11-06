@@ -30,6 +30,15 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 applicationBuilder.UseMiddleware<ResourceLoaderMiddleware>();
             });
+
+            if (0 != string.Compare(options.AssetsRootPath, options.DefaultAssetRootPath, StringComparison.OrdinalIgnoreCase))
+            {
+                app.Map(options.DefaultAssetRootPath, (applicationBuilder) =>
+                {
+                    applicationBuilder.UseMiddleware<ResourceLoaderMiddleware>();
+                });
+            }
+
             return app;
         }
     }

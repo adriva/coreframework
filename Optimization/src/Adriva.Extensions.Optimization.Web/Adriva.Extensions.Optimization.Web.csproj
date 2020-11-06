@@ -13,7 +13,7 @@
     <EmbeddedResource Include="loader.js" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="tsc -p &quot;$(MSBuildThisFileDirectory)tsconfig.json&quot;" />
   </Target>
 

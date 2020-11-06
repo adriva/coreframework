@@ -5,7 +5,6 @@ using Adriva.Web.Controls.Abstractions;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace Adriva.Web.Controls
 {
@@ -27,6 +26,7 @@ namespace Adriva.Web.Controls
                 viewContext.Asset("bootstrap.table.js"),
                 viewContext.Asset("bootstrap.min.css"),
                 viewContext.Asset("bootstrap.table.css"),
+                viewContext.Asset("font-awesome.css")
             };
         }
 
@@ -53,6 +53,7 @@ namespace Adriva.Web.Controls
             var mappingBuilder = contractResolver.AddTypeMapping<Grid>()
                 .MapProperty(x => x.Columns, "columns")
                 .MapProperty(x => x.Height, "height")
+                .MapProperty(x => x.ShowDetails, "detailView")
                 ;
 
             contractResolver.AddTypeMapping<GridColumn>()

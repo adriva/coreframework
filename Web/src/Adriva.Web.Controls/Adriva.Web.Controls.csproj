@@ -21,6 +21,9 @@
     <EmbeddedResource Include="Assets/*.woff">
       <LogicalName>Adriva.Web.Controls.%(filename)%(extension)</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Assets/*.woff2">
+      <LogicalName>Adriva.Web.Controls.%(filename)%(extension)</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Assets/*.ttf">
       <LogicalName>Adriva.Web.Controls.%(filename)%(extension)</LogicalName>
     </EmbeddedResource>
@@ -35,5 +38,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Adriva.Web.Controls.Abstractions\Adriva.Web.Controls.Abstractions.csproj" />
   </ItemGroup>
-
 </Project>

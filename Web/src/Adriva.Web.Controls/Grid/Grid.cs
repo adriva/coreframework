@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Adriva.Common.Core.Serialization.Json;
 using Adriva.Web.Controls.Abstractions;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -15,6 +16,12 @@ namespace Adriva.Web.Controls
 
         [HtmlAttributeName("height")]
         public int Height { get; set; }
+
+        [HtmlAttributeName("showdetails")]
+        public bool ShowDetails { get; set; }
+
+        [HtmlAttributeName("detailsformatter")]
+        public string DetailsFormatter { get; set; }
 
         [HtmlAttributeName("oninitialized")]
         public string OnInitialized { get; set; }

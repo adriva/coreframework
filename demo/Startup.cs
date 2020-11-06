@@ -41,7 +41,7 @@ namespace demo
 
             services.AddOptimization(options =>
             {
-                bool enableOpt = false;
+                bool enableOpt = true;
                 options.BundleStylesheets = enableOpt;
                 options.MinifyStylesheets = enableOpt;
                 options.BundleJavascripts = enableOpt;
