@@ -46,6 +46,11 @@ namespace Adriva.Web.Controls
             tagBuilder.TagRenderMode = TagRenderMode.Normal;
             tagBuilder.GenerateId(context.Id, "_");
 
+            foreach (var attribute in context.Attributes)
+            {
+                tagBuilder.Attributes.TryAdd(attribute.Name, Convert.ToString(attribute.Value));
+            }
+
             context.Output.Content.SetHtmlContent(tagBuilder);
 
             var contractResolver = new BootstrapGridRenderer.GridContractResolver();
@@ -54,6 +59,7 @@ namespace Adriva.Web.Controls
                 .MapProperty(x => x.Columns, "columns")
                 .MapProperty(x => x.Height, "height")
                 .MapProperty(x => x.ShowDetails, "detailView")
+                .MapProperty(x => x.ResponseFormatter, "responseHandler")
                 ;
 
             contractResolver.AddTypeMapping<GridColumn>()

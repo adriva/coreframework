@@ -26,6 +26,9 @@ namespace Adriva.Web.Controls
         [HtmlAttributeName("oninitialized")]
         public string OnInitialized { get; set; }
 
+        [HtmlAttributeName("responseformatter")]
+        public string ResponseFormatter { get; set; }
+
         [HtmlAttributeNotBound]
         public IList<GridColumn> Columns { get; private set; } = new List<GridColumn>();
 
