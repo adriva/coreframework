@@ -6,19 +6,14 @@
 assets-only="true">
     <div></div>
     <div>
-        <grid id="dd" source="@this.Url.Action("albums", "data")" height="600" class="table-striped" showdetails="true" detailsformatter="hede">
+        <grid id="dd" source="@this.Url.Action("promotions", "data")" height="600" class="table-striped" showdetails="true" detailsformatter="hede">
             <grid-column title="Id" field="id" ishidden="false">
                 <column-formatter>
                     (v,r)=>'<b>' + v + '</b>'
                 </column-formatter>
             </grid-column>
-            <grid-column title="Name" field="title"></grid-column>
-            <grid-column title="zsdad" alignment="Center">
-                <column-formatter>
-                    (v,r)=>'<input type="checkbox" title="' + r.id + '" />'
-                </column-formatter>
-            </grid-column>
-            <grid-pager location="Server" />
+            <grid-column title="Name" field="name"></grid-column>
+            <grid-pager location="Server" pagesizes="10,20,50" />
         </grid>
     </div>
 </renderer>

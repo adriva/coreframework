@@ -2,8 +2,11 @@ using System;
 using Adriva.Storage.Abstractions;
 using Adriva.Storage.Azure;
 using Adriva.Web.Controls.Abstractions;
+using demo.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -41,7 +44,7 @@ namespace demo
 
             services.AddOptimization(options =>
             {
-                bool enableOpt = true;
+                bool enableOpt = false;
                 options.BundleStylesheets = enableOpt;
                 options.MinifyStylesheets = enableOpt;
                 options.BundleJavascripts = enableOpt;
@@ -108,6 +111,14 @@ namespace demo
                    ;
                 });
             }
+
+            services.AddDbContext<JarrtDbContext>(builder =>
+            {
+                builder.UseSqlServer("data source=kwzh9m06kp.database.windows.net;initial catalog=marketplace;persist security info=True;user id=asos_db@kwzh9m06kp;password=AdrivaAdriva1;MultipleActiveResultSets=True;App=EntityFramework", sqlBuilder =>
+                {
+
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

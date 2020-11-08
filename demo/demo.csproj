@@ -13,12 +13,13 @@
     <ProjectReference Include="..\Analytics\src\Adriva.Extensions.Analytics.Repository.EntityFramework\Adriva.Extensions.Analytics.Repository.EntityFramework.csproj" />
     <ProjectReference Include="..\Analytics\src\Adriva.Extensions.Analytics.Repository.EntityFramework.SqlLite\Adriva.Extensions.Analytics.Repository.EntityFramework.SqlLite.csproj" />
     <ProjectReference Include="..\Storage\src\Adriva.Storage.Azure\Adriva.Storage.Azure.csproj" />
-    <ProjectReference Include="..\Web\src\Adriva.Web.Controls\Adriva.Web.Controls.csproj" />
+    <ProjectReference Include="..\Web\src\Adriva.Web.Controls\Adriva.Web.Controls.csproj" />    
   </ItemGroup>
 
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
   </ItemGroup>
 
 </Project>

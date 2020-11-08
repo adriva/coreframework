@@ -29,6 +29,12 @@ namespace Adriva.Web.Controls
         [HtmlAttributeName("responseformatter")]
         public string ResponseFormatter { get; set; }
 
+        [HtmlAttributeName("datafield")]
+        public string DataFieldName { get; set; } = "items";
+
+        [HtmlAttributeName("totalField")]
+        public string TotalFieldName { get; set; } = "recordCount";
+
         [HtmlAttributeNotBound]
         public IList<GridColumn> Columns { get; private set; } = new List<GridColumn>();
 

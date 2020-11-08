@@ -6,10 +6,10 @@ namespace Adriva.Common.Core
     public interface IPagedResult
     {
         /// <summary>
-        /// Gets the current page index of the resultset.
+        /// Gets the current page index of the resultset. Page index is 1 based.
         /// </summary>
         /// <value>An Int32 value representing the current page index.</value>
-        int PageIndex { get; }
+        int PageNumber { get; }
 
         /// <summary>
         /// Gets the total number of pages of the overall resultset.

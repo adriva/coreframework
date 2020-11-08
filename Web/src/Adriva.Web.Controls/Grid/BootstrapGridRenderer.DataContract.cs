@@ -56,6 +56,13 @@ namespace Adriva.Web.Controls
                             ValueProvider = new DynamicValueProvider<Grid, RawString>(x => x.DetailsFormatter, null),
                             Readable = true,
                             ShouldSerialize = x => ((Grid)x).ShowDetails
+                        },
+                        new JsonProperty(){
+                            PropertyName = "pageList",
+                            PropertyType = typeof(string),
+                            ValueProvider = new DynamicValueProvider<Grid, string>(x => $"[{x.Pager?.PageSizes ?? "10,50,100"}]", null),
+                            Readable = true,
+                            ShouldSerialize = x => null != ((Grid)x).Pager
                         }
                     };
                 }

@@ -1,33 +1,30 @@
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Adriva.Common.Core;
 using Adriva.Extensions.Caching.Abstractions;
+using demo.Database;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace demo.Controllers
 {
     public class DataController : Controller
     {
-        private readonly HttpClient HttpClient;
+        private readonly JarrtDbContext DbContext;
         private readonly ICache Cache;
 
-        public DataController(IHttpClientFactory httpClientFactory, ICache cache)
+        public DataController(JarrtDbContext dbContext, ICache cache)
         {
-            this.HttpClient = httpClientFactory.CreateClient();
+            this.DbContext = dbContext;
             this.Cache = cache;
         }
 
-        private async Task<string> CallTestApiAsync(string url)
+        public async Task<IActionResult> Promotions(int pageNumber = 1, int pageSize = 10)
         {
-            return await this.Cache.GetOrCreateAsync(url, async (entry) =>
-            {
-                return await this.HttpClient.GetStringAsync(url);
-            });
-        }
+            var results = await this.DbContext.Promotions.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
-        public async Task<IActionResult> Albums()
-        {
-            string json = await this.CallTestApiAsync("https://jsonplaceholder.typicode.com/albums");
-            return this.Content(json, "application/json");
+            return this.StatusCode(200, new PagedResult<Promotion>(results, 1, 5, 1000));
         }
     }
 }

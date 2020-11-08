@@ -9,6 +9,9 @@ namespace Adriva.Web.Controls
         [HtmlAttributeName("location")]
         public ProcessLocation ProcessLocation { get; set; }
 
+        [HtmlAttributeName("pagesizes")]
+        public string PageSizes { get; set; }
+
         protected override void Process(IControlOutputContext context)
         {
             var grid = (Grid)context.Parent.Control;

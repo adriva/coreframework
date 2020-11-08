@@ -1,3 +1,5 @@
+using System;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace Adriva.Common.Core.Serialization.Json
@@ -20,6 +22,19 @@ namespace Adriva.Common.Core.Serialization.Json
         public static implicit operator RawString(string text)
         {
             return new RawString(text);
+        }
+
+        public static implicit operator RawString(Array array)
+        {
+            if (null != array)
+            {
+                string s = Utilities.SafeSerialize(array);
+                return new RawString(s);
+            }
+            else
+            {
+                return new RawString("null");
+            }
         }
 
         public static implicit operator string(RawString rawString)

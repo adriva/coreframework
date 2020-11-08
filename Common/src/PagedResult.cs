@@ -23,8 +23,8 @@ namespace Adriva.Common.Core
         /// Gets the index of the current page within the whole availabe pages. 
         /// </summary>
         /// <value>A System.Int32 value representing the current page index.</value>
-        [JsonProperty("pageIndex")]
-        public int PageIndex { get; private set; }
+        [JsonProperty("pageNumber")]
+        public int PageNumber { get; private set; }
 
         [JsonProperty("pageCount")]
         public int PageCount { get; private set; }
@@ -44,7 +44,7 @@ namespace Adriva.Common.Core
         public PagedResult(IEnumerable<T> items, int pageIndex, int pageCount, long recordCount)
         {
             this.Items = items;
-            this.PageIndex = Math.Max(0, pageIndex);
+            this.PageNumber = Math.Max(1, pageIndex);
             this.PageCount = Math.Max(0, pageCount);
             this.RecordCount = recordCount;
         }

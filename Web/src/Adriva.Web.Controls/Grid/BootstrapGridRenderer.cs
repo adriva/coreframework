@@ -60,6 +60,8 @@ namespace Adriva.Web.Controls
                 .MapProperty(x => x.Height, "height")
                 .MapProperty(x => x.ShowDetails, "detailView")
                 .MapProperty(x => x.ResponseFormatter, "responseHandler")
+                .MapProperty(x => x.DataFieldName, "dataField", false)
+                .MapProperty(x => x.TotalFieldName, "totalField", false)
                 ;
 
             contractResolver.AddTypeMapping<GridColumn>()
@@ -68,7 +70,8 @@ namespace Adriva.Web.Controls
                 .MapProperty(x => x.Width, "width")
                 .MapProperty(x => x.Formatter, "formatter")
                 .MapProperty(x => x.Alignment, "align")
-                .MapProperty(x => x.IsHidden, "visible", shouldNegate: true);
+                .MapProperty(x => x.IsHidden, "visible", shouldNegate: true)
+                ;
 
 
             if (grid.DataSource is string)
