@@ -5,7 +5,7 @@
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
     <Title>Adriva Web Controls Library</Title>
     <PackageDescription>Includes common (shared) asp net core web controls.</PackageDescription>    
-    <Version>3.0.0-rc02</Version>
+    <Version>3.0.0-rc03</Version>
   </PropertyGroup>
 
   <ItemGroup>
