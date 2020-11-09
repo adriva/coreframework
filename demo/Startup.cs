@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Adriva.Storage.Abstractions;
 using Adriva.Storage.Azure;
 using Adriva.Web.Controls.Abstractions;
@@ -18,12 +19,15 @@ namespace demo
     {
         private bool DisableAnalytics = true;
 
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; }
+        public IHostEnvironment HostingEnvironment { get; }
+
+        public Startup(IConfiguration configuration, IHostEnvironment hostingEnvironment)
         {
             Configuration = configuration;
+            this.HostingEnvironment = hostingEnvironment;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -117,6 +121,14 @@ namespace demo
                 builder.UseSqlServer("data source=kwzh9m06kp.database.windows.net;initial catalog=marketplace;persist security info=True;user id=asos_db@kwzh9m06kp;password=AdrivaAdriva1;MultipleActiveResultSets=True;App=EntityFramework", sqlBuilder =>
                 {
 
+                });
+            });
+
+            services.AddReporting(reportingBuilder =>
+            {
+                reportingBuilder.UseFileSystemRepository(options =>
+                {
+                    options.RootPath = Path.Combine(this.HostingEnvironment.ContentRootPath, "Reports");
                 });
             });
         }

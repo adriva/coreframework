@@ -1,0 +1,10 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Adriva.Extensions.Reporting.Abstractions
+{
+    public interface IReportRepository
+    {
+        Task<IEnumerable<ReportDefinitionFile>> ResolveReportDefinitionChainAsync(string name);
+    }
+}
