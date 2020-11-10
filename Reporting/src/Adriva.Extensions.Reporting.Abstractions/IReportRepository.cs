@@ -5,6 +5,6 @@ namespace Adriva.Extensions.Reporting.Abstractions
 {
     public interface IReportRepository
     {
-        Task<IEnumerable<ReportDefinitionFile>> ResolveReportDefinitionChainAsync(string name);
+        Task<ReportDefinition> LoadReportDefinitionAsync(string name);
     }
 }

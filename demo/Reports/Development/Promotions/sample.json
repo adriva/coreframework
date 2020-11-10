@@ -1,5 +1,4 @@
 {
-    "he": {},
-    "base": "./base.json",
-    "ad": {}
+    "base": "basereport",
+    "name": "promotions sample report"
 }

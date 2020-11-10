@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
+using Adriva.Extensions.Reporting.Abstractions;
 using Adriva.Storage.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Cosmos.Table;
@@ -55,16 +56,19 @@ namespace demo.Controllers
 
     public class HomeController : Controller
     {
+        private readonly IReportingService ReportingService;
         private static readonly Random Rnd = new Random();
 
         public int X { get; set; } = 0;
 
-        public HomeController()
+        public HomeController(IReportingService reportingService)
         {
+            this.ReportingService = reportingService;
         }
 
         public async Task<IActionResult> Index()
         {
+            var rd = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
             var tc = this.HttpContext.RequestServices.GetService<Microsoft.ApplicationInsights.TelemetryClient>();
             if (null != tc)
             {

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\src\Adriva.Common.Core.csproj" />
+    <ProjectReference Include="..\..\..\Caching\src\Adriva.Extensions.Caching.Abstractions\Adriva.Extensions.Caching.Abstractions.csproj" />
   </ItemGroup>
 
   <ItemGroup>

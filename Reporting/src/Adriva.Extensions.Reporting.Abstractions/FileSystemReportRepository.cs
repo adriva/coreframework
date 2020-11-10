@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Adriva.Common.Core;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
+using System.Linq;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
@@ -126,7 +128,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             return output;
         }
 
-        public async Task<IEnumerable<ReportDefinitionFile>> ResolveReportDefinitionChainAsync(string name)
+        private async Task<IEnumerable<ReportDefinitionFile>> ResolveReportDefinitionChainAsync(string name)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
 
@@ -138,6 +140,24 @@ namespace Adriva.Extensions.Reporting.Abstractions
             output.AddRange(baseChain);
             output.Reverse();
             return output;
+        }
+
+        public async Task<ReportDefinition> LoadReportDefinitionAsync(string name)
+        {
+            var reportDefinitionFiles = await this.ResolveReportDefinitionChainAsync(name);
+
+            if (null == reportDefinitionFiles || !reportDefinitionFiles.Any()) return null;
+
+            ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+            configurationBuilder.SetBasePath(this.Options.RootPath);
+
+            foreach (var reportDefinitionFile in reportDefinitionFiles)
+            {
+                configurationBuilder.AddJsonFile(Path.Combine(reportDefinitionFile.Path, reportDefinitionFile.Name), true);
+            }
+
+            var reportConfiguration = configurationBuilder.Build();
+            return reportConfiguration.Get<ReportDefinition>();
         }
     }
 }

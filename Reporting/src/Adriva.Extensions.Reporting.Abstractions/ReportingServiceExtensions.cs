@@ -1,4 +1,5 @@
 using System;
+using Adriva.Extensions.Reporting.Abstractions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -7,6 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddReporting(this IServiceCollection services, Action<IReportingBuilder> build)
         {
             ReportingBuilder builder = new ReportingBuilder(services);
+            services.AddSingleton<IReportingService, ReportingService>();
             build?.Invoke(builder);
             return services;
         }
