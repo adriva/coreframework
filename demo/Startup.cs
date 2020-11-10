@@ -126,7 +126,7 @@ namespace demo
 
             services.AddReporting(reportingBuilder =>
             {
-                reportingBuilder.UseCache(true, TimeSpan.FromMinutes(20));
+                reportingBuilder.UseCache(false, TimeSpan.FromMinutes(20));
                 reportingBuilder.UseFileSystemRepository(options =>
                 {
                     options.RootPath = Path.Combine(this.HostingEnvironment.ContentRootPath, "Reports");

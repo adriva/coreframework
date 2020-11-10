@@ -8,7 +8,9 @@ using Newtonsoft.Json;
 using Adriva.Common.Core;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 using System.Linq;
+using System.ComponentModel;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {

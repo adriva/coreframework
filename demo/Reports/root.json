@@ -1,3 +1,16 @@
 {
-    "name": "root report definition"
+    "name": "root report definition",
+    "dataSources": {
+        "Hede": {
+            "type": "enum",
+            "connectionString": "Le connection stringue",
+            "options": {
+                "hebee": 123,
+                "ohara": {
+                    "id": 1,
+                    "name": "none"
+                }
+            }
+        }
+    }
 }
