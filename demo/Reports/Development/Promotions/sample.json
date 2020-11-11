@@ -1,4 +1,10 @@
 {
     "base": "basereport",
-    "name": "promotions sample report"
+    "name": "promotions sample report",
+    "filters": {
+        "supplier": {
+            "displayName": "Dukkan",
+            "typeCode": "string"
+        }
+    }
 }

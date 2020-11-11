@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Adriva.Extensions.Caching.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,18 +14,20 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
     internal class ReportingService : IReportingService
     {
+        private readonly IServiceProvider ServiceProvider;
         private readonly ICache Cache;
         private readonly ReportingServiceOptions Options;
         private readonly IEnumerable<IReportRepository> Repositories;
 
         public ReportingService(IServiceProvider serviceProvider, IEnumerable<IReportRepository> repositories, IOptions<ReportingServiceOptions> optionsAccessor)
         {
+            this.ServiceProvider = serviceProvider;
             this.Options = optionsAccessor.Value;
             this.Repositories = repositories;
 
             if (this.Options.UseCache)
             {
-                this.Cache = serviceProvider.GetService<ICache>();
+                this.Cache = this.ServiceProvider.GetService<ICache>();
             }
             else
             {

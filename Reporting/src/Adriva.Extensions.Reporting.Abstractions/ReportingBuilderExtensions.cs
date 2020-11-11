@@ -15,11 +15,18 @@ namespace Microsoft.Extensions.DependencyInjection
             return builder;
         }
 
+        public static IReportingBuilder UseRepository<TRepository, TOptions>(this IReportingBuilder builder, Action<TOptions> configure)
+                                                                                                where TRepository : class, IReportRepository
+                                                                                                where TOptions : class
+        {
+            builder.Services.AddSingleton<IReportRepository, TRepository>();
+            builder.Services.Configure<TOptions>(configure);
+            return builder;
+        }
+
         public static IReportingBuilder UseFileSystemRepository(this IReportingBuilder builder, Action<FileSystemReportRepositoryOptions> configure)
         {
-            builder.Services.AddSingleton<IReportRepository, FileSystemReportRepository>();
-            builder.Services.Configure<FileSystemReportRepositoryOptions>(configure);
-            return builder;
+            return builder.UseRepository<FileSystemReportRepository, FileSystemReportRepositoryOptions>(configure);
         }
     }
 }
