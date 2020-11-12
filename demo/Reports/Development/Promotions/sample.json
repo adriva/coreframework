@@ -3,7 +3,7 @@
     "name": "promotions sample report",
     "commands": {
         "getTypeCodes": {
-            "commandText": "EXEC HEDE {{{supplier}}} asdad { asdad }"
+            "commandText": "System.TypeCode"
         }
     },
     "filters": {

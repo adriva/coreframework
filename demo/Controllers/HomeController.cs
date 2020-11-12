@@ -59,8 +59,6 @@ namespace demo.Controllers
         private readonly IReportingService ReportingService;
         private static readonly Random Rnd = new Random();
 
-        public int X { get; set; } = 0;
-
         public HomeController(IReportingService reportingService)
         {
             this.ReportingService = reportingService;
@@ -69,6 +67,7 @@ namespace demo.Controllers
         public async Task<IActionResult> Index([FromQuery] FilterValuesCollection model)
         {
             var rd = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
+            this.ReportingService.ExecuteReportOutput(rd);
             // var tc = this.HttpContext.RequestServices.GetService<Microsoft.ApplicationInsights.TelemetryClient>();
             // if (null != tc)
             // {

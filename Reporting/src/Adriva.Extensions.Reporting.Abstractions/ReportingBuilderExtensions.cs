@@ -28,5 +28,20 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             return builder.UseRepository<FileSystemReportRepository, FileSystemReportRepositoryOptions>(configure);
         }
+
+        public static IReportingBuilder UseDataSource<TDataSource>(this IReportingBuilder builder) where TDataSource : class, IDataSource
+        {
+            builder.Services.AddScoped<IDataSource, TDataSource>();
+            return builder;
+        }
+
+        public static IReportingBuilder UseDataSource<TDataSource, TOptions>(this IReportingBuilder builder, Action<TOptions> configure)
+                                                                                                where TDataSource : class, IDataSource
+                                                                                                where TOptions : class
+        {
+            builder.Services.AddScoped<IDataSource, TDataSource>();
+            builder.Services.Configure<TOptions>(configure);
+            return builder;
+        }
     }
 }

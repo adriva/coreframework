@@ -66,4 +66,17 @@ namespace Adriva.Extensions.Reporting.Abstractions
     {
         ICommandBuilder GetCommandBuilder();
     }
+
+    public class EnumDataSource : IDataSource
+    {
+        private class EnumCommandBuilder : ICommandBuilder
+        {
+            public ICommand BuildCommand(CommandDefinition commandDefinition, FilterValuesCollection filterValues)
+            {
+                return null;
+            }
+        }
+
+        public ICommandBuilder GetCommandBuilder() => new EnumCommandBuilder();
+    }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Adriva.Extensions.Caching.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,8 @@ namespace Adriva.Extensions.Reporting.Abstractions
     public interface IReportingService
     {
         Task<ReportDefinition> LoadReportDefinitionAsync(string name);
+
+        void ExecuteReportOutput(ReportDefinition reportDefinition);
     }
 
     internal class ReportingService : IReportingService
@@ -69,6 +72,11 @@ namespace Adriva.Extensions.Reporting.Abstractions
             });
 
             return reportDefinition ?? throw new InvalidOperationException();
+        }
+
+        public void ExecuteReportOutput(ReportDefinition reportDefinition)
+        {
+
         }
     }
 }

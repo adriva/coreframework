@@ -89,13 +89,14 @@ namespace Adriva.Extensions.Reporting.Abstractions
             if (string.IsNullOrWhiteSpace(filterDefinition.Name)) throw new ArgumentException($"FilterDefinition doesn't have a name.");
 
             string filterValue = this[filterDefinition.Name];
+
             if (null == filterValue)
             {
                 value = null;
             }
 
             value = Convert.ChangeType(filterValue, filterDefinition.DataType, CultureInfo.CurrentCulture);
-            
+
             return true;
         }
     }
