@@ -2,8 +2,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
-    public abstract class DynamicDefinition
+    public interface IDynamicDefinition
     {
-        public IConfigurationSection Options { get; set; }
+        IConfigurationSection Options { get; set; }
     }
 }

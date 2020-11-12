@@ -1,10 +1,21 @@
 {
     "base": "basereport",
     "name": "promotions sample report",
+    "commands": {
+        "getTypeCodes": {
+            "commandText": "EXEC HEDE {{{supplier}}} asdad { asdad }"
+        }
+    },
     "filters": {
         "supplier": {
             "displayName": "Dukkan",
-            "typeCode": "string"
+            "dataType": "string",
+            "children": {
+                "status": {
+                    "displayName": "Durum",
+                    "dataType": "int32"
+                }
+            }
         }
     }
 }

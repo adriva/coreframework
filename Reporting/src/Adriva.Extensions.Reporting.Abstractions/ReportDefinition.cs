@@ -11,6 +11,8 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public IDictionary<string, DataSourceDefinition> DataSources { get; set; }
 
+        public IDictionary<string, CommandDefinition> Commands { get; set; }
+
         public IDictionary<string, FilterDefinition> Filters { get; private set; } = new Dictionary<string, FilterDefinition>();
     }
 }

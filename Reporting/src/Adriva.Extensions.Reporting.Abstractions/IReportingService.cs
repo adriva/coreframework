@@ -35,6 +35,21 @@ namespace Adriva.Extensions.Reporting.Abstractions
             }
         }
 
+        private void FixFilterDefinitions(IDictionary<string, FilterDefinition> filterDefinitions)
+        {
+            if (null == filterDefinitions) return;
+
+            foreach (var entry in filterDefinitions)
+            {
+                if (null == entry.Value)
+                {
+                    throw new ArgumentNullException($"FilterDefinition for filter '{entry.Key}' is not set to an instance of an object.");
+                }
+                entry.Value.Name = entry.Key;
+                this.FixFilterDefinitions(entry.Value.Children);
+            }
+        }
+
         public async Task<ReportDefinition> LoadReportDefinitionAsync(string name)
         {
             ReportDefinition reportDefinition = await this.Cache.GetOrCreateAsync($"ReportingService:LoadReportDefinitionAsync:{name}", async (entry) =>
@@ -43,7 +58,11 @@ namespace Adriva.Extensions.Reporting.Abstractions
                 foreach (var repository in this.Repositories)
                 {
                     reportDefinition = await repository.LoadReportDefinitionAsync(name);
-                    if (null != reportDefinition) return reportDefinition;
+                    if (null != reportDefinition)
+                    {
+                        this.FixFilterDefinitions(reportDefinition.Filters);
+                        return reportDefinition;
+                    }
                 }
 
                 return null;

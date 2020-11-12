@@ -66,16 +66,16 @@ namespace demo.Controllers
             this.ReportingService = reportingService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] FilterValuesCollection model)
         {
             var rd = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
-            var tc = this.HttpContext.RequestServices.GetService<Microsoft.ApplicationInsights.TelemetryClient>();
-            if (null != tc)
-            {
-                tc.TrackTrace("Hello world", Microsoft.ApplicationInsights.DataContracts.SeverityLevel.Information);
-                tc.TrackEvent("EVENT NAME");
-                tc.TrackAvailability("AVAILABILITY DEMO", DateTimeOffset.Now, TimeSpan.FromSeconds(10), "RUN LOCATION", true, "MESSAGE HERE");
-            }
+            // var tc = this.HttpContext.RequestServices.GetService<Microsoft.ApplicationInsights.TelemetryClient>();
+            // if (null != tc)
+            // {
+            //     tc.TrackTrace("Hello world", Microsoft.ApplicationInsights.DataContracts.SeverityLevel.Information);
+            //     tc.TrackEvent("EVENT NAME");
+            //     tc.TrackAvailability("AVAILABILITY DEMO", DateTimeOffset.Now, TimeSpan.FromSeconds(10), "RUN LOCATION", true, "MESSAGE HERE");
+            // }
 
             // var sm = this.HttpContext.RequestServices.GetService<IStorageClientFactory>();
             // var tac = await sm.GetTableClientAsync();
