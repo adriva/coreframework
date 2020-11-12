@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
+using System.Globalization;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
@@ -94,7 +94,8 @@ namespace Adriva.Extensions.Reporting.Abstractions
                 value = null;
             }
 
-            value = Convert.ChangeType(filterValue, filterDefinition.DataType, Thread.CurrentThread.CurrentCulture);
+            value = Convert.ChangeType(filterValue, filterDefinition.DataType, CultureInfo.CurrentCulture);
+            
             return true;
         }
     }
