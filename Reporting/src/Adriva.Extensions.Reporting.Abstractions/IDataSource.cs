@@ -1,6 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -59,24 +62,26 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
     public interface ICommandBuilder
     {
-        ICommand BuildCommand(CommandDefinition commandDefinition, FilterValuesCollection filterValues);
+        ICommand BuildCommand(ReportCommandContext context, FilterValues filterValues);
     }
 
-    public interface IDataSource
+    public interface IDataSource { }
+
+    public sealed class FilterValue
     {
-        ICommandBuilder GetCommandBuilder();
+        public object RawValue { get; private set; }
+
+        public object Value { get; private set; }
     }
 
-    public class EnumDataSource : IDataSource
+    public sealed class FilterValues
     {
-        private class EnumCommandBuilder : ICommandBuilder
-        {
-            public ICommand BuildCommand(CommandDefinition commandDefinition, FilterValuesCollection filterValues)
-            {
-                return null;
-            }
-        }
-
-        public ICommandBuilder GetCommandBuilder() => new EnumCommandBuilder();
+        public FilterValue this[string name] => null;
     }
+
+    public interface IFilterValueProvider
+    {
+        FilterValues Resolve(ReportCommandContext reportCommandContext, IDictionary<string, string> values);
+    }
+
 }

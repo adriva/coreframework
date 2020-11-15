@@ -9,7 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             ReportingBuilder builder = new ReportingBuilder(services);
             services.AddSingleton<IReportingService, ReportingService>();
-            builder.UseDataSource<EnumDataSource>();
+            // builder.UseDataSource<EnumDataSource>();
             build?.Invoke(builder);
             return services;
         }

@@ -64,7 +64,7 @@ namespace demo.Controllers
             this.ReportingService = reportingService;
         }
 
-        public async Task<IActionResult> Index([FromQuery] FilterValuesCollection model)
+        public async Task<IActionResult> Index(IDictionary<string, string> model)
         {
             var rd = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
             this.ReportingService.ExecuteReportOutput(rd);
