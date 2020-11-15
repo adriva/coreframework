@@ -23,9 +23,13 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public override int GetHashCode(string obj)
         {
+            if (null == obj) return 0;
+            if (obj.StartsWith("@", StringComparison.Ordinal))
+            {
+                obj = obj.Substring(1);
+            }
             if (string.IsNullOrWhiteSpace(obj)) return 0;
-            if (obj.StartsWith("@", StringComparison.Ordinal)) obj = obj.Substring(1);
-            return obj.GetHashCode();
+            return obj.ToUpperInvariant().GetHashCode();
         }
     }
 }

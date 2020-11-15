@@ -10,13 +10,18 @@ namespace Adriva.Extensions.Reporting.Abstractions
     internal class ReportingService : IReportingService
     {
         private readonly IServiceProvider ServiceProvider;
+        private readonly ICommandBuilder CommandBuilder;
         private readonly ICache Cache;
         private readonly ReportingServiceOptions Options;
         private readonly IEnumerable<IReportRepository> Repositories;
 
-        public ReportingService(IServiceProvider serviceProvider, IEnumerable<IReportRepository> repositories, IOptions<ReportingServiceOptions> optionsAccessor)
+        public ReportingService(IServiceProvider serviceProvider,
+                                                        ICommandBuilder commandBuilder,
+                                                        IEnumerable<IReportRepository> repositories,
+                                                        IOptions<ReportingServiceOptions> optionsAccessor)
         {
             this.ServiceProvider = serviceProvider;
+            this.CommandBuilder = commandBuilder;
             this.Options = optionsAccessor.Value;
             this.Repositories = repositories;
 
@@ -71,9 +76,11 @@ namespace Adriva.Extensions.Reporting.Abstractions
             return reportDefinition?.Clone() ?? throw new InvalidOperationException();
         }
 
-        public void ExecuteReportOutput(ReportDefinition reportDefinition)
+        public async Task ExecuteReportOutputAsync(ReportDefinition reportDefinition, IDictionary<string, string> values)
         {
-
+            await Task.CompletedTask;
+            ReportCommandContext context = new ReportCommandContext(reportDefinition, reportDefinition.Output.Command);
+            var d = this.CommandBuilder.BuildCommand(context, values);
         }
     }
 }

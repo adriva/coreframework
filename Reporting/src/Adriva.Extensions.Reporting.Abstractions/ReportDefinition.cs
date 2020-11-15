@@ -14,7 +14,9 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public IDictionary<string, CommandDefinition> Commands { get; set; }
 
-        public IDictionary<string, FilterDefinition> Filters { get; private set; } = new Dictionary<string, FilterDefinition>();
+        public FilterDefinitionDictionary Filters { get; private set; } = new FilterDefinitionDictionary();
+
+        public OutputDefinition Output { get; set; }
 
         public ReportDefinition Clone()
         {
@@ -26,11 +28,13 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
             clone.DataSources = new Dictionary<string, DataSourceDefinition>();
             clone.Commands = new Dictionary<string, CommandDefinition>();
-            clone.Filters = new Dictionary<string, FilterDefinition>();
+            clone.Filters = new FilterDefinitionDictionary();
 
             foreach (var child in this.DataSources) clone.DataSources.Add(child.Key, child.Value.Clone());
             foreach (var child in this.Commands) clone.Commands.Add(child.Key, child.Value.Clone());
             foreach (var child in this.Filters) clone.Filters.Add(child.Key, child.Value.Clone());
+
+            clone.Output = this.Output?.Clone();
 
             return clone;
         }

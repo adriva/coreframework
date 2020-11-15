@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Adriva.Extensions.Reporting.Abstractions
@@ -50,19 +51,33 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
     }
 
-    public interface ICommand
+    public sealed class ReportCommand
     {
+        public IList<ReportCommandParameter> Parameters { get; private set; }
 
+        public CommandDefinition CommandDefinition { get; private set; }
+
+        public string Text { get; private set; }
+
+        public ReportCommand(string text, CommandDefinition commandDefinition)
+        {
+            this.Text = text;
+            this.CommandDefinition = commandDefinition;
+            this.Parameters = new List<ReportCommandParameter>();
+        }
     }
 
-    public interface ICommandParameter
+    public sealed class ReportCommandParameter
     {
+        public string Name { get; private set; }
 
-    }
+        public FilterValue FilterValue { get; private set; }
 
-    public interface ICommandBuilder
-    {
-        ICommand BuildCommand(ReportCommandContext context, FilterValues filterValues);
+        public ReportCommandParameter(string name, FilterValue filterValue)
+        {
+            this.Name = name;
+            this.FilterValue = filterValue;
+        }
     }
 
     public interface IDataSource { }
@@ -74,14 +89,163 @@ namespace Adriva.Extensions.Reporting.Abstractions
         public object Value { get; private set; }
     }
 
-    public sealed class FilterValues
+    public sealed class FilterDefinitionDictionary : IDictionary<string, FilterDefinition>
     {
-        public FilterValue this[string name] => null;
+        private readonly IDictionary<string, FilterDefinition> Definitions;
+
+        public FilterDefinitionDictionary()
+        {
+            this.Definitions = new Dictionary<string, FilterDefinition>(new FilterNameComparer());
+        }
+
+        public FilterDefinition this[string key] { get => Definitions[key]; set => Definitions[key] = value; }
+
+        public ICollection<string> Keys => Definitions.Keys;
+
+        public ICollection<FilterDefinition> Values => Definitions.Values;
+
+        public int Count => Definitions.Count;
+
+        public bool IsReadOnly => Definitions.IsReadOnly;
+
+        public void Add(string key, FilterDefinition value)
+        {
+            Definitions.Add(key, value);
+        }
+
+        public void Add(KeyValuePair<string, FilterDefinition> item)
+        {
+            Definitions.Add(item);
+        }
+
+        public void Clear()
+        {
+            Definitions.Clear();
+        }
+
+        public bool Contains(KeyValuePair<string, FilterDefinition> item)
+        {
+            return Definitions.Contains(item);
+        }
+
+        public bool ContainsKey(string key)
+        {
+            return Definitions.ContainsKey(key);
+        }
+
+        public void CopyTo(KeyValuePair<string, FilterDefinition>[] array, int arrayIndex)
+        {
+            Definitions.CopyTo(array, arrayIndex);
+        }
+
+        public IEnumerator<KeyValuePair<string, FilterDefinition>> GetEnumerator()
+        {
+            return Definitions.GetEnumerator();
+        }
+
+        public bool Remove(string key)
+        {
+            return Definitions.Remove(key);
+        }
+
+        public bool Remove(KeyValuePair<string, FilterDefinition> item)
+        {
+            return Definitions.Remove(item);
+        }
+
+        public bool TryGetValue(string key, out FilterDefinition value)
+        {
+            return Definitions.TryGetValue(key, out value);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable)Definitions).GetEnumerator();
+        }
     }
 
-    public interface IFilterValueProvider
+    public interface ICommandBuilder
     {
-        FilterValues Resolve(ReportCommandContext reportCommandContext, IDictionary<string, string> values);
+        ReportCommand BuildCommand(ReportCommandContext context, IDictionary<string, string> values);
     }
 
+    public interface IFilterValueBinder
+    {
+        FilterValue GetFilterValue(FilterDefinition filterDefinition, string rawValue);
+    }
+
+    public class DefaultFilterValueBinder : IFilterValueBinder
+    {
+        public FilterValue GetFilterValue(FilterDefinition filterDefinition, string rawValue)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class DefaultCommandBuilder : ICommandBuilder
+    {
+        protected IFilterValueBinder FilterValueBinder { get; private set; }
+
+        public DefaultCommandBuilder(IFilterValueBinder filterValueBinder)
+        {
+            this.FilterValueBinder = filterValueBinder;
+        }
+
+        protected virtual bool TryParseCommandText(string text, out string commandText, out IList<string> parameterNames)
+        {
+            commandText = null;
+            parameterNames = null;
+
+            var matches = Regex.Matches(text, @"(?<parameterName>\@\w+)");
+
+            if (null == matches) return false;
+
+            parameterNames = new List<string>();
+
+            foreach (Match match in matches)
+            {
+                if (match.Success)
+                {
+                    var parameterNameGroup = match.Groups["parameterName"];
+
+                    if (parameterNameGroup.Success)
+                    {
+                        parameterNames.Add(parameterNameGroup.Value);
+                    }
+                }
+            }
+
+            commandText = text;
+
+            return !string.IsNullOrWhiteSpace(commandText);
+        }
+
+        public ReportCommand BuildCommand(ReportCommandContext context, IDictionary<string, string> values)
+        {
+            if (!this.TryParseCommandText(context.CommandDefinition.CommandText, out string commandText, out IList<string> parameterNames))
+            {
+                throw new InvalidOperationException($"Failed to parse command '{context.CommandName}' in report '{context.ReportDefinition.Name}'.");
+            }
+
+            ReportCommand command = new ReportCommand(commandText, context.CommandDefinition);
+
+            if (null == values) values = new Dictionary<string, string>(new FilterNameComparer());
+            else values = new Dictionary<string, string>(values, new FilterNameComparer());
+
+            foreach (string parameterName in parameterNames)
+            {
+                if (context.ReportDefinition.TryFindFilterDefinition(parameterName, out FilterDefinition filterDefinition))
+                {
+                    if (!values.TryGetValue(parameterName, out string rawValue))
+                    {
+                        rawValue = null;
+                    }
+
+                    FilterValue filterValue = this.FilterValueBinder.GetFilterValue(filterDefinition, rawValue);
+                }
+            }
+
+            return null;
+        }
+    }
 }

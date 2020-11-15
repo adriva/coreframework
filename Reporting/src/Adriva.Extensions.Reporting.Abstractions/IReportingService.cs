@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Adriva.Extensions.Reporting.Abstractions
@@ -6,6 +7,6 @@ namespace Adriva.Extensions.Reporting.Abstractions
     {
         Task<ReportDefinition> LoadReportDefinitionAsync(string name);
 
-        void ExecuteReportOutput(ReportDefinition reportDefinition);
+        Task ExecuteReportOutputAsync(ReportDefinition reportDefinition, IDictionary<string, string> values);
     }
 }

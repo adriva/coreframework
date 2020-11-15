@@ -67,7 +67,7 @@ namespace demo.Controllers
         public async Task<IActionResult> Index(IDictionary<string, string> model)
         {
             var rd = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
-            this.ReportingService.ExecuteReportOutput(rd);
+            await this.ReportingService.ExecuteReportOutputAsync(rd, model);
             // var tc = this.HttpContext.RequestServices.GetService<Microsoft.ApplicationInsights.TelemetryClient>();
             // if (null != tc)
             // {

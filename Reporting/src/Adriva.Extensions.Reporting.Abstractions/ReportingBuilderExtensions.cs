@@ -43,5 +43,17 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.Services.Configure<TOptions>(configure);
             return builder;
         }
+
+        public static IReportingBuilder UseCommandBuilder<TBuilder>(this IReportingBuilder builder) where TBuilder : class, ICommandBuilder
+        {
+            builder.Services.AddSingleton<ICommandBuilder, TBuilder>();
+            return builder;
+        }
+
+        public static IReportingBuilder UseFilterValueBinder<TBinder>(this IReportingBuilder builder) where TBinder : class, IFilterValueBinder
+        {
+            builder.Services.AddSingleton<IFilterValueBinder, TBinder>();
+            return builder;
+        }
     }
 }

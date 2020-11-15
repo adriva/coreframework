@@ -4,6 +4,9 @@
     "commands": {
         "getTypeCodes": {
             "commandText": "System.TypeCode"
+        },
+        "getPromotions": {
+            "commandText": "SELECT * FROM [Promotion] WHERE Supplier = @supplier"
         }
     },
     "filters": {
@@ -13,9 +16,13 @@
             "children": {
                 "status": {
                     "displayName": "Durum",
-                    "dataType": "int32"
+                    "dataType": "Decimal"
                 }
             }
         }
+    },
+    "output": {
+        "command": "getPromotions",
+        "dataSource": "DefaultSqlServer"
     }
 }
