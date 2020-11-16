@@ -13,6 +13,8 @@
         "supplier": {
             "displayName": "Dukkan",
             "dataType": "string",
+            "properties": "default",
+            "defaultValue": "boyner.com.tr",
             "children": {
                 "status": {
                     "displayName": "Durum",

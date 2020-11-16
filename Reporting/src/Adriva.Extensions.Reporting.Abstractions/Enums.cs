@@ -1,9 +1,13 @@
+using System;
+
 namespace Adriva.Extensions.Reporting.Abstractions
 {
-    public enum FilterType
+    [Flags]
+    public enum FilterProperties : long
     {
         Default = 0,
         Constant = 1,
-        Context = 2
+        Context = 1 << 1,
+        Required = 1 << 10
     }
 }

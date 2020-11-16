@@ -13,7 +13,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public TypeCode DataType { get; set; }
 
-        public FilterType Type { get; set; }
+        public FilterProperties Properties { get; set; }
 
         public object DefaultValue { get; set; }
 
@@ -27,7 +27,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             clone.Name = this.Name;
             clone.DisplayName = this.DisplayName;
             clone.DataType = this.DataType;
-            clone.Type = this.Type;
+            clone.Properties = this.Properties;
             clone.Options = this.Options;
             clone.DefaultValue = this.DefaultValue;
 
