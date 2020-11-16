@@ -80,7 +80,14 @@ namespace Adriva.Extensions.Reporting.Abstractions
         {
             await Task.CompletedTask;
             ReportCommandContext context = new ReportCommandContext(reportDefinition, reportDefinition.Output.Command);
-            var d = this.CommandBuilder.BuildCommand(context, values);
+
+            if (!string.IsNullOrWhiteSpace(reportDefinition.ContextProvider))
+            {
+                Type contextProviderType = Type.GetType(reportDefinition.ContextProvider, true, true);
+                context.ContextProvider = ActivatorUtilities.CreateInstance(this.ServiceProvider, contextProviderType);
+            }
+
+            var d = await this.CommandBuilder.BuildCommandAsync(context, values);
         }
     }
 }

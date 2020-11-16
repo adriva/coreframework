@@ -112,6 +112,65 @@ namespace Adriva.Common.Core
                    select m;
         }
 
+        public static MethodInfo FindMethod(Type ownerType, string methodName, ClrMemberFlags methodFlags, params Type[] argumentTypes)
+        {
+            if (null == ownerType) throw new ArgumentNullException(nameof(ownerType));
+            if (string.IsNullOrWhiteSpace(methodName)) throw new ArgumentNullException(nameof(methodName));
+
+            BindingFlags bindingFlags = BindingFlags.Default;
+
+            if (methodFlags.HasFlag(ClrMemberFlags.Instance)) bindingFlags |= BindingFlags.Instance;
+            if (methodFlags.HasFlag(ClrMemberFlags.Static)) bindingFlags |= BindingFlags.Static;
+            if (methodFlags.HasFlag(ClrMemberFlags.Public)) bindingFlags |= BindingFlags.Public;
+            if (methodFlags.HasFlag(ClrMemberFlags.NonPublic)) bindingFlags |= BindingFlags.NonPublic;
+
+            return ownerType.GetMethods(bindingFlags)
+                .Where(x => 0 == string.Compare(x.Name, methodName, StringComparison.OrdinalIgnoreCase))
+                .Where(x =>
+                {
+                    var methodParameters = x.GetParameters();
+                    if (null == argumentTypes || 0 == argumentTypes.Length) return 0 == methodParameters.Length;
+                    else
+                    {
+                        if (argumentTypes.Length != methodParameters.Length) return false;
+
+                        for (int loop = 0; loop < methodParameters.Length; loop++)
+                        {
+                            if (!methodParameters[loop].ParameterType.IsAssignableFrom(argumentTypes[loop]))
+                            {
+                                return false;
+                            }
+                        }
+                    }
+
+                    return true;
+                })
+                .FirstOrDefault();
+
+        }
+
+        // moniker = Name.Space.Type::MethodName
+        public static MethodInfo FindMethod(string methodMoniker, ClrMemberFlags methodFlags, params Type[] argumentTypes)
+        {
+            if (string.IsNullOrWhiteSpace(methodMoniker)) throw new ArgumentNullException(nameof(methodMoniker));
+
+            methodMoniker = methodMoniker.Split('(', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+
+            if (string.IsNullOrWhiteSpace(methodMoniker)) throw new ArgumentException("Method moniker must be in the short format such as Namespace.TypeName::MethodName");
+
+            StringBuilder buffer = new StringBuilder();
+            buffer.Append(methodMoniker);
+            buffer.Append("(");
+            if (null != argumentTypes)
+            {
+                buffer.AppendJoin(",", argumentTypes.Select(x => x.GetNormalizedName()));
+            }
+            buffer.Append(")");
+            return ReflectionHelpers.FindMethod(methodMoniker, methodFlags);
+
+        }
+
+        // moniker = Name.Space.Type::MethodName(@param1Type ...)
         public static MethodInfo FindMethod(string methodMoniker, ClrMemberFlags methodFlags)
         {
             if (string.IsNullOrWhiteSpace(methodMoniker)) throw new ArgumentNullException(nameof(methodMoniker));

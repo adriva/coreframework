@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
     public interface ICommandBuilder
     {
-        ReportCommand BuildCommand(ReportCommandContext context, IDictionary<string, string> values);
+        Task<ReportCommand> BuildCommandAsync(ReportCommandContext context, IDictionary<string, string> values);
     }
 }

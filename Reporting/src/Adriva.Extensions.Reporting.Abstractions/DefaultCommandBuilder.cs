@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
@@ -42,7 +43,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             return !string.IsNullOrWhiteSpace(commandText);
         }
 
-        public ReportCommand BuildCommand(ReportCommandContext context, IDictionary<string, string> values)
+        public async Task<ReportCommand> BuildCommandAsync(ReportCommandContext context, IDictionary<string, string> values)
         {
             if (!this.TryParseCommandText(context.CommandDefinition.CommandText, out string commandText, out IList<string> parameterNames))
             {
@@ -63,7 +64,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
                         rawValue = null;
                     }
 
-                    FilterValue filterValue = this.FilterValueBinder.GetFilterValue(filterDefinition, rawValue);
+                    FilterValue filterValue = await this.FilterValueBinder.GetFilterValueAsync(context, filterDefinition, rawValue);
                     ReportCommandParameter reportCommandParameter = new ReportCommandParameter(parameterName, filterValue);
                     reportCommand.Parameters.Add(reportCommandParameter);
                 }

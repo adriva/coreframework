@@ -10,6 +10,8 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public string Name { get; set; }
 
+        public string ContextProvider { get; set; }
+
         public IDictionary<string, DataSourceDefinition> DataSources { get; set; }
 
         public IDictionary<string, CommandDefinition> Commands { get; set; }
@@ -26,6 +28,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
                 Name = this.Name
             };
 
+            clone.ContextProvider = this.ContextProvider;
             clone.DataSources = new Dictionary<string, DataSourceDefinition>();
             clone.Commands = new Dictionary<string, CommandDefinition>();
             clone.Filters = new FilterDefinitionDictionary();

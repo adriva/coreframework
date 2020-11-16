@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace Adriva.Extensions.Reporting.Abstractions
 {
     public interface IFilterValueBinder
     {
-        FilterValue GetFilterValue(FilterDefinition filterDefinition, string rawValue);
+        Task<FilterValue> GetFilterValueAsync(ReportContext context, FilterDefinition filterDefinition, string rawValue);
     }
 }

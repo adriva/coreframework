@@ -1,6 +1,7 @@
 {
     "base": "basereport",
     "name": "promotions sample report",
+    "contextProvider": "demo.Controllers.ReportContextProvider,demo",
     "commands": {
         "getTypeCodes": {
             "commandText": "System.TypeCode"
@@ -12,9 +13,9 @@
     "filters": {
         "supplier": {
             "displayName": "Dukkan",
-            "dataType": "string",
-            "properties": "default",
-            "defaultValue": "boyner.com.tr",
+            "dataType": "DateTime",
+            "properties": "context",
+            "defaultValue": "GetCurrentDate",
             "children": {
                 "status": {
                     "displayName": "Durum",

@@ -54,6 +54,14 @@ namespace demo.Controllers
         public DateTime CreatedOn { get; set; }
     }
 
+    public class ReportContextProvider
+    {
+        public DateTime GetCurrentDate()
+        {
+            return DateTime.UtcNow;
+        }
+    }
+
     public class HomeController : Controller
     {
         private readonly IReportingService ReportingService;
