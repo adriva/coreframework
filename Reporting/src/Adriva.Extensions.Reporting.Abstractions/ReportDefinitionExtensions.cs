@@ -56,5 +56,15 @@ namespace Adriva.Extensions.Reporting.Abstractions
             if (string.IsNullOrWhiteSpace(dataDrivenObject?.DataSource)) return false;
             return reportDefinition.DataSources.TryGetValue(dataDrivenObject.DataSource, out dataSourceDefinition);
         }
+
+        public static IEnumerable<FieldDefinition> EnumerateFieldDefinitions(this ReportDefinition reportDefinition)
+        {
+            if (null == reportDefinition?.Output?.Fields) yield break;
+
+            foreach (var fieldDefinitionEntry in reportDefinition.Output.Fields)
+            {
+                yield return fieldDefinitionEntry.Value;
+            }
+        }
     }
 }

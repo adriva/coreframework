@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Adriva.Common.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
@@ -8,6 +10,8 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public string Command { get; set; }
 
+        public StringKeyDictionary<FieldDefinition> Fields { get; set; }
+
         public OutputDefinition Clone()
         {
             OutputDefinition clone = new OutputDefinition()
@@ -15,6 +19,17 @@ namespace Adriva.Extensions.Reporting.Abstractions
                 DataSource = this.DataSource,
                 Command = this.Command
             };
+
+            clone.Fields = new StringKeyDictionary<FieldDefinition>();
+
+            if (null != this.Fields)
+            {
+                foreach (var entry in this.Fields)
+                {
+                    clone.Fields.Add(entry.Key, entry.Value?.Clone());
+                }
+            }
+
             return clone;
         }
     }

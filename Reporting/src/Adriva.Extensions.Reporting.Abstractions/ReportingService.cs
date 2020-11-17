@@ -50,6 +50,16 @@ namespace Adriva.Extensions.Reporting.Abstractions
             }
         }
 
+        private void FixFieldDefinitions(OutputDefinition outputDefinition)
+        {
+            if (null == outputDefinition) return;
+
+            foreach (var fieldEntry in outputDefinition.Fields)
+            {
+                fieldEntry.Value.Name = fieldEntry.Key;
+            }
+        }
+
         public async Task<ReportDefinition> LoadReportDefinitionAsync(string name)
         {
             ReportDefinition reportDefinition = await this.Cache.GetOrCreateAsync($"ReportingService:LoadReportDefinitionAsync:{name}", async (entry) =>
@@ -61,6 +71,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
                     if (null != reportDefinition)
                     {
                         this.FixFilterDefinitions(reportDefinition.Filters);
+                        this.FixFieldDefinitions(reportDefinition.Output);
                         return reportDefinition;
                     }
                 }
@@ -78,7 +89,6 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public async Task ExecuteReportOutputAsync(ReportDefinition reportDefinition, IDictionary<string, string> values)
         {
-            await Task.CompletedTask;
             ReportCommandContext context = new ReportCommandContext(reportDefinition, reportDefinition.Output.Command);
 
             if (!string.IsNullOrWhiteSpace(reportDefinition.ContextProvider))
@@ -87,7 +97,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
                 context.ContextProvider = ActivatorUtilities.CreateInstance(this.ServiceProvider, contextProviderType);
             }
 
-            var d = await this.CommandBuilder.BuildCommandAsync(context, values);
+            var reportCommand = await this.CommandBuilder.BuildCommandAsync(context, values);
 
             using (IServiceScope serviceScope = this.ServiceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
@@ -99,17 +109,18 @@ namespace Adriva.Extensions.Reporting.Abstractions
                 var dataSourceRegistrationOptionsSnapshot = serviceScope.ServiceProvider.GetRequiredService<IOptionsSnapshot<DataSourceRegistrationOptions>>();
                 var dataSourceRegistrationOptions = dataSourceRegistrationOptionsSnapshot.Get(dataSourceDefinition.Type);
 
-                if (null == dataSourceRegistrationOptions.Type)
+                if (null == dataSourceRegistrationOptions.TypeHandle || IntPtr.Zero == dataSourceRegistrationOptions.TypeHandle.Value)
                 {
                     throw new InvalidOperationException($"No data source service is registered for data source type '{dataSourceDefinition.Type}'.");
                 }
 
-                IDataSource dataSource = (IDataSource)serviceScope.ServiceProvider.GetRequiredService(dataSourceRegistrationOptions.Type);
+                Type dataSourceType = Type.GetTypeFromHandle(dataSourceRegistrationOptions.TypeHandle);
+                IDataSource dataSource = (IDataSource)serviceScope.ServiceProvider.GetRequiredService(dataSourceType);
                 await dataSource.OpenAsync(dataSourceDefinition);
 
                 try
                 {
-                    // execute command
+                    await dataSource.GetDataAsync(reportCommand, reportDefinition.EnumerateFieldDefinitions());
                 }
                 finally
                 {

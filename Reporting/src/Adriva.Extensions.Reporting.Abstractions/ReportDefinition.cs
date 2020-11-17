@@ -12,11 +12,11 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public string ContextProvider { get; set; }
 
-        public IDictionary<string, DataSourceDefinition> DataSources { get; set; }
+        public StringKeyDictionary<DataSourceDefinition> DataSources { get; set; }
 
-        public IDictionary<string, CommandDefinition> Commands { get; set; }
+        public StringKeyDictionary<CommandDefinition> Commands { get; set; }
 
-        public FilterDefinitionDictionary Filters { get; private set; } = new FilterDefinitionDictionary();
+        public FilterDefinitionDictionary Filters { get; set; }
 
         public OutputDefinition Output { get; set; }
 
@@ -29,15 +29,15 @@ namespace Adriva.Extensions.Reporting.Abstractions
             };
 
             clone.ContextProvider = this.ContextProvider;
-            clone.DataSources = new Dictionary<string, DataSourceDefinition>();
-            clone.Commands = new Dictionary<string, CommandDefinition>();
+            clone.DataSources = new StringKeyDictionary<DataSourceDefinition>();
+            clone.Commands = new StringKeyDictionary<CommandDefinition>();
             clone.Filters = new FilterDefinitionDictionary();
 
-            foreach (var child in this.DataSources) clone.DataSources.Add(child.Key, child.Value.Clone());
-            foreach (var child in this.Commands) clone.Commands.Add(child.Key, child.Value.Clone());
-            foreach (var child in this.Filters) clone.Filters.Add(child.Key, child.Value.Clone());
+            foreach (var child in this.DataSources) clone.DataSources.Add(child.Key, child.Value?.Clone());
+            foreach (var child in this.Commands) clone.Commands.Add(child.Key, child.Value?.Clone());
+            foreach (var child in this.Filters) clone.Filters.Add(child.Key, child.Value?.Clone());
 
-            clone.Output = this.Output?.Clone();
+            clone.Output = (this.Output ?? new OutputDefinition()).Clone();
 
             return clone;
         }

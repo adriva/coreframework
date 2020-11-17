@@ -35,7 +35,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             builder.Services.Configure<DataSourceRegistrationOptions>(name, options =>
             {
-                options.UseType(typeof(TDataSource));
+                options.UseType(typeof(TDataSource).TypeHandle);
             });
             return builder;
         }

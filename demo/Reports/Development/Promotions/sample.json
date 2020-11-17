@@ -13,9 +13,8 @@
     "filters": {
         "supplier": {
             "displayName": "Dukkan",
-            "dataType": "DateTime",
-            "properties": "context",
-            "defaultValue": "GetCurrentDate",
+            "dataType": "String",
+            "defaultValue": "boyner.com.tr",
             "children": {
                 "status": {
                     "displayName": "Durum",
@@ -26,6 +25,11 @@
     },
     "output": {
         "command": "getPromotions",
-        "dataSource": "DefaultSqlServer"
+        "dataSource": "DefaultSqlServer",
+        "fields": {
+            "Id": {
+                "displayName": "Aydi"
+            }
+        }
     }
 }

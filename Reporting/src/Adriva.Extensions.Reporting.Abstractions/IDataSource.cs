@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Adriva.Extensions.Reporting.Abstractions
@@ -7,16 +7,8 @@ namespace Adriva.Extensions.Reporting.Abstractions
     {
         Task OpenAsync(DataSourceDefinition dataSourceDefinition);
 
+        Task<DataSet> GetDataAsync(ReportCommand command, IEnumerable<FieldDefinition> fields);
+
         Task CloseAsync();
-    }
-
-    public sealed class DataSourceRegistrationOptions
-    {
-        public Type Type { get; private set; }
-
-        public void UseType(Type dataSourceType)
-        {
-            this.Type = dataSourceType;
-        }
     }
 }
