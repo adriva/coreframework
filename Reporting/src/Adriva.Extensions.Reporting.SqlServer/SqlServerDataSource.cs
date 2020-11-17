@@ -10,7 +10,6 @@ namespace Adriva.Extensions.Reporting.SqlServer
         private SqlConnection Connection;
         private bool IsDisposed;
 
-
         public Task OpenAsync(DataSourceDefinition dataSourceDefinition)
         {
             this.Connection = new SqlConnection(dataSourceDefinition.ConnectionString);

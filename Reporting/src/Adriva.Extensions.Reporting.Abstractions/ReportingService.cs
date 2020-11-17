@@ -106,6 +106,15 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
                 IDataSource dataSource = (IDataSource)serviceScope.ServiceProvider.GetRequiredService(dataSourceRegistrationOptions.Type);
                 await dataSource.OpenAsync(dataSourceDefinition);
+
+                try
+                {
+                    // execute command
+                }
+                finally
+                {
+                    await dataSource.CloseAsync();
+                }
             }
         }
     }

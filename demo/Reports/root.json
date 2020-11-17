@@ -14,7 +14,7 @@
         },
         "DefaultSqlServer": {
             "type": "SqlServer",
-            "connectionString": "server=localhost"
+            "connectionString": "data source=kwzh9m06kp.database.windows.net;initial catalog=marketplace;persist security info=True;user id=asos_db@kwzh9m06kp;password=AdrivaAdriva1;MultipleActiveResultSets=True;App=EntityFramework"
         }
     }
 }
