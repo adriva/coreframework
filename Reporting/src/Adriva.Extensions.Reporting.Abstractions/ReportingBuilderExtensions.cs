@@ -29,17 +29,22 @@ namespace Microsoft.Extensions.DependencyInjection
             return builder.UseRepository<FileSystemReportRepository, FileSystemReportRepositoryOptions>(configure);
         }
 
-        public static IReportingBuilder UseDataSource<TDataSource>(this IReportingBuilder builder) where TDataSource : class, IDataSource
+        public static IReportingBuilder UseDataSource<TDataSource>(this IReportingBuilder builder, string name) where TDataSource : class, IDataSource
         {
-            builder.Services.AddScoped<IDataSource, TDataSource>();
+            builder.Services.AddScoped<TDataSource>();
+
+            builder.Services.Configure<DataSourceRegistrationOptions>(name, options =>
+            {
+                options.UseType(typeof(TDataSource));
+            });
             return builder;
         }
 
-        public static IReportingBuilder UseDataSource<TDataSource, TOptions>(this IReportingBuilder builder, Action<TOptions> configure)
+        public static IReportingBuilder UseDataSource<TDataSource, TOptions>(this IReportingBuilder builder, string name, Action<TOptions> configure)
                                                                                                 where TDataSource : class, IDataSource
                                                                                                 where TOptions : class
         {
-            builder.Services.AddScoped<IDataSource, TDataSource>();
+            builder.UseDataSource<TDataSource>(name);
             builder.Services.Configure<TOptions>(configure);
             return builder;
         }

@@ -14,7 +14,7 @@
     <ProjectReference Include="..\Analytics\src\Adriva.Extensions.Analytics.Repository.EntityFramework.SqlLite\Adriva.Extensions.Analytics.Repository.EntityFramework.SqlLite.csproj" />
     <ProjectReference Include="..\Storage\src\Adriva.Storage.Azure\Adriva.Storage.Azure.csproj" />
     <ProjectReference Include="..\Web\src\Adriva.Web.Controls\Adriva.Web.Controls.csproj" />
-    <ProjectReference Include="..\Reporting\src\Adriva.Extensions.Reporting.Abstractions\Adriva.Extensions.Reporting.Abstractions.csproj" />    
+    <ProjectReference Include="..\Reporting\src\Adriva.Extensions.Reporting.SqlServer\Adriva.Extensions.Reporting.SqlServer.csproj" />    
   </ItemGroup>
 
 

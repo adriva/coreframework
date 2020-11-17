@@ -131,6 +131,7 @@ namespace demo
                 {
                     options.RootPath = Path.Combine(this.HostingEnvironment.ContentRootPath, "Reports");
                 });
+                reportingBuilder.UseSqlServer();
             });
         }
 

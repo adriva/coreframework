@@ -88,6 +88,25 @@ namespace Adriva.Extensions.Reporting.Abstractions
             }
 
             var d = await this.CommandBuilder.BuildCommandAsync(context, values);
+
+            using (IServiceScope serviceScope = this.ServiceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                if (!reportDefinition.TryFindDataSourceDefinition(reportDefinition.Output, out DataSourceDefinition dataSourceDefinition))
+                {
+                    throw new InvalidOperationException($"Could not find data source definition '{reportDefinition.Output.DataSource}' in the report '{reportDefinition.Name}'.");
+                }
+
+                var dataSourceRegistrationOptionsSnapshot = serviceScope.ServiceProvider.GetRequiredService<IOptionsSnapshot<DataSourceRegistrationOptions>>();
+                var dataSourceRegistrationOptions = dataSourceRegistrationOptionsSnapshot.Get(dataSourceDefinition.Type);
+
+                if (null == dataSourceRegistrationOptions.Type)
+                {
+                    throw new InvalidOperationException($"No data source service is registered for data source type '{dataSourceDefinition.Type}'.");
+                }
+
+                IDataSource dataSource = (IDataSource)serviceScope.ServiceProvider.GetRequiredService(dataSourceRegistrationOptions.Type);
+                await dataSource.OpenAsync(dataSourceDefinition);
+            }
         }
     }
 }

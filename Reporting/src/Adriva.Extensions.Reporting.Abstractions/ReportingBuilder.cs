@@ -1,4 +1,6 @@
-namespace Microsoft.Extensions.DependencyInjection
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Adriva.Extensions.Reporting.Abstractions
 {
     internal class ReportingBuilder : IReportingBuilder
     {

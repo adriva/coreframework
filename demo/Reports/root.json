@@ -11,6 +11,10 @@
                     "name": "none"
                 }
             }
+        },
+        "DefaultSqlServer": {
+            "type": "SqlServer",
+            "connectionString": "server=localhost"
         }
     }
 }

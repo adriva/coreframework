@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Adriva.Extensions.Reporting.Abstractions
 {
     public interface IReportingBuilder
     {
