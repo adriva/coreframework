@@ -6,15 +6,15 @@ namespace Adriva.Extensions.Reporting.Abstractions
     {
         public string Name { get; private set; }
 
-        public TypeCode DataType { get; private set; }
+        public string DisplayName { get; private set; }
 
-        public DataColumn(string name, TypeCode dataType = TypeCode.Object)
+        public DataColumn(string name, string displayName = null)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("DataColumn requires a name.");
-            if (TypeCode.Empty == dataType) throw new ArgumentException("DataType of a DataColumn cannot be TypeCode.Empty.");
 
             this.Name = name;
-            this.DataType = dataType;
+            this.DisplayName = string.IsNullOrWhiteSpace(displayName) ? name : displayName;
+
         }
     }
 }

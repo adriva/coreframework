@@ -1,18 +1,29 @@
 using System;
+using Adriva.Common.Core;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
-    public class DataRow
+    public class DataRow : DynamicItem
     {
-        private readonly object[] Items;
+        private readonly DataSet DataSet = null;
+        private object[] Items = null;
+        private int ItemPointer = 0;
 
-        public DataRow(object[] items)
+        internal DataRow(DataSet dataSet)
         {
-            if (null == items || 0 == items.Length)
+            this.DataSet = dataSet;
+            this.Items = new object[dataSet.Columns.Count];
+        }
+
+        public void AddData(object value)
+        {
+            if (this.ItemPointer == this.Items.Length)
             {
-                throw new ArgumentException("DataRow requires at least one data item");
+                throw new IndexOutOfRangeException("DataRow does not accept adding more than configured fields.");
             }
-            this.Items = items;
+            this.Items[this.ItemPointer] = value;
+            this[this.DataSet.Columns[this.ItemPointer].Name] = value;
+            ++this.ItemPointer;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Adriva.Extensions.Reporting.Abstractions;
@@ -18,7 +19,7 @@ namespace Adriva.Extensions.Reporting.SqlServer
             return this.Connection.OpenAsync();
         }
 
-        public async Task<DataSet> GetDataAsync(ReportCommand command, IEnumerable<FieldDefinition> fields)
+        public async Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields)
         {
             using (SqlCommand sqlCommand = new SqlCommand(command.Text, this.Connection))
             {
@@ -34,25 +35,35 @@ namespace Adriva.Extensions.Reporting.SqlServer
                     }
                 }
 
-                using (var dataReader = await sqlCommand.ExecuteReaderAsync())
+                DataSet dataSet = DataSet.FromFields(fields);
+                int[] columnIndices = null;
+                using (var dataReader = await sqlCommand.ExecuteReaderAsync(System.Data.CommandBehavior.SingleResult))
                 {
-                    int[] columnIndices = fields.Select(f => dataReader.GetOrdinal(f.Name)).ToArray();
+                    if (null == columnIndices)
+                    {
+                        try
+                        {
+                            columnIndices = fields.Select(f => dataReader.GetOrdinal(f.Name)).ToArray();
+                        }
+                        catch (IndexOutOfRangeException indexOutOfRangeException)
+                        {
+                            throw new IndexOutOfRangeException($"Field '{indexOutOfRangeException.Message}' could not be found in the retrieved dataset.", indexOutOfRangeException);
+                        }
+                    }
 
                     while (await dataReader.ReadAsync())
                     {
-                        object[] rowData = new object[columnIndices.Length];
+                        var dataRow = dataSet.CreateRow();
 
-                        for (int loop = 0; loop < columnIndices.Length; loop++)
+                        foreach (var columnIndex in columnIndices)
                         {
-                            rowData[loop] = dataReader.GetValue(loop);
+                            object value = dataReader.GetValue(columnIndex);
+                            dataRow.AddData(DBNull.Value == value ? null : value);
                         }
-
-                        DataRow dataRow = new DataRow(rowData);
                     }
                 }
+                return dataSet;
             }
-
-            return null;
         }
 
         public Task CloseAsync()

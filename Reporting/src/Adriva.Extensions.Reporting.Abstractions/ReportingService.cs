@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Adriva.Extensions.Caching.Abstractions;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
@@ -120,7 +121,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
                 try
                 {
-                    await dataSource.GetDataAsync(reportCommand, reportDefinition.EnumerateFieldDefinitions());
+                    await dataSource.GetDataAsync(reportCommand, reportDefinition.EnumerateFieldDefinitions().ToArray());
                 }
                 finally
                 {
