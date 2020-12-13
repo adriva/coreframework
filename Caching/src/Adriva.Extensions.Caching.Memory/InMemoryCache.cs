@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Extensions.Caching.Abstractions;
 using Microsoft.Extensions.Caching.Memory;

@@ -12,7 +12,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Title>Adriva Web Common Functions Library</Title>
     <PackageDescription>Base library providing abstractions and common components and functions that cna be used in any web project.</PackageDescription>    
-    <Version>3.0.0-rc03</Version>
+    <Version>3.0.0-rc04</Version>
   </PropertyGroup>
 
 </Project>

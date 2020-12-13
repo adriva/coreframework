@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
 using Adriva.Extensions.Caching.Abstractions;
+using Adriva.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Adriva.Extensions.Reporting.Abstractions
@@ -14,7 +15,9 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public DefaultFilterValueBinder(IServiceProvider serviceProvider)
         {
-            this.Cache = serviceProvider.GetService<ICache>() ?? new NullCache();
+            var cacheWrapper = serviceProvider.GetService<ICache<InMemoryCache>>();
+            if (null == cacheWrapper?.Instance) this.Cache = new NullCache();
+            else this.Cache = cacheWrapper.Instance;
         }
 
         public async Task<FilterValue> GetFilterValueAsync(ReportContext context, FilterDefinition filterDefinition, string rawValue)

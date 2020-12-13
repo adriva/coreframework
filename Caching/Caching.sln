@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.Caching.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{C3640C31-D767-47B0-9360-75410FB5B78F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.Caching.Distributed", "src\Adriva.Extensions.Caching.Distributed\Adriva.Extensions.Caching.Distributed.csproj", "{CC05E4E0-D4C2-4D8D-B3C9-3301948273B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,9 +62,22 @@ Global
 		{C3640C31-D767-47B0-9360-75410FB5B78F}.Release|x64.Build.0 = Release|Any CPU
 		{C3640C31-D767-47B0-9360-75410FB5B78F}.Release|x86.ActiveCfg = Release|Any CPU
 		{C3640C31-D767-47B0-9360-75410FB5B78F}.Release|x86.Build.0 = Release|Any CPU
+		{CC05E4E0-D4C2-4D8D-B3C9-3301948273B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC05E4E0-D4C2-4D8D-B3C9-3301948273B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC05E4E0-D4C2-4D8D-B3C9-3301948273B9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CC05E4E0-D4C2-4D8D-B3C9-3301948273B9}.Debug|x64.Build.0 = Debug|Any CPU
+		{CC05E4E0-D4C2-4D8D-B3C9-3301948273B9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CC05E4E0-D4C2-4D8D-B3C9-3301948273B9}.Debug|x86.Build.0 = Debug|Any CPU
+		{CC05E4E0-D4C2-4D8D-B3C9-3301948273B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC05E4E0-D4C2-4D8D-B3C9-3301948273B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC05E4E0-D4C2-4D8D-B3C9-3301948273B9}.Release|x64.ActiveCfg = Release|Any CPU
+		{CC05E4E0-D4C2-4D8D-B3C9-3301948273B9}.Release|x64.Build.0 = Release|Any CPU
+		{CC05E4E0-D4C2-4D8D-B3C9-3301948273B9}.Release|x86.ActiveCfg = Release|Any CPU
+		{CC05E4E0-D4C2-4D8D-B3C9-3301948273B9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0815D0C2-7B10-47B9-B903-65E869C0556C} = {87D3DCC1-4E18-47D3-B395-8D7E913C1888}
 		{29B32D35-AB58-468A-BDB8-C4ACA8A8949C} = {87D3DCC1-4E18-47D3-B395-8D7E913C1888}
+		{CC05E4E0-D4C2-4D8D-B3C9-3301948273B9} = {87D3DCC1-4E18-47D3-B395-8D7E913C1888}
 	EndGlobalSection
 EndGlobal

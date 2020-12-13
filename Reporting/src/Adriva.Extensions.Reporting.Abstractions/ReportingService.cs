@@ -5,6 +5,7 @@ using Adriva.Extensions.Caching.Abstractions;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using Adriva.Extensions.Caching.Memory;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
@@ -28,7 +29,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
             if (this.Options.UseCache)
             {
-                this.Cache = this.ServiceProvider.GetService<ICache>();
+                this.Cache = this.ServiceProvider.GetRequiredService<ICache<InMemoryCache>>().Instance;
             }
             else
             {

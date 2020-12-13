@@ -7,18 +7,18 @@
   <PropertyGroup>
     <Title>Adriva Core Library</Title>
     <PackageDescription>Base library providing reusable types and utility functions.</PackageDescription>    
-    <Version>3.0.0-rc03</Version>
+    <Version>3.0.0-rc04</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="3.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.2" />    
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="3.1.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.*" />    
     <PackageReference Include="MimeTypes" Version="1.1.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.*" />
   </ItemGroup>
 
   <ItemGroup>

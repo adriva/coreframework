@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Adriva.Extensions.Caching.Abstractions;
+using Adriva.Extensions.Caching.Memory;
 using Adriva.Extensions.Optimization.Abstractions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -46,12 +47,12 @@ namespace Adriva.Extensions.Optimization.Web
                     IOptimizationScope optimizationScope,
                     IOptimizationResultTagBuilderFactory tagBuilderFactory,
                     IOptions<WebOptimizationOptions> optionsAccessor,
-                    ICache cache)
+                    ICache<InMemoryCache> cacheWrapper)
         {
             this.OptimizationScope = optimizationScope;
             this.OptimizationManager = optimizationManager;
             this.TagBuilderFactory = tagBuilderFactory;
-            this.Cache = cache;
+            this.Cache = cacheWrapper.Instance;
         }
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)

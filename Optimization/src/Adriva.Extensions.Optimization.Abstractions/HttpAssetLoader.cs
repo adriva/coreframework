@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
 using Adriva.Extensions.Caching.Abstractions;
+using Adriva.Extensions.Caching.Memory;
 
 namespace Adriva.Extensions.Optimization.Abstractions
 {
@@ -12,9 +13,9 @@ namespace Adriva.Extensions.Optimization.Abstractions
         private readonly ICache Cache;
         private readonly HttpClient HttpClient;
 
-        public HttpAssetLoader(IHttpClientFactory httpClientFactory, ICache cache)
+        public HttpAssetLoader(IHttpClientFactory httpClientFactory, ICache<InMemoryCache> cacheWrapper)
         {
-            this.Cache = cache;
+            this.Cache = cacheWrapper.Instance;
             this.HttpClient = httpClientFactory.CreateClient();
         }
 

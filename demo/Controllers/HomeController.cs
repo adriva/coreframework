@@ -7,6 +7,8 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
+using Adriva.Extensions.Caching.Abstractions;
+using Adriva.Extensions.Caching.Distributed;
 using Adriva.Extensions.Reporting.Abstractions;
 using Adriva.Storage.Abstractions;
 using Microsoft.AspNetCore.Mvc;
@@ -89,6 +91,25 @@ namespace demo.Controllers
             // var bac = await sm.GetBlobClientAsync();
             // var pro = await bac.GetPropertiesAsync("blog/yilbasi.html");
             return this.View();
+        }
+
+        public async Task<IActionResult> Cache()
+        {
+            var cache = this.HttpContext.RequestServices.GetService<ICache<DistributedCache>>();
+            DateTime dt = await cache.Instance.GetOrCreateAsync<DateTime>("Test001", async (entry) =>
+            {
+                await Task.CompletedTask;
+                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30);
+                return DateTime.Now;
+            }, "DEP01");
+            return this.Content(dt.ToString());
+        }
+
+        public async Task<IActionResult> CacheChange()
+        {
+            var cache = this.HttpContext.RequestServices.GetService<ICache<DistributedCache>>();
+            await cache.Instance.NotifyChangedAsync("DEP01");
+            return this.Content("TAMAM");
         }
     }
 }

@@ -39,11 +39,6 @@ namespace Adriva.Extensions.Optimization.Web
 
         }
 
-        public ResourceLoaderTagHelper(ICache cache)
-        {
-
-        }
-
         public void Init(TagHelperContext context)
         {
 

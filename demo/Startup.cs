@@ -37,6 +37,13 @@ namespace demo
                 builder.AddConsole();
             });
 
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "192.168.222.63:6379";
+            });
+
+            services.AddCache<Adriva.Extensions.Caching.Distributed.DistributedCache>();
+
             services
                 .AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
