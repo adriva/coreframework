@@ -13,4 +13,9 @@
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
+ <PropertyGroup>
+    <Title>Adriva Distributed Cache Storage Wrapper</Title>
+    <PackageDescription>Provides an implementation of cache storage wrapper that stores cached items in distributed cache storage.</PackageDescription>    
+    <Version>3.0.0-rc04</Version>
+  </PropertyGroup>
 </Project>
