@@ -32,6 +32,11 @@ jobs:
       with:
         PROJECT_FILE_PATH: Caching/src/Adriva.Extensions.Caching.Memory/Adriva.Extensions.Caching.Memory.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish NuGet Caching Distributed
+      uses: rohith/publish-nuget@v2.1.2
+      with:
+        PROJECT_FILE_PATH: Caching/src/Adriva.Extensions.Caching.Distributed/Adriva.Extensions.Caching.Distributed.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish NuGet Optimization Abstractions
       uses: rohith/publish-nuget@v2.1.2
       with:
