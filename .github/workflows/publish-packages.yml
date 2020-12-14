@@ -52,4 +52,9 @@ jobs:
       with:
         PROJECT_FILE_PATH: Optimization/src/Adriva.Extensions.Optimization.Web/Adriva.Extensions.Optimization.Web.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish NuGet text Search
+      uses: rohith/publish-nuget@v2.1.2
+      with:
+        PROJECT_FILE_PATH: TextSearch/src/Adriva.Extensions.TextSearch.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
         
