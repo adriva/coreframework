@@ -38,5 +38,34 @@ namespace Adriva.Common.Core
                 array[loop] = item;
             });
         }
+
+        public static async Task<IList<T>> ToListAsync<T>(this IAsyncEnumerable<T> items)
+        {
+            List<T> output = new List<T>();
+
+            await foreach (var item in items.ConfigureAwait(false))
+            {
+                output.Add(item);
+            }
+
+            return output;
+        }
+
+        public static async Task<IList<T>> ToListAsync<T>(this IAsyncEnumerable<T> items, int startIndex, int count)
+        {
+            int loop = 0;
+            List<T> output = new List<T>();
+
+            await foreach (var item in items.ConfigureAwait(false))
+            {
+                if (loop >= startIndex && count > loop)
+                {
+                    output.Add(item);
+                }
+                ++loop;
+            }
+
+            return output;
+        }
     }
 }

@@ -7,8 +7,11 @@ namespace Adriva.Storage.Abstractions
     /// Represents a message that can be used in a queue system.
     /// </summary>
     [Serializable]
-    public class QueueMessage
+    public sealed class QueueMessage
     {
+        [JsonProperty("id")]
+        public string Id { get; private set; }
+
         /// <summary>
         /// Gets the flags set on the message.
         /// </summary>
@@ -16,42 +19,63 @@ namespace Adriva.Storage.Abstractions
         [JsonProperty("fl")]
         public QueueMessageFlags Flags { get; private set; } = QueueMessageFlags.None;
 
-        [JsonProperty("li")]
-        public string LockIdentifier { get; private set; }
-
         [JsonProperty("ct")]
         public string CommandType { get; private set; }
 
         [JsonProperty("d")]
         public object Data { get; private set; }
 
-        public QueueMessage(string commandType, object data)
-            : this(QueueMessageFlags.None, commandType, data, null)
-        {
-        }
-
-        public QueueMessage(string commandType, object data, string lockIdentifier)
-            : this(QueueMessageFlags.None, commandType, data, lockIdentifier)
-        {
-        }
-
         [JsonConstructor]
-        public QueueMessage(QueueMessageFlags flags, string commandType, object data, string lockIdentifier)
+        private QueueMessage() { }
+
+        public static QueueMessage Create(object data, string commandType, QueueMessageFlags flags = null)
         {
-            this.CommandType = commandType;
-            this.Flags = flags;
-            this.Data = data;
-            this.LockIdentifier = lockIdentifier;
-
-            if (string.IsNullOrWhiteSpace(this.LockIdentifier))
+            flags = flags ?? QueueMessageFlags.Default;
+            return new QueueMessage()
             {
-                this.LockIdentifier = Environment.GetEnvironmentVariable("APPLICATION_INSTANCE_ID");
+                CommandType = commandType,
+                Data = data,
+                Flags = flags
+            };
+        }
 
-                if (string.IsNullOrWhiteSpace(this.LockIdentifier))
-                {
-                    this.LockIdentifier = Environment.MachineName;
-                }
-            }
+        public QueueMessage WithData(object data)
+        {
+            var clone = this.Clone();
+            clone.Data = data;
+            return clone;
+        }
+
+        public QueueMessage WithFlags(QueueMessageFlags flags)
+        {
+            var clone = this.Clone();
+            clone.Flags = flags;
+            return clone;
+        }
+
+        public QueueMessage WithId(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+                throw new ArgumentNullException(nameof(id));
+            if (!string.IsNullOrWhiteSpace(this.Id))
+                throw new InvalidOperationException("Once queue message id is assigned it cannot be changed.");
+
+            this.Id = id;
+            return this;
+        }
+
+        public QueueMessage Clone()
+        {
+            object cloneData = null;
+
+            if (this.Data is ICloneable cloneableData) cloneData = cloneableData.Clone();
+            else cloneData = this.Data;
+
+            QueueMessage message = new QueueMessage();
+            message.Flags = (long)this.Flags;
+            message.CommandType = this.CommandType;
+            message.Id = this.Id;
+            return message;
         }
     }
 }
