@@ -6,7 +6,7 @@ namespace Adriva.Storage.Abstractions
 {
     public sealed class NullQueueClient : IQueueClient
     {
-        public ValueTask InitializeAsync(string name)
+        public ValueTask InitializeAsync()
         {
             return new ValueTask();
         }
@@ -19,6 +19,11 @@ namespace Adriva.Storage.Abstractions
         public Task<QueueMessage> GetNextAsync(CancellationToken cancellationToken)
         {
             return Task.FromResult((QueueMessage)null);
+        }
+
+        public Task DeleteAsync(QueueMessage message)
+        {
+            return Task.CompletedTask;
         }
 
         public ValueTask DisposeAsync()

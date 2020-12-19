@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using Adriva.Storage.Abstractions;
-using Adriva.Storage.Azure;
 using Adriva.Web.Controls.Abstractions;
 using demo.Database;
 using Microsoft.AspNetCore.Builder;
@@ -70,30 +69,16 @@ namespace demo
             });
 
             services
-                .AddStorage(builder =>
+                .AddStorage()
+                .AddSqlServerQueue(this.HostingEnvironment.EnvironmentName, ServiceLifetime.Singleton, options =>
                 {
-                    builder.AddAzureBlob(ServiceLifetime.Singleton, (b) =>
-                    {
-                        b.ConnectionString = "DefaultEndpointsProtocol=https;AccountName=adriva;AccountKey=nQTYr6G1G00k+mUR370Ar7J0Spv+gbPWRCAyeTILHMF8KdHElRmy/xhiik8Uz1CQ2vohOzP6DsJUzGylFiTDlw==";
-                        b.ContainerName = "jarrtcontent";
-                    });
-
-                    builder.AddQueueClient<AzureQueueClient>(ServiceLifetime.Singleton)
-                        .Configure<AzureQueueConfiguration>(q =>
-                        {
-                            q.ConnectionString = "DefaultEndpointsProtocol=https;AccountName=adriva;AccountKey=nQTYr6G1G00k+mUR370Ar7J0Spv+gbPWRCAyeTILHMF8KdHElRmy/xhiik8Uz1CQ2vohOzP6DsJUzGylFiTDlw==";
-                            q.DefaultTimeToLive = TimeSpan.FromMinutes(1);
-                            q.QueueName = "deneme";
-                            q.UseSerializer<DefaultQueueMessageSerializer>();
-                        });
-
-                    builder.AddAzureTable(ServiceLifetime.Singleton, t =>
-                    {
-                        t.ConnectionString = "DefaultEndpointsProtocol=https;AccountName=adriva;AccountKey=nQTYr6G1G00k+mUR370Ar7J0Spv+gbPWRCAyeTILHMF8KdHElRmy/xhiik8Uz1CQ2vohOzP6DsJUzGylFiTDlw==";
-                        t.TableName = "JarrtDomainInfo";
-                    });
-                });
-            ;
+                    options.ConnectionString = "Connection string here";
+                })
+                .AddSqlServerQueue("Production", ServiceLifetime.Singleton, options =>
+                {
+                    options.ConnectionString = "Prod Connection string here";
+                })
+                ;
 
             services.AddWebControls(options =>
             {

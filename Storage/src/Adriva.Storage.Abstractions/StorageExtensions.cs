@@ -1,23 +1,67 @@
 using System;
 using Adriva.Storage.Abstractions;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
+    public static class Helpers
+    {
+        public static string GetQueueName(string name)
+        {
+            return $"queue:{name}";
+        }
+    }
+
+    public interface IStorageBuilder
+    {
+        IServiceCollection Services { get; }
+
+        IStorageBuilder AddQueueClient<TClient, TOptions>(string name, ServiceLifetime serviceLifetime, Action<TOptions> configure)
+                                                where TClient : class, IQueueClient
+                                                where TOptions : class, new();
+    }
+
+    internal class DefaultStorageBuilder : IStorageBuilder
+    {
+        public IServiceCollection Services { get; private set; }
+
+        public DefaultStorageBuilder(IServiceCollection services)
+        {
+            this.Services = services;
+        }
+
+        private IStorageBuilder AddStorageClient<TClient, TOptions>(string name, ServiceLifetime serviceLifetime, Action<TOptions> configure)
+                                                                                where TClient : class, IStorageClient
+                                                                                where TOptions : class, new()
+        {
+            ServiceDescriptor serviceDescriptor = new ServiceDescriptor(typeof(StorageClientWrapper),
+                (serviceProvider) =>
+                {
+                    IStorageClient storageClient = ActivatorUtilities.CreateInstance<TClient>(serviceProvider);
+                    return new StorageClientWrapper(storageClient, name);
+                }, serviceLifetime);
+            this.Services.Add(serviceDescriptor);
+            this.Services.Configure(name, configure);
+            return this;
+        }
+
+        public IStorageBuilder AddQueueClient<TClient, TOptions>(string name, ServiceLifetime serviceLifetime, Action<TOptions> configure)
+                where TClient : class, IQueueClient
+                where TOptions : class, new()
+        {
+            return this.AddStorageClient<TClient, TOptions>(Helpers.GetQueueName(name), serviceLifetime, configure);
+        }
+    }
+
     public static class StorageExtensions
     {
-        public static IServiceCollection AddStorage(this IServiceCollection services, Action<IStorageBuilder> build)
+        public static IStorageBuilder AddStorage(this IServiceCollection services)
         {
-            services.AddOptions();
-            services.TryAddSingleton<IStorageClientFactory, DefaultStorageClientFactory>();
+            services.AddSingleton<IStorageClientFactory>(serviceProvider => ActivatorUtilities.CreateInstance<DefaultStorageClientFactory>(serviceProvider));
+            DefaultStorageBuilder builder = new DefaultStorageBuilder(services);
 
-            if (null != build)
-            {
-                IStorageBuilder builder = new DefaultStorageBuilder(services);
-                build.Invoke(builder);
-            }
-
-            return services;
+            return builder;
         }
     }
 }

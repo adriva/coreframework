@@ -9,21 +9,24 @@ namespace Adriva.Storage.Abstractions
     [Serializable]
     public sealed class QueueMessage
     {
-        [JsonProperty("id")]
+        [JsonProperty("id", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Id { get; private set; }
 
         /// <summary>
         /// Gets the flags set on the message.
         /// </summary>
         /// <value>An instance of QueueMessageFlags class that represents the flags set on the message.</value>
-        [JsonProperty("fl")]
+        [JsonProperty("fl", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public QueueMessageFlags Flags { get; private set; } = QueueMessageFlags.None;
 
-        [JsonProperty("ct")]
+        [JsonProperty("ct", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string CommandType { get; private set; }
 
-        [JsonProperty("d")]
+        [JsonProperty("d", TypeNameHandling = TypeNameHandling.All, DefaultValueHandling = DefaultValueHandling.Ignore)]
         public object Data { get; private set; }
+
+        [JsonProperty("pt", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string PlatformTag { get; set; }
 
         [JsonConstructor]
         private QueueMessage() { }

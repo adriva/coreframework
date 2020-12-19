@@ -9,5 +9,7 @@ namespace Adriva.Storage.Abstractions
         ValueTask AddAsync(QueueMessage message, TimeSpan? timeToLive = null, TimeSpan? initialVisibilityDelay = null);
 
         Task<QueueMessage> GetNextAsync(CancellationToken cancellationToken);
+
+        Task DeleteAsync(QueueMessage message);
     }
 }

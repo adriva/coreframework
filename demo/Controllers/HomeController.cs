@@ -12,37 +12,12 @@ using Adriva.Extensions.Caching.Distributed;
 using Adriva.Extensions.Reporting.Abstractions;
 using Adriva.Storage.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace demo.Controllers
 {
-    public class Test : ITableItem
-    {
-        [NotMapped]
-        public string DomainName
-        {
-            get => this.RowKey;
-            set => this.RowKey = value;
-        }
 
-        public string PartitionKey { get; set; }
-        public string RowKey { get; set; }
-        public DateTimeOffset Timestamp { get; set; }
-        public string ETag { get; set; }
 
-        public int PromotionCount { get; set; }
-
-        public void ReadEntity(IDictionary<string, EntityProperty> properties, OperationContext operationContext)
-        {
-
-        }
-
-        public IDictionary<string, EntityProperty> WriteEntity(OperationContext operationContext)
-        {
-            return new Dictionary<string, EntityProperty>();
-        }
-    }
 
     [Serializable]
     public class TestDataItem
@@ -68,14 +43,17 @@ namespace demo.Controllers
     {
         private readonly IReportingService ReportingService;
         private static readonly Random Rnd = new Random();
+        Adriva.Storage.Abstractions.IStorageClientFactory SCF;
 
-        public HomeController(IReportingService reportingService)
+        public HomeController(IReportingService reportingService, Adriva.Storage.Abstractions.IStorageClientFactory scf)
         {
             this.ReportingService = reportingService;
+            SCF = scf;
         }
 
         public async Task<IActionResult> Index(IDictionary<string, string> model)
         {
+            var haha = await this.SCF.GetQueueClientAsync("Development");
             var rd = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
             await this.ReportingService.ExecuteReportOutputAsync(rd, model);
             // var tc = this.HttpContext.RequestServices.GetService<Microsoft.ApplicationInsights.TelemetryClient>();
