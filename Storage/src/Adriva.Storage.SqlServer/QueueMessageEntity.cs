@@ -12,9 +12,11 @@ namespace Adriva.Storage.SqlServer
 
         public byte[] Content { get; set; }
 
+        public long Flags { get; set; }
+
         public DateTime TimestampUtc { get; set; }
 
-        public DateTime RetrievedOnUtc { get; set; }
+        public DateTime? RetrievedOnUtc { get; set; }
 
     }
 }

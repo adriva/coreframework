@@ -2,19 +2,39 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Storage.Abstractions;
-using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 
 namespace Adriva.Storage.SqlServer
 {
-
+#error Must implement dbcontext methods to persist / retrieve messages
     internal class SqlServerQueueClient : IQueueClient
     {
+        private static readonly TimeSpan MinimumVisibilityTimeout = TimeSpan.FromSeconds(30);
+        private static readonly TimeSpan MaximumVisibilityTimeout = TimeSpan.FromMinutes(30);
+
         private readonly QueueDbContext DbContext;
+        private readonly IQueueMessageSerializer MessageSerializer;
         private StorageClientContext Context;
 
-        public SqlServerQueueClient(QueueDbContext queueDbContext)
+        public SqlServerQueueClient(QueueDbContext queueDbContext, IQueueMessageSerializer messageSerializer)
         {
             this.DbContext = queueDbContext;
+            this.MessageSerializer = messageSerializer;
+        }
+
+        private static void EnsureValidQueueMessage(QueueMessage queueMessage, ref long? id)
+        {
+            if (null == queueMessage) throw new ArgumentNullException(nameof(queueMessage));
+
+            if (null != id)
+            {
+                if (!long.TryParse(queueMessage.Id, out long messageId))
+                {
+                    throw new InvalidOperationException("Message id is invalid and cannot be used with SqlServerQueueClient.");
+                }
+
+                id = messageId;
+            }
         }
 
         public ValueTask InitializeAsync(StorageClientContext context)
@@ -24,24 +44,53 @@ namespace Adriva.Storage.SqlServer
             return new ValueTask();
         }
 
-        public ValueTask AddAsync(QueueMessage message, TimeSpan? timeToLive = null, TimeSpan? initialVisibilityDelay = null)
+        public async ValueTask AddAsync(QueueMessage message, TimeSpan? visibilityTimeout = null, TimeSpan? initialVisibilityDelay = null)
         {
-            throw new NotImplementedException();
+            long? messageId = 0;
+            SqlServerQueueClient.EnsureValidQueueMessage(message, ref messageId);
+
+            visibilityTimeout = visibilityTimeout ?? SqlServerQueueClient.MinimumVisibilityTimeout;
+
+            if (visibilityTimeout < SqlServerQueueClient.MinimumVisibilityTimeout)
+            {
+                visibilityTimeout = SqlServerQueueClient.MinimumVisibilityTimeout;
+            }
+            else if (visibilityTimeout > SqlServerQueueClient.MaximumVisibilityTimeout)
+            {
+                visibilityTimeout = SqlServerQueueClient.MaximumVisibilityTimeout;
+            }
+
+            initialVisibilityDelay = initialVisibilityDelay ?? TimeSpan.Zero;
+
+            QueueMessageEntity entity = new QueueMessageEntity();
+            entity.Environment = this.Context.Name;
+            entity.TimestampUtc = DateTime.UtcNow.AddSeconds(initialVisibilityDelay.Value.TotalSeconds);
+            entity.VisibilityTimeout = (int)visibilityTimeout.Value.TotalSeconds;
+            entity.RetrievedOnUtc = null;
+            entity.Content = this.MessageSerializer.Serialize(message);
+            entity.Flags = message.Flags;
+
+            await this.DbContext.AddAsync(message);
+            await this.DbContext.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(QueueMessage message)
+        public async Task DeleteAsync(QueueMessage message)
         {
-            throw new NotImplementedException();
+            long? messageId = null;
+            SqlServerQueueClient.EnsureValidQueueMessage(message, ref messageId);
+            await this.DbContext.Database.ExecuteSqlRawAsync("?? {0}", messageId);
         }
 
-        public Task<QueueMessage> GetNextAsync(CancellationToken cancellationToken)
+        public async Task<QueueMessage> GetNextAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var messageEntity = await this.DbContext.Messages.FromSqlRaw("?? {0}", this.Context.Name).FirstOrDefaultAsync();
+            if (null == messageEntity) return null;
+
+            QueueMessage queueMessage = QueueMessage.Create(null, null, null);
+            queueMessage.WithId(Convert.ToString(messageEntity.Id));
+            return queueMessage;
         }
 
-        public ValueTask DisposeAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public ValueTask DisposeAsync() => new ValueTask();
     }
 }
