@@ -32,7 +32,7 @@ namespace Adriva.Storage.Abstractions
 
         public async Task<IQueueClient> GetQueueClientAsync(string name)
         {
-            string queueName = Helpers.GetQueueName(name);
+            string queueName = Helpers.GetQualifiedQueueName(name);
             var wrapperService = this.ServiceProvider.GetServices<StorageClientWrapper>().FirstOrDefault(wrapper => 0 == string.Compare(queueName, wrapper.Name, StringComparison.OrdinalIgnoreCase));
             if (null == wrapperService) return null;
             StorageClientContext context = new StorageClientContext(this.ServiceProvider, queueName, name);

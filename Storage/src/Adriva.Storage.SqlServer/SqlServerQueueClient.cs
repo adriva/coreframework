@@ -9,13 +9,18 @@ namespace Adriva.Storage.SqlServer
 
     internal class SqlServerQueueClient : IQueueClient
     {
+        private readonly QueueDbContext DbContext;
+        private StorageClientContext Context;
+
         public SqlServerQueueClient(QueueDbContext queueDbContext)
         {
+            this.DbContext = queueDbContext;
         }
 
         public ValueTask InitializeAsync(StorageClientContext context)
         {
             var options = context.GetOptions<SqlServerQueueOptions>();
+            this.Context = context;
             return new ValueTask();
         }
 

@@ -8,10 +8,13 @@ namespace Adriva.Storage.SqlServer
 
         public string Environment { get; set; }
 
-        public int TimeToLive { get; set; }
+        public int VisibilityTimeout { get; set; }
 
-        public string Content { get; set; }
+        public byte[] Content { get; set; }
+
+        public DateTime TimestampUtc { get; set; }
 
         public DateTime RetrievedOnUtc { get; set; }
+
     }
 }

@@ -14,6 +14,13 @@ namespace Adriva.Storage.SqlServer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<QueueMessageEntity>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.VisibilityTimeout).HasDefaultValue(60);
+                entity.Property(x => x.Content).HasColumnType("varbinary(max)");
+            });
         }
     }
 }

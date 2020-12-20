@@ -1,5 +1,4 @@
 using System;
-using Adriva.Storage.Abstractions;
 using Adriva.Storage.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -14,7 +13,8 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.Services.AddDbContext<QueueDbContext>((serviceProvider, dbContextBuilder) =>
             {
                 var optionsMonitor = serviceProvider.GetRequiredService<IOptionsMonitor<SqlServerQueueOptions>>();
-                var options = optionsMonitor.Get(Helpers.GetQueueName(name));
+                var options = optionsMonitor.Get(Helpers.GetQualifiedQueueName(name));
+                dbContextBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
                 dbContextBuilder.UseSqlServer(options.ConnectionString);
             }, serviceLifetime, serviceLifetime);
             return builder;

@@ -1,11 +1,9 @@
-using System.Threading.Tasks;
-
 namespace Adriva.Storage.Abstractions
 {
     public interface IQueueMessageSerializer
     {
-        Task<byte[]> SerializeAsync(QueueMessage queueMessage);
+        byte[] Serialize(QueueMessage queueMessage);
 
-        Task<QueueMessage> DeserializeAsync(byte[] content);
+        QueueMessage Deserialize(byte[] content);
     }
 }
