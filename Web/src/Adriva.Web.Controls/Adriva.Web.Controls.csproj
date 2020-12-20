@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
     <Title>Adriva Web Controls Library</Title>
     <PackageDescription>Includes common (shared) asp net core web controls.</PackageDescription>    
-    <Version>3.0.0-rc05</Version>
+    <Version>3.0.0-rc06</Version>
   </PropertyGroup>
 
   <ItemGroup>

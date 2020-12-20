@@ -38,8 +38,8 @@ namespace Microsoft.Extensions.DependencyInjection
             ServiceDescriptor serviceDescriptor = new ServiceDescriptor(typeof(StorageClientWrapper),
                 (serviceProvider) =>
                 {
-                    IStorageClient storageClient = ActivatorUtilities.CreateInstance<TClient>(serviceProvider);
-                    return new StorageClientWrapper(storageClient, name);
+                    Func<IStorageClient> factoryMethod = () => ActivatorUtilities.CreateInstance<TClient>(serviceProvider);
+                    return new StorageClientWrapper(factoryMethod, name);
                 }, serviceLifetime);
             this.Services.Add(serviceDescriptor);
             this.Services.Configure(name, configure);

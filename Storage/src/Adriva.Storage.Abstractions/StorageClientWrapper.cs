@@ -1,26 +1,40 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Adriva.Storage.Abstractions
 {
     internal class StorageClientWrapper : IStorageClient
     {
+        private readonly Func<IStorageClient> ClientFactory;
         private int IsInitialized = 0;
-        internal IStorageClient StorageClient { get; private set; }
+        private IStorageClient StorageClientField = null;
 
-        public string Name { get; }
-
-        public StorageClientWrapper(IStorageClient storageClient, string name)
+        internal IStorageClient StorageClient
         {
-            this.StorageClient = storageClient;
+            get
+            {
+                Interlocked.CompareExchange(ref this.StorageClientField, this.ClientFactory.Invoke(), null);
+                return this.StorageClientField;
+            }
+        }
+
+        public string Name { get; private set; }
+
+        public StorageClientWrapper(Func<IStorageClient> clientFactory, string name)
+        {
+            if (null == name) throw new ArgumentNullException(nameof(name));
+
+            this.ClientFactory = clientFactory;
             this.Name = name;
         }
 
-        public async ValueTask InitializeAsync()
+        public async ValueTask InitializeAsync(StorageClientContext context)
         {
             if (0 == Interlocked.CompareExchange(ref this.IsInitialized, 1, 0))
             {
-                await this.StorageClient.InitializeAsync();
+                await this.StorageClient.InitializeAsync(context);
             }
         }
 
