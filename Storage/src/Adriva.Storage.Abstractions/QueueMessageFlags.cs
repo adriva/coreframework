@@ -6,8 +6,9 @@ namespace Adriva.Storage.Abstractions
     [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class QueueMessageFlags
     {
-        public static QueueMessageFlags None = new QueueMessageFlags(0);
-        public static QueueMessageFlags Default = new QueueMessageFlags(1);
+        public static QueueMessageFlags NormalPriority = new QueueMessageFlags(0);
+        public static QueueMessageFlags LowPriority = new QueueMessageFlags(1);
+        public static QueueMessageFlags HighPriority = new QueueMessageFlags(2);
 
         [JsonProperty("v")]
         public long Value { get; private set; }
@@ -24,7 +25,7 @@ namespace Adriva.Storage.Abstractions
 
         public static implicit operator QueueMessageFlags(long value)
         {
-            if (0 == value) return QueueMessageFlags.None;
+            if (0 == value) return QueueMessageFlags.NormalPriority;
             return new QueueMessageFlags(value);
         }
 

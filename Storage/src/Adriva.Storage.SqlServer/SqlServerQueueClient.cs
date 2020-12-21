@@ -1,16 +1,20 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Adriva.Common.Core;
 using Adriva.Storage.Abstractions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 namespace Adriva.Storage.SqlServer
 {
-#warning Must implement dbcontext methods to persist / retrieve messages
     internal class SqlServerQueueClient : IQueueClient
     {
         private static readonly TimeSpan MinimumVisibilityTimeout = TimeSpan.FromSeconds(30);
         private static readonly TimeSpan MaximumVisibilityTimeout = TimeSpan.FromMinutes(30);
+        private static readonly SemaphoreSlim DatabaseCreateSemaphore = new SemaphoreSlim(1, 1);
+
+        private static bool IsDatabaseObjectsCreated = false;
 
         private readonly QueueDbContext DbContext;
         private readonly IQueueMessageSerializer MessageSerializer;
@@ -37,11 +41,40 @@ namespace Adriva.Storage.SqlServer
             }
         }
 
-        public ValueTask InitializeAsync(StorageClientContext context)
+        private async ValueTask EnsureDatabaseObjectsAsync()
         {
+            if (!SqlServerQueueClient.IsDatabaseObjectsCreated)
+            {
+                await SqlServerQueueClient.DatabaseCreateSemaphore.WaitAsync();
+
+                try
+                {
+                    if (!SqlServerQueueClient.IsDatabaseObjectsCreated)
+                    {
+                        var resourceFileProvider = new EmbeddedFileProvider(typeof(SqlServerQueueClient).Assembly);
+                        var storedProcedureFileInfo = resourceFileProvider.GetFileInfo("createsp.sql");
+                        var tableFileInfo = resourceFileProvider.GetFileInfo("createtable.sql");
+
+                        string sqlStoredProcedure = await storedProcedureFileInfo.ReadAllTextAsync();
+                        string sqlTable = await tableFileInfo.ReadAllTextAsync();
+
+                        await this.DbContext.Database.ExecuteSqlRawAsync(sqlTable);
+                        await this.DbContext.Database.ExecuteSqlRawAsync(sqlStoredProcedure);
+                        SqlServerQueueClient.IsDatabaseObjectsCreated = true;
+                    }
+                }
+                finally
+                {
+                    SqlServerQueueClient.DatabaseCreateSemaphore.Release();
+                }
+            }
+        }
+
+        public async ValueTask InitializeAsync(StorageClientContext context)
+        {
+            await this.EnsureDatabaseObjectsAsync();
             var options = context.GetOptions<SqlServerQueueOptions>();
             this.Context = context;
-            return new ValueTask();
         }
 
         public async ValueTask AddAsync(QueueMessage message, TimeSpan? visibilityTimeout = null, TimeSpan? initialVisibilityDelay = null)
@@ -79,14 +112,14 @@ namespace Adriva.Storage.SqlServer
 
         public async Task DeleteAsync(QueueMessage message)
         {
-            long? messageId = null;
+            long? messageId = -1;
             SqlServerQueueClient.EnsureValidQueueMessage(message, ref messageId);
-            await this.DbContext.Database.ExecuteSqlRawAsync("?? {0}", messageId);
+            await this.DbContext.Database.ExecuteSqlRawAsync("DELETE [QueueMessages] WHERE Id = {0}", messageId);
         }
 
         public async Task<QueueMessage> GetNextAsync(CancellationToken cancellationToken)
         {
-            var messageEntity = await this.DbContext.Messages.FromSqlRaw("?? {0}", this.Context.Name).FirstOrDefaultAsync();
+            var messageEntity = await this.DbContext.Messages.FromSqlRaw("GetNextQueueMessage {0}", this.Context.Name).FirstOrDefaultAsync();
             if (null == messageEntity) return null;
 
             QueueMessage queueMessage = QueueMessage.Create(null, null, null);
@@ -94,6 +127,9 @@ namespace Adriva.Storage.SqlServer
             return queueMessage;
         }
 
-        public ValueTask DisposeAsync() => new ValueTask();
+        public ValueTask DisposeAsync()
+        {
+            return new ValueTask();
+        }
     }
 }

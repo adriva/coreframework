@@ -17,7 +17,7 @@ namespace Adriva.Storage.Abstractions
         /// </summary>
         /// <value>An instance of QueueMessageFlags class that represents the flags set on the message.</value>
         [JsonProperty("fl", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public QueueMessageFlags Flags { get; private set; } = QueueMessageFlags.None;
+        public QueueMessageFlags Flags { get; private set; } = QueueMessageFlags.NormalPriority;
 
         [JsonProperty("ct", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string CommandType { get; private set; }
@@ -33,7 +33,7 @@ namespace Adriva.Storage.Abstractions
 
         public static QueueMessage Create(object data, string commandType, QueueMessageFlags flags = null)
         {
-            flags = flags ?? QueueMessageFlags.Default;
+            flags = flags ?? QueueMessageFlags.NormalPriority;
             return new QueueMessage()
             {
                 CommandType = commandType,

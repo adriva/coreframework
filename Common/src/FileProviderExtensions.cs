@@ -1,4 +1,6 @@
 using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.Extensions.FileProviders;
 
 namespace Adriva.Common.Core
@@ -19,5 +21,15 @@ namespace Adriva.Common.Core
             }
         }
 
+        public static async Task<string> ReadAllTextAsync(this IFileInfo fileInfo, Encoding encoding = null)
+        {
+            encoding = encoding ?? Encoding.UTF8;
+
+            using (var stream = fileInfo.CreateReadStream())
+            using (var reader = new StreamReader(stream, encoding))
+            {
+                return await reader.ReadToEndAsync();
+            }
+        }
     }
 }
