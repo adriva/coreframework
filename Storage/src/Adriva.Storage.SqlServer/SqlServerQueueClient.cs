@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Adriva.Storage.SqlServer
 {
-#error Must implement dbcontext methods to persist / retrieve messages
+#warning Must implement dbcontext methods to persist / retrieve messages
     internal class SqlServerQueueClient : IQueueClient
     {
         private static readonly TimeSpan MinimumVisibilityTimeout = TimeSpan.FromSeconds(30);
@@ -46,7 +46,7 @@ namespace Adriva.Storage.SqlServer
 
         public async ValueTask AddAsync(QueueMessage message, TimeSpan? visibilityTimeout = null, TimeSpan? initialVisibilityDelay = null)
         {
-            long? messageId = 0;
+            long? messageId = null;
             SqlServerQueueClient.EnsureValidQueueMessage(message, ref messageId);
 
             visibilityTimeout = visibilityTimeout ?? SqlServerQueueClient.MinimumVisibilityTimeout;
@@ -70,8 +70,11 @@ namespace Adriva.Storage.SqlServer
             entity.Content = this.MessageSerializer.Serialize(message);
             entity.Flags = message.Flags;
 
-            await this.DbContext.AddAsync(message);
+            await this.DbContext.AddAsync(entity);
             await this.DbContext.SaveChangesAsync();
+            this.DbContext.Entry(entity).State = EntityState.Detached;
+
+            message.SetId(Convert.ToString(entity.Id));
         }
 
         public async Task DeleteAsync(QueueMessage message)
@@ -87,7 +90,7 @@ namespace Adriva.Storage.SqlServer
             if (null == messageEntity) return null;
 
             QueueMessage queueMessage = QueueMessage.Create(null, null, null);
-            queueMessage.WithId(Convert.ToString(messageEntity.Id));
+            queueMessage.SetId(Convert.ToString(messageEntity.Id));
             return queueMessage;
         }
 

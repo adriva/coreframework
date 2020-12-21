@@ -56,7 +56,7 @@ namespace Adriva.Storage.Abstractions
             return clone;
         }
 
-        public QueueMessage WithId(string id)
+        public QueueMessage SetId(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
                 throw new ArgumentNullException(nameof(id));

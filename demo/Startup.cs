@@ -72,7 +72,7 @@ namespace demo
                 .AddStorage()
                 .AddSqlServerQueue(this.HostingEnvironment.EnvironmentName, ServiceLifetime.Singleton, options =>
                 {
-                    options.ConnectionString = "Connection string here";
+                    options.ConnectionString = "Server=localhost;Initial Catalog=DevDb;User id=sa;Password=PASS@word1;";
                 })
                 .AddSqlServerQueue("Production", ServiceLifetime.Singleton, options =>
                 {
