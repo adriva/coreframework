@@ -1,8 +1,10 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
 using Adriva.Storage.Abstractions;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
@@ -102,6 +104,7 @@ namespace Adriva.Storage.SqlServer
             entity.RetrievedOnUtc = null;
             entity.Content = this.MessageSerializer.Serialize(message);
             entity.Flags = message.Flags;
+            entity.Command = message.CommandType;
 
             await this.DbContext.AddAsync(entity);
             await this.DbContext.SaveChangesAsync();
@@ -119,10 +122,11 @@ namespace Adriva.Storage.SqlServer
 
         public async Task<QueueMessage> GetNextAsync(CancellationToken cancellationToken)
         {
-            var messageEntity = await this.DbContext.Messages.FromSqlRaw("GetNextQueueMessage {0}", this.Context.Name).FirstOrDefaultAsync();
+            var resultset = await this.DbContext.Messages.FromSqlRaw("GetNextQueueMessage @environment", new SqlParameter("@environment", this.Context.Name)).ToArrayAsync();
+            var messageEntity = resultset.FirstOrDefault();
             if (null == messageEntity) return null;
 
-            QueueMessage queueMessage = QueueMessage.Create(null, null, null);
+            var queueMessage = this.MessageSerializer.Deserialize(messageEntity.Content);
             queueMessage.SetId(Convert.ToString(messageEntity.Id));
             return queueMessage;
         }

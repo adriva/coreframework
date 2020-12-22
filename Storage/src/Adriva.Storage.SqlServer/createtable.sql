@@ -8,6 +8,7 @@ BEGIN
         [Id] [bigint] IDENTITY(1,1) NOT NULL,
         [Environment] [nvarchar](50) NULL,
         [Content] [varbinary](max) NULL,
+        [Command] [nvarchar](100) NULL,
         [Flags] [bigint] NOT NULL,
         [VisibilityTimeout] [int] NOT NULL,
         [TimestampUtc] [datetime2](7) NOT NULL,

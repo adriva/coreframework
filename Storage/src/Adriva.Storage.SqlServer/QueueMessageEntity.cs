@@ -12,6 +12,8 @@ namespace Adriva.Storage.SqlServer
 
         public byte[] Content { get; set; }
 
+        public string Command { get; set; }
+
         public long Flags { get; set; }
 
         public DateTime TimestampUtc { get; set; }

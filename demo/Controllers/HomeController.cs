@@ -54,9 +54,11 @@ namespace demo.Controllers
         public async Task<IActionResult> Index(IDictionary<string, string> model)
         {
             var haha = await this.SCF.GetQueueClientAsync("Development");
-            var msg = QueueMessage.Create("DATA HERE", "COMMAND TYPE HERE", 0);
-            await haha.AddAsync(msg, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(60));
-               var rd = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
+            var qm = QueueMessage.Create("Hello world", "no command", QueueMessageFlags.HighPriority);
+            await haha.AddAsync(qm);
+            var msg = await haha.GetNextAsync(CancellationToken.None);
+            await haha.DeleteAsync(msg);
+            var rd = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
             await this.ReportingService.ExecuteReportOutputAsync(rd, model);
             // var tc = this.HttpContext.RequestServices.GetService<Microsoft.ApplicationInsights.TelemetryClient>();
             // if (null != tc)
