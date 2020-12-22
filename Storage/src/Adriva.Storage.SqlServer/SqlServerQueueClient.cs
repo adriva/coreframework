@@ -54,8 +54,8 @@ namespace Adriva.Storage.SqlServer
                     if (!SqlServerQueueClient.IsDatabaseObjectsCreated)
                     {
                         var resourceFileProvider = new EmbeddedFileProvider(typeof(SqlServerQueueClient).Assembly);
-                        var storedProcedureFileInfo = resourceFileProvider.GetFileInfo("createsp.sql");
-                        var tableFileInfo = resourceFileProvider.GetFileInfo("createtable.sql");
+                        var storedProcedureFileInfo = resourceFileProvider.GetFileInfo("queue-createsp.sql");
+                        var tableFileInfo = resourceFileProvider.GetFileInfo("queue-createtable.sql");
 
                         string sqlStoredProcedure = await storedProcedureFileInfo.ReadAllTextAsync();
                         string sqlTable = await tableFileInfo.ReadAllTextAsync();

@@ -15,7 +15,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="createtable.sql" />
-    <EmbeddedResource Include="createsp.sql" />
+    <EmbeddedResource Include="*.sql" />    
   </ItemGroup>
 </Project>
