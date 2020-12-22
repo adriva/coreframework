@@ -10,5 +10,9 @@ namespace Microsoft.Extensions.DependencyInjection
         IStorageBuilder AddQueueClient<TClient, TOptions>(string name, ServiceLifetime serviceLifetime, Action<TOptions> configure)
                                                 where TClient : class, IQueueClient
                                                 where TOptions : class, new();
+
+        IStorageBuilder AddBlobClient<TClient, TOptions>(string name, ServiceLifetime serviceLifetime, Action<TOptions> configure)
+                where TClient : class, IBlobClient
+                where TOptions : class, new();
     }
 }

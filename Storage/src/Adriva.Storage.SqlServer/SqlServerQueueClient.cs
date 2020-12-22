@@ -2,11 +2,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Adriva.Common.Core;
 using Adriva.Storage.Abstractions;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
 
 namespace Adriva.Storage.SqlServer
 {
@@ -53,15 +51,7 @@ namespace Adriva.Storage.SqlServer
                 {
                     if (!SqlServerQueueClient.IsDatabaseObjectsCreated)
                     {
-                        var resourceFileProvider = new EmbeddedFileProvider(typeof(SqlServerQueueClient).Assembly);
-                        var storedProcedureFileInfo = resourceFileProvider.GetFileInfo("queue-createsp.sql");
-                        var tableFileInfo = resourceFileProvider.GetFileInfo("queue-createtable.sql");
-
-                        string sqlStoredProcedure = await storedProcedureFileInfo.ReadAllTextAsync();
-                        string sqlTable = await tableFileInfo.ReadAllTextAsync();
-
-                        await this.DbContext.Database.ExecuteSqlRawAsync(sqlTable);
-                        await this.DbContext.Database.ExecuteSqlRawAsync(sqlStoredProcedure);
+                        await DbHelpers.ExecuteScriptAsync(this.DbContext.Database, "queue-createtable", "queue-createsp");
                         SqlServerQueueClient.IsDatabaseObjectsCreated = true;
                     }
                 }

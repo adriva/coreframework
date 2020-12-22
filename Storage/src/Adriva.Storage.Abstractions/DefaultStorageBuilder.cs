@@ -33,5 +33,12 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             return this.AddStorageClient<TClient, TOptions>(Helpers.GetQualifiedQueueName(name), serviceLifetime, configure);
         }
+
+        public IStorageBuilder AddBlobClient<TClient, TOptions>(string name, ServiceLifetime serviceLifetime, Action<TOptions> configure)
+                where TClient : class, IBlobClient
+                where TOptions : class, new()
+        {
+            return this.AddStorageClient<TClient, TOptions>(Helpers.GetQualifiedQueueName(name), serviceLifetime, configure);
+        }
     }
 }

@@ -19,5 +19,10 @@ namespace Microsoft.Extensions.DependencyInjection
             }, serviceLifetime, serviceLifetime);
             return builder;
         }
+
+        public static IStorageBuilder AddSqlServerBlob(this IStorageBuilder builder, string name)
+        {
+            return builder;
+        }
     }
 }
