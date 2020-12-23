@@ -25,15 +25,5 @@ namespace Adriva.Storage.Abstractions
         {
             return Task.CompletedTask;
         }
-
-        public ValueTask DisposeAsync()
-        {
-            return new ValueTask();
-        }
-
-        public void Dispose()
-        {
-
-        }
     }
 }

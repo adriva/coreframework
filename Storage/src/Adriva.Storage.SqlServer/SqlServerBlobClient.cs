@@ -131,9 +131,36 @@ namespace Adriva.Storage.SqlServer
             return new BlobItemProperties(blobEntity.Length, blobEntity.ETag, blobEntity.LastModifiedUtc);
         }
 
-        public Task<SegmentedResult<string>> ListAllAsync(string continuationToken, string prefix = null, int count = 500)
+        public async Task<SegmentedResult<string>> ListAllAsync(string continuationToken, string prefix = null, int count = 500)
         {
-            throw new NotImplementedException();
+            if (!long.TryParse(continuationToken, out long startId)) startId = 0;
+
+            if (null != prefix && !prefix.EndsWith('/')) prefix = prefix + '/';
+
+            var items = await this.DbContext.Blobs
+                .Where(b => b.ContainerName == this.ContainerName && (null == prefix || b.Name.StartsWith(prefix)) && b.Id >= startId)
+                .Select(b => new { b.Id, b.Name })
+                .OrderBy(b => b.Id)
+                .Take(1 + count)
+                .ToListAsync();
+
+            if (count + 1 == items.Count)
+            {
+                continuationToken = items[count].Id.ToString();
+            }
+            else
+            {
+                continuationToken = null;
+            }
+
+            if (items.Any())
+            {
+                return new SegmentedResult<string>(items.Select(x => x.Name).Take(count), continuationToken, !string.IsNullOrWhiteSpace(continuationToken));
+            }
+            else
+            {
+                return SegmentedResult<string>.Empty;
+            }
         }
 
         public async Task<Stream> OpenReadStreamAsync(string name)
@@ -229,19 +256,19 @@ namespace Adriva.Storage.SqlServer
             }
         }
 
-        public ValueTask DeleteAsync(string name)
+        public async ValueTask DeleteAsync(string name)
         {
-            throw new NotImplementedException();
-        }
+            SqlServerBlobClient.ValidateName(ref name);
 
-        public ValueTask DisposeAsync()
-        {
-            return new ValueTask();
-        }
+            using (var transaction = await this.DbContext.Database.BeginTransactionAsync())
+            {
+                long? id = await this.GetBlobIdAsync(name);
+                if (!id.HasValue) return;
 
-        public void Dispose()
-        {
+                await this.DbContext.Database.ExecuteSqlInterpolatedAsync($"DELETE BlobItems WHERE Id = {id.Value}");
 
+                await transaction.CommitAsync();
+            }
         }
     }
 }

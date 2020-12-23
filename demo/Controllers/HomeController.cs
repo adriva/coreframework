@@ -55,11 +55,9 @@ namespace demo.Controllers
         public async Task<IActionResult> Index(IDictionary<string, string> model)
         {
             var haha = await this.SCF.GetBlobClientAsync("Development");
-            var props = await haha.GetPropertiesAsync("deneme_entry");
-            var bb = await haha.ReadAllBytesAsync("deneme_entry");
-            var b = await haha.ExistsAsync("deneme_entry");
-            var rd = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
-            await this.ReportingService.ExecuteReportOutputAsync(rd, model);
+            await haha.UpsertAsync("f1/f2/deneme", "Hello world");
+            await haha.DeleteAsync("f1/f2/deneme");
+
             // var tc = this.HttpContext.RequestServices.GetService<Microsoft.ApplicationInsights.TelemetryClient>();
             // if (null != tc)
             // {

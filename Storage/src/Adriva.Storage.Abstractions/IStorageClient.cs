@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Adriva.Storage.Abstractions
 {
-    public interface IStorageClient : IAsyncDisposable, IDisposable
+    public interface IStorageClient
     {
         ValueTask InitializeAsync(StorageClientContext context);
     }

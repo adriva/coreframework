@@ -37,15 +37,5 @@ namespace Adriva.Storage.Abstractions
                 await this.StorageClient.InitializeAsync(context);
             }
         }
-
-        public ValueTask DisposeAsync()
-        {
-            return this.StorageClient.DisposeAsync();
-        }
-
-        public void Dispose()
-        {
-            this.StorageClient.Dispose();
-        }
     }
 }

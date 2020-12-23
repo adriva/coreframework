@@ -120,14 +120,5 @@ namespace Adriva.Storage.SqlServer
             queueMessage.SetId(Convert.ToString(messageEntity.Id));
             return queueMessage;
         }
-
-        public ValueTask DisposeAsync()
-        {
-            return new ValueTask();
-        }
-
-        public void Dispose()
-        {
-        }
     }
 }
