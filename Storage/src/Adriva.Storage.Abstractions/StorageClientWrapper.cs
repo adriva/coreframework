@@ -1,7 +1,7 @@
 using System;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Adriva.Storage.Abstractions
 {
@@ -15,18 +15,21 @@ namespace Adriva.Storage.Abstractions
         {
             get
             {
-                Interlocked.CompareExchange(ref this.StorageClientField, this.ClientFactory.Invoke(), null);
+                if (null == this.StorageClientField)
+                {
+                    Interlocked.CompareExchange(ref this.StorageClientField, this.ClientFactory.Invoke(), null);
+                }
                 return this.StorageClientField;
             }
         }
 
         public string Name { get; private set; }
 
-        public StorageClientWrapper(Func<IStorageClient> clientFactory, string name)
+        public StorageClientWrapper(Expression<Func<IStorageClient>> clientFactoryExpression, string name)
         {
             if (null == name) throw new ArgumentNullException(nameof(name));
 
-            this.ClientFactory = clientFactory;
+            this.ClientFactory = clientFactoryExpression.Compile();
             this.Name = name;
         }
 

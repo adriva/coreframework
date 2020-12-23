@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 using Adriva.Storage.Abstractions;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -19,7 +20,7 @@ namespace Microsoft.Extensions.DependencyInjection
             ServiceDescriptor serviceDescriptor = new ServiceDescriptor(typeof(StorageClientWrapper),
                 (serviceProvider) =>
                 {
-                    Func<IStorageClient> factoryMethod = () => ActivatorUtilities.CreateInstance<TClient>(serviceProvider);
+                    Expression<Func<IStorageClient>> factoryMethod = () => ActivatorUtilities.CreateInstance<TClient>(serviceProvider);
                     return ActivatorUtilities.CreateInstance<StorageClientWrapper>(serviceProvider, factoryMethod, name);
                 }, ServiceLifetime.Singleton);
             this.Services.Add(serviceDescriptor);
