@@ -20,8 +20,16 @@ namespace Microsoft.Extensions.DependencyInjection
             return builder;
         }
 
-        public static IStorageBuilder AddSqlServerBlob(this IStorageBuilder builder, string name)
+        public static IStorageBuilder AddSqlServerBlob(this IStorageBuilder builder, string name, ServiceLifetime serviceLifetime, Action<SqlServerBlobOptions> configure)
         {
+            builder.AddBlobClient<SqlServerBlobClient, SqlServerBlobOptions>(name, serviceLifetime, configure);
+            builder.Services.AddDbContext<BlobDbContext>((serviceProvider, dbContextBuilder) =>
+            {
+                var optionsMonitor = serviceProvider.GetRequiredService<IOptionsMonitor<SqlServerBlobOptions>>();
+                var options = optionsMonitor.Get(Helpers.GetQualifiedBlobName(name));
+                dbContextBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                dbContextBuilder.UseSqlServer(options.ConnectionString);
+            }, serviceLifetime, serviceLifetime);
             return builder;
         }
     }

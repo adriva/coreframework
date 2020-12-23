@@ -1,4 +1,5 @@
 IF OBJECT_ID('[dbo].[BlobItems]', 'U') IS NULL
+BEGIN
     SET ANSI_NULLS ON
 
     SET QUOTED_IDENTIFIER ON

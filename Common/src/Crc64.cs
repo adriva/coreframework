@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace Adriva.Common.Core
 {
@@ -166,6 +167,18 @@ namespace Adriva.Common.Core
             for (int j = 0; j < data.Length; j++)
             {
                 crc = Crc64.Table[(byte)(crc ^ data[j])] ^ (crc >> 8);
+            }
+
+            return crc;
+        }
+
+        public static ulong Compute(ReadOnlyMemory<byte> data)
+        {
+            ReadOnlySpan<byte> span = data.Span;
+            ulong crc = 0;
+            for (int j = 0; j < data.Length; j++)
+            {
+                crc = Crc64.Table[(byte)(crc ^ span[j])] ^ (crc >> 8);
             }
 
             return crc;

@@ -15,14 +15,24 @@ namespace Adriva.Storage.Abstractions
             this.ServiceProvider = serviceProvider;
         }
 
+        private async Task<IStorageClient> GetStorageClientAsync(string qualifiedName, string name)
+        {
+            var wrapperService = this.ServiceProvider.GetServices<StorageClientWrapper>().FirstOrDefault(wrapper => 0 == string.Compare(qualifiedName, wrapper.Name, StringComparison.OrdinalIgnoreCase));
+            if (null == wrapperService) return null;
+            StorageClientContext context = new StorageClientContext(this.ServiceProvider, qualifiedName, name);
+            await wrapperService.InitializeAsync(context);
+            return wrapperService.StorageClient;
+        }
+
         public Task<IBlobClient> GetBlobClientAsync()
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IBlobClient> GetBlobClientAsync(string name)
+        public async Task<IBlobClient> GetBlobClientAsync(string name)
         {
-            throw new System.NotImplementedException();
+            string queueName = Helpers.GetQualifiedBlobName(name);
+            return (IBlobClient)await this.GetStorageClientAsync(queueName, name);
         }
 
         public Task<IQueueClient> GetQueueClientAsync()
@@ -33,11 +43,7 @@ namespace Adriva.Storage.Abstractions
         public async Task<IQueueClient> GetQueueClientAsync(string name)
         {
             string queueName = Helpers.GetQualifiedQueueName(name);
-            var wrapperService = this.ServiceProvider.GetServices<StorageClientWrapper>().FirstOrDefault(wrapper => 0 == string.Compare(queueName, wrapper.Name, StringComparison.OrdinalIgnoreCase));
-            if (null == wrapperService) return null;
-            StorageClientContext context = new StorageClientContext(this.ServiceProvider, queueName, name);
-            await wrapperService.InitializeAsync(context);
-            return (IQueueClient)wrapperService.StorageClient;
+            return (IQueueClient)await this.GetStorageClientAsync(queueName, name);
         }
 
         public Task<ITableClient> GetTableClientAsync()

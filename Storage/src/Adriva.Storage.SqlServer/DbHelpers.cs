@@ -21,6 +21,8 @@ namespace Adriva.Storage.SqlServer
 
                     await database.ExecuteSqlRawAsync(sql);
                 }
+
+                await transaction.CommitAsync();
             }
         }
     }

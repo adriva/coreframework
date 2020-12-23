@@ -1,10 +1,13 @@
 using System;
+using System.Data;
+using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
 using Adriva.Storage.Abstractions;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace Adriva.Storage.SqlServer
@@ -16,34 +19,56 @@ namespace Adriva.Storage.SqlServer
         private static bool IsDatabaseObjectsCreated = false;
 
         private readonly BlobDbContext DbContext;
+
         private string ContainerName;
+        private SqlServerBlobOptions Options;
 
-        // name format = CONTAINER/FOLDER/FOLDER/FOLDER/NAME
-        public static bool TryParseName(string name, out string containerName, out string blobName)
+        private static string CalculateETag(Stream stream)
         {
-            containerName = blobName = null;
+            if (stream.CanSeek) stream.Seek(0, SeekOrigin.Begin);
 
-            if (string.IsNullOrWhiteSpace(name)) return false;
-            if (!char.IsLetter(name[0])) return false;
-            name = name.Replace("\\", "/");
-            containerName = name;
+            byte[] hash = Utilities.CalculateStreamHash(stream);
 
-            do
+            return Utilities.GetBaseString(hash, Utilities.Base36Alphabet).ToUpperInvariant();
+        }
+
+        private static void ValidateName(ref string name)
+        {
+            /*
+            name => letter+ (letter,space,digit,seperator)* letter+
+            */
+
+            bool IsValidChar(char c)
             {
-                string temp = Path.GetDirectoryName(containerName);
-                if (string.IsNullOrWhiteSpace(temp)) break;
-                containerName = temp;
-            } while (!string.IsNullOrWhiteSpace(containerName));
-
-            blobName = Path.GetRelativePath(containerName, name);
-
-            if (string.IsNullOrWhiteSpace(containerName) || string.IsNullOrWhiteSpace(blobName) || 0 == string.Compare(name, containerName, StringComparison.OrdinalIgnoreCase))
-            {
-                containerName = blobName = null;
-                return false;
+                return
+                    (char.IsLetterOrDigit(c))
+                    || ' ' == c
+                    || '-' == c
+                    || '_' == c
+                    || '/' == c
+                    ;
             }
 
-            return true;
+            var exception = new ArgumentException("Invalid blob name.", nameof(name));
+
+            name = name.Replace("\\", "/");
+            if (string.IsNullOrWhiteSpace(name)) throw exception;
+            if (!char.IsLetter(name[0])) throw exception;
+            if ('/' == name[name.Length - 1]) throw exception;
+            if (!IsValidChar(name[name.Length - 1])) throw exception;
+
+            int loop = 1, count = name.Length;
+
+            while (loop < count)
+            {
+                if (IsValidChar(name[loop]))
+                {
+                    ++loop;
+                    continue;
+                }
+                else throw exception;
+            }
+
         }
 
         public SqlServerBlobClient(BlobDbContext blobDbContext)
@@ -61,7 +86,7 @@ namespace Adriva.Storage.SqlServer
                 {
                     if (!SqlServerBlobClient.IsDatabaseObjectsCreated)
                     {
-                        await DbHelpers.ExecuteScriptAsync(this.DbContext.Database, "blob-createtable.sql");
+                        await DbHelpers.ExecuteScriptAsync(this.DbContext.Database, "blob-createtable", "blob-createsp");
                         SqlServerBlobClient.IsDatabaseObjectsCreated = true;
                     }
                 }
@@ -72,25 +97,38 @@ namespace Adriva.Storage.SqlServer
             }
         }
 
-        private async ValueTask<long?> GetBlobIdAsync(string name)
+        public async ValueTask InitializeAsync(StorageClientContext context)
         {
-            return await this.DbContext.Blobs.Where(b => b.ContainerName == this.ContainerName && b.Name == name).Select(b => b.Id).FirstOrDefaultAsync();
+            await this.EnsureDatabaseObjectsAsync();
+            this.ContainerName = context.Name;
+            this.Options = context.GetOptions<SqlServerBlobOptions>();
         }
 
-        public ValueTask InitializeAsync(StorageClientContext context)
+        private async ValueTask<long?> GetBlobIdAsync(string name)
         {
-            this.ContainerName = context.Name;
-            return new ValueTask();
+            SqlServerBlobClient.ValidateName(ref name);
+            long id = await this.DbContext.Blobs.Where(b => b.ContainerName == this.ContainerName && b.Name == name).Select(b => b.Id).FirstOrDefaultAsync();
+            if (0 == id) return null;
+            return id;
         }
 
         public async ValueTask<bool> ExistsAsync(string name)
         {
-            return null != (await this.GetBlobIdAsync(name));
+            SqlServerBlobClient.ValidateName(ref name);
+            return (await this.GetBlobIdAsync(name)).HasValue;
         }
 
-        public Task<BlobItemProperties> GetPropertiesAsync(string name)
+        public async Task<BlobItemProperties> GetPropertiesAsync(string name)
         {
-            throw new NotImplementedException();
+            SqlServerBlobClient.ValidateName(ref name);
+            var id = await this.GetBlobIdAsync(name);
+
+            if (!id.HasValue) return BlobItemProperties.NotExists;
+
+            var blobEntity = await this.DbContext.Blobs.FindAsync(id.Value);
+            if (null == blobEntity) return BlobItemProperties.NotExists;
+
+            return new BlobItemProperties(blobEntity.Length, blobEntity.ETag, blobEntity.LastModifiedUtc);
         }
 
         public Task<SegmentedResult<string>> ListAllAsync(string continuationToken, string prefix = null, int count = 500)
@@ -98,13 +136,43 @@ namespace Adriva.Storage.SqlServer
             throw new NotImplementedException();
         }
 
-        public Task<Stream> OpenReadStreamAsync(string name)
+        public async Task<Stream> OpenReadStreamAsync(string name)
         {
-            throw new NotImplementedException();
+            SqlServerBlobClient.ValidateName(ref name);
+            var id = await this.GetBlobIdAsync(name);
+
+            if (!id.HasValue) return SqlServerStream.Empty;
+
+            DbConnection connection = new SqlConnection(this.Options.ConnectionString);
+            DbCommand command = null;
+            DbDataReader reader = null;
+            try
+            {
+                if (ConnectionState.Closed == connection.State)
+                {
+                    await connection.OpenAsync();
+                }
+
+                command = connection.CreateCommand();
+                command.CommandText = $"SELECT [Content] FROM BlobItems WHERE Id = {id.Value}";
+
+                reader = await command.ExecuteReaderAsync();
+
+                if (!await reader.ReadAsync()) return SqlServerStream.Empty;
+                else return new SqlServerStream(reader.GetStream(0), reader, command, connection);
+            }
+            catch
+            {
+                if (null != reader) await reader.DisposeAsync();
+                if (null != command) await command.DisposeAsync();
+                if (null != connection) await connection.DisposeAsync();
+                throw;
+            }
         }
 
         public async Task<ReadOnlyMemory<byte>> ReadAllBytesAsync(string name)
         {
+            SqlServerBlobClient.ValidateName(ref name);
             var id = await this.GetBlobIdAsync(name);
             if (!id.HasValue) return new ReadOnlyMemory<byte>(Array.Empty<byte>());
 
@@ -113,14 +181,52 @@ namespace Adriva.Storage.SqlServer
             return entity.Content;
         }
 
-        public Task<string> UpsertAsync(string name, Stream stream, int cacheDuration = 0)
+        public async Task<string> UpsertAsync(string name, Stream stream, int cacheDuration = 0)
         {
-            throw new NotImplementedException();
+            SqlServerBlobClient.ValidateName(ref name);
+
+            long? existingId = await this.GetBlobIdAsync(name);
+
+            using (var connection = new SqlConnection(this.Options.ConnectionString))
+            {
+                await connection.OpenAsync();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    using (var command = connection.CreateCommand())
+                    {
+                        string etag = SqlServerBlobClient.CalculateETag(stream);
+                        stream.Seek(0, SeekOrigin.Begin);
+
+                        command.Transaction = transaction;
+
+                        command.CommandText = "UpsertBlobItem";
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddRange(new[] {
+                            new SqlParameter("@id", SqlDbType.BigInt){ Value = existingId ?? 0 },
+                            new SqlParameter("@containerName", SqlDbType.NVarChar, 1024){ Value = this.ContainerName },
+                            new SqlParameter("@name", SqlDbType.NVarChar, 1024){ Value = name },
+                            new SqlParameter("@data", SqlDbType.VarBinary, -1) {Value = stream },
+                            new SqlParameter("@length", SqlDbType.BigInt) {Value = stream.Length },
+                            new SqlParameter("@etag", SqlDbType.VarChar, 100) {Value = etag }
+                        });
+
+                        await command.ExecuteNonQueryAsync();
+                    }
+
+                    await transaction.CommitAsync();
+                }
+            }
+
+            return name;
         }
 
-        public Task<string> UpsertAsync(string name, ReadOnlyMemory<byte> data, int cacheDuration = 0)
+        public async Task<string> UpsertAsync(string name, ReadOnlyMemory<byte> data, int cacheDuration = 0)
         {
-            throw new NotImplementedException();
+            using (var stream = new MemoryStream(data.ToArray()))
+            {
+                return await this.UpsertAsync(name, stream, cacheDuration);
+            }
         }
 
         public ValueTask DeleteAsync(string name)
