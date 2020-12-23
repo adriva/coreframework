@@ -234,6 +234,14 @@ namespace Adriva.Storage.SqlServer
             throw new NotImplementedException();
         }
 
-        public ValueTask DisposeAsync() => new ValueTask();
+        public ValueTask DisposeAsync()
+        {
+            return new ValueTask();
+        }
+
+        public void Dispose()
+        {
+
+        }
     }
 }

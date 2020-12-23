@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Adriva.Storage.Abstractions
 {
@@ -26,7 +27,7 @@ namespace Adriva.Storage.Abstractions
 
         public Task<IBlobClient> GetBlobClientAsync()
         {
-            throw new System.NotImplementedException();
+            return this.GetBlobClientAsync(Options.DefaultName);
         }
 
         public async Task<IBlobClient> GetBlobClientAsync(string name)
@@ -37,7 +38,7 @@ namespace Adriva.Storage.Abstractions
 
         public Task<IQueueClient> GetQueueClientAsync()
         {
-            throw new System.NotImplementedException();
+            return this.GetQueueClientAsync(Options.DefaultName);
         }
 
         public async Task<IQueueClient> GetQueueClientAsync(string name)
@@ -48,7 +49,7 @@ namespace Adriva.Storage.Abstractions
 
         public Task<ITableClient> GetTableClientAsync()
         {
-            throw new System.NotImplementedException();
+            return this.GetTableClientAsync(Options.DefaultName);
         }
 
         public Task<ITableClient> GetTableClientAsync(string name)

@@ -125,5 +125,9 @@ namespace Adriva.Storage.SqlServer
         {
             return new ValueTask();
         }
+
+        public void Dispose()
+        {
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
             this.Services = services;
         }
 
-        private IStorageBuilder AddStorageClient<TClient, TOptions>(string name, ServiceLifetime serviceLifetime, Action<TOptions> configure)
+        private IStorageBuilder AddStorageClient<TClient, TOptions>(string name, Action<TOptions> configure)
                                                                                 where TClient : class, IStorageClient
                                                                                 where TOptions : class, new()
         {
@@ -20,25 +20,25 @@ namespace Microsoft.Extensions.DependencyInjection
                 (serviceProvider) =>
                 {
                     Func<IStorageClient> factoryMethod = () => ActivatorUtilities.CreateInstance<TClient>(serviceProvider);
-                    return new StorageClientWrapper(factoryMethod, name);
-                }, serviceLifetime);
+                    return ActivatorUtilities.CreateInstance<StorageClientWrapper>(serviceProvider, factoryMethod, name);
+                }, ServiceLifetime.Singleton);
             this.Services.Add(serviceDescriptor);
             this.Services.Configure(name, configure);
             return this;
         }
 
-        public IStorageBuilder AddQueueClient<TClient, TOptions>(string name, ServiceLifetime serviceLifetime, Action<TOptions> configure)
+        public IStorageBuilder AddQueueClient<TClient, TOptions>(string name, Action<TOptions> configure)
                 where TClient : class, IQueueClient
                 where TOptions : class, new()
         {
-            return this.AddStorageClient<TClient, TOptions>(Helpers.GetQualifiedQueueName(name), serviceLifetime, configure);
+            return this.AddStorageClient<TClient, TOptions>(Helpers.GetQualifiedQueueName(name), configure);
         }
 
-        public IStorageBuilder AddBlobClient<TClient, TOptions>(string name, ServiceLifetime serviceLifetime, Action<TOptions> configure)
+        public IStorageBuilder AddBlobClient<TClient, TOptions>(string name, Action<TOptions> configure)
                 where TClient : class, IBlobClient
                 where TOptions : class, new()
         {
-            return this.AddStorageClient<TClient, TOptions>(Helpers.GetQualifiedBlobName(name), serviceLifetime, configure);
+            return this.AddStorageClient<TClient, TOptions>(Helpers.GetQualifiedBlobName(name), configure);
         }
     }
 }

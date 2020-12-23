@@ -42,5 +42,10 @@ namespace Adriva.Storage.Abstractions
         {
             return this.StorageClient.DisposeAsync();
         }
+
+        public void Dispose()
+        {
+            this.StorageClient.Dispose();
+        }
     }
 }

@@ -30,5 +30,10 @@ namespace Adriva.Storage.Abstractions
         {
             return new ValueTask();
         }
+
+        public void Dispose()
+        {
+
+        }
     }
 }

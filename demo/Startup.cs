@@ -70,15 +70,15 @@ namespace demo
 
             services
                 .AddStorage()
-                .AddSqlServerQueue(this.HostingEnvironment.EnvironmentName, ServiceLifetime.Singleton, options =>
+                .AddSqlServerQueue(this.HostingEnvironment.EnvironmentName, options =>
                 {
                     options.ConnectionString = "Server=localhost;Initial Catalog=DevDb;User id=sa;Password=PASS@word1;";
                 })
-                .AddSqlServerQueue("Production", ServiceLifetime.Singleton, options =>
-                {
-                    options.ConnectionString = "Server=localhost;Initial Catalog=DevDb;User id=sa;Password=PASS@word1;";
-                })
-                .AddSqlServerBlob(this.HostingEnvironment.EnvironmentName, ServiceLifetime.Singleton, options =>
+                .AddSqlServerQueue("Production", options =>
+                 {
+                     options.ConnectionString = "Server=localhost;Initial Catalog=DevDb;User id=sa;Password=PASS@word1;";
+                 })
+                .AddSqlServerBlob(this.HostingEnvironment.EnvironmentName, options =>
                 {
                     options.ConnectionString = "Server=localhost;Initial Catalog=DevDb;User id=sa;Password=PASS@word1;";
                 })
