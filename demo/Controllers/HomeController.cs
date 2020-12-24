@@ -56,7 +56,7 @@ namespace demo.Controllers
         {
             var haha = await this.SCF.GetBlobClientAsync("Development");
             await haha.UpsertAsync("f1/f2/deneme", "Hello world");
-            await haha.DeleteAsync("f1/f2/deneme");
+            await haha.UpdateAsync("f1/f2/deneme", "Naber", "*");
 
             // var tc = this.HttpContext.RequestServices.GetService<Microsoft.ApplicationInsights.TelemetryClient>();
             // if (null != tc)

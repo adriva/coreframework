@@ -256,6 +256,51 @@ namespace Adriva.Storage.SqlServer
             }
         }
 
+        public async Task UpdateAsync(string name, ReadOnlyMemory<byte> data, string etag)
+        {
+            using (var stream = new MemoryStream(data.ToArray()))
+            {
+                await this.UpdateAsync(name, stream, etag);
+            }
+        }
+
+        public async Task UpdateAsync(string name, Stream stream, string etag)
+        {
+            SqlServerBlobClient.ValidateName(ref name);
+
+            long? existingId = await this.GetBlobIdAsync(name);
+
+            using (var connection = new SqlConnection(this.Options.ConnectionString))
+            {
+                await connection.OpenAsync();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    using (var command = connection.CreateCommand())
+                    {
+                        string newEtag = SqlServerBlobClient.CalculateETag(stream);
+                        stream.Seek(0, SeekOrigin.Begin);
+
+                        command.Transaction = transaction;
+
+                        command.CommandText = "UpdateBlobItem";
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddRange(new[] {
+                            new SqlParameter("@id", SqlDbType.BigInt){ Value = existingId ?? 0 },
+                            new SqlParameter("@data", SqlDbType.VarBinary, -1) {Value = stream },
+                            new SqlParameter("@length", SqlDbType.BigInt) {Value = stream.Length },
+                            new SqlParameter("@etag", SqlDbType.VarChar, 100) {Value = newEtag },
+                            new SqlParameter("@matchEtag", SqlDbType.VarChar, 100) {Value = etag }
+                        });
+
+                        await command.ExecuteNonQueryAsync();
+                    }
+
+                    await transaction.CommitAsync();
+                }
+            }
+        }
+
         public async ValueTask DeleteAsync(string name)
         {
             SqlServerBlobClient.ValidateName(ref name);
