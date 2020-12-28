@@ -1,6 +1,7 @@
 <Project>
   <PropertyGroup>
     <Authors>adriva</Authors>
+    <Company>Adriva LLC.</Company>
     <Copyright>(c) 2020, Adriva LLC.</Copyright>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/adriva/coreframework</RepositoryUrl>
