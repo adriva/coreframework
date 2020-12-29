@@ -17,10 +17,13 @@ namespace Adriva.CodeAnalysis.CSharp
             var vi = MSBuildLocator.RegisterDefaults();
             using (var workspace = Microsoft.CodeAnalysis.MSBuild.MSBuildWorkspace.Create())
             {
+                workspace.SkipUnrecognizedProjects = true;
                 workspace.LoadMetadataForReferencedProjects = true;
 
                 var project = await workspace.OpenProjectAsync(args[0]);
-                var alternateOptions = project.CompilationOptions.WithGeneralDiagnosticOption(Microsoft.CodeAnalysis.ReportDiagnostic.Error);
+                var alternateOptions = project.CompilationOptions
+                                .WithGeneralDiagnosticOption(Microsoft.CodeAnalysis.ReportDiagnostic.Error)
+                                .WithConcurrentBuild(true);
                 project = project.WithCompilationOptions(alternateOptions);
                 var compilation = (CSharpCompilation)await project.GetCompilationAsync();
 
