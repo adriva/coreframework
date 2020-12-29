@@ -59,6 +59,17 @@
             }
         },
         {
+            "name": "Launch Code Analyzer",
+            "preLaunchTask": "build dev-tools",
+            "type": "coreclr",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/DevTools/src/Adriva.CodeAnalysis.CSharp",
+            "program": "${workspaceFolder}/DevTools/src/Adriva.CodeAnalysis.CSharp/bin/Debug/netcoreapp3.1/Adriva.CodeAnalysis.CSharp.dll",
+            "args": [
+                "/Users/mnemonic/Projects/netcorelibs/Framework/demo/demo.csproj"
+            ]
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",

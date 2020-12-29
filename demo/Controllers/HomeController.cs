@@ -1,4 +1,5 @@
-﻿using System;
+﻿//#pragma warning disable ADR00001
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -93,3 +94,4 @@ namespace demo.Controllers
         }
     }
 }
+#pragma warning restore ADR00001
