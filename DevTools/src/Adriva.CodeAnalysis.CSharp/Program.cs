@@ -27,8 +27,10 @@ namespace Adriva.CodeAnalysis.CSharp
                 project = project.WithCompilationOptions(alternateOptions);
                 var compilation = (CSharpCompilation)await project.GetCompilationAsync();
 
+                var sm = new SimilarMethodAnalyzer();
                 var co = new CompilationWithAnalyzers(compilation, ImmutableArray.Create(new DiagnosticAnalyzer[] {
-                    new NamingAnalyzer()
+                    new NamingAnalyzer(),
+                    sm,
                  }), null, CancellationToken.None);
 
                 var diags = await co.GetAllDiagnosticsAsync();
