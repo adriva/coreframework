@@ -55,10 +55,10 @@ namespace demo.Controllers
 
         public async Task<IActionResult> Index(IDictionary<string, string> model)
         {
-            var haha = await this.SCF.GetBlobClientAsync("Development");
-            await haha.UpsertAsync("f1/f2/deneme", "Hello world");
-            await haha.UpdateAsync("f1/f2/deneme", "Naber", "*");
-
+            var haha = await this.SCF.GetQueueClientAsync("Production");
+            await haha.AddAsync(QueueMessage.Create("hello world", "no-command", QueueMessageFlags.LowPriority), TimeSpan.FromSeconds(60));
+            var m = await haha.GetNextAsync(CancellationToken.None);
+            await haha.DeleteAsync(m);
             // var tc = this.HttpContext.RequestServices.GetService<Microsoft.ApplicationInsights.TelemetryClient>();
             // if (null != tc)
             // {

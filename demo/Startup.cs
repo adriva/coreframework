@@ -74,9 +74,11 @@ namespace demo
                 {
                     options.ConnectionString = "Server=localhost;Initial Catalog=DevDb;User id=sa;Password=PASS@word1;";
                 })
-                .AddSqlServerQueue("Production", options =>
+                .AddRabbitMqQueue("Production", options =>
                  {
-                     options.ConnectionString = "Server=localhost;Initial Catalog=DevDb;User id=sa;Password=PASS@word1;";
+                     options.Host = "localhost";
+                     options.Username = "guest";
+                     options.Password = "guest";
                  })
                 .AddSqlServerBlob(this.HostingEnvironment.EnvironmentName, options =>
                 {

@@ -65,7 +65,6 @@ namespace Adriva.Storage.SqlServer
         public async ValueTask InitializeAsync(StorageClientContext context)
         {
             await this.EnsureDatabaseObjectsAsync();
-            var options = context.GetOptions<SqlServerQueueOptions>();
             this.Context = context;
         }
 

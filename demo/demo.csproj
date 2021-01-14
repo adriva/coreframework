@@ -15,7 +15,8 @@
     <ProjectReference Include="..\Storage\src\Adriva.Storage.SqlServer\Adriva.Storage.SqlServer.csproj" />
     <ProjectReference Include="..\Web\src\Adriva.Web.Controls\Adriva.Web.Controls.csproj" />
     <ProjectReference Include="..\Reporting\src\Adriva.Extensions.Reporting.SqlServer\Adriva.Extensions.Reporting.SqlServer.csproj" />
-    <ProjectReference Include="..\Caching\src\Adriva.Extensions.Caching.Distributed\Adriva.Extensions.Caching.Distributed.csproj" />    
+    <ProjectReference Include="..\Caching\src\Adriva.Extensions.Caching.Distributed\Adriva.Extensions.Caching.Distributed.csproj" />
+    <ProjectReference Include="..\Storage\src\Adriva.Storage.RabbitMq\Adriva.Storage.RabbitMq.csproj" />    
   </ItemGroup>
 
 
