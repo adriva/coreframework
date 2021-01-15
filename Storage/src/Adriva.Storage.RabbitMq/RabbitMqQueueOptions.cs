@@ -22,6 +22,11 @@ namespace Adriva.Storage.RabbitMq
 
         public bool IsQueueDurable { get; set; } = true;
 
-        public string RoutingKey { get; set; }
+        public string DefaultRoutingKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value representing if model configuration (queue, binding and exchange declerations) should be skipped.
+        /// </summary>
+        public bool SkipConfigureModel { get; set; }
     }
 }

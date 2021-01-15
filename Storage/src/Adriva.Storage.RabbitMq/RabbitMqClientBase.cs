@@ -47,9 +47,12 @@ namespace Adriva.Storage.RabbitMq
             var connection = this.GetConnection();
             var model = connection.CreateModel();
 
-            model.ExchangeDeclare(this.Options.ExchangeName, this.Options.ExchangeType, this.Options.IsExchangeDurable, false, null);
-            model.QueueDeclare(this.Options.QueueName, this.Options.IsQueueDurable, false, false, null);
-            model.QueueBind(this.Options.QueueName, this.Options.ExchangeName, this.Options.RoutingKey, null);
+            if (!this.Options.SkipConfigureModel)
+            {
+                model.ExchangeDeclare(this.Options.ExchangeName, this.Options.ExchangeType, this.Options.IsExchangeDurable, false, null);
+                model.QueueDeclare(this.Options.QueueName, this.Options.IsQueueDurable, false, false, null);
+                model.QueueBind(this.Options.QueueName, this.Options.ExchangeName, this.Options.DefaultRoutingKey, null);
+            }
 
             return model;
         }
@@ -94,6 +97,8 @@ namespace Adriva.Storage.RabbitMq
             await Task.CompletedTask;
         }
 
+        protected abstract string GetRoutingKey(QueueMessage message);
+
         public async ValueTask AddAsync(QueueMessage message, TimeSpan? visibilityTimeout = null, TimeSpan? initialVisibilityDelay = null)
         {
             if (null == message) return;
@@ -118,7 +123,7 @@ namespace Adriva.Storage.RabbitMq
                         {
                             properties.Expiration = visibilityTimeout.Value.TotalMilliseconds.ToString();
                         }
-                        model.BasicPublish(this.Options.ExchangeName, this.Options.RoutingKey, true, properties, buffer);
+                        model.BasicPublish(this.Options.ExchangeName, this.GetRoutingKey(message), true, properties, buffer);
                     }
                 }
                 finally
