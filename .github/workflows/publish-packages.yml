@@ -57,4 +57,18 @@ jobs:
       with:
         PROJECT_FILE_PATH: TextSearch/src/Adriva.Extensions.TextSearch.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
-        
+    - name: Publish Nuget Storage Abstractions
+      uses: rohith/publish-nuget@v2.1.2
+      with:
+        PROJECT_FILE_PATH: Storage/src/Adriva.Storage.Abstractions/Adriva.Storage.Abstractions.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish Nuget Storage RabbitMQ
+      uses: rohith/publish-nuget@v2.1.2
+      with:
+        PROJECT_FILE_PATH: Storage/src/Adriva.Storage.RabbitMq/Adriva.Storage.RabbitMq.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish Nuget Storage SQL Server
+      uses: rohith/publish-nuget@v2.1.2
+      with:
+        PROJECT_FILE_PATH: Storage/src/Adriva.Storage.SqlServer/Adriva.Storage.SqlServer.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
