@@ -3,7 +3,7 @@
 namespace Adriva.Storage.RabbitMq
 {
 
-    public sealed class RabbitMqQueueClient : RabbitMqClientBase<RabbitMqQueueOptions>, IQueueClient
+    public sealed class RabbitMqQueueClient : RabbitMqClientBase<RabbitMqQueueOptions>
     {
 
     }
