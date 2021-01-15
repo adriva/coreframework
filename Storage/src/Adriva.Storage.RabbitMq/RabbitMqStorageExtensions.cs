@@ -1,5 +1,6 @@
 using System;
 using Adriva.Storage.RabbitMq;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

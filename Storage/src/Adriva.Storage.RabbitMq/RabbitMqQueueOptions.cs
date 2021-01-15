@@ -11,5 +11,17 @@ namespace Adriva.Storage.RabbitMq
         public string Password { get; set; }
 
         public string VirtualHost { get; set; } = "/";
+
+        public string QueueName { get; set; }
+
+        public string ExchangeName { get; set; }
+
+        public string ExchangeType { get; set; } = RabbitMQ.Client.ExchangeType.Direct;
+
+        public bool IsExchangeDurable { get; set; } = true;
+
+        public bool IsQueueDurable { get; set; } = true;
+
+        public string RoutingKey { get; set; }
     }
 }

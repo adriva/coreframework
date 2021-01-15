@@ -79,6 +79,9 @@ namespace demo
                      options.Host = "localhost";
                      options.Username = "guest";
                      options.Password = "guest";
+                     options.QueueName = "Demo_Q";
+                     options.ExchangeName = "Demo_EXC";
+                     options.RoutingKey = "Demo_RK";
                  })
                 .AddSqlServerBlob(this.HostingEnvironment.EnvironmentName, options =>
                 {
