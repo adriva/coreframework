@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>    
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Adriva.Extensions.Worker\Adriva.Extensions.Worker.csproj" />
+  </ItemGroup>
+</Project>

@@ -70,6 +70,14 @@
             ]
         },
         {
+            "name": "Launch Worker Host",
+            "preLaunchTask": "build worker",
+            "type": "coreclr",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/Worker/src/Adriva.Worker.Host",
+            "program": "${workspaceFolder}/Worker/src/Adriva.Worker.Host/bin/Debug/netcoreapp3.1/Adriva.Worker.Host.dll"
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
