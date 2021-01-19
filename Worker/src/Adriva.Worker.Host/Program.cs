@@ -23,7 +23,8 @@ namespace Adriva.Worker.Host
             {
                 builder.AddConsole();
             });
-            services.AddHostedService<Worker>();
+            // services.AddHostedService<Worker>();
+            services.AddScheduledJobs();
         }
     }
 
@@ -31,11 +32,13 @@ namespace Adriva.Worker.Host
     {
         public static void Main(string[] args)
         {
-            // CreateHostBuilder(args).Build().Run();            
-            WorkerHost
-                .Create(args)
-                .UseStartup<Startup>()
-                .Run();
+            using (var workerHost = WorkerHost
+                    .Create(args)
+                    .UseStartup<Startup>()
+                    .Build())
+            {
+                workerHost.Run();
+            }
         }
     }
 }
