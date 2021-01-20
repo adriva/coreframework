@@ -2,7 +2,7 @@ using System;
 
 namespace Adriva.Extensions.Worker
 {
-    [AttributeUsage(AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public sealed class ScheduleAttribute : Attribute
     {
         public string Expression { get; private set; }

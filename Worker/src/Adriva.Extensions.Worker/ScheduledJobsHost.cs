@@ -13,7 +13,7 @@ namespace Adriva.Extensions.Worker
 {
     internal class ScheduledJobsHost : BackgroundService
     {
-        internal readonly struct ScheduledItem
+        internal class ScheduledItem
         {
             public string Expression { get; }
 
@@ -34,11 +34,13 @@ namespace Adriva.Extensions.Worker
         private readonly IList<ScheduledItem> ScheduledItems = new List<ScheduledItem>();
         private readonly ILogger Logger;
 
+        private CancellationToken CancellationToken;
         private DateTime LastRunDate;
 
-        public ScheduledJobsHost(IServiceProvider serviceProvider)
+        public ScheduledJobsHost(IServiceProvider serviceProvider, ILogger<ScheduledJobsHost> logger)
         {
             this.ServiceProvider = serviceProvider;
+            this.Logger = logger;
             this.Timer = new Timer(this.OnTimerElapsed, null, Timeout.Infinite, 5000);
         }
 
@@ -70,11 +72,20 @@ namespace Adriva.Extensions.Worker
             }
 
             parserCache.Clear();
+
+            this.LastRunDate = DateTime.UtcNow;
+            this.CancellationToken = stoppingToken;
+            foreach (var scheduledItem in this.ScheduledItems)
+            {
+                DateTime? nextRunDate = scheduledItem.Parser.GetNext(this.LastRunDate, scheduledItem.Expression);
+                if (!nextRunDate.HasValue) continue;
+
+                this.Logger.LogInformation($"Next scheduled run for '{scheduledItem.Method.Name}' is at '{nextRunDate.Value}' UTC.");
+            }
             while (0 != DateTime.Now.Second % 5)
             {
-                await Task.Delay(300);
+                await Task.Delay(250);
             }
-            this.LastRunDate = DateTime.UtcNow;
             this.Timer.Change(0, 5000);
         }
 
@@ -84,19 +95,41 @@ namespace Adriva.Extensions.Worker
             {
                 DateTime? nextRunDate = scheduledItem.Parser.GetNext(this.LastRunDate, scheduledItem.Expression);
                 if (!nextRunDate.HasValue) continue;
+
                 if (nextRunDate.Value <= DateTime.UtcNow)
                 {
-                    ThreadPool.QueueUserWorkItem(this.RunItem, scheduledItem);
+                    ThreadPool.QueueUserWorkItem(this.SafeRunItem, scheduledItem);
                 }
             }
 
             this.LastRunDate = DateTime.UtcNow;
         }
 
-        private async void RunItem(object state)
+        private async void SafeRunItem(object state)
         {
-            if (!(state is ScheduledItem scheduledItem)) return;
+            ScheduledItem scheduledItem = null;
+            try
+            {
+                scheduledItem = state as ScheduledItem;
+                if (null == scheduledItem) return;
+                await this.RunItem(scheduledItem);
+            }
+            catch (Exception fatalError)
+            {
+                this.Logger.LogError(fatalError, $"Failed to execute scheduled job '{scheduledItem.Method.Name}'.");
+            }
+            finally
+            {
+                DateTime? nextRunDate = scheduledItem.Parser.GetNext(this.LastRunDate, scheduledItem.Expression);
+                if (nextRunDate.HasValue)
+                {
+                    this.Logger.LogInformation($"Next scheduled run for '{scheduledItem.Method.Name}' is at '{nextRunDate.Value}' UTC.");
+                }
+            }
+        }
 
+        private async Task RunItem(ScheduledItem scheduledItem)
+        {
             object ownerType = null;
 
             if (!scheduledItem.Method.IsStatic)
@@ -109,21 +142,21 @@ namespace Adriva.Extensions.Worker
 
             for (int loop = 0; loop < parameters.Length; loop++)
             {
-                parameters[loop] = ActivatorUtilities.CreateInstance(this.ServiceProvider, parameterInfoItems[loop].ParameterType);
-            }
-
-            try
-            {
-                object returnValue = scheduledItem.Method.Invoke(ownerType, parameters);
-
-                if (returnValue is Task returnTask)
+                if (parameterInfoItems[loop].ParameterType == typeof(CancellationToken))
                 {
-                    await returnTask;
+                    parameters[loop] = this.CancellationToken;
+                }
+                else
+                {
+                    parameters[loop] = ActivatorUtilities.CreateInstance(this.ServiceProvider, parameterInfoItems[loop].ParameterType);
                 }
             }
-            catch (Exception fatalError)
+
+            object returnValue = scheduledItem.Method.Invoke(ownerType, parameters);
+
+            if (returnValue is Task returnTask)
             {
-                this.Logger.LogError(fatalError, $"Failed to exeecute scheduled job '{scheduledItem.Method.Name}'.");
+                await returnTask;
             }
         }
 
