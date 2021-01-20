@@ -132,31 +132,45 @@ namespace Adriva.Extensions.Worker
         {
             object ownerType = null;
 
-            if (!scheduledItem.Method.IsStatic)
+            try
             {
-                ownerType = ActivatorUtilities.CreateInstance(this.ServiceProvider, scheduledItem.Method.DeclaringType);
-            }
-
-            var parameterInfoItems = scheduledItem.Method.GetParameters();
-            object[] parameters = new object[parameterInfoItems.Length];
-
-            for (int loop = 0; loop < parameters.Length; loop++)
-            {
-                if (parameterInfoItems[loop].ParameterType == typeof(CancellationToken))
+                if (!scheduledItem.Method.IsStatic)
                 {
-                    parameters[loop] = this.CancellationToken;
+                    ownerType = ActivatorUtilities.CreateInstance(this.ServiceProvider, scheduledItem.Method.DeclaringType);
                 }
-                else
+
+                var parameterInfoItems = scheduledItem.Method.GetParameters();
+                object[] parameters = new object[parameterInfoItems.Length];
+
+                for (int loop = 0; loop < parameters.Length; loop++)
                 {
-                    parameters[loop] = ActivatorUtilities.CreateInstance(this.ServiceProvider, parameterInfoItems[loop].ParameterType);
+                    if (parameterInfoItems[loop].ParameterType == typeof(CancellationToken))
+                    {
+                        parameters[loop] = this.CancellationToken;
+                    }
+                    else
+                    {
+                        parameters[loop] = ActivatorUtilities.CreateInstance(this.ServiceProvider, parameterInfoItems[loop].ParameterType);
+                    }
+                }
+
+                object returnValue = scheduledItem.Method.Invoke(ownerType, parameters);
+
+                if (returnValue is Task returnTask)
+                {
+                    await returnTask;
                 }
             }
-
-            object returnValue = scheduledItem.Method.Invoke(ownerType, parameters);
-
-            if (returnValue is Task returnTask)
+            finally
             {
-                await returnTask;
+                if (ownerType is IDisposable disposableOwner)
+                {
+                    disposableOwner.Dispose();
+                }
+                else if (ownerType is IAsyncDisposable asyncDisposableOwner)
+                {
+                    await asyncDisposableOwner.DisposeAsync();
+                }
             }
         }
 
