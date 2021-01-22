@@ -175,6 +175,8 @@ namespace Adriva.Extensions.Worker
                 }
             }
 
+            this.Logger.LogInformation($"Executing scheduled job '{scheduledItem.Method.Name}'.");
+
             object returnValue = scheduledItem.Method.Invoke(ownerType, parameters);
 
             if (returnValue is Task returnTask)
@@ -182,6 +184,7 @@ namespace Adriva.Extensions.Worker
                 await returnTask;
             }
 
+            this.Logger.LogInformation($"Executed scheduled job '{scheduledItem.Method.Name}'.");
         }
 
         public override void Dispose()
