@@ -43,7 +43,9 @@ namespace Adriva.Extensions.Worker
 
         public WorkerHost Build()
         {
-            IHost host = this.HostBuilder.Build();
+            IHost host = this.HostBuilder
+                            .UseConsoleLifetime()
+                            .Build();
             return new WorkerHost(host);
         }
     }

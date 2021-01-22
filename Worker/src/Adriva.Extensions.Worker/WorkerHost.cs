@@ -19,7 +19,13 @@ namespace Adriva.Extensions.Worker
 
         public void Run()
         {
-            this.InnerHost.Run();
+            try
+            {
+                this.InnerHost.Run();
+            }
+            catch (OperationCanceledException)
+            {
+            }
         }
 
         public void Dispose()

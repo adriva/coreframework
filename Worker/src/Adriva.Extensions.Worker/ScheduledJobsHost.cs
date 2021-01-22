@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -30,17 +31,20 @@ namespace Adriva.Extensions.Worker
         }
 
         private readonly Timer Timer;
+        private readonly CancellationTokenSource CancellationTokenSource;
         private readonly IServiceProvider ServiceProvider;
         private readonly IList<ScheduledItem> ScheduledItems = new List<ScheduledItem>();
+        private readonly ConcurrentDictionary<IntPtr, object> MethodOwners = new ConcurrentDictionary<IntPtr, object>();
         private readonly ILogger Logger;
 
-        private CancellationToken CancellationToken;
         private DateTime LastRunDate;
+        private long RunningItemCount = 0;
 
         public ScheduledJobsHost(IServiceProvider serviceProvider, ILogger<ScheduledJobsHost> logger)
         {
             this.ServiceProvider = serviceProvider;
             this.Logger = logger;
+            this.CancellationTokenSource = new CancellationTokenSource();
             this.Timer = new Timer(this.OnTimerElapsed, null, Timeout.Infinite, 5000);
         }
 
@@ -74,7 +78,6 @@ namespace Adriva.Extensions.Worker
             parserCache.Clear();
 
             this.LastRunDate = DateTime.UtcNow;
-            this.CancellationToken = stoppingToken;
             foreach (var scheduledItem in this.ScheduledItems)
             {
                 DateTime? nextRunDate = scheduledItem.Parser.GetNext(this.LastRunDate, scheduledItem.Expression);
@@ -97,7 +100,7 @@ namespace Adriva.Extensions.Worker
                 DateTime? nextRunDate = scheduledItem.Parser.GetNext(this.LastRunDate, scheduledItem.Expression);
                 if (!nextRunDate.HasValue) continue;
 
-                if (nextRunDate.Value <= DateTime.UtcNow)
+                if (nextRunDate.Value <= DateTime.Now)
                 {
                     ThreadPool.QueueUserWorkItem(this.SafeRunItem, scheduledItem);
                 }
@@ -113,6 +116,7 @@ namespace Adriva.Extensions.Worker
             {
                 scheduledItem = state as ScheduledItem;
                 if (null == scheduledItem) return;
+                Interlocked.Increment(ref this.RunningItemCount);
                 await this.RunItem(scheduledItem);
             }
             catch (Exception fatalError)
@@ -121,6 +125,7 @@ namespace Adriva.Extensions.Worker
             }
             finally
             {
+                Interlocked.Decrement(ref this.RunningItemCount);
                 DateTime? nextRunDate = scheduledItem.Parser.GetNext(this.LastRunDate, scheduledItem.Expression);
                 if (nextRunDate.HasValue)
                 {
@@ -129,54 +134,67 @@ namespace Adriva.Extensions.Worker
             }
         }
 
+        public override async Task StopAsync(CancellationToken cancellationToken)
+        {
+            this.Timer.Change(Timeout.Infinite, Timeout.Infinite);
+            this.CancellationTokenSource.Cancel();
+
+            await base.StopAsync(cancellationToken);
+
+            SpinWait.SpinUntil(() =>
+            {
+                return 0 == Interlocked.Read(ref this.RunningItemCount);
+            }, 30000);
+        }
+
         private async Task RunItem(ScheduledItem scheduledItem)
         {
             object ownerType = null;
 
-            try
+            if (!scheduledItem.Method.IsStatic)
             {
-                if (!scheduledItem.Method.IsStatic)
+                ownerType = this.MethodOwners.GetOrAdd<object>(scheduledItem.Method.MethodHandle.Value, (key, state) =>
                 {
-                    ownerType = ActivatorUtilities.CreateInstance(this.ServiceProvider, scheduledItem.Method.DeclaringType);
+                    var si = state as ScheduledItem;
+                    return ActivatorUtilities.CreateInstance(this.ServiceProvider, si.Method.DeclaringType);
+                }, scheduledItem);
+            }
+
+            var parameterInfoItems = scheduledItem.Method.GetParameters();
+            object[] parameters = new object[parameterInfoItems.Length];
+
+            for (int loop = 0; loop < parameters.Length; loop++)
+            {
+                if (parameterInfoItems[loop].ParameterType == typeof(CancellationToken))
+                {
+                    parameters[loop] = this.CancellationTokenSource.Token;
                 }
-
-                var parameterInfoItems = scheduledItem.Method.GetParameters();
-                object[] parameters = new object[parameterInfoItems.Length];
-
-                for (int loop = 0; loop < parameters.Length; loop++)
+                else
                 {
-                    if (parameterInfoItems[loop].ParameterType == typeof(CancellationToken))
-                    {
-                        parameters[loop] = this.CancellationToken;
-                    }
-                    else
-                    {
-                        parameters[loop] = ActivatorUtilities.CreateInstance(this.ServiceProvider, parameterInfoItems[loop].ParameterType);
-                    }
-                }
-
-                object returnValue = scheduledItem.Method.Invoke(ownerType, parameters);
-
-                if (returnValue is Task returnTask)
-                {
-                    await returnTask;
+                    parameters[loop] = ActivatorUtilities.CreateInstance(this.ServiceProvider, parameterInfoItems[loop].ParameterType);
                 }
             }
-            finally
+
+            object returnValue = scheduledItem.Method.Invoke(ownerType, parameters);
+
+            if (returnValue is Task returnTask)
             {
-                if (ownerType is IDisposable disposableOwner)
-                {
-                    disposableOwner.Dispose();
-                }
-                else if (ownerType is IAsyncDisposable asyncDisposableOwner)
-                {
-                    await asyncDisposableOwner.DisposeAsync();
-                }
+                await returnTask;
             }
+
         }
 
         public override void Dispose()
         {
+            foreach (var ownerType in this.MethodOwners.Values)
+            {
+                if (ownerType is IDisposable disposable) disposable.Dispose();
+                else if (ownerType is IAsyncDisposable asyncDisposable)
+                {
+                    asyncDisposable.DisposeAsync().AsTask().Wait();
+                }
+            }
+
             base.Dispose();
             this.Timer.Change(Timeout.Infinite, Timeout.Infinite);
             this.Timer.Dispose();

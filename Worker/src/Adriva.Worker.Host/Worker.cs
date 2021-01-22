@@ -27,7 +27,7 @@ namespace Adriva.Worker.Host
             }
         }
 
-        [Schedule("7 21 * * * *")]
+        [Schedule("30 * * * * *")]
         public void DoIt(CancellationToken cancellationToken)
         {
             System.Console.WriteLine("hahahahh ran");
