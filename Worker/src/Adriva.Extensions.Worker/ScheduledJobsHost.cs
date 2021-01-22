@@ -78,9 +78,10 @@ namespace Adriva.Extensions.Worker
             foreach (var scheduledItem in this.ScheduledItems)
             {
                 DateTime? nextRunDate = scheduledItem.Parser.GetNext(this.LastRunDate, scheduledItem.Expression);
+
                 if (!nextRunDate.HasValue) continue;
 
-                this.Logger.LogInformation($"Next scheduled run for '{scheduledItem.Method.Name}' is at '{nextRunDate.Value}' UTC.");
+                this.Logger.LogInformation($"Next scheduled run for '{scheduledItem.Method.Name}' is at '{nextRunDate.Value}' Local Time.");
             }
             while (0 != DateTime.Now.Second % 5)
             {
