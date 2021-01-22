@@ -72,3 +72,8 @@ jobs:
       with:
         PROJECT_FILE_PATH: Storage/src/Adriva.Storage.SqlServer/Adriva.Storage.SqlServer.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish Worker Core
+      uses: rohith/publish-nuget@v2.1.2
+      with:
+        PROJECT_FILE_PATH: Worker/src/Adriva.Extensions.Worker/Adriva.Extensions.Worker.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
