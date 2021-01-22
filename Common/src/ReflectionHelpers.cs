@@ -112,7 +112,7 @@ namespace Adriva.Common.Core
                    select m;
         }
 
-        public static MethodInfo FindMethod(Type ownerType, string methodName, ClrMemberFlags methodFlags, params Type[] argumentTypes)
+        public static MethodInfo FindMethod(this Type ownerType, string methodName, ClrMemberFlags methodFlags, params Type[] argumentTypes)
         {
             if (null == ownerType) throw new ArgumentNullException(nameof(ownerType));
             if (string.IsNullOrWhiteSpace(methodName)) throw new ArgumentNullException(nameof(methodName));

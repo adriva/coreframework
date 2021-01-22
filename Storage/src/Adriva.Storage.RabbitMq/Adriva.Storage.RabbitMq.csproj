@@ -17,7 +17,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Title>Adriva Core Framework RabbitMQ Queue Client</Title>
     <PackageDescription>Adriva RabbitMQ queue client that is built on the Adriva.Storage.Abstractions library.</PackageDescription>    
-    <Version>3.0.0</Version>
+    <Version>3.0.1</Version>
   </PropertyGroup>
 
 </Project>

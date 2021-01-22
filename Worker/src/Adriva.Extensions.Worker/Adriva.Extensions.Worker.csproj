@@ -13,4 +13,10 @@
     <ProjectReference Include="..\..\..\Common\src\Adriva.Common.Core.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <Title>Adriva Worker / Service Library</Title>
+    <PackageDescription>Shared library providing abstractions and common components to implement long running services, background jobs and scheduled jobs.</PackageDescription>    
+    <Version>3.0.2</Version>
+  </PropertyGroup>
+
 </Project>
