@@ -76,7 +76,7 @@ namespace Adriva.Common.Core.DataStructures
             }
             else if (NotifyCollectionChangedAction.Remove == e.Action && null != this.OnChildrenRemoved)
             {
-                TreeNodeEventArgs treeNodeEventArgs = new TreeNodeEventArgs(e.NewItems.OfType<TreeNode<T>>());
+                TreeNodeEventArgs treeNodeEventArgs = new TreeNodeEventArgs(e.OldItems.OfType<TreeNode<T>>());
                 this.OnChildrenRemoved.Invoke(treeNodeEventArgs);
             }
         }
