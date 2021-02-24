@@ -46,7 +46,7 @@ namespace Adriva.Common.Core.DataStructures
         /// <summary>
         /// Gets the child nodes of the current tree node.
         /// </summary>        
-        public IList<TreeNode<T>> Children => this.ObservableChildren.ToList();
+        public IList<TreeNode<T>> Children => this.ObservableChildren;
 
         /// <summary>
         /// Gets or sets a callback that is called when children are added to this TreeNode<T>.
