@@ -112,6 +112,24 @@ namespace Adriva.Common.Core
                    select m;
         }
 
+        public static IEnumerable<MethodInfo> FindMethods(this Type type, Func<MethodInfo, bool> predicate, ClrMemberFlags methodFlags = ClrMemberFlags.None)
+        {
+            if (null == type) throw new ArgumentNullException(nameof(type));
+
+            return from m in type.GetMethods()
+                   where (
+                       ClrMemberFlags.None == methodFlags
+                       || (
+                           methodFlags.HasFlag(ClrMemberFlags.Instance) ? !m.IsStatic : true
+                           && methodFlags.HasFlag(ClrMemberFlags.Static) ? m.IsStatic : true
+                           && methodFlags.HasFlag(ClrMemberFlags.Public) ? m.IsPublic : true
+                           && methodFlags.HasFlag(ClrMemberFlags.NonPublic) ? !m.IsPublic : true
+                           && methodFlags.HasFlag(ClrMemberFlags.SpecialName) ? m.IsSpecialName : true
+                       )
+                   ) && predicate(m)
+                   select m;
+        }
+
         public static MethodInfo FindMethod(this Type ownerType, string methodName, ClrMemberFlags methodFlags, params Type[] argumentTypes)
         {
             if (null == ownerType) throw new ArgumentNullException(nameof(ownerType));
@@ -238,5 +256,14 @@ namespace Adriva.Common.Core
             }
         }
 
+        public static void InvokeMethods(IEnumerable<MethodInfo> methods, object instance, params object[] arguments)
+        {
+            if (null == methods) return;
+
+            foreach (var method in methods)
+            {
+                method.Invoke(instance, arguments);
+            }
+        }
     }
 }
