@@ -49,14 +49,14 @@ namespace Adriva.Common.Core.DataStructures
         public IList<TreeNode<T>> Children => this.ObservableChildren.ToList();
 
         /// <summary>
-        /// A callback that is called when children are added to this TreeNode<T>.
+        /// Gets or sets a callback that is called when children are added to this TreeNode<T>.
         /// </summary>
-        public Action<TreeNodeEventArgs> OnChildrenAdded;
+        public Action<TreeNodeEventArgs> OnChildrenAdded { get; set; }
 
         /// <summary>
-        /// A callback that is called when children are removed from this TreeNode<T>.
+        /// Gets or sets a callback that is called when children are removed from this TreeNode<T>.
         /// </summary>
-        public Action<TreeNodeEventArgs> OnChildrenRemoved;
+        public Action<TreeNodeEventArgs> OnChildrenRemoved { get; set; }
 
         /// <summary>
         /// Creates a new instance of a TreeNode class.

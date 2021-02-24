@@ -98,7 +98,7 @@ namespace Adriva.Common.Core
         {
             if (null == type) throw new ArgumentNullException(nameof(type));
 
-            return from m in type.GetMethods()
+            return from m in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)
                    where (
                        ClrMemberFlags.None == methodFlags
                        || (
@@ -116,7 +116,7 @@ namespace Adriva.Common.Core
         {
             if (null == type) throw new ArgumentNullException(nameof(type));
 
-            return from m in type.GetMethods()
+            return from m in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)
                    where (
                        ClrMemberFlags.None == methodFlags
                        || (
