@@ -22,6 +22,8 @@ namespace Adriva.Extensions.Worker
 
             public IExpressionParser Parser { get; }
 
+            public bool IsRunning { get; set; }
+
             public ScheduledItem(string expression, MethodInfo method, IExpressionParser parser)
             {
                 this.Expression = expression;
@@ -84,7 +86,7 @@ namespace Adriva.Extensions.Worker
 
                 if (!nextRunDate.HasValue) continue;
 
-                this.Logger.LogInformation($"Next scheduled run for '{scheduledItem.Method.Name}' is at '{nextRunDate.Value}' Local Time.");
+                this.Logger.LogInformation($"Next scheduled run for '{scheduledItem.Method.Name}' is at '{nextRunDate.Value}'.");
             }
             while (0 != DateTime.Now.Second % 5)
             {
@@ -102,20 +104,34 @@ namespace Adriva.Extensions.Worker
 
                 if (nextRunDate.Value <= DateTime.Now)
                 {
-                    ThreadPool.QueueUserWorkItem(this.SafeRunItem, scheduledItem);
+                    ThreadPool.QueueUserWorkItem(this.SafeRunItemAsync, scheduledItem);
                 }
             }
 
             this.LastRunDate = DateTime.UtcNow;
         }
 
-        private async void SafeRunItem(object state)
+        private async void SafeRunItemAsync(object state)
         {
             ScheduledItem scheduledItem = null;
+
             try
             {
                 scheduledItem = state as ScheduledItem;
                 if (null == scheduledItem) return;
+
+                if (!scheduledItem.IsRunning)
+                {
+                    lock (scheduledItem)
+                    {
+                        if (!scheduledItem.IsRunning)
+                        {
+                            scheduledItem.IsRunning = true;
+                        }
+                        else return;
+                    }
+                }
+
                 Interlocked.Increment(ref this.RunningItemCount);
                 await this.RunItem(scheduledItem);
             }
@@ -125,11 +141,12 @@ namespace Adriva.Extensions.Worker
             }
             finally
             {
+                scheduledItem.IsRunning = false;
                 Interlocked.Decrement(ref this.RunningItemCount);
                 DateTime? nextRunDate = scheduledItem.Parser.GetNext(this.LastRunDate, scheduledItem.Expression);
                 if (nextRunDate.HasValue)
                 {
-                    this.Logger.LogInformation($"Next scheduled run for '{scheduledItem.Method.Name}' is at '{nextRunDate.Value}' UTC.");
+                    this.Logger.LogInformation($"Next scheduled run for '{scheduledItem.Method.Name}' is at '{nextRunDate.Value}'.");
                 }
             }
         }
