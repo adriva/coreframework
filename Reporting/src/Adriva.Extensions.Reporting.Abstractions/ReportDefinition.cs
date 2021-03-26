@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Adriva.Common.Core;
 
 namespace Adriva.Extensions.Reporting.Abstractions
@@ -40,6 +39,19 @@ namespace Adriva.Extensions.Reporting.Abstractions
             clone.Output = (this.Output ?? new OutputDefinition()).Clone();
 
             return clone;
+        }
+    }
+
+    public sealed class ReportOutput
+    {
+        public ReportCommand Command { get; private set; }
+
+        public DataSet DataSet { get; private set; }
+
+        public ReportOutput(ReportCommand reportCommand, DataSet dataSet)
+        {
+            this.Command = reportCommand;
+            this.DataSet = dataSet;
         }
     }
 }

@@ -7,6 +7,6 @@ namespace Adriva.Extensions.Reporting.Abstractions
     {
         Task<ReportDefinition> LoadReportDefinitionAsync(string name);
 
-        Task ExecuteReportOutputAsync(ReportDefinition reportDefinition, IDictionary<string, string> values);
+        Task<ReportOutput> ExecuteReportOutputAsync(ReportDefinition reportDefinition, IDictionary<string, string> values);
     }
 }

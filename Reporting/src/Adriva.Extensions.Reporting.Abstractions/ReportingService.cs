@@ -89,7 +89,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             return reportDefinition?.Clone() ?? throw new InvalidOperationException();
         }
 
-        public async Task ExecuteReportOutputAsync(ReportDefinition reportDefinition, IDictionary<string, string> values)
+        public async Task<ReportOutput> ExecuteReportOutputAsync(ReportDefinition reportDefinition, IDictionary<string, string> values)
         {
             ReportCommandContext context = new ReportCommandContext(reportDefinition, reportDefinition.Output.Command);
 
@@ -122,7 +122,8 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
                 try
                 {
-                    await dataSource.GetDataAsync(reportCommand, reportDefinition.EnumerateFieldDefinitions().ToArray());
+                    var dataset = await dataSource.GetDataAsync(reportCommand, reportDefinition.EnumerateFieldDefinitions().ToArray());
+                    return new ReportOutput(reportCommand, dataset);
                 }
                 finally
                 {

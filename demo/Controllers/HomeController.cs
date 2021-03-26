@@ -53,24 +53,13 @@ namespace demo.Controllers
             SCF = scf;
         }
 
-        public async Task<IActionResult> Index(IDictionary<string, string> model)
+        public async Task<IActionResult> Index()
         {
-            var haha = await this.SCF.GetQueueClientAsync("Production");
-            await haha.AddAsync(QueueMessage.Create("hello world", "no-command", QueueMessageFlags.LowPriority), TimeSpan.FromSeconds(60));
-            var m = await haha.GetNextAsync(CancellationToken.None);
-            await haha.DeleteAsync(m);
-            // var tc = this.HttpContext.RequestServices.GetService<Microsoft.ApplicationInsights.TelemetryClient>();
-            // if (null != tc)
-            // {
-            //     tc.TrackTrace("Hello world", Microsoft.ApplicationInsights.DataContracts.SeverityLevel.Information);
-            //     tc.TrackEvent("EVENT NAME");
-            //     tc.TrackAvailability("AVAILABILITY DEMO", DateTimeOffset.Now, TimeSpan.FromSeconds(10), "RUN LOCATION", true, "MESSAGE HERE");
-            // }
+            var def = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
+            var o = await this.ReportingService.ExecuteReportOutputAsync(def, new Dictionary<string, string>() {
+                { "supplier", "boyner.com.tr"}
+            });
 
-            // var sm = this.HttpContext.RequestServices.GetService<IStorageClientFactory>();
-            // var tac = await sm.GetTableClientAsync();
-            // var bac = await sm.GetBlobClientAsync();
-            // var pro = await bac.GetPropertiesAsync("blog/yilbasi.html");
             return this.View();
         }
 

@@ -7,7 +7,7 @@
             "commandText": "System.TypeCode"
         },
         "getPromotions": {
-            "commandText": "SELECT * FROM Promotion  "
+            "commandText": "SELECT * FROM Promotion  WHERE Supplier = @supplier"
         }
     },
     "filters": {
@@ -28,7 +28,13 @@
         "dataSource": "DefaultSqlServer",
         "fields": {
             "Id": {
-                "displayName": "Aydi"
+                "displayName": "Aydi",
+                "options": {
+                    "web": {
+                        "formatter": "xx1",
+                        "format": "C2"
+                    }
+                }
             },
             "name": {
                 "displayName": "Name"

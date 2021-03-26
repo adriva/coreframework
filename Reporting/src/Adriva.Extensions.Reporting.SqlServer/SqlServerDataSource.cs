@@ -5,13 +5,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Adriva.Extensions.Reporting.Abstractions;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Logging;
 
 namespace Adriva.Extensions.Reporting.SqlServer
 {
     public class SqlServerDataSource : IDataSource, IDisposable
     {
+        private readonly ILogger Logger;
         private SqlConnection Connection;
         private bool IsDisposed;
+
+        public SqlServerDataSource(ILogger<SqlServerDataSource> logger)
+        {
+            this.Logger = logger;
+        }
 
         public Task OpenAsync(DataSourceDefinition dataSourceDefinition)
         {
@@ -35,8 +42,20 @@ namespace Adriva.Extensions.Reporting.SqlServer
                     }
                 }
 
+
                 DataSet dataSet = DataSet.FromFields(fields);
                 int[] columnIndices = null;
+
+                this.Logger.LogInformation($"Executing Sql Command : {command.ToString()}");
+
+                if (null != command.Parameters)
+                {
+                    foreach (var parameter in command.Parameters)
+                    {
+                        this.Logger.LogInformation($"{parameter.Name} = {parameter.FilterValue.Value}");
+                    }
+                }
+
                 using (var dataReader = await sqlCommand.ExecuteReaderAsync(System.Data.CommandBehavior.SingleResult))
                 {
                     if (null == columnIndices)
