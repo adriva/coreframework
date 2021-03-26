@@ -56,9 +56,7 @@ namespace demo.Controllers
         public async Task<IActionResult> Index()
         {
             var def = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
-            var o = await this.ReportingService.ExecuteReportOutputAsync(def, new Dictionary<string, string>() {
-                { "supplier", "boyner.com.tr"}
-            });
+            var o = await this.ReportingService.ExecuteReportOutputAsync(def, null);
 
             return this.View();
         }
