@@ -6,14 +6,18 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddCache<TCache>(this IServiceCollection services) where TCache : class, ICache
         {
-            var serviceProvider = services.BuildServiceProvider();
-            TCache cacheInstance = ActivatorUtilities.CreateInstance<TCache>(serviceProvider);
-
-            return services.AddSingleton<ICache<TCache>>(serviceProvider =>
+            services.AddSingleton<TCache>();
+            services.AddSingleton<ICache>(serviceProvider =>
             {
-                services.AddSingleton<ICache>(cacheInstance);
-                return new CacheWrapper<TCache>(cacheInstance);
-            }).AddSingleton<ICache>(cacheInstance);
+                return serviceProvider.GetRequiredService<TCache>();
+            });
+            services.AddSingleton<ICache<TCache>>(serviceProvider =>
+            {
+                var cacheInstance = serviceProvider.GetRequiredService<TCache>();
+                var cacheWrapper = new CacheWrapper<TCache>(cacheInstance);
+                return cacheWrapper;
+            });
+            return services;
         }
     }
 }
