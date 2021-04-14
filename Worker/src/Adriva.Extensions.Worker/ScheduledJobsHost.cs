@@ -98,7 +98,7 @@ namespace Adriva.Extensions.Worker
             {
                 await Task.Delay(250);
             }
-            this.Timer.Change(0, 15000);
+            this.Timer.Change(0, 5000);
         }
 
         private void OnTimerElapsed(object state)
