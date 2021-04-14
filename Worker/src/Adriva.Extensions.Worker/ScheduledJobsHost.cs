@@ -24,6 +24,10 @@ namespace Adriva.Extensions.Worker
 
             public bool IsRunning { get; set; }
 
+            public bool IsQueued { get; set; }
+
+            public bool ShouldRunOnStartup { get; set; }
+
             public ScheduledItem(string expression, MethodInfo method, IExpressionParser parser)
             {
                 this.Expression = expression;
@@ -73,7 +77,9 @@ namespace Adriva.Extensions.Worker
                         parserCache[scheduleAttribute.ExpressionParserType] = (IExpressionParser)ActivatorUtilities.CreateInstance(this.ServiceProvider, scheduleAttribute.ExpressionParserType);
                     }
 
-                    this.ScheduledItems.Add(new ScheduledItem(scheduleAttribute.Expression, method, parserCache[scheduleAttribute.ExpressionParserType]));
+                    var scheduledItem = new ScheduledItem(scheduleAttribute.Expression, method, parserCache[scheduleAttribute.ExpressionParserType]);
+                    scheduledItem.ShouldRunOnStartup = scheduleAttribute.RunOnStartup;
+                    this.ScheduledItems.Add(scheduledItem);
                 }
             }
 
@@ -92,19 +98,34 @@ namespace Adriva.Extensions.Worker
             {
                 await Task.Delay(250);
             }
-            this.Timer.Change(0, 5000);
+            this.Timer.Change(0, 15000);
         }
 
         private void OnTimerElapsed(object state)
         {
             foreach (var scheduledItem in this.ScheduledItems)
             {
-                DateTime? nextRunDate = scheduledItem.Parser.GetNext(this.LastRunDate, scheduledItem.Expression);
+                DateTime? nextRunDate = null;
+                lock (scheduledItem)
+                {
+                    if (scheduledItem.ShouldRunOnStartup) nextRunDate = DateTime.MinValue;
+                    scheduledItem.ShouldRunOnStartup = false;
+                }
+
+                nextRunDate = nextRunDate ?? scheduledItem.Parser.GetNext(this.LastRunDate, scheduledItem.Expression);
+
                 if (!nextRunDate.HasValue) continue;
 
-                if (nextRunDate.Value <= DateTime.Now)
+                if (!scheduledItem.IsQueued && nextRunDate.Value <= DateTime.Now)
                 {
-                    ThreadPool.QueueUserWorkItem(this.SafeRunItemAsync, scheduledItem);
+                    lock (scheduledItem)
+                    {
+                        if (!scheduledItem.IsQueued)
+                        {
+                            scheduledItem.IsQueued = true;
+                            ThreadPool.QueueUserWorkItem(this.SafeRunItemAsync, scheduledItem);
+                        }
+                    }
                 }
             }
 
@@ -142,6 +163,7 @@ namespace Adriva.Extensions.Worker
             finally
             {
                 scheduledItem.IsRunning = false;
+                scheduledItem.IsQueued = false;
                 Interlocked.Decrement(ref this.RunningItemCount);
                 DateTime? nextRunDate = scheduledItem.Parser.GetNext(this.LastRunDate, scheduledItem.Expression);
                 if (nextRunDate.HasValue)

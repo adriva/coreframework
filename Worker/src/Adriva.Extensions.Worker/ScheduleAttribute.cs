@@ -6,7 +6,10 @@ namespace Adriva.Extensions.Worker
     public sealed class ScheduleAttribute : Attribute
     {
         public string Expression { get; private set; }
+
         public Type ExpressionParserType { get; private set; }
+
+        public bool RunOnStartup { get; set; }
 
         public ScheduleAttribute(string expression) : this(expression, typeof(CronExpressionParser))
         {
