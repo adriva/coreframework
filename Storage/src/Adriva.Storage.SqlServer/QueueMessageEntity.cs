@@ -10,6 +10,8 @@ namespace Adriva.Storage.SqlServer
 
         public int VisibilityTimeout { get; set; }
 
+        public int TimeToLive { get; set; }
+
         public byte[] Content { get; set; }
 
         public string Command { get; set; }

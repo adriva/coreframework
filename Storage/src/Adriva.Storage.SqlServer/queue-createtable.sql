@@ -11,6 +11,7 @@ BEGIN
         [Command] [nvarchar](100) NULL,
         [Flags] [bigint] NOT NULL,
         [VisibilityTimeout] [int] NOT NULL,
+        [TimeToLive] [int] NOT NULL,
         [TimestampUtc] [datetime2](7) NOT NULL,
         [RetrievedOnUtc] [datetime2](7) NULL
     ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
@@ -27,10 +28,12 @@ BEGIN
         [Environment] DESC,
         [Flags] ASC
     )
-    INCLUDE([VisibilityTimeout],[TimestampUtc],[RetrievedOnUtc]) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+    INCLUDE([VisibilityTimeout],[TimestampUtc],[RetrievedOnUtc],[TimeToLive]) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
     
     ALTER TABLE [dbo].[QueueMessages] ADD  DEFAULT ((0)) FOR [Flags]
     
     ALTER TABLE [dbo].[QueueMessages] ADD  DEFAULT ((60)) FOR [VisibilityTimeout]
+    
+    ALTER TABLE [dbo].[QueueMessages] ADD  DEFAULT ((86400)) FOR [TimeToLive]
     
 END

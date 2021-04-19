@@ -12,6 +12,7 @@ namespace Adriva.Storage.SqlServer
     {
         private static readonly TimeSpan MinimumVisibilityTimeout = TimeSpan.FromSeconds(30);
         private static readonly TimeSpan MaximumVisibilityTimeout = TimeSpan.FromMinutes(30);
+        private static readonly TimeSpan DefaultTimeToLive = TimeSpan.FromHours(24);
         private static readonly SemaphoreSlim DatabaseCreateSemaphore = new SemaphoreSlim(1, 1);
 
         private static bool IsDatabaseObjectsCreated = false;
@@ -68,7 +69,7 @@ namespace Adriva.Storage.SqlServer
             this.Context = context;
         }
 
-        public async ValueTask AddAsync(QueueMessage message, TimeSpan? visibilityTimeout = null, TimeSpan? initialVisibilityDelay = null)
+        public async ValueTask AddAsync(QueueMessage message, TimeSpan? timeToLive = null, TimeSpan? visibilityTimeout = null, TimeSpan? initialVisibilityDelay = null)
         {
             long? messageId = null;
             SqlServerQueueClient.EnsureValidQueueMessage(message, ref messageId);
@@ -84,6 +85,8 @@ namespace Adriva.Storage.SqlServer
                 visibilityTimeout = SqlServerQueueClient.MaximumVisibilityTimeout;
             }
 
+            timeToLive = timeToLive ?? SqlServerQueueClient.DefaultTimeToLive;
+
             initialVisibilityDelay = initialVisibilityDelay ?? TimeSpan.Zero;
 
             QueueMessageEntity entity = new QueueMessageEntity();
@@ -94,6 +97,7 @@ namespace Adriva.Storage.SqlServer
             entity.Content = this.MessageSerializer.Serialize(message);
             entity.Flags = message.Flags;
             entity.Command = message.CommandType;
+            entity.TimeToLive = (int)timeToLive.Value.TotalSeconds;
 
             await this.DbContext.AddAsync(entity);
             await this.DbContext.SaveChangesAsync();

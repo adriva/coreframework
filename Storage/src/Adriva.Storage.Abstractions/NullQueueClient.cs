@@ -11,7 +11,7 @@ namespace Adriva.Storage.Abstractions
             return new ValueTask();
         }
 
-        public ValueTask AddAsync(QueueMessage message, TimeSpan? timeToLive, TimeSpan? initialVisibilityDelay)
+        public ValueTask AddAsync(QueueMessage message, TimeSpan? timetoLive, TimeSpan? timeToLive, TimeSpan? initialVisibilityDelay)
         {
             return new ValueTask();
         }
