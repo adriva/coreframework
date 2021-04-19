@@ -80,6 +80,8 @@ namespace Adriva.Storage.RabbitMq
 
     public abstract class RabbitMqClientBase<TOptions> : IQueueClient, IDisposable where TOptions : RabbitMqQueueOptions, new()
     {
+        private static readonly TimeSpan DefaultTimeToLive = TimeSpan.FromHours(24);
+
         private ObjectPool<IModel> ModelPool;
         private ModelPoolPolicy<TOptions> PoolPolicy;
         private bool IsDisposed;
@@ -99,7 +101,7 @@ namespace Adriva.Storage.RabbitMq
 
         protected abstract string GetRoutingKey(QueueMessage message);
 
-        public async ValueTask AddAsync(QueueMessage message, TimeSpan? visibilityTimeout = null, TimeSpan? initialVisibilityDelay = null)
+        public async ValueTask AddAsync(QueueMessage message, TimeSpan? timeToLive = null, TimeSpan? visibilityTimeout = null, TimeSpan? initialVisibilityDelay = null)
         {
             if (null == message) return;
 
@@ -119,10 +121,7 @@ namespace Adriva.Storage.RabbitMq
                         properties.ContentEncoding = "utf-8";
                         properties.MessageId = message.Id;
                         properties.Priority = (byte)(message.Flags & 3L);
-                        if (visibilityTimeout.HasValue && 0 < visibilityTimeout.Value.TotalMilliseconds)
-                        {
-                            properties.Expiration = visibilityTimeout.Value.TotalMilliseconds.ToString();
-                        }
+                        properties.Expiration = (timeToLive ?? RabbitMqClientBase<TOptions>.DefaultTimeToLive).TotalMilliseconds.ToString();
                         model.BasicPublish(this.Options.ExchangeName, this.GetRoutingKey(message), true, properties, buffer);
                     }
                 }
