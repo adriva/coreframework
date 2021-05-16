@@ -6,5 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Adriva.Extensions.Worker\Adriva.Extensions.Worker.csproj" />
+    <ProjectReference Include="..\..\..\DevTools\src\Adriva.DevTools.CodeGenerator\Adriva.DevTools.CodeGenerator.csproj" />
   </ItemGroup>
 </Project>
