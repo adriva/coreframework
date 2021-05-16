@@ -4,21 +4,28 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Adriva.DevTools.CodeGenerator
 {
     public sealed class CSharpCodeBuilder : ICodeBuilder
     {
+        private readonly IServiceProvider ServiceProvider;
         private readonly IList<IClassBuilder> ClassBuilderList = new List<IClassBuilder>();
         private readonly IList<string> UsingNamespaces = new List<string>();
 
         private string NamespaceName = $"Namespace_{Guid.NewGuid().ToString("N")}";
 
+        public CSharpCodeBuilder(IServiceProvider serviceProvider)
+        {
+            this.ServiceProvider = serviceProvider;
+        }
+
         public ICodeBuilder AddClass(Action<IClassBuilder> buildClass)
         {
             if (null == buildClass) return this;
 
-            IClassBuilder classBuilder = new CSharpClassBuilder();
+            IClassBuilder classBuilder = this.ServiceProvider.GetRequiredService<IClassBuilder>();
             buildClass(classBuilder);
             this.ClassBuilderList.Add(classBuilder);
             return this;
@@ -42,38 +49,20 @@ namespace Adriva.DevTools.CodeGenerator
 
             var namespaceDecleration = SyntaxFactory.NamespaceDeclaration(this.NamespaceName.ParseCSharpName());
 
-            compilationUnit = compilationUnit.AddMembers(namespaceDecleration);
-
             var orderedNamespaceDeclerations = this.UsingNamespaces.OrderBy(x => x).Select(x => SyntaxFactory.UsingDirective(x.ParseCSharpName()));
 
             compilationUnit = compilationUnit.AddUsings(orderedNamespaceDeclerations.ToArray());
 
+            if (0 < this.ClassBuilderList.Count)
+            {
+                var classDeclerations = this.ClassBuilderList.Select(x => x.Build()).OfType<ClassDeclarationSyntax>().ToArray();
+                namespaceDecleration = namespaceDecleration.AddMembers(classDeclerations);
+            }
+
+            compilationUnit = compilationUnit.AddMembers(namespaceDecleration);
             System.Console.WriteLine(compilationUnit.NormalizeWhitespace("\t", false).ToFullString());
 
             return compilationUnit;
-        }
-    }
-
-    public sealed class CSharpClassBuilder : IClassBuilder
-    {
-        private readonly IList<IPropertyBuilder> PropertyBuilderList = new List<IPropertyBuilder>();
-
-        private string ClassName = $"Class_{Guid.NewGuid().ToString("N")}";
-
-        public IClassBuilder WithName(string className)
-        {
-            this.ClassName = className;
-            return this;
-        }
-
-        public IClassBuilder AddProperty(Action<IPropertyBuilder> propertyBuilder)
-        {
-            throw new NotImplementedException();
-        }
-
-        public SyntaxNode Build()
-        {
-            return null;
         }
     }
 }

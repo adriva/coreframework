@@ -25,6 +25,8 @@ namespace Adriva.Worker.Host
             });
             // services.AddHostedService<Worker>();
             services.AddScheduledJobs();
+            services.AddTransient<Adriva.DevTools.CodeGenerator.ICodeBuilder, Adriva.DevTools.CodeGenerator.CSharpCodeBuilder>();
+            services.AddTransient<Adriva.DevTools.CodeGenerator.IClassBuilder, Adriva.DevTools.CodeGenerator.CSharpClassBuilder>();
         }
     }
 
@@ -32,13 +34,6 @@ namespace Adriva.Worker.Host
     {
         public static void Main(string[] args)
         {
-            var b = new DevTools.CodeGenerator.CSharpCodeBuilder();
-            b.WithNamespace("Dummy").WithNamespace("Hello")
-                .AddUsingStatement("System.Collections.Generic")
-                .AddUsingStatement("System")
-                .AddClass(b => { })
-                .Build();
-            return;
             using (var workerHost = WorkerHost
                     .Create(args)
                     .UseStartup<Startup>()

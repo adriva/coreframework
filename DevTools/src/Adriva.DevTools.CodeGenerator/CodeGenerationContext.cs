@@ -10,9 +10,9 @@ namespace Adriva.DevTools.CodeGenerator
 
     public interface ICodeBuilder : ISyntaxBuilder
     {
-        ICodeBuilder AddUsingStatement(string namespaceName);
-
         ICodeBuilder WithNamespace(string namespaceName);
+
+        ICodeBuilder AddUsingStatement(string namespaceName);
 
         ICodeBuilder AddClass(Action<IClassBuilder> buildClass);
     }
@@ -20,6 +20,10 @@ namespace Adriva.DevTools.CodeGenerator
     public interface IClassBuilder : ISyntaxBuilder
     {
         IClassBuilder WithName(string className);
+
+        IClassBuilder WithModifiers(AccessModifier modifiers);
+
+        IClassBuilder AddBaseType(string typeName);
 
         IClassBuilder AddProperty(Action<IPropertyBuilder> propertyBuilder);
 
