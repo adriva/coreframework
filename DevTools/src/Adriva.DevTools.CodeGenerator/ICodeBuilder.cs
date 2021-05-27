@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace Adriva.DevTools.CodeGenerator
 {
@@ -12,6 +11,6 @@ namespace Adriva.DevTools.CodeGenerator
 
         ICodeBuilder AddClass(Action<IClassBuilder> buildClass);
 
-        Task WriteAsync(TextWriter textWriter);
+        void WriteTo(TextWriter textWriter);
     }
 }

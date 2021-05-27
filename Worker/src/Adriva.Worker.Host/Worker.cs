@@ -32,11 +32,11 @@ namespace Adriva.Worker.Host
         }
 
         [Schedule("20 * * * * *", RunOnStartup = true)]
-        public async Task DoIt(CancellationToken cancellationToken)
+        public void DoIt(CancellationToken cancellationToken)
         {
             var writer = new StringWriter();
             var codebuilder = this.ServiceProvider.GetRequiredService<Adriva.DevTools.CodeGenerator.ICodeBuilder>();
-            await codebuilder
+            codebuilder
                 .WithNamespace("PetrolOfisi")
                 .AddUsingStatement("System.Collections")
                 .AddUsingStatement("System")
@@ -68,7 +68,7 @@ namespace Adriva.Worker.Host
                         })
                         ;
                 })
-                .WriteAsync(writer);
+                .WriteTo(writer);
             ;
             writer.Flush();
             System.Console.WriteLine(writer.ToString());

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -66,11 +65,11 @@ namespace Adriva.DevTools.CodeGenerator
             return compilationUnit;
         }
 
-        public Task WriteAsync(TextWriter textWriter)
+        public void WriteTo(TextWriter textWriter)
         {
             var syntaxNode = this.Build();
-            string code = syntaxNode.NormalizeWhitespace("\t", false).ToFullString();
-            return textWriter.WriteAsync(code);
+            syntaxNode = syntaxNode.NormalizeWhitespace("\t", false);
+            syntaxNode.WriteTo(textWriter);
         }
     }
 }
