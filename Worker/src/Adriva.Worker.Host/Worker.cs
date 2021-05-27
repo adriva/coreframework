@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,10 +32,11 @@ namespace Adriva.Worker.Host
         }
 
         [Schedule("20 * * * * *", RunOnStartup = true)]
-        public void DoIt(CancellationToken cancellationToken)
+        public async Task DoIt(CancellationToken cancellationToken)
         {
+            var writer = new StringWriter();
             var codebuilder = this.ServiceProvider.GetRequiredService<Adriva.DevTools.CodeGenerator.ICodeBuilder>();
-            codebuilder
+            await codebuilder
                 .WithNamespace("PetrolOfisi")
                 .AddUsingStatement("System.Collections")
                 .AddUsingStatement("System")
@@ -42,21 +44,34 @@ namespace Adriva.Worker.Host
                 {
                     x
                         .WithName("Deneme")
-                        .AddBaseType("BitArray")
-                        .AddBaseType("IEqualityComparer<int>")
+                        .WithBaseType("BitArray")
+                        .WithBaseType("IEqualityComparer<int>")
                         .WithModifiers(DevTools.CodeGenerator.AccessModifier.Public | DevTools.CodeGenerator.AccessModifier.Sealed)
+                        .WithAttribute("Serializable", true, (byte)1, false)
                         ;
                 })
                 .AddClass(x =>
                 {
                     x
                         .WithName("Deneme2")
-                        .AddBaseType("Exception")
+                        .WithBaseType("Deneme")
                         .WithModifiers(DevTools.CodeGenerator.AccessModifier.Public | DevTools.CodeGenerator.AccessModifier.Partial)
+                        .WithProperty(p =>
+                        {
+                            p
+                                .WithName("UserId")
+                                .HasSetter(false)
+                                .WithType(typeof(long).Name)
+                                .WithModifiers(DevTools.CodeGenerator.AccessModifier.Public)
+                                .WithAttribute("Serializable", true, (byte)1, false)
+                                ;
+                        })
                         ;
                 })
-                .Build()
-                ;
+                .WriteAsync(writer);
+            ;
+            writer.Flush();
+            System.Console.WriteLine(writer.ToString());
             Thread.Sleep(1000);
         }
     }

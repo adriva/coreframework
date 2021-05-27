@@ -25,8 +25,7 @@ namespace Adriva.Worker.Host
             });
             // services.AddHostedService<Worker>();
             services.AddScheduledJobs();
-            services.AddTransient<Adriva.DevTools.CodeGenerator.ICodeBuilder, Adriva.DevTools.CodeGenerator.CSharpCodeBuilder>();
-            services.AddTransient<Adriva.DevTools.CodeGenerator.IClassBuilder, Adriva.DevTools.CodeGenerator.CSharpClassBuilder>();
+            Adriva.DevTools.CodeGenerator.CodeGeneratorServiceExtensions.AddDefaultCSharpCodeGenerator(services);
         }
     }
 
