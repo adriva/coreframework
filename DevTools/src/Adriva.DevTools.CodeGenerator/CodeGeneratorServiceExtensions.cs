@@ -4,21 +4,21 @@ namespace Adriva.DevTools.CodeGenerator
 {
     public static class CodeGeneratorServiceExtensions
     {
-        public static IServiceCollection AddCodeGenerators<TCodeBuilder, TClassBuilder, TPropertyBuilder>(this IServiceCollection services)
+        public static IServiceCollection AddCodeGenerators<TCodeBuilder, TClassBuilder, TPropertyBuilder>(this IServiceCollection services, ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
             where TCodeBuilder : class, ICodeBuilder
             where TClassBuilder : class, IClassBuilder
             where TPropertyBuilder : class, IPropertyBuilder
         {
-            return services
-                .AddTransient<ICodeBuilder, TCodeBuilder>()
-                .AddTransient<IClassBuilder, TClassBuilder>()
-                .AddTransient<IPropertyBuilder, TPropertyBuilder>()
-                ;
+            services.Add(ServiceDescriptor.Describe(typeof(ICodeBuilder), typeof(TCodeBuilder), serviceLifetime));
+            services.Add(ServiceDescriptor.Describe(typeof(IClassBuilder), typeof(TClassBuilder), serviceLifetime));
+            services.Add(ServiceDescriptor.Describe(typeof(IPropertyBuilder), typeof(TPropertyBuilder), serviceLifetime));
+
+            return services;
         }
 
-        public static IServiceCollection AddDefaultCSharpCodeGenerator(this IServiceCollection services)
+        public static IServiceCollection AddCSharpCodeGenerator(this IServiceCollection services, ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
         {
-            return services.AddCodeGenerators<CSharpCodeBuilder, CSharpClassBuilder, CSharpPropertyBuilder>();
+            return services.AddCodeGenerators<CSharpCodeBuilder, CSharpClassBuilder, CSharpPropertyBuilder>(serviceLifetime);
         }
     }
 }
