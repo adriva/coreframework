@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Extensions.Worker;
+using Adriva.DevTools.CodeGenerator;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -44,10 +45,10 @@ namespace Adriva.Worker.Host
                 {
                     x
                         .WithName("Deneme")
-                        .WithBaseType("BitArray")
-                        .WithBaseType("IEqualityComparer<int>")
+                        .WithBaseType(typeof(System.Collections.Generic.IDictionary<string, IList<int?>>), true)
+                        .WithBaseType(typeof(IEqualityComparer<int>), true)
                         .WithModifiers(DevTools.CodeGenerator.AccessModifier.Public | DevTools.CodeGenerator.AccessModifier.Sealed)
-                        .WithAttribute("Serializable", true, (byte)1, false)
+                        .WithAttribute<SerializableAttribute>(true, true, (byte)1, false)
                         ;
                 })
                 .AddClass(x =>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Adriva.Common.Core;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -9,6 +10,25 @@ namespace Adriva.DevTools.CodeGenerator
 {
     internal static class Extensions
     {
+        private static readonly Dictionary<Type, string> CSharpTypeAliases = new Dictionary<Type, string>
+            {
+                { typeof(bool), "bool" },
+                { typeof(byte), "byte" },
+                { typeof(char), "char" },
+                { typeof(decimal), "decimal" },
+                { typeof(double), "double" },
+                { typeof(float), "float" },
+                { typeof(int), "int" },
+                { typeof(long), "long" },
+                { typeof(object), "object" },
+                { typeof(sbyte), "sbyte" },
+                { typeof(short), "short" },
+                { typeof(string), "string" },
+                { typeof(uint), "uint" },
+                { typeof(ulong), "ulong" },
+                { typeof(void), "void" }
+            };
+
         public static NameSyntax ParseCSharpName(this string value) => SyntaxFactory.ParseName(value, 0, true);
 
         public static TypeSyntax ParseCSharpTypeName(this string value) => SyntaxFactory.ParseTypeName(value, 0, true);
@@ -109,6 +129,26 @@ namespace Adriva.DevTools.CodeGenerator
             }
 
             throw new NotSupportedException();
+        }
+
+        public static string GetCSharpTypeString(this Type type, bool trimNamespace = false) => type.GetNormalizedName(trimNamespace);
+
+        public static string GetCSharpTypeAlias(this string typeName)
+        {
+            Type type = Type.GetType(typeName, false);
+            if (null == type)
+            {
+                var matchingType = Extensions.CSharpTypeAliases.Keys.FirstOrDefault(k => 0 == string.CompareOrdinal(k.Name, typeName));
+                if (null == matchingType) return typeName;
+                type = matchingType;
+            }
+            return type.GetCSharpTypeAlias();
+        }
+
+        public static string GetCSharpTypeAlias(this Type type)
+        {
+            if (Extensions.CSharpTypeAliases.TryGetValue(type, out string alias)) return alias;
+            return type.GetCSharpTypeString();
         }
     }
 }

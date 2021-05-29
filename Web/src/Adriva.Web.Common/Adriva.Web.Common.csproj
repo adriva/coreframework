@@ -11,8 +11,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Title>Adriva Web Common Functions Library</Title>
-    <PackageDescription>Base library providing abstractions and common components and functions that cna be used in any web project.</PackageDescription>    
-    <Version>3.0.2</Version>
+    <PackageDescription>Base library providing abstractions and common components and functions that cna be used in any web project.</PackageDescription>
+    <Version>3.1.0</Version>
   </PropertyGroup>
 
 </Project>

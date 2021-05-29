@@ -6,8 +6,8 @@
 
   <PropertyGroup>
     <Title>Adriva client wrapper for Microsoft ApplicationInsights</Title>
-    <PackageDescription>Client library that can be injected to collect analytics data.</PackageDescription>    
-    <Version>3.1.0</Version>
+    <PackageDescription>Client library that can be injected to collect analytics data.</PackageDescription>
+    <Version>3.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\src\Adriva.Common.Core.csproj" />    
+    <ProjectReference Include="..\..\..\Common\src\Adriva.Common.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,19 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>    
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup>
     <Title>Adriva Core Library</Title>
-    <PackageDescription>Base library providing reusable types and utility functions.</PackageDescription>    
-    <Version>3.1.3</Version>
+    <PackageDescription>Base library providing reusable types and utility functions.</PackageDescription>
+    <Version>3.1.4</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="3.1.*" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.*" />    
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.*" />
     <PackageReference Include="MimeTypes" Version="1.1.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

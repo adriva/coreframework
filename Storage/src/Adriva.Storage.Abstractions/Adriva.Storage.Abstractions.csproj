@@ -16,7 +16,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Title>Adriva Core Framework Storage Services Abstractions</Title>
-    <PackageDescription>Base library providing common types and interfaces for storage service integrations such as blob, queue and table services.</PackageDescription>    
-    <Version>3.1.0</Version>
+    <PackageDescription>Base library providing common types and interfaces for storage service integrations such as blob, queue and table services.</PackageDescription>
+    <Version>3.1.1</Version>
   </PropertyGroup>
 </Project>

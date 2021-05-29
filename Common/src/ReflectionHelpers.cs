@@ -44,13 +44,19 @@ namespace Adriva.Common.Core
             });
         }
 
-        public static string GetNormalizedName(this Type type)
+        public static string GetNormalizedName(this Type type, bool ignoreNamespace = false)
         {
+            string GetTypeName(Type type, bool ignoreNamespace = false)
+            {
+                if (ignoreNamespace) return type.Name;
+                return type.FullName;
+            }
+
             if (null == type) throw new ArgumentNullException(nameof(type));
 
             if (type.IsArray)
             {
-                return string.Concat(ReflectionHelpers.GetNormalizedName(type.GetElementType()), "[]");
+                return string.Concat(ReflectionHelpers.GetNormalizedName(type.GetElementType(), ignoreNamespace), "[]");
             }
 
             if (type.IsGenericType)
@@ -58,11 +64,11 @@ namespace Adriva.Common.Core
                 var genericTypeDefinition = type.GetGenericTypeDefinition();
                 return string.Format(
                     "{0}<{1}>",
-                    genericTypeDefinition.FullName.Substring(0, genericTypeDefinition.FullName.LastIndexOf("`", StringComparison.InvariantCulture)),
-                    string.Join(",", type.GetGenericArguments().Select(GetNormalizedName)));
+                    GetTypeName(genericTypeDefinition, ignoreNamespace).Substring(0, GetTypeName(genericTypeDefinition, ignoreNamespace).LastIndexOf("`", StringComparison.InvariantCulture)),
+                    string.Join(",", type.GetGenericArguments().Select(t => GetNormalizedName(t, ignoreNamespace))));
             }
 
-            return type.FullName ?? type.Name;
+            return GetTypeName(type, ignoreNamespace);
         }
 
         public static string GetNormalizedName(this MethodInfo methodInfo)

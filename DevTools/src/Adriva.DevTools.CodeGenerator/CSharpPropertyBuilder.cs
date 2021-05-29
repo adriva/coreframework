@@ -35,7 +35,7 @@ namespace Adriva.DevTools.CodeGenerator
 
         public IPropertyBuilder WithType(string typeName)
         {
-            this.TypeName = typeName;
+            this.TypeName = typeName.GetCSharpTypeAlias();
             return this;
         }
 
