@@ -1,1 +1,0 @@
-# Adriva Core Framework

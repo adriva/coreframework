@@ -1,7 +1,0 @@
-<Project>
-    <Target Name="CopyFiles" AfterTargets="PostBuild">
-        <!-- Copy introduction md file to documentation folder -->
-        <Copy SourceFiles="$(MSBuildProjectDirectory)\..\README.md" DestinationFiles="$(MSBuildProjectDirectory)\index.md" />
-        <Exec Command="docfx docfx.json" WorkingDirectory="$(MSBuildProjectDirectory)" />
-    </Target>
-</Project>
