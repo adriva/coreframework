@@ -84,5 +84,55 @@ namespace Adriva.Common.Core.DataStructures
             processedLookup.Clear();
             return itemsLookup.Values;
         }
+
+        /// <summary>
+        /// Creates a graph structure using the given flat sequence of items that has a parent to child relationship defined.
+        /// </summary>
+        /// <param name="items">Items that will be converted into a tree structure.</param>
+        /// <param name="idResolver">A function that will be used to generate unique id of a tree node for an item.</param>
+        /// <param name="parentIdResolver">A function that will be used to retrieve the parent id of a tree node for an item.</param>
+        /// <typeparam name="TValue">The value type of the TreeNode.</typeparam>
+        /// <returns>A sequence of TreeNode classes that represents the root nodes.</returns>
+        public static IEnumerable<TreeNode<TValue>> CreateTree<TValue>(this IEnumerable<TValue> items, Func<TValue, string> idResolver, Func<TValue, string> parentIdResolver)
+        {
+            if (null == items) return null;
+
+            if (null == idResolver) throw new ArgumentNullException(nameof(idResolver));
+            if (null == parentIdResolver) throw new ArgumentNullException(nameof(parentIdResolver));
+
+            Dictionary<string, TreeNode<TValue>> itemsLookup = items.ToDictionary(idResolver, x => new TreeNode<TValue>(x));
+            Dictionary<string, bool> processedLookup = new Dictionary<string, bool>();
+
+            bool isNoop;
+
+            do
+            {
+                isNoop = true;
+                foreach (var nodePair in itemsLookup)
+                {
+                    string parentId = parentIdResolver.Invoke(nodePair.Value.Value);
+
+                    if (!string.IsNullOrWhiteSpace(parentId))
+                    {
+                        if (itemsLookup.ContainsKey(parentId) && !processedLookup.ContainsKey(idResolver(nodePair.Value.Value)))
+                        {
+                            itemsLookup[parentId].Children.Add(nodePair.Value);
+                            processedLookup[idResolver(nodePair.Value.Value)] = true;
+                            isNoop = false;
+                        }
+                    }
+                }
+            } while (!isNoop);
+
+            var nonRootItems = itemsLookup.Where(x => !string.IsNullOrWhiteSpace(parentIdResolver(x.Value.Value))).ToArray();
+
+            foreach (var nonRootItem in nonRootItems)
+            {
+                itemsLookup.Remove(nonRootItem.Key);
+            }
+
+            processedLookup.Clear();
+            return itemsLookup.Values;
+        }
     }
 }
