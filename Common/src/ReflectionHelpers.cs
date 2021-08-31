@@ -121,6 +121,7 @@ namespace Adriva.Common.Core
         public static IEnumerable<MethodInfo> FindMethods(this Type type, Func<MethodInfo, bool> predicate, ClrMemberFlags methodFlags = ClrMemberFlags.None)
         {
             if (null == type) throw new ArgumentNullException(nameof(type));
+            if (null == predicate) throw new ArgumentNullException(nameof(predicate));
 
             return from m in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)
                    where (
@@ -260,6 +261,42 @@ namespace Adriva.Common.Core
             {
                 throw new InvalidOperationException($"Could not find method '{methodName}' matching the given signature. Have you forgotten to fully qualify all type names in the Namespace.TypeName format?", innerException);
             }
+        }
+
+        public static IEnumerable<FieldInfo> FindFields(this Type type, Func<FieldInfo, bool> predicate, ClrMemberFlags fieldFlags = ClrMemberFlags.None)
+        {
+            if (null == type) throw new ArgumentNullException(nameof(type));
+            if (null == predicate) throw new ArgumentNullException(nameof(predicate));
+
+            return from f in type.GetFields()
+                   where (
+                       ClrMemberFlags.None == fieldFlags
+                       || (
+                           fieldFlags.HasFlag(ClrMemberFlags.Instance) ? !f.IsStatic : true
+                           && fieldFlags.HasFlag(ClrMemberFlags.Static) ? f.IsStatic : true
+                           && fieldFlags.HasFlag(ClrMemberFlags.Public) ? f.IsPublic : true
+                           && fieldFlags.HasFlag(ClrMemberFlags.NonPublic) ? !f.IsPublic : true
+                           && fieldFlags.HasFlag(ClrMemberFlags.SpecialName) ? f.IsSpecialName : true
+                           && fieldFlags.HasFlag(ClrMemberFlags.Constant) ? f.IsLiteral : true
+                       )
+                   ) && predicate(f)
+                   select f;
+        }
+
+        public static IEnumerable<FieldInfo> FindFields<TFieldType>(this Type type, bool includeInheritedTypes = false, ClrMemberFlags fieldFlags = ClrMemberFlags.None)
+        {
+            Type typeOfField = typeof(TFieldType);
+            return type.FindFields(f =>
+            {
+                if (includeInheritedTypes)
+                {
+                    return typeOfField.IsAssignableFrom(f.FieldType);
+                }
+                else
+                {
+                    return typeOfField.Equals(f.FieldType);
+                }
+            }, fieldFlags);
         }
 
         public static void InvokeMethods(IEnumerable<MethodInfo> methods, object instance, params object[] arguments)

@@ -14,7 +14,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Title>Adriva Web Controls Abstractions Library</Title>
     <PackageDescription>Base library providing abstractions and common components and tag helpers to implement and consume aspnet core web controls.</PackageDescription>    
-    <Version>3.0.2</Version>
+    <Version>3.0.3</Version>
   </PropertyGroup>
 
 </Project>

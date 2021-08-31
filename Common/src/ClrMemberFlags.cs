@@ -14,6 +14,7 @@ namespace Adriva.Common.Core
         Static = 1 << 5,
         Instance = 1 << 6,
         Public = 1 << 10,
-        NonPublic = 1 << 11
+        NonPublic = 1 << 11,
+        Constant = 1 << 12
     }
 }
