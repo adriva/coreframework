@@ -92,8 +92,3 @@ jobs:
       with:
         PROJECT_FILE_PATH: Reporting/src/Adriva.Extensions.Reporting.SqlServer/Adriva.Extensions.Reporting.SqlServer.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
-    - name: Publish DevTools Code Generator
-      uses: rohith/publish-nuget@v2.1.2
-      with:
-        PROJECT_FILE_PATH: DevTools/src/Adriva.DevTools.CodeGenerator/Adriva.DevTools.CodeGenerator.csproj
-        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
