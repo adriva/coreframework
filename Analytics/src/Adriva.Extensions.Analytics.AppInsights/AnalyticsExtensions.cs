@@ -1,5 +1,6 @@
 ﻿using System;
 using Adriva.Extensions.Analytics.AppInsights;
+using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -37,7 +38,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     DeveloperMode = analyticsOptions.IsDeveloperMode,
                     EndpointAddress = analyticsOptions.EndPointAddress,
                     MaxBacklogSize = analyticsOptions.BacklogSize,
-                    MaxTelemetryBufferCapacity = analyticsOptions.Capacity
+                    MaxTelemetryBufferCapacity = analyticsOptions.Capacity,
                 };
             }));
 
@@ -58,7 +59,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services">The Microsoft.Extensions.DependencyInjection.IServiceCollection to add services to.</param>
         /// <param name="configure">The AnalyticsOptions configuration delegate.</param>
         /// <returns>The Microsoft.Extensions.DependencyInjection.IServiceCollection so that additional calls can be chained.</returns>
-        public static IServiceCollection AddAppInsightsWebAnalytics(this IServiceCollection services, Action<AnalyticsOptions> configure)
+        public static IServiceCollection AddAppInsightsWebAnalytics(this IServiceCollection services, Action<AnalyticsOptions> configure, Action<ApplicationInsightsServiceOptions> postConfigure = null)
         {
             services.AddAppInsightsAnalytics(builder =>
             {
@@ -69,6 +70,11 @@ namespace Microsoft.Extensions.DependencyInjection
                     options.InstrumentationKey = builder.Options.InstrumentationKey;
                     options.DeveloperMode = builder.Options.IsDeveloperMode;
                     options.EndpointAddress = builder.Options.EndPointAddress;
+
+                    if (null != postConfigure)
+                    {
+                        postConfigure(options);
+                    }
                 });
             });
 
