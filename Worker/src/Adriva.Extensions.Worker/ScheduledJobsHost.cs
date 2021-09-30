@@ -12,7 +12,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Adriva.Extensions.Worker
 {
-    internal class ScheduledJobsHost : BackgroundService
+
+    internal class ScheduledJobsHost : BackgroundService, IScheduledJobsHost
     {
         internal class ScheduledItem
         {
@@ -54,7 +55,7 @@ namespace Adriva.Extensions.Worker
             this.Timer = new Timer(this.OnTimerElapsed, null, Timeout.Infinite, 5000);
         }
 
-        private IEnumerable<MethodInfo> ResolveScheduledMethods()
+        public IEnumerable<MethodInfo> ResolveScheduledMethods()
         {
             return from type in ReflectionHelpers.FindTypes(t => t.IsClass && !t.IsAbstract && !t.IsSpecialName)
                    from method in type.GetMethods()
@@ -128,8 +129,6 @@ namespace Adriva.Extensions.Worker
                     }
                 }
             }
-
-            this.LastRunDate = DateTime.UtcNow;
         }
 
         private async void SafeRunItemAsync(object state)
@@ -162,6 +161,7 @@ namespace Adriva.Extensions.Worker
             }
             finally
             {
+                this.LastRunDate = DateTime.UtcNow;
                 scheduledItem.IsRunning = false;
                 scheduledItem.IsQueued = false;
                 Interlocked.Decrement(ref this.RunningItemCount);
@@ -184,6 +184,23 @@ namespace Adriva.Extensions.Worker
             {
                 return 0 == Interlocked.Read(ref this.RunningItemCount);
             }, 30000);
+        }
+
+        public async Task RunJobAsync(MethodInfo methodInfo)
+        {
+            if (null == methodInfo)
+            {
+                throw new ArgumentNullException(nameof(methodInfo));
+            }
+
+            var scheduledItem = this.ScheduledItems.FirstOrDefault(s => s.Method == methodInfo);
+
+            if (null == scheduledItem)
+            {
+                throw new InvalidOperationException($"Method '{ReflectionHelpers.GetNormalizedName(methodInfo)}' is not a valid scheduled job.");
+            }
+
+            await this.RunItem(scheduledItem);
         }
 
         private async Task RunItem(ScheduledItem scheduledItem)
