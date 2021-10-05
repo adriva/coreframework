@@ -46,6 +46,7 @@ namespace Adriva.Extensions.Worker
 
         private DateTime LastRunDate;
         private long RunningItemCount = 0;
+        private bool IsDisposed = false;
 
         public ScheduledJobsHost(IServiceProvider serviceProvider, ILogger<ScheduledJobsHost> logger)
         {
@@ -245,18 +246,22 @@ namespace Adriva.Extensions.Worker
 
         public override void Dispose()
         {
-            foreach (var ownerType in this.MethodOwners.Values)
+            if (!this.IsDisposed)
             {
-                if (ownerType is IDisposable disposable) disposable.Dispose();
-                else if (ownerType is IAsyncDisposable asyncDisposable)
+                this.Logger.LogDebug("Disposing 'ScheduledJobsHost' instance.");
+                this.IsDisposed = true;
+                foreach (var ownerType in this.MethodOwners.Values)
                 {
-                    asyncDisposable.DisposeAsync().AsTask().Wait();
+                    if (ownerType is IDisposable disposable) disposable.Dispose();
+                    else if (ownerType is IAsyncDisposable asyncDisposable)
+                    {
+                        asyncDisposable.DisposeAsync().AsTask().Wait();
+                    }
                 }
-            }
 
-            base.Dispose();
-            this.Timer.Change(Timeout.Infinite, Timeout.Infinite);
-            this.Timer.Dispose();
+                base.Dispose();
+                this.Timer.Dispose();
+            }
         }
     }
 }
