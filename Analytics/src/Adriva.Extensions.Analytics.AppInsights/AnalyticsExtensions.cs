@@ -92,26 +92,26 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services">The Microsoft.Extensions.DependencyInjection.IServiceCollection to add services to.</param>
         /// <param name="configure">The AnalyticsOptions configuration delegate.</param>
         /// <returns>The Microsoft.Extensions.DependencyInjection.IServiceCollection so that additional calls can be chained.</returns>
-        public static IServiceCollection AddAppInsightsGenericAnalytics(this IServiceCollection services, Action<AnalyticsOptions> configure)
-        {
+        // public static IServiceCollection AddAppInsightsGenericAnalytics(this IServiceCollection services, Action<AnalyticsOptions> configure)
+        // {
 
-            services.AddAppInsightsAnalytics(builder =>
-            {
-                builder.Configure(configure);
-                builder.Services.AddApplicationInsightsTelemetryWorkerService(options =>
-                {
-                    options.InstrumentationKey = builder.Options.InstrumentationKey;
-                    options.DeveloperMode = builder.Options.IsDeveloperMode;
-                    options.EndpointAddress = builder.Options.EndPointAddress;
-                });
-            });
+        //     services.AddAppInsightsAnalytics(builder =>
+        //     {
+        //         builder.Configure(configure);
+        //         builder.Services.AddApplicationInsightsTelemetryWorkerService(options =>
+        //         {
+        //             options.InstrumentationKey = builder.Options.InstrumentationKey;
+        //             options.DeveloperMode = builder.Options.IsDeveloperMode;
+        //             options.EndpointAddress = builder.Options.EndPointAddress;
+        //         });
+        //     });
 
-            services.AddSingleton<ApplicationInsights.WorkerService.ITelemetryProcessorFactory>(serviceProvider =>
-            {
-                return new SharedTelemetryProcessorFactory(serviceProvider, typeof(DefaultTelemetryFilter));
-            });
+        //     services.AddSingleton<ApplicationInsights.WorkerService.ITelemetryProcessorFactory>(serviceProvider =>
+        //     {
+        //         return new SharedTelemetryProcessorFactory(serviceProvider, typeof(DefaultTelemetryFilter));
+        //     });
 
-            return services;
-        }
+        //     return services;
+        // }
     }
 }

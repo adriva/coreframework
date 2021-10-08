@@ -3,7 +3,7 @@ using Microsoft.ApplicationInsights.Extensibility;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    internal class SharedTelemetryProcessorFactory : ApplicationInsights.AspNetCore.ITelemetryProcessorFactory, ApplicationInsights.WorkerService.ITelemetryProcessorFactory
+    internal class SharedTelemetryProcessorFactory : ApplicationInsights.AspNetCore.ITelemetryProcessorFactory
     {
         private readonly IServiceProvider serviceProvider;
         private readonly Type telemetryProcessorType;
