@@ -1,25 +1,32 @@
 using System;
-using System.Text;
 using Adriva.Common.Core;
+using Newtonsoft.Json;
 
 namespace Adriva.Storage.Abstractions
 {
     public class DefaultQueueMessageSerializer : IQueueMessageSerializer
     {
-        public QueueMessage Deserialize(byte[] content)
+        private static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings()
+        {
+            TypeNameHandling = TypeNameHandling.All,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            Formatting = Formatting.None
+        };
+
+        public virtual JsonSerializerSettings GetSerializerSettings() => DefaultQueueMessageSerializer.SerializerSettings;
+
+        public QueueMessage Deserialize(string content)
         {
             if (null == content || 0 == content.Length) return null;
 
-            string json = Encoding.UTF8.GetString(content);
-            return Utilities.SafeDeserialize<QueueMessage>(json);
+            return Utilities.SafeDeserialize<QueueMessage>(content, this.GetSerializerSettings());
         }
 
-        public byte[] Serialize(QueueMessage queueMessage)
+        public string Serialize(QueueMessage queueMessage)
         {
             if (null == queueMessage) throw new ArgumentNullException(nameof(queueMessage));
 
-            string json = Utilities.SafeSerialize(queueMessage);
-            return Encoding.UTF8.GetBytes(json);
+            return Utilities.SafeSerialize(queueMessage, this.GetSerializerSettings());
         }
     }
 }

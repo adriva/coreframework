@@ -2,8 +2,8 @@ namespace Adriva.Storage.Abstractions
 {
     public interface IQueueMessageSerializer
     {
-        byte[] Serialize(QueueMessage queueMessage);
+        string Serialize(QueueMessage queueMessage);
 
-        QueueMessage Deserialize(byte[] content);
+        QueueMessage Deserialize(string content);
     }
 }

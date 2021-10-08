@@ -9,11 +9,18 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IStorageBuilder AddSqlServerQueue(this IStorageBuilder builder, string name, Action<SqlServerQueueOptions> configure)
         {
+            string qualifiedName = Helpers.GetQualifiedQueueName(name);
+
             builder.AddQueueClient<SqlServerQueueClient, SqlServerQueueOptions>(name, configure);
             builder.Services.AddDbContext<QueueDbContext>((serviceProvider, dbContextBuilder) =>
             {
+
                 var optionsMonitor = serviceProvider.GetRequiredService<IOptionsMonitor<SqlServerQueueOptions>>();
-                var options = optionsMonitor.Get(Helpers.GetQualifiedQueueName(name));
+                var options = optionsMonitor.Get(qualifiedName);
+                if (string.IsNullOrWhiteSpace(options.ApplicationName))
+                {
+                    throw new ArgumentException("An application name should be provided when calling 'AddSqlServerQueue' method.");
+                }
                 dbContextBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
                 dbContextBuilder.UseSqlServer(options.ConnectionString);
             }, ServiceLifetime.Singleton, ServiceLifetime.Singleton);

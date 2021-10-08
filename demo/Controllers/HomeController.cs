@@ -55,8 +55,13 @@ namespace demo.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var def = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
-            var o = await this.ReportingService.ExecuteReportOutputAsync(def, null);
+            var qc = await this.SCF.GetQueueClientAsync();
+            // await qc.AddAsync(QueueMessage.Create(null, "DENEME", QueueMessageFlags.HighPriority));
+            var qm = await qc.GetNextAsync(CancellationToken.None);
+            await qc.DeleteAsync(qm);
+
+            // var def = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
+            // var o = await this.ReportingService.ExecuteReportOutputAsync(def, null);
 
             return this.View();
         }

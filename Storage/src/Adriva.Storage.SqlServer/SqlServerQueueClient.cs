@@ -1,10 +1,12 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Storage.Abstractions;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Adriva.Storage.SqlServer
 {
@@ -19,6 +21,8 @@ namespace Adriva.Storage.SqlServer
 
         private readonly QueueDbContext DbContext;
         private readonly IQueueMessageSerializer MessageSerializer;
+
+        private SqlServerQueueOptions Options;
         private StorageClientContext Context;
 
         public SqlServerQueueClient(QueueDbContext queueDbContext, IQueueMessageSerializer messageSerializer)
@@ -52,7 +56,7 @@ namespace Adriva.Storage.SqlServer
                 {
                     if (!SqlServerQueueClient.IsDatabaseObjectsCreated)
                     {
-                        await DbHelpers.ExecuteScriptAsync(this.DbContext.Database, "queue-createtable", "queue-createsp");
+                        await DbHelpers.ExecuteScriptAsync(this.DbContext.Database, this.Options, "queue-createtable", "queue-createsp");
                         SqlServerQueueClient.IsDatabaseObjectsCreated = true;
                     }
                 }
@@ -65,6 +69,7 @@ namespace Adriva.Storage.SqlServer
 
         public async ValueTask InitializeAsync(StorageClientContext context)
         {
+            this.Options = context.GetOptions<SqlServerQueueOptions>();
             await this.EnsureDatabaseObjectsAsync();
             this.Context = context;
         }
@@ -91,6 +96,7 @@ namespace Adriva.Storage.SqlServer
 
             QueueMessageEntity entity = new QueueMessageEntity();
             entity.Environment = this.Context.Name;
+            entity.Application = this.Options.ApplicationName;
             entity.TimestampUtc = DateTime.UtcNow.AddSeconds(initialVisibilityDelay.Value.TotalSeconds);
             entity.VisibilityTimeout = (int)visibilityTimeout.Value.TotalSeconds;
             entity.RetrievedOnUtc = null;
@@ -110,12 +116,12 @@ namespace Adriva.Storage.SqlServer
         {
             long? messageId = -1;
             SqlServerQueueClient.EnsureValidQueueMessage(message, ref messageId);
-            await this.DbContext.Database.ExecuteSqlRawAsync("DELETE [QueueMessages] WHERE Id = {0}", messageId);
+            await this.DbContext.Database.ExecuteSqlRawAsync($"DELETE {this.Options.SchemaName}.{this.Options.TableName} WHERE Id = @messageId", new SqlParameter("@messageId", messageId));
         }
 
         public async Task<QueueMessage> GetNextAsync(CancellationToken cancellationToken)
         {
-            var resultset = await this.DbContext.Messages.FromSqlRaw("GetNextQueueMessage @environment", new SqlParameter("@environment", this.Context.Name)).ToArrayAsync();
+            var resultset = await this.DbContext.Messages.FromSqlRaw($"EXEC {this.Options.SchemaName}.{this.Options.RetrieveProcedureName} @environment, @application", new SqlParameter("@environment", this.Context.Name), new SqlParameter("@application", this.Options.ApplicationName)).ToArrayAsync();
             var messageEntity = resultset.FirstOrDefault();
             if (null == messageEntity) return null;
 

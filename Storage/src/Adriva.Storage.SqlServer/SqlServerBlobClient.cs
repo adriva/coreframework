@@ -86,7 +86,7 @@ namespace Adriva.Storage.SqlServer
                 {
                     if (!SqlServerBlobClient.IsDatabaseObjectsCreated)
                     {
-                        await DbHelpers.ExecuteScriptAsync(this.DbContext.Database, "blob-createtable", "blob-createsp");
+                        await DbHelpers.ExecuteScriptAsync(this.DbContext.Database, this.Options, "blob-createtable", "blob-createsp");
                         SqlServerBlobClient.IsDatabaseObjectsCreated = true;
                     }
                 }

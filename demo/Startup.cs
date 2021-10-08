@@ -70,9 +70,10 @@ namespace demo
 
             services
                 .AddStorage()
-                .AddSqlServerQueue(this.HostingEnvironment.EnvironmentName, options =>
+                .AddSqlServerQueue(string.Empty, options =>
                 {
                     options.ConnectionString = "Server=localhost;Initial Catalog=DevDb;User id=sa;Password=PASS@word1;";
+                    options.ApplicationName = "demo";
                 })
                 .AddRabbitMqQueue("Production", options =>
                  {
