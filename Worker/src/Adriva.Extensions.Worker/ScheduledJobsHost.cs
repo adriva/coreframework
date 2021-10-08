@@ -189,7 +189,7 @@ namespace Adriva.Extensions.Worker
             }, 30000);
         }
 
-        public async Task<string> RunJobAsync(MethodInfo methodInfo)
+        public string Run(MethodInfo methodInfo)
         {
             if (null == methodInfo)
             {
@@ -204,7 +204,10 @@ namespace Adriva.Extensions.Worker
             }
 
             string instanceId = Guid.NewGuid().ToString();
-            await this.RunItem(scheduledItem, instanceId);
+            if (!ThreadPool.QueueUserWorkItem(this.SafeRunItemAsync, scheduledItem))
+            {
+                return null;
+            }
             return instanceId;
         }
 

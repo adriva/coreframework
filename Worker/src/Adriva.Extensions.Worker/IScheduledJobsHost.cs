@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Adriva.Extensions.Worker
 {
@@ -8,6 +7,6 @@ namespace Adriva.Extensions.Worker
     {
         IEnumerable<MethodInfo> ResolveScheduledMethods();
 
-        Task<string> RunJobAsync(MethodInfo methodInfo);
+        string Run(MethodInfo methodInfo);
     }
 }
