@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Adriva.Extensions.Worker
 {
-
     internal class ScheduledJobsHost : BackgroundService, IScheduledJobsHost
     {
         internal class ScheduledItem
@@ -43,6 +42,7 @@ namespace Adriva.Extensions.Worker
         private readonly IList<ScheduledItem> ScheduledItems = new List<ScheduledItem>();
         private readonly ConcurrentDictionary<IntPtr, object> MethodOwners = new ConcurrentDictionary<IntPtr, object>();
         private readonly ILogger Logger;
+        private readonly IScheduledJobEvents Events;
 
         private DateTime LastRunDate;
         private long RunningItemCount = 0;
@@ -54,6 +54,7 @@ namespace Adriva.Extensions.Worker
             this.Logger = logger;
             this.CancellationTokenSource = new CancellationTokenSource();
             this.Timer = new Timer(this.OnTimerElapsed, null, Timeout.Infinite, 5000);
+            this.Events = this.ServiceProvider.GetService<IScheduledJobEvents>();
         }
 
         public IEnumerable<MethodInfo> ResolveScheduledMethods()
@@ -154,7 +155,8 @@ namespace Adriva.Extensions.Worker
                 }
 
                 Interlocked.Increment(ref this.RunningItemCount);
-                await this.RunItem(scheduledItem);
+                string instanceId = Guid.NewGuid().ToString();
+                await this.RunItem(scheduledItem, instanceId);
             }
             catch (Exception fatalError)
             {
@@ -187,7 +189,7 @@ namespace Adriva.Extensions.Worker
             }, 30000);
         }
 
-        public async Task RunJobAsync(MethodInfo methodInfo)
+        public async Task<string> RunJobAsync(MethodInfo methodInfo)
         {
             if (null == methodInfo)
             {
@@ -201,10 +203,12 @@ namespace Adriva.Extensions.Worker
                 throw new InvalidOperationException($"Method '{ReflectionHelpers.GetNormalizedName(methodInfo)}' is not a valid scheduled job.");
             }
 
-            await this.RunItem(scheduledItem);
+            string instanceId = Guid.NewGuid().ToString();
+            await this.RunItem(scheduledItem, instanceId);
+            return instanceId;
         }
 
-        private async Task RunItem(ScheduledItem scheduledItem)
+        private async Task RunItem(ScheduledItem scheduledItem, string instanceId)
         {
             object ownerType = null;
 
@@ -234,11 +238,34 @@ namespace Adriva.Extensions.Worker
 
             this.Logger.LogInformation($"Executing scheduled job '{scheduledItem.Method.Name}'.");
 
-            object returnValue = scheduledItem.Method.Invoke(ownerType, parameters);
-
-            if (returnValue is Task returnTask)
+            try
             {
-                await returnTask;
+
+                if (null != this.Events)
+                {
+                    await this.Events.ExecutingAsync(instanceId, scheduledItem.Method);
+                }
+
+                object returnValue = scheduledItem.Method.Invoke(ownerType, parameters);
+
+                if (returnValue is Task returnTask)
+                {
+                    await returnTask;
+                }
+
+                if (null != this.Events)
+                {
+                    await this.Events.ExecutedAsync(instanceId, scheduledItem.Method, null);
+                }
+            }
+            catch (Exception error)
+            {
+                if (null != this.Events)
+                {
+                    await this.Events.ExecutedAsync(instanceId, scheduledItem.Method, error);
+                }
+
+                throw;
             }
 
             this.Logger.LogInformation($"Executed scheduled job '{scheduledItem.Method.Name}'.");

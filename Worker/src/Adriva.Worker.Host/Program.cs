@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Adriva.Extensions.Worker;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,19 @@ using Microsoft.Extensions.Logging;
 
 namespace Adriva.Worker.Host
 {
+    internal class ScheduledJobsEvents : IScheduledJobEvents
+    {
+        public Task ExecutedAsync(string instanceId, MethodInfo methodInfo, Exception error)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task ExecutingAsync(string instanceId, MethodInfo methodInfo)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
     public class Startup
     {
         public Startup(IHostEnvironment hostEnvironment, IConfiguration configuration)
@@ -25,6 +39,7 @@ namespace Adriva.Worker.Host
             });
             // services.AddHostedService<Worker>();
             services.AddScheduledJobs();
+            services.AddSingleton<IScheduledJobEvents, ScheduledJobsEvents>();
         }
     }
 

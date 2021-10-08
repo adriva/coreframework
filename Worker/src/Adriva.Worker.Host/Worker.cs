@@ -31,10 +31,10 @@ namespace Adriva.Worker.Host
             }
         }
 
-        [Schedule("20 * * * * *", RunOnStartup = true)]
+        [Schedule("*/20 * * * * *", RunOnStartup = true)]
         public void DoIt(CancellationToken cancellationToken)
         {
-
+            throw new Exception("adada");
         }
     }
 }
