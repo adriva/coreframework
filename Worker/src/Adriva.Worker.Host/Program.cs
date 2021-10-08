@@ -13,12 +13,12 @@ namespace Adriva.Worker.Host
 {
     internal class ScheduledJobsEvents : IScheduledJobEvents
     {
-        public Task ExecutedAsync(string instanceId, MethodInfo methodInfo, Exception error)
+        public Task ExecutedAsync(object owner, string instanceId, MethodInfo methodInfo, Exception error)
         {
             return Task.CompletedTask;
         }
 
-        public Task ExecutingAsync(string instanceId, MethodInfo methodInfo)
+        public Task ExecutingAsync(object owner, string instanceId, MethodInfo methodInfo)
         {
             return Task.CompletedTask;
         }

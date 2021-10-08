@@ -210,11 +210,11 @@ namespace Adriva.Extensions.Worker
 
         private async Task RunItem(ScheduledItem scheduledItem, string instanceId)
         {
-            object ownerType = null;
+            object ownerInstance = null;
 
             if (!scheduledItem.Method.IsStatic)
             {
-                ownerType = this.MethodOwners.GetOrAdd<object>(scheduledItem.Method.MethodHandle.Value, (key, state) =>
+                ownerInstance = this.MethodOwners.GetOrAdd<object>(scheduledItem.Method.MethodHandle.Value, (key, state) =>
                 {
                     var si = state as ScheduledItem;
                     return ActivatorUtilities.CreateInstance(this.ServiceProvider, si.Method.DeclaringType);
@@ -243,10 +243,10 @@ namespace Adriva.Extensions.Worker
 
                 if (null != this.Events)
                 {
-                    await this.Events.ExecutingAsync(instanceId, scheduledItem.Method);
+                    await this.Events.ExecutingAsync(ownerInstance, instanceId, scheduledItem.Method);
                 }
 
-                object returnValue = scheduledItem.Method.Invoke(ownerType, parameters);
+                object returnValue = scheduledItem.Method.Invoke(ownerInstance, parameters);
 
                 if (returnValue is Task returnTask)
                 {
@@ -255,14 +255,14 @@ namespace Adriva.Extensions.Worker
 
                 if (null != this.Events)
                 {
-                    await this.Events.ExecutedAsync(instanceId, scheduledItem.Method, null);
+                    await this.Events.ExecutedAsync(ownerInstance, instanceId, scheduledItem.Method, null);
                 }
             }
             catch (Exception error)
             {
                 if (null != this.Events)
                 {
-                    await this.Events.ExecutedAsync(instanceId, scheduledItem.Method, error);
+                    await this.Events.ExecutedAsync(ownerInstance, instanceId, scheduledItem.Method, error);
                 }
 
                 throw;

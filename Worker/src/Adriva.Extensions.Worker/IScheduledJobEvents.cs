@@ -6,8 +6,8 @@ namespace Adriva.Extensions.Worker
 {
     public interface IScheduledJobEvents
     {
-        Task ExecutingAsync(string instanceId, MethodInfo methodInfo);
+        Task ExecutingAsync(object owner, string instanceId, MethodInfo methodInfo);
 
-        Task ExecutedAsync(string instanceId, MethodInfo methodInfo, Exception error);
+        Task ExecutedAsync(object owner, string instanceId, MethodInfo methodInfo, Exception error);
     }
 }
