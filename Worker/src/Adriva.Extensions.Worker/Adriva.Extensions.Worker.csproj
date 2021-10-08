@@ -16,7 +16,7 @@
   <PropertyGroup>
     <Title>Adriva Worker / Service Library</Title>
     <PackageDescription>Shared library providing abstractions and common components to implement long running services, background jobs and scheduled jobs.</PackageDescription>    
-    <Version>3.1.8</Version>
+    <Version>3.1.9</Version>
   </PropertyGroup>
 
 </Project>

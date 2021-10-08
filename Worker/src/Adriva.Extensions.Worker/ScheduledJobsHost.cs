@@ -28,11 +28,26 @@ namespace Adriva.Extensions.Worker
 
             public bool ShouldRunOnStartup { get; set; }
 
+            public string InstanceId { get; private set; }
+
             public ScheduledItem(string expression, MethodInfo method, IExpressionParser parser)
             {
                 this.Expression = expression;
                 this.Method = method;
                 this.Parser = parser;
+            }
+        }
+
+        internal class ScheduledItemInstance
+        {
+            public ScheduledItem ScheduledItem { get; private set; }
+
+            public string InstanceId { get; private set; }
+
+            public ScheduledItemInstance(ScheduledItem scheduledItem, string instanceId)
+            {
+                this.ScheduledItem = scheduledItem;
+                this.InstanceId = instanceId;
             }
         }
 
@@ -126,7 +141,8 @@ namespace Adriva.Extensions.Worker
                         if (!scheduledItem.IsQueued)
                         {
                             scheduledItem.IsQueued = true;
-                            ThreadPool.QueueUserWorkItem(this.SafeRunItemAsync, scheduledItem);
+                            ScheduledItemInstance scheduledItemInstance = new ScheduledItemInstance(scheduledItem, Guid.NewGuid().ToString());
+                            ThreadPool.QueueUserWorkItem(this.SafeRunItemAsync, scheduledItemInstance);
                         }
                     }
                 }
@@ -136,10 +152,13 @@ namespace Adriva.Extensions.Worker
         private async void SafeRunItemAsync(object state)
         {
             ScheduledItem scheduledItem = null;
+            ScheduledItemInstance scheduledItemInstance = null;
 
             try
             {
-                scheduledItem = state as ScheduledItem;
+                scheduledItemInstance = state as ScheduledItemInstance;
+                scheduledItem = scheduledItemInstance.ScheduledItem;
+
                 if (null == scheduledItem) return;
 
                 if (!scheduledItem.IsRunning)
@@ -155,8 +174,8 @@ namespace Adriva.Extensions.Worker
                 }
 
                 Interlocked.Increment(ref this.RunningItemCount);
-                string instanceId = Guid.NewGuid().ToString();
-                await this.RunItem(scheduledItem, instanceId);
+
+                await this.RunItem(scheduledItemInstance);
             }
             catch (Exception fatalError)
             {
@@ -204,16 +223,18 @@ namespace Adriva.Extensions.Worker
             }
 
             string instanceId = Guid.NewGuid().ToString();
-            if (!ThreadPool.QueueUserWorkItem(this.SafeRunItemAsync, scheduledItem))
+            ScheduledItemInstance scheduledItemInstance = new ScheduledItemInstance(scheduledItem, instanceId);
+            if (!ThreadPool.QueueUserWorkItem(this.SafeRunItemAsync, scheduledItemInstance))
             {
                 return null;
             }
             return instanceId;
         }
 
-        private async Task RunItem(ScheduledItem scheduledItem, string instanceId)
+        private async Task RunItem(ScheduledItemInstance scheduledItemInstance)
         {
             object ownerInstance = null;
+            ScheduledItem scheduledItem = scheduledItemInstance.ScheduledItem;
 
             if (!scheduledItem.Method.IsStatic)
             {
@@ -246,7 +267,7 @@ namespace Adriva.Extensions.Worker
 
                 if (null != this.Events)
                 {
-                    await this.Events.ExecutingAsync(ownerInstance, instanceId, scheduledItem.Method);
+                    await this.Events.ExecutingAsync(ownerInstance, scheduledItemInstance.InstanceId, scheduledItem.Method);
                 }
 
                 object returnValue = scheduledItem.Method.Invoke(ownerInstance, parameters);
@@ -258,14 +279,14 @@ namespace Adriva.Extensions.Worker
 
                 if (null != this.Events)
                 {
-                    await this.Events.ExecutedAsync(ownerInstance, instanceId, scheduledItem.Method, null);
+                    await this.Events.ExecutedAsync(ownerInstance, scheduledItemInstance.InstanceId, scheduledItem.Method, null);
                 }
             }
             catch (Exception error)
             {
                 if (null != this.Events)
                 {
-                    await this.Events.ExecutedAsync(ownerInstance, instanceId, scheduledItem.Method, error);
+                    await this.Events.ExecutedAsync(ownerInstance, scheduledItemInstance.InstanceId, scheduledItem.Method, error);
                 }
 
                 throw;
