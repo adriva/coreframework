@@ -1,12 +1,11 @@
 using System;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Storage.Abstractions;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Hosting;
 
 namespace Adriva.Storage.SqlServer
 {
@@ -19,15 +18,16 @@ namespace Adriva.Storage.SqlServer
 
         private static bool IsDatabaseObjectsCreated = false;
 
-        private readonly QueueDbContext DbContext;
+        private readonly DbContextFactory DbContextFactory;
         private readonly IQueueMessageSerializer MessageSerializer;
 
+        private QueueDbContext DbContext;
         private SqlServerQueueOptions Options;
         private StorageClientContext Context;
 
-        public SqlServerQueueClient(QueueDbContext queueDbContext, IQueueMessageSerializer messageSerializer)
+        public SqlServerQueueClient(DbContextFactory dbContextFactory, IQueueMessageSerializer messageSerializer)
         {
-            this.DbContext = queueDbContext;
+            this.DbContextFactory = dbContextFactory;
             this.MessageSerializer = messageSerializer;
         }
 
@@ -70,6 +70,13 @@ namespace Adriva.Storage.SqlServer
         public async ValueTask InitializeAsync(StorageClientContext context)
         {
             this.Options = context.GetOptions<SqlServerQueueOptions>();
+            this.DbContext = this.DbContextFactory.GetQueueDbContext(context, this.Options);
+
+            if (null == this.DbContext)
+            {
+                throw new InvalidOperationException($"Failed to construct services for SQL queue client '{context.Name}'. Did you forget to register the client with IStorageBuilder.AddSqlServerQueue('{context.Name}', ...) ?");
+            }
+
             await this.EnsureDatabaseObjectsAsync();
             this.Context = context;
         }
@@ -121,7 +128,9 @@ namespace Adriva.Storage.SqlServer
 
         public async Task<QueueMessage> GetNextAsync(CancellationToken cancellationToken)
         {
-            var resultset = await this.DbContext.Messages.FromSqlRaw($"EXEC {this.Options.SchemaName}.{this.Options.RetrieveProcedureName} @environment, @application", new SqlParameter("@environment", this.Context.Name), new SqlParameter("@application", this.Options.ApplicationName)).ToArrayAsync();
+            var resultset = await this.DbContext.Messages.FromSqlRaw($"EXEC {this.Options.SchemaName}.{this.Options.RetrieveProcedureName} @environment, @application",
+                                                                                                                new SqlParameter("@environment", this.Context.Name),
+                                                                                                                new SqlParameter("@application", this.Options.ApplicationName)).ToArrayAsync();
             var messageEntity = resultset.FirstOrDefault();
             if (null == messageEntity) return null;
 

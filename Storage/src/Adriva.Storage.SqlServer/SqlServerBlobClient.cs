@@ -16,12 +16,11 @@ namespace Adriva.Storage.SqlServer
     {
         private static readonly SemaphoreSlim DatabaseCreateSemaphore = new SemaphoreSlim(1, 1);
 
-        private static bool IsDatabaseObjectsCreated = false;
-
-        private readonly BlobDbContext DbContext;
+        private readonly DbContextFactory DbContextFactory;
 
         private string ContainerName;
         private SqlServerBlobOptions Options;
+        private BlobDbContext DbContext;
 
         private static string CalculateETag(Stream stream)
         {
@@ -71,37 +70,31 @@ namespace Adriva.Storage.SqlServer
 
         }
 
-        public SqlServerBlobClient(BlobDbContext blobDbContext)
+        public SqlServerBlobClient(DbContextFactory dbContextFactory)
         {
-            this.DbContext = blobDbContext;
+            this.DbContextFactory = dbContextFactory;
         }
 
         private async ValueTask EnsureDatabaseObjectsAsync()
         {
-            if (!SqlServerBlobClient.IsDatabaseObjectsCreated)
-            {
-                await SqlServerBlobClient.DatabaseCreateSemaphore.WaitAsync();
+            await SqlServerBlobClient.DatabaseCreateSemaphore.WaitAsync();
 
-                try
-                {
-                    if (!SqlServerBlobClient.IsDatabaseObjectsCreated)
-                    {
-                        await DbHelpers.ExecuteScriptAsync(this.DbContext.Database, this.Options, "blob-createtable", "blob-createsp");
-                        SqlServerBlobClient.IsDatabaseObjectsCreated = true;
-                    }
-                }
-                finally
-                {
-                    SqlServerBlobClient.DatabaseCreateSemaphore.Release();
-                }
+            try
+            {
+                await DbHelpers.ExecuteScriptAsync(this.DbContext.Database, this.Options, "blob-createtable", "blob-createsp");
+            }
+            finally
+            {
+                SqlServerBlobClient.DatabaseCreateSemaphore.Release();
             }
         }
 
         public async ValueTask InitializeAsync(StorageClientContext context)
         {
+            this.Options = context.GetOptions<SqlServerBlobOptions>();
+            this.DbContext = this.DbContextFactory.GetBlobDbContext(context, this.Options);
             await this.EnsureDatabaseObjectsAsync();
             this.ContainerName = context.Name;
-            this.Options = context.GetOptions<SqlServerBlobOptions>();
         }
 
         private async ValueTask<long?> GetBlobIdAsync(string name)
@@ -181,7 +174,7 @@ namespace Adriva.Storage.SqlServer
                 }
 
                 command = connection.CreateCommand();
-                command.CommandText = $"SELECT [Content] FROM BlobItems WHERE Id = {id.Value}";
+                command.CommandText = $"SELECT [Content] FROM {this.Options.SchemaName}.{this.Options.TableName} WHERE Id = {id.Value}";
 
                 reader = await command.ExecuteReaderAsync();
 
@@ -226,7 +219,7 @@ namespace Adriva.Storage.SqlServer
 
                         command.Transaction = transaction;
 
-                        command.CommandText = "UpsertBlobItem";
+                        command.CommandText = $"{this.Options.SchemaName}.{this.Options.UpsertProcedureName}";
                         command.CommandType = CommandType.StoredProcedure;
 
                         command.Parameters.AddRange(new[] {
@@ -282,7 +275,7 @@ namespace Adriva.Storage.SqlServer
 
                         command.Transaction = transaction;
 
-                        command.CommandText = "UpdateBlobItem";
+                        command.CommandText = $"{this.Options.SchemaName}.{this.Options.UpdateProcedureName}";
                         command.CommandType = CommandType.StoredProcedure;
 
                         command.Parameters.AddRange(new[] {
@@ -310,7 +303,7 @@ namespace Adriva.Storage.SqlServer
                 long? id = await this.GetBlobIdAsync(name);
                 if (!id.HasValue) return;
 
-                await this.DbContext.Database.ExecuteSqlInterpolatedAsync($"DELETE BlobItems WHERE Id = {id.Value}");
+                await this.DbContext.Database.ExecuteSqlRawAsync($"DELETE {this.Options.SchemaName}.{this.Options.TableName} WHERE Id = {id.Value}");
 
                 await transaction.CommitAsync();
             }

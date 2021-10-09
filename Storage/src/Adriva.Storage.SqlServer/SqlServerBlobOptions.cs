@@ -6,8 +6,12 @@ namespace Adriva.Storage.SqlServer
 
         public string SchemaName { get; set; } = "dbo";
 
-        public string TableName { get; set; } = "Queue";
+        public string TableName { get; set; } = "Blob";
 
-        public string RetrieveProcedureName { get; set; } = "RetrieveQueueMessage";
+        public string RetrieveProcedureName { get; set; }
+
+        public string UpsertProcedureName { get; set; } = "UpsertBlobItem";
+
+        public string UpdateProcedureName { get; set; } = "UpdateBlobItem";
     }
 }

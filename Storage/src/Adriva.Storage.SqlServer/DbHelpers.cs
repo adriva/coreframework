@@ -24,6 +24,14 @@ namespace Adriva.Storage.SqlServer
                             .Replace("{TABLE}", options.TableName)
                             .Replace("{PROC_RETRIEVE}", options.RetrieveProcedureName);
 
+                    if (options is SqlServerBlobOptions blobOptions)
+                    {
+                        sql = sql
+                                .Replace("{PROC_UPSERT}", blobOptions.UpsertProcedureName)
+                                .Replace("{PROC_UPDATE}", blobOptions.UpdateProcedureName)
+                                ;
+                    }
+
                     await database.ExecuteSqlRawAsync(sql);
                 }
 

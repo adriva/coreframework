@@ -1,17 +1,16 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace Adriva.Storage.SqlServer
 {
-    internal class QueueDbContext : DbContext
+    internal sealed class QueueDbContext : DbContext
     {
         private readonly SqlServerQueueOptions Options;
 
         public DbSet<QueueMessageEntity> Messages { get; set; }
 
-        public QueueDbContext(IOptions<SqlServerQueueOptions> optionsAccessor, DbContextOptions<QueueDbContext> options) : base(options)
+        public QueueDbContext(SqlServerQueueOptions queueOptions, DbContextOptions<QueueDbContext> contextOptions) : base(contextOptions)
         {
-            this.Options = optionsAccessor.Value;
+            this.Options = queueOptions;
             this.ChangeTracker.AutoDetectChangesEnabled = false;
         }
 

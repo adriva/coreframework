@@ -6,7 +6,6 @@ using Microsoft.Extensions.Options;
 
 namespace Adriva.Storage.Abstractions
 {
-
     internal class DefaultStorageClientFactory : IStorageClientFactory
     {
         private readonly IServiceProvider ServiceProvider;
@@ -32,8 +31,8 @@ namespace Adriva.Storage.Abstractions
 
         public async Task<IBlobClient> GetBlobClientAsync(string name)
         {
-            string queueName = Helpers.GetQualifiedBlobName(name);
-            return (IBlobClient)await this.GetStorageClientAsync(queueName, name);
+            string qualifiedName = Helpers.GetQualifiedBlobName(name);
+            return (IBlobClient)await this.GetStorageClientAsync(qualifiedName, name);
         }
 
         public Task<IQueueClient> GetQueueClientAsync()
@@ -43,8 +42,8 @@ namespace Adriva.Storage.Abstractions
 
         public async Task<IQueueClient> GetQueueClientAsync(string name)
         {
-            string queueName = Helpers.GetQualifiedQueueName(name);
-            return (IQueueClient)await this.GetStorageClientAsync(queueName, name);
+            string qualifiedName = Helpers.GetQualifiedQueueName(name);
+            return (IQueueClient)await this.GetStorageClientAsync(qualifiedName, name);
         }
 
         public Task<ITableClient> GetTableClientAsync()
