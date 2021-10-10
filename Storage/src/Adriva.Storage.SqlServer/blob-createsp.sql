@@ -21,7 +21,7 @@ BEGIN
     END
     ELSE
     BEGIN
-        INSERT INTO {SCHEMA}.{TABLE} (ContainerName, [Name], [Content], [Length], [ETag], [LastModifiedUtc])
+        INSERT INTO [{SCHEMA}].[{TABLE}] (ContainerName, [Name], [Content], [Length], [ETag], [LastModifiedUtc])
         VALUES (@containerName, @name, @data, @length, @etag, @now)
     END';
 END
@@ -34,7 +34,7 @@ SELECT * FROM INFORMATION_SCHEMA.ROUTINES
     AND ROUTINE_TYPE = N'PROCEDURE'
 )
 BEGIN
-EXEC sp_executesql N'CREATE PROCEDURE {SCHEMA}.{PROC_UPDATE}
+EXEC sp_executesql N'CREATE PROCEDURE [{SCHEMA}].[{PROC_UPDATE}]
          @id BIGINT,
          @data VARBINARY(MAX),
          @length BIGINT,
@@ -43,6 +43,6 @@ EXEC sp_executesql N'CREATE PROCEDURE {SCHEMA}.{PROC_UPDATE}
     AS
     DECLARE @now DATETIME2 = GETUTCDATE() 
 
-    UPDATE {SCHEMA}.{TABLE} SET Content = @data, [Length] = @length, ETag = @etag, LastModifiedUtc = @now
-    WHERE Id = @id AND (@matchEtag = ''*'' OR ETag = @matchEtag)';
+    UPDATE [{SCHEMA}].[{TABLE}] SET [Content] = @data, [Length] = @length, [ETag] = @etag, [LastModifiedUtc] = @now
+    WHERE [Id] = @id AND (@matchEtag = ''*'' OR [ETag] = @matchEtag)';
 END
