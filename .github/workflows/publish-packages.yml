@@ -19,76 +19,91 @@ jobs:
     - uses: actions/checkout@v2
     - name: Publish NuGet Core
       uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
       with:
         PROJECT_FILE_PATH: Common/src/Adriva.Common.Core.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish NuGet Caching Abstractions
       uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
       with:
         PROJECT_FILE_PATH: Caching/src/Adriva.Extensions.Caching.Abstractions/Adriva.Extensions.Caching.Abstractions.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish NuGet Caching Memory
       uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
       with:
         PROJECT_FILE_PATH: Caching/src/Adriva.Extensions.Caching.Memory/Adriva.Extensions.Caching.Memory.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish NuGet Caching Distributed
       uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
       with:
         PROJECT_FILE_PATH: Caching/src/Adriva.Extensions.Caching.Distributed/Adriva.Extensions.Caching.Distributed.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish NuGet Optimization Abstractions
       uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
       with:
         PROJECT_FILE_PATH: Optimization/src/Adriva.Extensions.Optimization.Abstractions/Adriva.Extensions.Optimization.Abstractions.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish NuGet Optimization Transforms
       uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
       with:
         PROJECT_FILE_PATH: Optimization/src/Adriva.Extensions.Optimization.Transforms/Adriva.Extensions.Optimization.Transforms.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish NuGet Optimization Web
       uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
       with:
         PROJECT_FILE_PATH: Optimization/src/Adriva.Extensions.Optimization.Web/Adriva.Extensions.Optimization.Web.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish NuGet Text Search
       uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
       with:
         PROJECT_FILE_PATH: TextSearch/src/Adriva.Extensions.TextSearch.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish Nuget Storage Abstractions
       uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
       with:
         PROJECT_FILE_PATH: Storage/src/Adriva.Storage.Abstractions/Adriva.Storage.Abstractions.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish Nuget Storage RabbitMQ
       uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
       with:
         PROJECT_FILE_PATH: Storage/src/Adriva.Storage.RabbitMq/Adriva.Storage.RabbitMq.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish Nuget Storage SQL Server
       uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
       with:
         PROJECT_FILE_PATH: Storage/src/Adriva.Storage.SqlServer/Adriva.Storage.SqlServer.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish Worker Core
       uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
       with:
         PROJECT_FILE_PATH: Worker/src/Adriva.Extensions.Worker/Adriva.Extensions.Worker.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish Analytics Client
       uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
       with:
         PROJECT_FILE_PATH: Analytics/src/Adriva.Extensions.Analytics.AppInsights/Adriva.Extensions.Analytics.AppInsights.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish Reporting Services
       uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
       with:
         PROJECT_FILE_PATH: Reporting/src/Adriva.Extensions.Reporting.Abstractions/Adriva.Extensions.Reporting.Abstractions.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish Reporting Services Sql Extensions
       uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
       with:
         PROJECT_FILE_PATH: Reporting/src/Adriva.Extensions.Reporting.SqlServer/Adriva.Extensions.Reporting.SqlServer.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
