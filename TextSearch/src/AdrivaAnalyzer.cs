@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Adriva.Extensions.TextSearch
 {
-    internal class AdrivaAnalyzer : Lucene.Net.Analysis.Analyzer
+    public class AdrivaAnalyzer : Lucene.Net.Analysis.Analyzer
     {
         private readonly LuceneVersion LuceneVersion;
 
