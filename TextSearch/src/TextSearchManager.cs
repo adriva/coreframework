@@ -68,8 +68,6 @@ namespace Adriva.Extensions.TextSearch
 
             if (!forceCreate && this.CanReuseIndex(indexDirectoryInfo)) return;
 
-            this.Dispose(true);
-
             var files = indexDirectoryInfo.GetFiles();
 
             Array.ForEach(files, file =>
@@ -118,7 +116,6 @@ namespace Adriva.Extensions.TextSearch
 
         public void CreateSearcher(bool storeIndexInMemory = false)
         {
-
             DirectoryInfo directoryInfo = new DirectoryInfo(this.IndexPath);
 
             if (null != this.Searcher)
@@ -176,10 +173,9 @@ namespace Adriva.Extensions.TextSearch
             }
         }
 
-        public virtual async Task Recycle(bool forceCreateIndex = false, bool storeIndexInMemory = false)
+        public virtual async Task RecycleAsync(bool forceCreateIndex = false, bool storeIndexInMemory = false)
         {
             SpinWait.SpinUntil(() => 0 == Interlocked.Read(ref this.ActiveSearchCount));
-            this.Dispose();
             await this.CreateIndexFileAsync(forceCreateIndex);
             this.CreateSearcher(storeIndexInMemory);
         }
