@@ -185,7 +185,7 @@ namespace Adriva.Extensions.TextSearch
         public virtual async Task RecycleAsync(bool forceCreateIndex = false, bool storeIndexInMemory = false)
         {
             SpinWait.SpinUntil(() => 0 == Interlocked.Read(ref this.ActiveSearchCount));
-            await this.CreateIndexFileAsync(forceCreateIndex);
+            await this.CreateIndexFileAsync(forceCreateIndex, true);
             this.CreateSearcher(storeIndexInMemory);
         }
 
