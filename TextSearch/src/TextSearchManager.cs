@@ -57,11 +57,20 @@ namespace Adriva.Extensions.TextSearch
 
         protected virtual void OnIndexCreating() { }
 
-        public async Task CreateIndexFileAsync(bool forceCreate)
+        public Task CreateIndexFileAsync(bool forceCreate)
+        {
+            return this.CreateIndexFileAsync(forceCreate, false);
+        }
+
+        private async Task CreateIndexFileAsync(bool forceCreate, bool isRecycling)
         {
             SpinWait.SpinUntil(() => 0 == Interlocked.Read(ref this.ActiveSearchCount));
 
-            Interlocked.Exchange(ref this.IsSearcherReady, 0);
+            if (!isRecycling || this.SearchDirectory is not RAMDirectory)
+            {
+                Interlocked.Exchange(ref this.IsSearcherReady, 0);
+            }
+
             this.OnIndexCreating();
 
             DirectoryInfo indexDirectoryInfo = new DirectoryInfo(this.IndexPath);
