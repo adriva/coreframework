@@ -161,15 +161,20 @@ namespace Adriva.Extensions.Worker
                 return new LockStatus(null, false);
             }
 
-            var lockStatus = await this.WorkerLock.AcquireLockAsync(scheduledItemInstance.InstanceId, TimeSpan.Zero);
+            LockStatus lockStatus = new LockStatus(scheduledItemInstance.InstanceId, true);
 
-            if (lockStatus.HasLock)
+            if (scheduledItemInstance.ScheduledItem.IsSingleton)
             {
-                this.Logger.LogInformation($"Job instance '{scheduledItemInstance.InstanceId}' ({ReflectionHelpers.GetNormalizedName(scheduledItemInstance.ScheduledItem.Method)}) has acquired lock.");
-            }
-            else
-            {
-                this.Logger.LogWarning($"Job instance '{scheduledItemInstance.InstanceId}' ({ReflectionHelpers.GetNormalizedName(scheduledItemInstance.ScheduledItem.Method)}) has failed to acquire a lock.");
+                lockStatus = await this.WorkerLock.AcquireLockAsync(scheduledItemInstance.InstanceId, TimeSpan.Zero);
+
+                if (lockStatus.HasLock)
+                {
+                    this.Logger.LogInformation($"Job instance '{scheduledItemInstance.InstanceId}' ({ReflectionHelpers.GetNormalizedName(scheduledItemInstance.ScheduledItem.Method)}) has acquired lock.");
+                }
+                else
+                {
+                    this.Logger.LogWarning($"Job instance '{scheduledItemInstance.InstanceId}' ({ReflectionHelpers.GetNormalizedName(scheduledItemInstance.ScheduledItem.Method)}) has failed to acquire a lock.");
+                }
             }
 
             if (lockStatus.HasLock && ThreadPool.QueueUserWorkItem(this.SafeRunItemAsync, scheduledItemInstance))
@@ -216,7 +221,10 @@ namespace Adriva.Extensions.Worker
             {
                 try
                 {
-                    await this.WorkerLock.ReleaseLockAsync(scheduledItemInstance.InstanceId);
+                    if (scheduledItemInstance.ScheduledItem.IsSingleton)
+                    {
+                        await this.WorkerLock.ReleaseLockAsync(scheduledItemInstance.InstanceId);
+                    }
                 }
                 catch (Exception lockError)
                 {
