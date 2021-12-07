@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
@@ -30,10 +31,13 @@ namespace Adriva.Extensions.Worker
 
             public bool ShouldRunOnStartup { get; set; }
 
+            public string JobId { get; private set; }
+
             public string InstanceId { get; private set; }
 
-            public ScheduledItem(string expression, MethodInfo method, IExpressionParser parser, bool isSingleton)
+            public ScheduledItem(string jobId, string expression, MethodInfo method, IExpressionParser parser, bool isSingleton)
             {
+                this.JobId = jobId;
                 this.Expression = expression;
                 this.Method = method;
                 this.Parser = parser;
@@ -67,6 +71,17 @@ namespace Adriva.Extensions.Worker
         private long RunningItemCount = 0;
         private bool IsDisposed = false;
 
+        private static string GenerateJobId(MethodInfo methodInfo)
+        {
+            StringBuilder buffer = new StringBuilder();
+            buffer.AppendFormat("{0}@", methodInfo.DeclaringType.Assembly.ManifestModule.Name);
+            buffer.AppendFormat("{0}:", ReflectionHelpers.GetNormalizedName(methodInfo.DeclaringType));
+            buffer.AppendFormat("{0}", ReflectionHelpers.GetNormalizedName(methodInfo));
+
+            var bytes = System.Text.Encoding.ASCII.GetBytes(buffer.ToString());
+            return Utilities.GetBaseString(bytes, Utilities.Base63Alphabet);
+        }
+
         public ScheduledJobsHost(IServiceProvider serviceProvider, ILogger<ScheduledJobsHost> logger)
         {
             this.ServiceProvider = serviceProvider;
@@ -99,8 +114,8 @@ namespace Adriva.Extensions.Worker
                     {
                         parserCache[scheduleAttribute.ExpressionParserType] = (IExpressionParser)ActivatorUtilities.CreateInstance(this.ServiceProvider, scheduleAttribute.ExpressionParserType);
                     }
-
-                    var scheduledItem = new ScheduledItem(scheduleAttribute.Expression, method, parserCache[scheduleAttribute.ExpressionParserType], scheduleAttribute.IsSingleton);
+                    string jobId = ScheduledJobsHost.GenerateJobId(method);
+                    var scheduledItem = new ScheduledItem(jobId, scheduleAttribute.Expression, method, parserCache[scheduleAttribute.ExpressionParserType], scheduleAttribute.IsSingleton);
                     scheduledItem.ShouldRunOnStartup = scheduleAttribute.RunOnStartup;
                     this.ScheduledItems.Add(scheduledItem);
                 }
@@ -165,7 +180,7 @@ namespace Adriva.Extensions.Worker
 
             if (scheduledItemInstance.ScheduledItem.IsSingleton)
             {
-                lockStatus = await this.WorkerLock.AcquireLockAsync(scheduledItemInstance.InstanceId, TimeSpan.Zero);
+                lockStatus = await this.WorkerLock.AcquireLockAsync(scheduledItemInstance.ScheduledItem.JobId, scheduledItemInstance.InstanceId, TimeSpan.Zero);
 
                 if (lockStatus.HasLock)
                 {
@@ -223,7 +238,7 @@ namespace Adriva.Extensions.Worker
                 {
                     if (scheduledItemInstance.ScheduledItem.IsSingleton)
                     {
-                        await this.WorkerLock.ReleaseLockAsync(scheduledItemInstance.InstanceId);
+                        await this.WorkerLock.ReleaseLockAsync(scheduledItem.JobId, scheduledItemInstance.InstanceId);
                     }
                 }
                 catch (Exception lockError)

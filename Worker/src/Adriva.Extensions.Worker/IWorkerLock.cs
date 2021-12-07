@@ -5,8 +5,8 @@ namespace Adriva.Extensions.Worker
 {
     public interface IWorkerLock
     {
-        ValueTask<LockStatus> AcquireLockAsync(string instanceId, TimeSpan timeout);
+        ValueTask<LockStatus> AcquireLockAsync(string jobId, string instanceId, TimeSpan timeout);
 
-        ValueTask ReleaseLockAsync(string instanceId);
+        ValueTask ReleaseLockAsync(string jobId, string instanceId);
     }
 }
