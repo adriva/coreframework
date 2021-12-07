@@ -66,7 +66,7 @@ namespace Adriva.Extensions.TextSearch
         {
             SpinWait.SpinUntil(() => 0 == Interlocked.Read(ref this.ActiveSearchCount));
 
-            if (!isRecycling || this.SearchDirectory is not RAMDirectory)
+            if (!isRecycling || !(this.SearchDirectory is RAMDirectory))
             {
                 Interlocked.Exchange(ref this.IsSearcherReady, 0);
             }
