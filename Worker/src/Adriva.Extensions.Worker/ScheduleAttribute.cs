@@ -9,6 +9,8 @@ namespace Adriva.Extensions.Worker
 
         public Type ExpressionParserType { get; private set; }
 
+        public bool IsSingleton { get; set; }
+
         public bool RunOnStartup { get; set; }
 
         public ScheduleAttribute(string expression) : this(expression, typeof(CronExpressionParser))
@@ -20,10 +22,12 @@ namespace Adriva.Extensions.Worker
         {
             this.Expression = expression;
             if (null == expressionParserType) throw new ArgumentNullException(nameof(expressionParserType), "Expression parser type is not set to an instance of an object.");
+
             if (!typeof(IExpressionParser).IsAssignableFrom(expressionParserType))
             {
                 throw new InvalidCastException("Expression parser type should point to a class that implements the 'IExpressionParser' interface.");
             }
+
             this.ExpressionParserType = expressionParserType;
         }
     }

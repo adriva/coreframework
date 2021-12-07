@@ -24,17 +24,20 @@ namespace Adriva.Extensions.Worker
 
             public bool IsRunning { get; set; }
 
+            public bool IsSingleton { get; private set; }
+
             public bool IsQueued { get; set; }
 
             public bool ShouldRunOnStartup { get; set; }
 
             public string InstanceId { get; private set; }
 
-            public ScheduledItem(string expression, MethodInfo method, IExpressionParser parser)
+            public ScheduledItem(string expression, MethodInfo method, IExpressionParser parser, bool isSingleton)
             {
                 this.Expression = expression;
                 this.Method = method;
                 this.Parser = parser;
+                this.IsSingleton = isSingleton;
             }
         }
 
@@ -58,6 +61,7 @@ namespace Adriva.Extensions.Worker
         private readonly ConcurrentDictionary<IntPtr, object> MethodOwners = new ConcurrentDictionary<IntPtr, object>();
         private readonly ILogger Logger;
         private readonly IScheduledJobEvents Events;
+        private readonly IWorkerLock WorkerLock;
 
         private DateTime LastRunDate;
         private long RunningItemCount = 0;
@@ -70,6 +74,7 @@ namespace Adriva.Extensions.Worker
             this.CancellationTokenSource = new CancellationTokenSource();
             this.Timer = new Timer(this.OnTimerElapsed, null, Timeout.Infinite, 5000);
             this.Events = this.ServiceProvider.GetService<IScheduledJobEvents>();
+            this.WorkerLock = this.ServiceProvider.GetService<IWorkerLock>() ?? new NullLock();
         }
 
         public IEnumerable<MethodInfo> ResolveScheduledMethods()
@@ -95,7 +100,7 @@ namespace Adriva.Extensions.Worker
                         parserCache[scheduleAttribute.ExpressionParserType] = (IExpressionParser)ActivatorUtilities.CreateInstance(this.ServiceProvider, scheduleAttribute.ExpressionParserType);
                     }
 
-                    var scheduledItem = new ScheduledItem(scheduleAttribute.Expression, method, parserCache[scheduleAttribute.ExpressionParserType]);
+                    var scheduledItem = new ScheduledItem(scheduleAttribute.Expression, method, parserCache[scheduleAttribute.ExpressionParserType], scheduleAttribute.IsSingleton);
                     scheduledItem.ShouldRunOnStartup = scheduleAttribute.RunOnStartup;
                     this.ScheduledItems.Add(scheduledItem);
                 }
@@ -138,15 +143,41 @@ namespace Adriva.Extensions.Worker
                 {
                     lock (scheduledItem)
                     {
-                        if (!scheduledItem.IsQueued)
+                        if (!scheduledItem.IsQueued && nextRunDate.Value <= DateTime.Now)
                         {
                             scheduledItem.IsQueued = true;
                             ScheduledItemInstance scheduledItemInstance = new ScheduledItemInstance(scheduledItem, Guid.NewGuid().ToString());
-                            ThreadPool.QueueUserWorkItem(this.SafeRunItemAsync, scheduledItemInstance);
+                            _ = this.TryQueueItemAsync(scheduledItemInstance);
                         }
                     }
                 }
             }
+        }
+
+        private async ValueTask<LockStatus> TryQueueItemAsync(ScheduledItemInstance scheduledItemInstance)
+        {
+            if (null == scheduledItemInstance)
+            {
+                return new LockStatus(null, false);
+            }
+
+            var lockStatus = await this.WorkerLock.AcquireLockAsync(scheduledItemInstance.InstanceId, TimeSpan.Zero);
+
+            if (lockStatus.HasLock)
+            {
+                this.Logger.LogInformation($"Job instance '{scheduledItemInstance.InstanceId}' ({ReflectionHelpers.GetNormalizedName(scheduledItemInstance.ScheduledItem.Method)}) has acquired lock.");
+            }
+            else
+            {
+                this.Logger.LogWarning($"Job instance '{scheduledItemInstance.InstanceId}' ({ReflectionHelpers.GetNormalizedName(scheduledItemInstance.ScheduledItem.Method)}) has failed to acquire a lock.");
+            }
+
+            if (lockStatus.HasLock && ThreadPool.QueueUserWorkItem(this.SafeRunItemAsync, scheduledItemInstance))
+            {
+                return lockStatus;
+            }
+
+            return new LockStatus(null, false);
         }
 
         private async void SafeRunItemAsync(object state)
@@ -175,7 +206,7 @@ namespace Adriva.Extensions.Worker
 
                 Interlocked.Increment(ref this.RunningItemCount);
 
-                await this.RunItem(scheduledItemInstance);
+                await this.RunItemAsync(scheduledItemInstance);
             }
             catch (Exception fatalError)
             {
@@ -183,6 +214,15 @@ namespace Adriva.Extensions.Worker
             }
             finally
             {
+                try
+                {
+                    await this.WorkerLock.ReleaseLockAsync(scheduledItemInstance.InstanceId);
+                }
+                catch (Exception lockError)
+                {
+                    this.Logger.LogError(lockError, $"Failed to release lock on scheduled job instance id '{scheduledItemInstance.InstanceId}'. {ReflectionHelpers.GetNormalizedName(scheduledItem.Method)}");
+                }
+
                 this.LastRunDate = DateTime.UtcNow;
                 scheduledItem.IsRunning = false;
                 scheduledItem.IsQueued = false;
@@ -208,7 +248,7 @@ namespace Adriva.Extensions.Worker
             }, 30000);
         }
 
-        public string Run(MethodInfo methodInfo)
+        public async ValueTask<LockStatus> RunAsync(MethodInfo methodInfo)
         {
             if (null == methodInfo)
             {
@@ -224,14 +264,11 @@ namespace Adriva.Extensions.Worker
 
             string instanceId = Guid.NewGuid().ToString();
             ScheduledItemInstance scheduledItemInstance = new ScheduledItemInstance(scheduledItem, instanceId);
-            if (!ThreadPool.QueueUserWorkItem(this.SafeRunItemAsync, scheduledItemInstance))
-            {
-                return null;
-            }
-            return instanceId;
+
+            return await this.TryQueueItemAsync(scheduledItemInstance);
         }
 
-        private async Task RunItem(ScheduledItemInstance scheduledItemInstance)
+        private async Task RunItemAsync(ScheduledItemInstance scheduledItemInstance)
         {
             object ownerInstance = null;
             ScheduledItem scheduledItem = scheduledItemInstance.ScheduledItem;
