@@ -4,6 +4,6 @@ namespace Adriva.Extensions.Worker
 {
     public interface IExpressionParser
     {
-        DateTime? GetNext(DateTime afterDate, string expression);
+        DateTime? GetNext(DateTime fromDate, string expression);
     }
 }

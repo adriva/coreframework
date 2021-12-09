@@ -30,18 +30,9 @@ namespace Adriva.Extensions.TextSearch
 
         public string IndexPath { get; private set; }
 
-        public TextSearchManagerUpdatePolicy UpdatePolicy { get; private set; }
-
-        protected TextSearchManager(string indexPath) :
-            this(indexPath, TextSearchManagerUpdatePolicy.Default)
-        {
-
-        }
-
-        protected TextSearchManager(string indexPath, TextSearchManagerUpdatePolicy updatePolicy)
+        protected TextSearchManager(string indexPath)
         {
             this.IndexPath = indexPath;
-            this.UpdatePolicy = updatePolicy;
         }
 
         protected virtual bool CanReuseIndex(DirectoryInfo directory)
@@ -90,7 +81,6 @@ namespace Adriva.Extensions.TextSearch
 
             using (SimpleFSDirectory fsDirectory = new SimpleFSDirectory(indexDirectoryInfo))
             {
-
                 using (var analyzer = new AdrivaAnalyzer(LuceneVersion.LUCENE_48))
                 {
                     IndexWriterConfig indexWriterConfig = new IndexWriterConfig(LuceneVersion.LUCENE_48, analyzer) { };
@@ -184,7 +174,6 @@ namespace Adriva.Extensions.TextSearch
 
         public virtual async Task RecycleAsync(bool forceCreateIndex = false, bool storeIndexInMemory = false)
         {
-            SpinWait.SpinUntil(() => 0 == Interlocked.Read(ref this.ActiveSearchCount));
             await this.CreateIndexFileAsync(forceCreateIndex, true);
             this.CreateSearcher(storeIndexInMemory);
         }
