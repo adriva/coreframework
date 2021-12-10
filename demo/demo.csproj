@@ -6,14 +6,12 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\Optimization\src\Adriva.Extensions.Optimization.Web\Adriva.Extensions.Optimization.Web.csproj" />
     <ProjectReference Include="..\Analytics\src\Adriva.Extensions.Analytics.AppInsights\Adriva.Extensions.Analytics.AppInsights.csproj" />
     <ProjectReference Include="..\Analytics\src\Adriva.Extensions.Analytics.Server\Adriva.Extensions.Analytics.Server.csproj" />
     <ProjectReference Include="..\Analytics\src\Adriva.Extensions.Analytics.Server.AppInsights\Adriva.Extensions.Analytics.Server.AppInsights.csproj" />
     <ProjectReference Include="..\Analytics\src\Adriva.Extensions.Analytics.Repository.EntityFramework\Adriva.Extensions.Analytics.Repository.EntityFramework.csproj" />
     <ProjectReference Include="..\Analytics\src\Adriva.Extensions.Analytics.Repository.EntityFramework.SqlLite\Adriva.Extensions.Analytics.Repository.EntityFramework.SqlLite.csproj" />
     <ProjectReference Include="..\Storage\src\Adriva.Storage.SqlServer\Adriva.Storage.SqlServer.csproj" />
-    <ProjectReference Include="..\Web\src\Adriva.Web.Controls\Adriva.Web.Controls.csproj" />
     <ProjectReference Include="..\Reporting\src\Adriva.Extensions.Reporting.SqlServer\Adriva.Extensions.Reporting.SqlServer.csproj" />
     <ProjectReference Include="..\Caching\src\Adriva.Extensions.Caching.Distributed\Adriva.Extensions.Caching.Distributed.csproj" />
     <ProjectReference Include="..\Storage\src\Adriva.Storage.RabbitMq\Adriva.Storage.RabbitMq.csproj" />    

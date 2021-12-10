@@ -1,28 +1,3 @@
-﻿@using Adriva.Web.Controls.Abstractions
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
-<renderer defer name="bootstrap-grid" property1="test1" property2="test2" optimization-context-name="WebControls"
-assets-only="true">
-    <div></div>
-    <div>
-        <grid id="dd" source="@this.Url.Action("promotions", "data")" height="600" class="table-striped" showdetails="true" detailsformatter="hede">
-            <grid-column title="Id" field="id" ishidden="false">
-                <column-formatter>
-                    (v,r)=>'<b>' + v + '</b>'
-                </column-formatter>
-            </grid-column>
-            <grid-column title="Name" field="name"></grid-column>
-            <grid-pager location="Server" pagesizes="10,20,50" />
-        </grid>
-    </div>
-</renderer>
-<script>
-    function hede(index, row) {
-    var html = []
-    $.each(row, function (key, value) {
-      html.push('<p><b>' + key + ':</b> ' + value + '</p>')
-    })
-    return html.join('')
-  }
-</script>

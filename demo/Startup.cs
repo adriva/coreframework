@@ -1,12 +1,9 @@
 using System;
 using System.IO;
-using Adriva.Storage.Abstractions;
-using Adriva.Web.Controls.Abstractions;
 using demo.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -52,22 +49,6 @@ namespace demo
                 options.EnableForHttps = true;
             });
 
-            services.AddOptimization(options =>
-            {
-                bool enableOpt = false;
-                options.BundleStylesheets = enableOpt;
-                options.MinifyStylesheets = enableOpt;
-                options.BundleJavascripts = enableOpt;
-                options.MinifyJavascripts = enableOpt;
-                options.MinifyHtml = false;
-                options.UseFileOrderer("assetorder.txt");
-                // options.AssetRootUrl = "https://www.adriva.com";
-            })
-            .ConfigureStyleSheetMinification(cssOptions =>
-            {
-                cssOptions.Substitutions.Add("deneme", "ahahahaha");
-            });
-
             services
                 .AddStorage()
                 .AddSqlServerQueue(this.HostingEnvironment.EnvironmentName, options =>
@@ -94,14 +75,6 @@ namespace demo
                     options.ConnectionString = "Server=localhost;Initial Catalog=DevDb;User id=sa;Password=PASS@word1;";
                 })
                 ;
-
-            services.AddWebControls(options =>
-            {
-                options.OptimizationContextName = "WebControls";
-            })
-            .AddAssembly(typeof(Adriva.Web.Controls.Grid).Assembly.Location)
-            .AddRenderer<Adriva.Web.Controls.Abstractions.NullControlRenderer>("nullrenderer")
-            .AddRenderer<Adriva.Web.Controls.BootstrapGridRenderer>();
 
             if (!DisableAnalytics)
             {
@@ -167,10 +140,6 @@ namespace demo
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseOptimization();
-
-            app.UseWebControls();
 
             app.UseEndpoints(endpoints =>
             {
