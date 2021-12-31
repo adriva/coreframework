@@ -295,73 +295,70 @@ namespace Adriva.Extensions.Worker
             object ownerInstance = null;
             ScheduledItem scheduledItem = scheduledItemInstance.ScheduledItem;
 
-            using (var serviceScope = this.ServiceProvider.CreateScope())
+            if (!scheduledItem.Method.IsStatic)
             {
-                if (!scheduledItem.Method.IsStatic)
-                {
-                    ownerInstance = ActivatorUtilities.CreateInstance(serviceScope.ServiceProvider, scheduledItem.Method.DeclaringType);
-                }
-
-                var parameterInfoItems = scheduledItem.Method.GetParameters();
-                object[] parameters = new object[parameterInfoItems.Length];
-
-                for (int loop = 0; loop < parameters.Length; loop++)
-                {
-                    if (parameterInfoItems[loop].ParameterType == typeof(CancellationToken))
-                    {
-                        parameters[loop] = this.CancellationTokenSource.Token;
-                    }
-                    else
-                    {
-                        parameters[loop] = ActivatorUtilities.CreateInstance(serviceScope.ServiceProvider, parameterInfoItems[loop].ParameterType);
-                    }
-                }
-
-                this.Logger.LogInformation($"Executing scheduled job '{scheduledItem.Method.Name}'.");
-
-                try
-                {
-
-                    if (null != this.Events)
-                    {
-                        await this.Events.ExecutingAsync(ownerInstance, scheduledItemInstance.InstanceId, scheduledItem.Method);
-                    }
-
-                    object returnValue = scheduledItem.Method.Invoke(ownerInstance, parameters);
-
-                    if (returnValue is Task returnTask)
-                    {
-                        await returnTask;
-                    }
-
-                    if (null != this.Events)
-                    {
-                        await this.Events.ExecutedAsync(ownerInstance, scheduledItemInstance.InstanceId, scheduledItem.Method, null);
-                    }
-                }
-                catch (Exception error)
-                {
-                    if (null != this.Events)
-                    {
-                        await this.Events.ExecutedAsync(ownerInstance, scheduledItemInstance.InstanceId, scheduledItem.Method, error);
-                    }
-
-                    throw;
-                }
-                finally
-                {
-                    if (ownerInstance is IDisposable disposable)
-                    {
-                        disposable.Dispose();
-                    }
-                    else if (ownerInstance is IAsyncDisposable asyncDisposable)
-                    {
-                        await asyncDisposable.DisposeAsync();
-                    }
-                }
-
-                this.Logger.LogInformation($"Executed scheduled job '{scheduledItem.Method.Name}'.");
+                ownerInstance = ActivatorUtilities.CreateInstance(this.ServiceProvider, scheduledItem.Method.DeclaringType);
             }
+
+            var parameterInfoItems = scheduledItem.Method.GetParameters();
+            object[] parameters = new object[parameterInfoItems.Length];
+
+            for (int loop = 0; loop < parameters.Length; loop++)
+            {
+                if (parameterInfoItems[loop].ParameterType == typeof(CancellationToken))
+                {
+                    parameters[loop] = this.CancellationTokenSource.Token;
+                }
+                else
+                {
+                    parameters[loop] = ActivatorUtilities.CreateInstance(this.ServiceProvider, parameterInfoItems[loop].ParameterType);
+                }
+            }
+
+            this.Logger.LogInformation($"Executing scheduled job '{scheduledItem.Method.Name}'.");
+
+            try
+            {
+
+                if (null != this.Events)
+                {
+                    await this.Events.ExecutingAsync(ownerInstance, scheduledItemInstance.InstanceId, scheduledItem.Method);
+                }
+
+                object returnValue = scheduledItem.Method.Invoke(ownerInstance, parameters);
+
+                if (returnValue is Task returnTask)
+                {
+                    await returnTask;
+                }
+
+                if (null != this.Events)
+                {
+                    await this.Events.ExecutedAsync(ownerInstance, scheduledItemInstance.InstanceId, scheduledItem.Method, null);
+                }
+            }
+            catch (Exception error)
+            {
+                if (null != this.Events)
+                {
+                    await this.Events.ExecutedAsync(ownerInstance, scheduledItemInstance.InstanceId, scheduledItem.Method, error);
+                }
+
+                throw;
+            }
+            finally
+            {
+                if (ownerInstance is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+                else if (ownerInstance is IAsyncDisposable asyncDisposable)
+                {
+                    await asyncDisposable.DisposeAsync();
+                }
+            }
+
+            this.Logger.LogInformation($"Executed scheduled job '{scheduledItem.Method.Name}'.");
         }
 
         public override void Dispose()
