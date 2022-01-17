@@ -15,6 +15,7 @@ namespace Adriva.Extensions.TextSearch
     public abstract class TextSearchManager : IDisposable
     {
         private long IsSearcherReady = 0;
+        private long IsRecycling = 0;
         private long ActiveSearchCount = 0;
         private Lucene.Net.Store.Directory SearchDirectory;
         private DirectoryReader Reader;
@@ -55,9 +56,11 @@ namespace Adriva.Extensions.TextSearch
 
         private async Task CreateIndexFileAsync(bool forceCreate, bool isRecycling)
         {
-            SpinWait.SpinUntil(() => 0 == Interlocked.Read(ref this.ActiveSearchCount));
+            bool isUsingMemoryIndex = this.SearchDirectory is RAMDirectory;
 
-            if (!isRecycling || !(this.SearchDirectory is RAMDirectory))
+            SpinWait.SpinUntil(() => 0 == Interlocked.Read(ref this.ActiveSearchCount), 30_000);
+
+            if (!isRecycling || !isUsingMemoryIndex)
             {
                 Interlocked.Exchange(ref this.IsSearcherReady, 0);
             }
@@ -174,8 +177,18 @@ namespace Adriva.Extensions.TextSearch
 
         public virtual async Task RecycleAsync(bool forceCreateIndex = false, bool storeIndexInMemory = false)
         {
-            await this.CreateIndexFileAsync(forceCreateIndex, true);
-            this.CreateSearcher(storeIndexInMemory);
+            if (0 == Interlocked.CompareExchange(ref this.IsRecycling, 1, 0))
+            {
+                try
+                {
+                    await this.CreateIndexFileAsync(forceCreateIndex, true);
+                    this.CreateSearcher(storeIndexInMemory);
+                }
+                finally
+                {
+                    Interlocked.Exchange(ref this.IsRecycling, 0);
+                }
+            }
         }
 
         protected virtual void Dispose(bool disposing)
