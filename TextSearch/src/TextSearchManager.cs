@@ -76,7 +76,7 @@ namespace Adriva.Extensions.TextSearch
             Array.ForEach(files, file =>
             {
                 if (!file.Name.Equals("placeholder.txt", StringComparison.OrdinalIgnoreCase)
-                    && !file.Name.Equals("work.lock", StringComparison.OrdinalIgnoreCase))
+                    && !file.Name.Equals("writer.lock", StringComparison.OrdinalIgnoreCase))
                 {
                     file.Delete();
                 }

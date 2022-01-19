@@ -12,6 +12,6 @@
   <PropertyGroup>
     <Title>Adriva Lucene Search Library</Title>
     <PackageDescription>Provides common components to consume Lucene search services.</PackageDescription>    
-    <Version>3.0.9</Version>
+    <Version>3.0.10</Version>
   </PropertyGroup>
 </Project>
