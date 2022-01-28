@@ -48,9 +48,12 @@
                 },
                 "fields": {
                     "type": "object",
-                    "title": "Field definitions for the given data source / command pair",
+                    "title": "Field definitions for the given data source / command pair.",
+                    "description": "Field definitions that should define the data retrieved from the data source with the given command.",
                     "patternProperties": {
                         "\\w+": {
+                            "title": "Name of the data source field.",
+                            "description": "Name of the field as it is in the data source. Depending on the data source type, this value may be case-sensitive.",
                             "allOf": [
                                 {
                                     "$ref": "#/definitions/fieldDefinition"
@@ -200,6 +203,8 @@
                         },
                         "properties": {
                             "type": "string",
+                            "default": "Default",
+                            "title": "Runtime properties of the field.",
                             "minLength": 1,
                             "examples": [
                                 "Default",

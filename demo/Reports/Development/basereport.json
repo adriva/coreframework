@@ -1,4 +1,5 @@
 {
+    "$schema": "../report-schema.json",
     "base": "root",
     "name": "base report definition"
 }
