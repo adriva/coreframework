@@ -48,6 +48,12 @@ namespace Adriva.Extensions.Reporting.Abstractions
                     throw new ArgumentNullException($"FilterDefinition for filter '{entry.Key}' is not set to an instance of an object.");
                 }
                 entry.Value.Name = entry.Key;
+
+                foreach (var fieldEntry in entry.Value.Fields)
+                {
+                    fieldEntry.Value.Name = fieldEntry.Key;
+                }
+
                 this.FixFilterDefinitions(entry.Value.Children);
             }
         }
@@ -83,15 +89,15 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
             /*
             need to return the clone of the definition since multiple clients might be
-            accessing the cached instance and modifying it state
+            accessing the cached instance and modifying its state
             by cloning we make sure each client gets its own copy of the definition
             */
             return reportDefinition?.Clone() ?? throw new InvalidOperationException();
         }
 
-        public async Task<ReportOutput> ExecuteReportOutputAsync(ReportDefinition reportDefinition, IDictionary<string, string> values)
+        private async Task<ReportOutput> GetDataAsync(ReportDefinition reportDefinition, IDataDrivenObject dataSourceScope, IEnumerable<FieldDefinition> fieldDefinitions, string commandName, IDictionary<string, string> values)
         {
-            ReportCommandContext context = new ReportCommandContext(reportDefinition, reportDefinition.Output.Command);
+            ReportCommandContext context = new ReportCommandContext(reportDefinition, commandName);
 
             if (!string.IsNullOrWhiteSpace(reportDefinition.ContextProvider))
             {
@@ -101,11 +107,11 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
             var reportCommand = await this.CommandBuilder.BuildCommandAsync(context, values);
 
-            using (IServiceScope serviceScope = this.ServiceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            using (IServiceScope serviceScope = this.ServiceProvider.CreateScope())
             {
-                if (!reportDefinition.TryFindDataSourceDefinition(reportDefinition.Output, out DataSourceDefinition dataSourceDefinition))
+                if (!reportDefinition.TryFindDataSourceDefinition(dataSourceScope, out DataSourceDefinition dataSourceDefinition))
                 {
-                    throw new InvalidOperationException($"Could not find data source definition '{reportDefinition.Output.DataSource}' in the report '{reportDefinition.Name}'.");
+                    throw new InvalidOperationException($"Could not find data source definition '{dataSourceScope.DataSource}' in the report '{reportDefinition.Name}'.");
                 }
 
                 var dataSourceRegistrationOptionsSnapshot = serviceScope.ServiceProvider.GetRequiredService<IOptionsSnapshot<DataSourceRegistrationOptions>>();
@@ -122,13 +128,51 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
                 try
                 {
-                    var dataset = await dataSource.GetDataAsync(reportCommand, reportDefinition.EnumerateFieldDefinitions().ToArray());
+                    var dataset = await dataSource.GetDataAsync(reportCommand, fieldDefinitions.ToArray());
                     return new ReportOutput(reportCommand, dataset);
                 }
                 finally
                 {
                     await dataSource.CloseAsync();
                 }
+            }
+        }
+
+        public async Task<ReportOutput> ExecuteReportOutputAsync(ReportDefinition reportDefinition, IDictionary<string, string> values)
+        {
+            return await this.GetDataAsync(reportDefinition, reportDefinition.Output, reportDefinition.EnumerateFieldDefinitions(), reportDefinition.Output.Command, values);
+        }
+
+        private async Task PopulateFilterValuesAsync(ReportDefinition reportDefinition, FilterDefinition filterDefinition, IDictionary<string, string> values)
+        {
+            if (null == filterDefinition || string.IsNullOrWhiteSpace(filterDefinition.DataSource))
+            {
+                return;
+            }
+
+            var output = await this.GetDataAsync(reportDefinition, filterDefinition, filterDefinition.EnumerateFieldDefinitions(), filterDefinition.Command, values);
+        }
+
+        public async Task PopulateFilterValuesAsync(ReportDefinition reportDefinition, IDictionary<string, string> values)
+        {
+            if (null == reportDefinition)
+            {
+                throw new ArgumentNullException(nameof(reportDefinition), "Report definition is not set to an instance of an object");
+            }
+
+            if (null == reportDefinition.Filters || 0 == reportDefinition.Filters.Count)
+            {
+                return;
+            }
+
+            if (null == values)
+            {
+                values = new Dictionary<string, string>();
+            }
+
+            foreach (var filterDefinition in reportDefinition.Filters)
+            {
+                await this.PopulateFilterValuesAsync(reportDefinition, filterDefinition.Value, values);
             }
         }
     }

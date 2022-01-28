@@ -1,4 +1,5 @@
 {
+    "$schema": "../../report-schema.json",
     "base": "basereport",
     "name": "promotions sample report",
     "contextProvider": "demo.Controllers.ReportContextProvider,demo",
@@ -6,15 +7,50 @@
         "getTypeCodes": {
             "commandText": "System.TypeCode"
         },
-        "getPromotions": {
-            "commandText": "SELECT * FROM Promotion  WHERE Supplier = @supplier"
+        "getUsers": {
+            "commandText": "SELECT * FROM org.[User] WHERE FirstName LIKE @firstName + '%' ORDER BY Id"
+        },
+        "getCities": {
+            "commandText": "SELECT Id, Name FROM City ORDER BY Name"
+        },
+        "getDistricts": {
+            "commandText": "SELECT Id, Name FROM District WHERE CityId = @city ORDER BY Name"
+        },
+        "getAttributeTargets": {
+            "commandText": "Enum"
         }
     },
     "filters": {
-        "supplier": {
-            "displayName": "Dukkan",
+        "city": {
+            "displayName": "Sehir",
+            "dataType": "Int64",
+            "dataSource": "DefaultSqlServer",
+            "command": "getCities",
+            "fields": {
+                "Id": {
+                    "Name": "Id"
+                },
+                "Name": {
+                    "Name": "Name"
+                }
+            },
+            "children": {
+                "district": {
+                    "displayName": "Ilce",
+                    "dataSource": "DefaultSqlServer",
+                    "command": "getDistricts"
+                }
+            }
+        },
+        "dummy": {
+            "displayName": "Attribute Targets",
+            "dataSource": "AttTargetsEnum",
+            "command": "getAttributeTargets"
+        },
+        "firstName": {
+            "displayName": "Ad",
             "dataType": "String",
-            "defaultValue": "boyner.com.tr",
+            "defaultValue": "",
             "children": {
                 "status": {
                     "displayName": "Durum",
@@ -24,7 +60,7 @@
         }
     },
     "output": {
-        "command": "getPromotions",
+        "command": "getUsers",
         "dataSource": "DefaultSqlServer",
         "fields": {
             "Id": {
@@ -36,10 +72,10 @@
                     }
                 }
             },
-            "name": {
+            "firstName": {
                 "displayName": "Name"
             },
-            "Description": {}
+            "lastName": {}
         }
     }
 }

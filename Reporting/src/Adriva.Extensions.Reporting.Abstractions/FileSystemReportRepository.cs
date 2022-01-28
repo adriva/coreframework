@@ -64,6 +64,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
             IFileInfo reportFileInfo = null;
             IFileInfo environmentSpecificFileInfo = this.FileProvider.GetFileInfo(Path.Combine(this.HostingEnvironment.EnvironmentName, name));
+
             if (!environmentSpecificFileInfo.Exists || environmentSpecificFileInfo.IsDirectory)
             {
                 IFileInfo genericFileInfo = this.FileProvider.GetFileInfo(name);

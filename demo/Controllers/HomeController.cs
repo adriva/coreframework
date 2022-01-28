@@ -18,9 +18,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace demo.Controllers
 {
-
-
-
     [Serializable]
     public class TestDataItem
     {
@@ -45,44 +42,17 @@ namespace demo.Controllers
     {
         private readonly IReportingService ReportingService;
         private static readonly Random Rnd = new Random();
-        Adriva.Storage.Abstractions.IStorageClientFactory SCF;
 
-        public HomeController(IReportingService reportingService, Adriva.Storage.Abstractions.IStorageClientFactory scf)
+        public HomeController(IReportingService reportingService)
         {
             this.ReportingService = reportingService;
-            SCF = scf;
         }
 
         public async Task<IActionResult> Index()
         {
-            var qc = await this.SCF.GetQueueClientAsync("Development");
-            var bc = await this.SCF.GetBlobClientAsync("Development");
-
-            // var def = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
-            // var o = await this.ReportingService.ExecuteReportOutputAsync(def, null);
-
-            await bc.DeleteAsync("hello");
-
+            var def = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
+            await this.ReportingService.PopulateFilterValuesAsync(def, null);
             return this.View();
-        }
-
-        public async Task<IActionResult> Cache()
-        {
-            var cache = this.HttpContext.RequestServices.GetService<ICache<DistributedCache>>();
-            DateTime dt = await cache.Instance.GetOrCreateAsync<DateTime>("Test001", async (entry) =>
-            {
-                await Task.CompletedTask;
-                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30);
-                return DateTime.Now;
-            }, "DEP01");
-            return this.Content(dt.ToString());
-        }
-
-        public async Task<IActionResult> CacheChange()
-        {
-            var cache = this.HttpContext.RequestServices.GetService<ICache<DistributedCache>>();
-            await cache.Instance.NotifyChangedAsync("DEP01");
-            return this.Content("TAMAM");
         }
     }
 }

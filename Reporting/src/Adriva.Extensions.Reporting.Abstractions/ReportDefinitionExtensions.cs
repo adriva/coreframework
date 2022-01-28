@@ -66,5 +66,15 @@ namespace Adriva.Extensions.Reporting.Abstractions
                 yield return fieldDefinitionEntry.Value;
             }
         }
+
+        public static IEnumerable<FieldDefinition> EnumerateFieldDefinitions(this FilterDefinition filterDefinition)
+        {
+            if (null == filterDefinition?.Fields) yield break;
+
+            foreach (var fieldDefinitionEntry in filterDefinition.Fields)
+            {
+                yield return fieldDefinitionEntry.Value;
+            }
+        }
     }
 }

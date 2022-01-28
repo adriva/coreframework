@@ -1,0 +1,314 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "Report definition",
+    "description": "JSON formatted definition of the dynamic report.",
+    "default": {},
+    "required": [
+        "name"
+    ],
+    "properties": {
+        "base": {
+            "$id": "#/properties/base",
+            "type": "string",
+            "title": "Base report that will be merged with this one.",
+            "description": "Name of the base report definition file that will be merged with this report definition.",
+            "default": "",
+            "examples": [
+                "basereport"
+            ]
+        },
+        "name": {
+            "$id": "#/properties/name",
+            "type": "string",
+            "title": "The name schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "promotions sample report"
+            ]
+        },
+        "contextProvider": {
+            "$id": "#/properties/contextProvider",
+            "type": "string",
+            "title": "The contextProvider schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "demo.Controllers.ReportContextProvider,demo"
+            ]
+        },
+        "dataSources": {
+            "$id": "#/properties/dataSources",
+            "type": "object",
+            "title": "The dataSources schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "patternProperties": {
+                "\\w+": {
+                    "type": "object",
+                    "properties": {
+                        "connectionString": {
+                            "type": "string"
+                        },
+                        "type": {
+                            "type": "string",
+                            "examples": [
+                                "SqlServer",
+                                "Enum"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "connectionString",
+                        "type"
+                    ]
+                }
+            },
+            "additionalProperties": true
+        },
+        "commands": {
+            "$id": "#/properties/commands",
+            "type": "object",
+            "title": "The commands schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "required": [],
+            "additionalProperties": true
+        },
+        "filters": {
+            "$id": "#/properties/filters",
+            "type": "object",
+            "title": "The filters schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "additionalProperties": true
+        },
+        "output": {
+            "$id": "#/properties/output",
+            "type": "object",
+            "title": "The output schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "command": "getUsers",
+                    "dataSource": "DefaultSqlServer",
+                    "fields": {
+                        "Id": {
+                            "displayName": "Aydi",
+                            "options": {
+                                "web": {
+                                    "formatter": "xx1",
+                                    "format": "C2"
+                                }
+                            }
+                        },
+                        "firstName": {
+                            "displayName": "Name"
+                        },
+                        "lastName": {}
+                    }
+                }
+            ],
+            "required": [
+                "command",
+                "dataSource",
+                "fields"
+            ],
+            "properties": {
+                "command": {
+                    "$id": "#/properties/output/properties/command",
+                    "type": "string",
+                    "title": "The command schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "getUsers"
+                    ]
+                },
+                "dataSource": {
+                    "$id": "#/properties/output/properties/dataSource",
+                    "type": "string",
+                    "title": "The dataSource schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "DefaultSqlServer"
+                    ]
+                },
+                "fields": {
+                    "$id": "#/properties/output/properties/fields",
+                    "type": "object",
+                    "title": "The fields schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "Id": {
+                                "displayName": "Aydi",
+                                "options": {
+                                    "web": {
+                                        "formatter": "xx1",
+                                        "format": "C2"
+                                    }
+                                }
+                            },
+                            "firstName": {
+                                "displayName": "Name"
+                            },
+                            "lastName": {}
+                        }
+                    ],
+                    "required": [
+                        "Id",
+                        "firstName",
+                        "lastName"
+                    ],
+                    "properties": {
+                        "Id": {
+                            "$id": "#/properties/output/properties/fields/properties/Id",
+                            "type": "object",
+                            "title": "The Id schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "displayName": "Aydi",
+                                    "options": {
+                                        "web": {
+                                            "formatter": "xx1",
+                                            "format": "C2"
+                                        }
+                                    }
+                                }
+                            ],
+                            "required": [
+                                "displayName",
+                                "options"
+                            ],
+                            "properties": {
+                                "displayName": {
+                                    "$id": "#/properties/output/properties/fields/properties/Id/properties/displayName",
+                                    "type": "string",
+                                    "title": "The displayName schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "Aydi"
+                                    ]
+                                },
+                                "options": {
+                                    "$id": "#/properties/output/properties/fields/properties/Id/properties/options",
+                                    "type": "object",
+                                    "title": "The options schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": {},
+                                    "examples": [
+                                        {
+                                            "web": {
+                                                "formatter": "xx1",
+                                                "format": "C2"
+                                            }
+                                        }
+                                    ],
+                                    "required": [
+                                        "web"
+                                    ],
+                                    "properties": {
+                                        "web": {
+                                            "$id": "#/properties/output/properties/fields/properties/Id/properties/options/properties/web",
+                                            "type": "object",
+                                            "title": "The web schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": {},
+                                            "examples": [
+                                                {
+                                                    "formatter": "xx1",
+                                                    "format": "C2"
+                                                }
+                                            ],
+                                            "required": [
+                                                "formatter",
+                                                "format"
+                                            ],
+                                            "properties": {
+                                                "formatter": {
+                                                    "$id": "#/properties/output/properties/fields/properties/Id/properties/options/properties/web/properties/formatter",
+                                                    "type": "string",
+                                                    "title": "The formatter schema",
+                                                    "description": "An explanation about the purpose of this instance.",
+                                                    "default": "",
+                                                    "examples": [
+                                                        "xx1"
+                                                    ]
+                                                },
+                                                "format": {
+                                                    "$id": "#/properties/output/properties/fields/properties/Id/properties/options/properties/web/properties/format",
+                                                    "type": "string",
+                                                    "title": "The format schema",
+                                                    "description": "An explanation about the purpose of this instance.",
+                                                    "default": "",
+                                                    "examples": [
+                                                        "C2"
+                                                    ]
+                                                }
+                                            },
+                                            "additionalProperties": true
+                                        }
+                                    },
+                                    "additionalProperties": true
+                                }
+                            },
+                            "additionalProperties": true
+                        },
+                        "firstName": {
+                            "$id": "#/properties/output/properties/fields/properties/firstName",
+                            "type": "object",
+                            "title": "The firstName schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "displayName": "Name"
+                                }
+                            ],
+                            "required": [
+                                "displayName"
+                            ],
+                            "properties": {
+                                "displayName": {
+                                    "$id": "#/properties/output/properties/fields/properties/firstName/properties/displayName",
+                                    "type": "string",
+                                    "title": "The displayName schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "Name"
+                                    ]
+                                }
+                            },
+                            "additionalProperties": true
+                        },
+                        "lastName": {
+                            "$id": "#/properties/output/properties/fields/properties/lastName",
+                            "type": "object",
+                            "title": "The lastName schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {}
+                            ],
+                            "required": [],
+                            "additionalProperties": true
+                        }
+                    },
+                    "additionalProperties": true
+                }
+            },
+            "additionalProperties": true
+        }
+    },
+    "additionalProperties": true
+}

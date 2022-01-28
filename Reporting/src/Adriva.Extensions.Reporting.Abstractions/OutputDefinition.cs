@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using Adriva.Common.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {

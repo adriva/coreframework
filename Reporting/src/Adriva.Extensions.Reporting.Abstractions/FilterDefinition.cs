@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
-    public class FilterDefinition : IDynamicDefinition, ICloneable<FilterDefinition>
+    public class FilterDefinition : IDataDrivenObject, IDynamicDefinition, ICloneable<FilterDefinition>
     {
         public string Name { get; set; }
 
@@ -16,6 +16,12 @@ namespace Adriva.Extensions.Reporting.Abstractions
         public FilterProperties Properties { get; set; }
 
         public object DefaultValue { get; set; }
+
+        public string DataSource { get; set; }
+
+        public string Command { get; set; }
+
+        public StringKeyDictionary<FieldDefinition> Fields { get; set; } = new StringKeyDictionary<FieldDefinition>();
 
         public IDictionary<string, FilterDefinition> Children { get; private set; } = new Dictionary<string, FilterDefinition>();
 
@@ -30,6 +36,13 @@ namespace Adriva.Extensions.Reporting.Abstractions
             clone.Properties = this.Properties;
             clone.Options = this.Options;
             clone.DefaultValue = this.DefaultValue;
+            clone.DataSource = this.DataSource;
+            clone.Command = this.Command;
+
+            foreach (var field in this.Fields)
+            {
+                clone.Fields.Add(field.Key, field.Value);
+            }
 
             foreach (var child in this.Children)
             {

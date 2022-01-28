@@ -11,7 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<IReportingService, ReportingService>();
             builder.UseCommandBuilder<DefaultCommandBuilder>();
             builder.UseFilterValueBinder<DefaultFilterValueBinder>();
-            // builder.UseDataSource<EnumDataSource>();
+            builder.UseDataSource<EnumDataSource>("Enum");
             build?.Invoke(builder);
             return services;
         }
