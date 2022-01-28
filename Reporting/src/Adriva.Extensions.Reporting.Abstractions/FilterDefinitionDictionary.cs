@@ -8,6 +8,5 @@ namespace Adriva.Extensions.Reporting.Abstractions
         {
 
         }
-
     }
 }

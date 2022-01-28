@@ -1,5 +1,4 @@
-﻿//#pragma warning disable ADR00001
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -48,12 +47,12 @@ namespace demo.Controllers
             this.ReportingService = reportingService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(FilterValuesDictionary values)
         {
             var def = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
+            var dd = await this.ReportingService.GetFilterDataAsync(def, "district", values);
             await this.ReportingService.PopulateFilterValuesAsync(def, null);
-            return this.View();
+            return this.Content(Utilities.SafeSerialize(def));
         }
     }
 }
-#pragma warning restore ADR00001

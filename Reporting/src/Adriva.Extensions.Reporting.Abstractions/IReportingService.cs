@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Adriva.Extensions.Reporting.Abstractions
@@ -7,8 +6,10 @@ namespace Adriva.Extensions.Reporting.Abstractions
     {
         Task<ReportDefinition> LoadReportDefinitionAsync(string name);
 
-        Task PopulateFilterValuesAsync(ReportDefinition reportDefinition, IDictionary<string, string> values);
+        Task PopulateFilterValuesAsync(ReportDefinition reportDefinition, FilterValuesDictionary values);
 
-        Task<ReportOutput> ExecuteReportOutputAsync(ReportDefinition reportDefinition, IDictionary<string, string> values);
+        Task<DataSet> GetFilterDataAsync(ReportDefinition reportDefinition, string filterName, FilterValuesDictionary values);
+
+        Task<ReportOutput> ExecuteReportOutputAsync(ReportDefinition reportDefinition, FilterValuesDictionary values);
     }
 }

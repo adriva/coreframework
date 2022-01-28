@@ -25,6 +25,7 @@
             "displayName": "Sehir",
             "dataType": "Int64",
             "dataSource": "DefaultSqlServer",
+            "defaultValue": 34,
             "command": "getCities",
             "fields": {
                 "Id": {
@@ -38,7 +39,15 @@
                 "district": {
                     "displayName": "Ilce",
                     "dataSource": "DefaultSqlServer",
-                    "command": "getDistricts"
+                    "command": "getDistricts",
+                    "fields": {
+                        "Id": {
+                            "Name": "Id"
+                        },
+                        "Name": {
+                            "Name": "Name"
+                        }
+                    }
                 }
             }
         },

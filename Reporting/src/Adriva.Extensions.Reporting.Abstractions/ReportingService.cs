@@ -73,6 +73,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             ReportDefinition reportDefinition = await this.Cache.GetOrCreateAsync($"ReportingService:LoadReportDefinitionAsync:{name}", async (entry) =>
             {
                 entry.AbsoluteExpirationRelativeToNow = this.Options.DefinitionTimeToLive;
+
                 foreach (var repository in this.Repositories)
                 {
                     reportDefinition = await repository.LoadReportDefinitionAsync(name);
@@ -95,7 +96,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             return reportDefinition?.Clone() ?? throw new InvalidOperationException();
         }
 
-        private async Task<ReportOutput> GetDataAsync(ReportDefinition reportDefinition, IDataDrivenObject dataSourceScope, IEnumerable<FieldDefinition> fieldDefinitions, string commandName, IDictionary<string, string> values)
+        private async Task<ReportOutput> GetDataAsync(ReportDefinition reportDefinition, IDataDrivenObject dataSourceScope, IEnumerable<FieldDefinition> fieldDefinitions, string commandName, FilterValuesDictionary values)
         {
             ReportCommandContext context = new ReportCommandContext(reportDefinition, commandName);
 
@@ -138,12 +139,12 @@ namespace Adriva.Extensions.Reporting.Abstractions
             }
         }
 
-        public async Task<ReportOutput> ExecuteReportOutputAsync(ReportDefinition reportDefinition, IDictionary<string, string> values)
+        public async Task<ReportOutput> ExecuteReportOutputAsync(ReportDefinition reportDefinition, FilterValuesDictionary values)
         {
             return await this.GetDataAsync(reportDefinition, reportDefinition.Output, reportDefinition.EnumerateFieldDefinitions(), reportDefinition.Output.Command, values);
         }
 
-        private async Task PopulateFilterValuesAsync(ReportDefinition reportDefinition, FilterDefinition filterDefinition, IDictionary<string, string> values)
+        private async Task PopulateFilterValuesAsync(ReportDefinition reportDefinition, FilterDefinition filterDefinition, FilterValuesDictionary values)
         {
             if (null == filterDefinition || string.IsNullOrWhiteSpace(filterDefinition.DataSource))
             {
@@ -151,9 +152,56 @@ namespace Adriva.Extensions.Reporting.Abstractions
             }
 
             var output = await this.GetDataAsync(reportDefinition, filterDefinition, filterDefinition.EnumerateFieldDefinitions(), filterDefinition.Command, values);
+            filterDefinition.Data = output.DataSet;
         }
 
-        public async Task PopulateFilterValuesAsync(ReportDefinition reportDefinition, IDictionary<string, string> values)
+        public async Task<DataSet> GetFilterDataAsync(ReportDefinition reportDefinition, string filterName, FilterValuesDictionary values)
+        {
+            if (!reportDefinition.TryFindFilterDefinition(filterName, out FilterDefinition filterDefinition))
+            {
+                return null;
+            }
+
+            if (string.IsNullOrWhiteSpace(filterDefinition.DataSource))
+            {
+                return null;
+            }
+
+            if (null == values)
+            {
+                values = new FilterValuesDictionary();
+            }
+
+            foreach (var filterDefinitionEntry in reportDefinition.Filters)
+            {
+                Queue<FilterDefinition> filterQueue = new Queue<FilterDefinition>();
+                filterQueue.Enqueue(filterDefinitionEntry.Value);
+
+                while (0 < filterQueue.Count)
+                {
+                    if (filterQueue.TryDequeue(out FilterDefinition filter))
+                    {
+                        if (!values.ContainsKey(filter.Name) && null != filter.DefaultValue)
+                        {
+                            values[filter.Name] = Convert.ToString(filter.DefaultValue);
+                        }
+
+                        if (null != filter.Children)
+                        {
+                            foreach (var childFilter in filter.Children)
+                            {
+                                filterQueue.Enqueue(childFilter.Value);
+                            }
+                        }
+                    }
+                }
+            }
+
+            var output = await this.GetDataAsync(reportDefinition, filterDefinition, filterDefinition.EnumerateFieldDefinitions(), filterDefinition.Command, values);
+            return output.DataSet;
+        }
+
+        public async Task PopulateFilterValuesAsync(ReportDefinition reportDefinition, FilterValuesDictionary values)
         {
             if (null == reportDefinition)
             {
@@ -167,12 +215,34 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
             if (null == values)
             {
-                values = new Dictionary<string, string>();
+                values = new FilterValuesDictionary();
             }
 
             foreach (var filterDefinition in reportDefinition.Filters)
             {
-                await this.PopulateFilterValuesAsync(reportDefinition, filterDefinition.Value, values);
+                Queue<FilterDefinition> filterQueue = new Queue<FilterDefinition>();
+                filterQueue.Enqueue(filterDefinition.Value);
+
+                while (0 < filterQueue.Count)
+                {
+                    if (filterQueue.TryDequeue(out FilterDefinition filter))
+                    {
+                        await this.PopulateFilterValuesAsync(reportDefinition, filter, values);
+
+                        if (!values.ContainsKey(filter.Name) && null != filter.DefaultValue)
+                        {
+                            values[filter.Name] = Convert.ToString(filter.DefaultValue);
+                        }
+
+                        if (null != filter.Children)
+                        {
+                            foreach (var childFilter in filter.Children)
+                            {
+                                filterQueue.Enqueue(childFilter.Value);
+                            }
+                        }
+                    }
+                }
             }
         }
     }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
@@ -75,6 +76,16 @@ namespace Adriva.Extensions.Reporting.Abstractions
             {
                 yield return fieldDefinitionEntry.Value;
             }
+        }
+
+        public static T Get<T>(this IDynamicDefinition dynamicDefinition) where T : class
+        {
+            if (null == dynamicDefinition?.Options)
+            {
+                return null;
+            }
+
+            return dynamicDefinition.Options.Get<T>();
         }
     }
 }

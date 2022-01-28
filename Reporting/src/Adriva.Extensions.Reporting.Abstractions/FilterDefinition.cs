@@ -2,9 +2,11 @@ using Adriva.Common.Core;
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
+    [DebuggerDisplay("FilterDefinition = {Name}")]
     public class FilterDefinition : IDataDrivenObject, IDynamicDefinition, ICloneable<FilterDefinition>
     {
         public string Name { get; set; }
@@ -26,6 +28,8 @@ namespace Adriva.Extensions.Reporting.Abstractions
         public IDictionary<string, FilterDefinition> Children { get; private set; } = new Dictionary<string, FilterDefinition>();
 
         public IConfigurationSection Options { get; set; }
+
+        public DataSet Data { get; set; }
 
         public FilterDefinition Clone()
         {
