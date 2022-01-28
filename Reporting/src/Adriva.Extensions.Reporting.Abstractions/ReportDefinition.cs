@@ -1,8 +1,9 @@
+using System.Diagnostics;
 using Adriva.Common.Core;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
-
+    [DebuggerDisplay("ReportDefinition = {Name} [Base = {Base}]")]
     public sealed class ReportDefinition : ICloneable<ReportDefinition>
     {
         public string Base { get; set; }

@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using System.Linq;
 using System.ComponentModel;
+using Newtonsoft.Json.Linq;
+using Microsoft.Extensions.Logging;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
@@ -21,12 +23,14 @@ namespace Adriva.Extensions.Reporting.Abstractions
         private readonly FileSystemReportRepositoryOptions Options;
         private readonly IHostEnvironment HostingEnvironment;
         private readonly IFileProvider FileProvider;
+        private readonly ILogger Logger;
 
-        public FileSystemReportRepository(IHostEnvironment hostingtEnvironment, IOptions<FileSystemReportRepositoryOptions> optionsAccessor)
+        public FileSystemReportRepository(IHostEnvironment hostingtEnvironment, IOptions<FileSystemReportRepositoryOptions> optionsAccessor, ILogger<FileSystemReportRepository> logger)
         {
             this.HostingEnvironment = hostingtEnvironment;
             this.Options = optionsAccessor.Value;
             this.FileProvider = new PhysicalFileProvider(this.Options.RootPath);
+            this.Logger = logger;
         }
 
         private async Task<string> ResolveBasePathAsync(IFileInfo fileInfo)
@@ -149,18 +153,34 @@ namespace Adriva.Extensions.Reporting.Abstractions
         {
             var reportDefinitionFiles = await this.ResolveReportDefinitionChainAsync(name);
 
-            if (null == reportDefinitionFiles || !reportDefinitionFiles.Any()) return null;
+            if (null == reportDefinitionFiles || !reportDefinitionFiles.Any())
+            {
+                this.Logger.LogError($"Couldn't resolve the definition chain for report '{name}'.");
+                return null;
+            }
 
-            ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-            configurationBuilder.SetBasePath(this.Options.RootPath);
+            JObject definitionObject = new JObject();
 
             foreach (var reportDefinitionFile in reportDefinitionFiles)
             {
-                configurationBuilder.AddJsonFile(Path.Combine(reportDefinitionFile.Path, reportDefinitionFile.Name), true);
+                this.Logger.LogTrace($"Using report definition file '{reportDefinitionFile.Path}' to construct report '{name}'.");
+
+                using (StreamReader streamReader = File.OpenText(Path.Combine(this.Options.RootPath, reportDefinitionFile.Path, reportDefinitionFile.Name)))
+                using (JsonTextReader jsonReader = new JsonTextReader(streamReader))
+                {
+                    definitionObject.Merge(await JObject.ReadFromAsync(jsonReader), new JsonMergeSettings()
+                    {
+                        MergeArrayHandling = MergeArrayHandling.Union,
+                        MergeNullValueHandling = MergeNullValueHandling.Ignore,
+                        PropertyNameComparison = StringComparison.OrdinalIgnoreCase
+                    });
+                }
             }
 
-            var reportConfiguration = configurationBuilder.Build();
-            return reportConfiguration.Get<ReportDefinition>();
+            this.Logger.LogTrace($"Final definition for the report '{name}' is:");
+            this.Logger.LogTrace(definitionObject?.ToString() ?? "NULL");
+
+            return definitionObject.ToObject<ReportDefinition>();
         }
     }
 }

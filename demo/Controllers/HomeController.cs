@@ -35,6 +35,11 @@ namespace demo.Controllers
         {
             return DateTime.UtcNow;
         }
+
+        public static int Get35()
+        {
+            return 35;
+        }
     }
 
     public class HomeController : Controller
@@ -47,12 +52,12 @@ namespace demo.Controllers
             this.ReportingService = reportingService;
         }
 
-        public async Task<IActionResult> Index(FilterValuesDictionary values)
+        public async Task<IActionResult> Index(FilterValuesDictionary model)
         {
             var def = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
-            var dd = await this.ReportingService.GetFilterDataAsync(def, "district", values);
+            var dd = await this.ReportingService.GetFilterDataAsync(def, "district", model);
             await this.ReportingService.PopulateFilterValuesAsync(def, null);
-            return this.Content(Utilities.SafeSerialize(def));
+            return this.Content(Utilities.SafeSerialize(def), "application/json");
         }
     }
 }

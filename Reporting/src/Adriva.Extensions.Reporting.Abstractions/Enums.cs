@@ -6,7 +6,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
     public enum FilterProperties : long
     {
         Default = 0,
-        Constant = 1,
+        Constant = 1 << 0,
         Context = 1 << 1,
         Required = 1 << 10
     }

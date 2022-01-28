@@ -1,28 +1,26 @@
+using System.Diagnostics;
 using Adriva.Common.Core;
-using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
-    public class FieldDefinition : ICloneable<FieldDefinition>
+    [DebuggerDisplay("FieldDefinition = {Name}")]
+    public sealed class FieldDefinition : IDynamicDefinition, ICloneable<FieldDefinition>
     {
-        public string Name { get; set; }
+        public string Name { get; internal set; }
 
         public string DisplayName { get; set; }
 
-        public IConfigurationSection Options { get; set; }
+        public JToken Options { get; set; }
 
         public FieldDefinition Clone()
         {
             var clone = new FieldDefinition()
             {
                 Name = this.Name,
-                DisplayName = this.DisplayName
+                DisplayName = this.DisplayName,
+                Options = this.Options?.DeepClone()
             };
-
-            if (null != this.Options)
-            {
-                clone.Options = this.Options.Get<IConfigurationSection>();
-            }
 
             return clone;
         }

@@ -25,15 +25,12 @@
             "displayName": "Sehir",
             "dataType": "Int64",
             "dataSource": "DefaultSqlServer",
-            "defaultValue": 34,
+            "defaultValue": "Get35",
             "command": "getCities",
+            "properties": "Constant, Context",
             "fields": {
-                "Id": {
-                    "Name": "Id"
-                },
-                "Name": {
-                    "Name": "Name"
-                }
+                "Id": {},
+                "Name": {}
             },
             "children": {
                 "district": {
@@ -41,12 +38,8 @@
                     "dataSource": "DefaultSqlServer",
                     "command": "getDistricts",
                     "fields": {
-                        "Id": {
-                            "Name": "Id"
-                        },
-                        "Name": {
-                            "Name": "Name"
-                        }
+                        "Id": {},
+                        "Name": {}
                     }
                 }
             }

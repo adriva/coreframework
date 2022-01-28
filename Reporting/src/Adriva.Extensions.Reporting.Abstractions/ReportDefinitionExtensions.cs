@@ -78,14 +78,14 @@ namespace Adriva.Extensions.Reporting.Abstractions
             }
         }
 
-        public static T Get<T>(this IDynamicDefinition dynamicDefinition) where T : class
-        {
-            if (null == dynamicDefinition?.Options)
-            {
-                return null;
-            }
+        // public static T Get<T>(this IDynamicDefinition dynamicDefinition) where T : class
+        // {
+        //     if (null == dynamicDefinition?.Options)
+        //     {
+        //         return null;
+        //     }
 
-            return dynamicDefinition.Options.Get<T>();
-        }
+        //     return dynamicDefinition.Options.Get<T>();
+        // }
     }
 }

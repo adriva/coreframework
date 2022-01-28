@@ -2,7 +2,7 @@ using Adriva.Common.Core;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
-    public class OutputDefinition : IDataDrivenObject, ICloneable<OutputDefinition>
+    public sealed class OutputDefinition : IDataDrivenObject, ICloneable<OutputDefinition>
     {
         public string DataSource { get; set; }
 

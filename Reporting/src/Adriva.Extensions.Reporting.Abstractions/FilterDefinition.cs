@@ -1,13 +1,13 @@
 using Adriva.Common.Core;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
 using System.Diagnostics;
+using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
     [DebuggerDisplay("FilterDefinition = {Name}")]
-    public class FilterDefinition : IDataDrivenObject, IDynamicDefinition, ICloneable<FilterDefinition>
+    public sealed class FilterDefinition : IDataDrivenObject, IDynamicDefinition, ICloneable<FilterDefinition>
     {
         public string Name { get; set; }
 
@@ -27,7 +27,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public IDictionary<string, FilterDefinition> Children { get; private set; } = new Dictionary<string, FilterDefinition>();
 
-        public IConfigurationSection Options { get; set; }
+        public JToken Options { get; set; }
 
         public DataSet Data { get; set; }
 
@@ -42,6 +42,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             clone.DefaultValue = this.DefaultValue;
             clone.DataSource = this.DataSource;
             clone.Command = this.Command;
+            clone.Options = this.Options?.DeepClone();
 
             foreach (var field in this.Fields)
             {

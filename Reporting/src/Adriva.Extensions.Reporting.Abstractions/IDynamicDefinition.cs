@@ -1,9 +1,9 @@
-using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
     public interface IDynamicDefinition
     {
-        IConfigurationSection Options { get; set; }
+        JToken Options { get; set; }
     }
 }

@@ -1,15 +1,15 @@
 using Adriva.Common.Core;
-using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
-    public class DataSourceDefinition : IDynamicDefinition, ICloneable<DataSourceDefinition>
+    public sealed class DataSourceDefinition : IDynamicDefinition, ICloneable<DataSourceDefinition>
     {
         public string Type { get; set; }
 
         public string ConnectionString { get; set; }
 
-        public IConfigurationSection Options { get; set; }
+        public JToken Options { get; set; }
 
         public DataSourceDefinition Clone()
         {
@@ -17,7 +17,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             {
                 Type = this.Type,
                 ConnectionString = this.ConnectionString,
-                Options = this.Options
+                Options = this.Options?.DeepClone()
             };
         }
     }

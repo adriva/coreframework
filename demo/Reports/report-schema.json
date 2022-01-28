@@ -1,6 +1,68 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "http://example.com/example.json",
+    "$id": "http://adriva.com/schemas/2022/report-definition",
+    "definitions": {
+        "options": {
+            "$id": "/defs/options",
+            "type": "object",
+            "default": {},
+            "title": "Dynamic options.",
+            "description": "Provides an object of dynamic options that may be platform dependent that are not necessarily recognized by the core reporting infrastructure.",
+            "additionalProperties": true
+        },
+        "dataTypes": {
+            "type": "string",
+            "default": "String",
+            "enum": [
+                "Boolean",
+                "DateTime",
+                "Decimal",
+                "Double",
+                "Empty",
+                "Int32",
+                "Int64",
+                "String"
+            ]
+        },
+        "fieldDefinition": {
+            "properties": {
+                "displayName": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "default": null
+                },
+                "options": {
+                    "$ref": "#/definitions/options"
+                }
+            }
+        },
+        "dataBoundType": {
+            "properties": {
+                "dataSource": {
+                    "type": "string"
+                },
+                "command": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "object",
+                    "title": "Field definitions for the given data source / command pair",
+                    "patternProperties": {
+                        "\\w+": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/fieldDefinition"
+                                }
+                            ]
+                        }
+                    },
+                    "minProperties": 1
+                }
+            }
+        }
+    },
     "type": "object",
     "title": "Report definition",
     "description": "JSON formatted definition of the dynamic report.",
@@ -14,40 +76,44 @@
             "type": "string",
             "title": "Base report that will be merged with this one.",
             "description": "Name of the base report definition file that will be merged with this report definition.",
-            "default": "",
-            "examples": [
-                "basereport"
-            ]
+            "default": ""
         },
         "name": {
             "$id": "#/properties/name",
             "type": "string",
-            "title": "The name schema",
-            "description": "An explanation about the purpose of this instance.",
+            "title": "Name of the report.",
+            "description": "The name of the report this JSON defines.",
             "default": "",
             "examples": [
-                "promotions sample report"
+                "Report Name"
             ]
         },
         "contextProvider": {
             "$id": "#/properties/contextProvider",
-            "type": "string",
-            "title": "The contextProvider schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": "",
+            "type": [
+                "string",
+                "null"
+            ],
+            "title": "Context data provider.",
+            "description": "Provides a type that provdes data which is not bound to a specific data source, but retrieved from the specified type in runtime.",
+            "default": null,
             "examples": [
-                "demo.Controllers.ReportContextProvider,demo"
+                "namespace.typename,assemblyname"
             ]
         },
         "dataSources": {
             "$id": "#/properties/dataSources",
             "type": "object",
-            "title": "The dataSources schema",
-            "description": "An explanation about the purpose of this instance.",
+            "title": "List of data sources that are available.",
+            "description": "Provides a list of data source configurations that are available to this report as well as all reports inherited from this one to populate filter and output data in runtime.",
             "default": {},
             "patternProperties": {
                 "\\w+": {
                     "type": "object",
+                    "default": {
+                        "type": "",
+                        "connectionString": ""
+                    },
                     "properties": {
                         "connectionString": {
                             "type": "string"
@@ -58,6 +124,9 @@
                                 "SqlServer",
                                 "Enum"
                             ]
+                        },
+                        "options": {
+                            "$ref": "#/definitions/options"
                         }
                     },
                     "required": [
@@ -71,18 +140,83 @@
         "commands": {
             "$id": "#/properties/commands",
             "type": "object",
-            "title": "The commands schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": {},
+            "title": "List of commands.",
+            "description": "Provides a list of command configurations that are available to this report as well as all reports inherited from this one.",
+            "default": {
+                "commandName": {
+                    "commandText": "COMMAND"
+                }
+            },
+            "patternProperties": {
+                "\\w+": {
+                    "type": "object",
+                    "default": {
+                        "commandText": "COMMAND"
+                    },
+                    "properties": {
+                        "commandText": {
+                            "type": "string",
+                            "minLength": 1
+                        },
+                        "options": {
+                            "$ref": "#/definitions/options"
+                        }
+                    },
+                    "required": [
+                        "commandText"
+                    ]
+                }
+            },
             "required": [],
             "additionalProperties": true
         },
         "filters": {
             "$id": "#/properties/filters",
             "type": "object",
-            "title": "The filters schema",
-            "description": "An explanation about the purpose of this instance.",
+            "title": "Defines filters that are available",
+            "description": "Defines the filters that may be used to filter the default output of the report.",
             "default": {},
+            "patternProperties": {
+                "\\w+": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/dataBoundType"
+                        }
+                    ],
+                    "properties": {
+                        "displayName": {
+                            "type": "string",
+                            "minLength": 1
+                        },
+                        "defaultValue": {
+                            "default": null,
+                            "type": [
+                                "string",
+                                "number",
+                                "integer",
+                                "boolean",
+                                "null"
+                            ]
+                        },
+                        "properties": {
+                            "type": "string",
+                            "minLength": 1,
+                            "examples": [
+                                "Default",
+                                "Constant",
+                                "Context",
+                                "Required"
+                            ]
+                        },
+                        "dataType": {
+                            "$ref": "#/definitions/dataTypes"
+                        },
+                        "children": {
+                            "$ref": "#/properties/filters"
+                        }
+                    }
+                }
+            },
             "additionalProperties": true
         },
         "output": {

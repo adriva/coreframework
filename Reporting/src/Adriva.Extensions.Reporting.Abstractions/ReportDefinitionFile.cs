@@ -1,5 +1,8 @@
+using System.Diagnostics;
+
 namespace Adriva.Extensions.Reporting.Abstractions
 {
+    [DebuggerDisplay("ReportDefinitionFile = {Name}")]
     public struct ReportDefinitionFile
     {
         public string Name { get; set; }
@@ -7,10 +10,5 @@ namespace Adriva.Extensions.Reporting.Abstractions
         public string Path { get; set; }
 
         public string Base { get; set; }
-
-        public override string ToString()
-        {
-            return $"ReportDefinitionFile, '{this.Name}'";
-        }
     }
 }
