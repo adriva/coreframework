@@ -112,6 +112,10 @@ namespace demo
                     options.RootPath = Path.Combine(this.HostingEnvironment.ContentRootPath, "Reports");
                 });
                 reportingBuilder.UseSqlServer();
+                reportingBuilder.UseHttpJson("HttpJson", x =>
+                {
+                    x.DefaultRequestHeaders.Add("Portalmibu", "tabiilan");
+                });
             });
         }
 

@@ -180,7 +180,8 @@ namespace Adriva.Extensions.Reporting.Abstractions
             this.Logger.LogTrace($"Final definition for the report '{name}' is:");
             this.Logger.LogTrace(definitionObject?.ToString() ?? "NULL");
 
-            return definitionObject.ToObject<ReportDefinition>();
+            var reportDefinition = definitionObject.ToObject<ReportDefinition>();
+            return reportDefinition;
         }
     }
 }

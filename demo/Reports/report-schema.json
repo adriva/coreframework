@@ -13,6 +13,7 @@
         "dataTypes": {
             "type": "string",
             "default": "String",
+            "title": "The underlying data type of the current item.",
             "enum": [
                 "Boolean",
                 "DateTime",
@@ -31,7 +32,8 @@
                         "string",
                         "null"
                     ],
-                    "default": null
+                    "default": null,
+                    "title": "The name that may be used when displaying the item on a user interface."
                 },
                 "options": {
                     "$ref": "#/definitions/options"
@@ -41,10 +43,12 @@
         "dataBoundType": {
             "properties": {
                 "dataSource": {
-                    "type": "string"
+                    "type": "string",
+                    "title": "The name of the data source, as declared in the report, that will be used to retrieve the data for the current item."
                 },
                 "command": {
-                    "type": "string"
+                    "type": "string",
+                    "title": "The name of the command, as declared in the report, that will be used to retrieve the data from teh data source, for the current item."
                 },
                 "fields": {
                     "type": "object",
@@ -143,7 +147,7 @@
         "commands": {
             "$id": "#/properties/commands",
             "type": "object",
-            "title": "List of commands.",
+            "title": "List of commands available.",
             "description": "Provides a list of command configurations that are available to this report as well as all reports inherited from this one.",
             "default": {
                 "commandName": {
@@ -153,13 +157,16 @@
             "patternProperties": {
                 "\\w+": {
                     "type": "object",
+                    "title": "A name that uniquely identifies the current command in the report.",
                     "default": {
                         "commandText": "COMMAND"
                     },
                     "properties": {
                         "commandText": {
                             "type": "string",
-                            "minLength": 1
+                            "minLength": 1,
+                            "title": "The text of the command that will be execute on the data source.",
+                            "description": "The command that will be executed by the data source. For example, a valid SQL query when targeting a SQL Server data source."
                         },
                         "options": {
                             "$ref": "#/definitions/options"
@@ -181,6 +188,7 @@
             "default": {},
             "patternProperties": {
                 "\\w+": {
+                    "title": "The name of the filter that uniquely identifies this filter in the report definition. The name provided here can be used as a parameter in the data-source bound commands.",
                     "allOf": [
                         {
                             "$ref": "#/definitions/dataBoundType"
@@ -189,10 +197,13 @@
                     "properties": {
                         "displayName": {
                             "type": "string",
-                            "minLength": 1
+                            "minLength": 1,
+                            "title": "The name that may be used when displaying the item on a user interface."
                         },
                         "defaultValue": {
                             "default": null,
+                            "title": "Default value that will be used by the system when no values are provided in the runtime.",
+                            "description": "Default value may be a concrete value, the name of a public parameterless method in the context (if filter is set to use Context in filter.properties) or a constant.",
                             "type": [
                                 "string",
                                 "number",
@@ -206,7 +217,7 @@
                             "default": "Default",
                             "title": "Runtime properties of the field.",
                             "minLength": 1,
-                            "examples": [
+                            "enum": [
                                 "Default",
                                 "Constant",
                                 "Context",
@@ -217,7 +228,8 @@
                             "$ref": "#/definitions/dataTypes"
                         },
                         "children": {
-                            "$ref": "#/properties/filters"
+                            "$ref": "#/properties/filters",
+                            "title": "Child filters depending on the current field."
                         }
                     }
                 }
@@ -230,221 +242,15 @@
             "title": "The output schema",
             "description": "An explanation about the purpose of this instance.",
             "default": {},
-            "examples": [
-                {
-                    "command": "getUsers",
-                    "dataSource": "DefaultSqlServer",
-                    "fields": {
-                        "Id": {
-                            "displayName": "Aydi",
-                            "options": {
-                                "web": {
-                                    "formatter": "xx1",
-                                    "format": "C2"
-                                }
-                            }
-                        },
-                        "firstName": {
-                            "displayName": "Name"
-                        },
-                        "lastName": {}
-                    }
-                }
-            ],
             "required": [
                 "command",
                 "dataSource",
                 "fields"
             ],
             "properties": {
-                "command": {
-                    "$id": "#/properties/output/properties/command",
-                    "type": "string",
-                    "title": "The command schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                        "getUsers"
-                    ]
-                },
-                "dataSource": {
-                    "$id": "#/properties/output/properties/dataSource",
-                    "type": "string",
-                    "title": "The dataSource schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                        "DefaultSqlServer"
-                    ]
-                },
-                "fields": {
-                    "$id": "#/properties/output/properties/fields",
-                    "type": "object",
-                    "title": "The fields schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": {},
-                    "examples": [
-                        {
-                            "Id": {
-                                "displayName": "Aydi",
-                                "options": {
-                                    "web": {
-                                        "formatter": "xx1",
-                                        "format": "C2"
-                                    }
-                                }
-                            },
-                            "firstName": {
-                                "displayName": "Name"
-                            },
-                            "lastName": {}
-                        }
-                    ],
-                    "required": [
-                        "Id",
-                        "firstName",
-                        "lastName"
-                    ],
-                    "properties": {
-                        "Id": {
-                            "$id": "#/properties/output/properties/fields/properties/Id",
-                            "type": "object",
-                            "title": "The Id schema",
-                            "description": "An explanation about the purpose of this instance.",
-                            "default": {},
-                            "examples": [
-                                {
-                                    "displayName": "Aydi",
-                                    "options": {
-                                        "web": {
-                                            "formatter": "xx1",
-                                            "format": "C2"
-                                        }
-                                    }
-                                }
-                            ],
-                            "required": [
-                                "displayName",
-                                "options"
-                            ],
-                            "properties": {
-                                "displayName": {
-                                    "$id": "#/properties/output/properties/fields/properties/Id/properties/displayName",
-                                    "type": "string",
-                                    "title": "The displayName schema",
-                                    "description": "An explanation about the purpose of this instance.",
-                                    "default": "",
-                                    "examples": [
-                                        "Aydi"
-                                    ]
-                                },
-                                "options": {
-                                    "$id": "#/properties/output/properties/fields/properties/Id/properties/options",
-                                    "type": "object",
-                                    "title": "The options schema",
-                                    "description": "An explanation about the purpose of this instance.",
-                                    "default": {},
-                                    "examples": [
-                                        {
-                                            "web": {
-                                                "formatter": "xx1",
-                                                "format": "C2"
-                                            }
-                                        }
-                                    ],
-                                    "required": [
-                                        "web"
-                                    ],
-                                    "properties": {
-                                        "web": {
-                                            "$id": "#/properties/output/properties/fields/properties/Id/properties/options/properties/web",
-                                            "type": "object",
-                                            "title": "The web schema",
-                                            "description": "An explanation about the purpose of this instance.",
-                                            "default": {},
-                                            "examples": [
-                                                {
-                                                    "formatter": "xx1",
-                                                    "format": "C2"
-                                                }
-                                            ],
-                                            "required": [
-                                                "formatter",
-                                                "format"
-                                            ],
-                                            "properties": {
-                                                "formatter": {
-                                                    "$id": "#/properties/output/properties/fields/properties/Id/properties/options/properties/web/properties/formatter",
-                                                    "type": "string",
-                                                    "title": "The formatter schema",
-                                                    "description": "An explanation about the purpose of this instance.",
-                                                    "default": "",
-                                                    "examples": [
-                                                        "xx1"
-                                                    ]
-                                                },
-                                                "format": {
-                                                    "$id": "#/properties/output/properties/fields/properties/Id/properties/options/properties/web/properties/format",
-                                                    "type": "string",
-                                                    "title": "The format schema",
-                                                    "description": "An explanation about the purpose of this instance.",
-                                                    "default": "",
-                                                    "examples": [
-                                                        "C2"
-                                                    ]
-                                                }
-                                            },
-                                            "additionalProperties": true
-                                        }
-                                    },
-                                    "additionalProperties": true
-                                }
-                            },
-                            "additionalProperties": true
-                        },
-                        "firstName": {
-                            "$id": "#/properties/output/properties/fields/properties/firstName",
-                            "type": "object",
-                            "title": "The firstName schema",
-                            "description": "An explanation about the purpose of this instance.",
-                            "default": {},
-                            "examples": [
-                                {
-                                    "displayName": "Name"
-                                }
-                            ],
-                            "required": [
-                                "displayName"
-                            ],
-                            "properties": {
-                                "displayName": {
-                                    "$id": "#/properties/output/properties/fields/properties/firstName/properties/displayName",
-                                    "type": "string",
-                                    "title": "The displayName schema",
-                                    "description": "An explanation about the purpose of this instance.",
-                                    "default": "",
-                                    "examples": [
-                                        "Name"
-                                    ]
-                                }
-                            },
-                            "additionalProperties": true
-                        },
-                        "lastName": {
-                            "$id": "#/properties/output/properties/fields/properties/lastName",
-                            "type": "object",
-                            "title": "The lastName schema",
-                            "description": "An explanation about the purpose of this instance.",
-                            "default": {},
-                            "examples": [
-                                {}
-                            ],
-                            "required": [],
-                            "additionalProperties": true
-                        }
-                    },
-                    "additionalProperties": true
-                }
+                "command": {},
+                "dataSource": {},
+                "fields": {}
             },
             "additionalProperties": true
         }

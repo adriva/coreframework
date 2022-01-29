@@ -24,12 +24,12 @@ namespace Adriva.Extensions.Reporting.Abstractions
         {
             object value;
 
-            if (filterDefinition.Properties.HasFlag(FilterProperties.Constant)) value = filterDefinition.DefaultValue;
-            else if (filterDefinition.Properties.HasFlag(FilterProperties.Required) && null == rawValue)
+            if (FilterProperties.Constant == filterDefinition.Properties) value = filterDefinition.DefaultValue;
+            else if (FilterProperties.Required == filterDefinition.Properties && null == rawValue)
             {
                 throw new ArgumentNullException(filterDefinition.Name, $"Filter parameter {filterDefinition.Name} is required.");
             }
-            else if (filterDefinition.Properties.HasFlag(FilterProperties.Context))
+            else if (FilterProperties.Context == filterDefinition.Properties)
             {
                 string cacheKey = $"{context.ContextProvider.GetType().AssemblyQualifiedName}:{filterDefinition.DefaultValue}:Instance:Public";
 
@@ -58,7 +58,15 @@ namespace Adriva.Extensions.Reporting.Abstractions
                 value = rawValue ?? filterDefinition.DefaultValue;
             }
 
-            value = Convert.ChangeType(value, filterDefinition.DataType, CultureInfo.CurrentCulture);
+            if (TypeCode.Empty == filterDefinition.DataType)
+            {
+                value = null;
+            }
+            else
+            {
+                value = Convert.ChangeType(value, filterDefinition.DataType, CultureInfo.CurrentCulture);
+            }
+
             return new FilterValue(rawValue, value);
         }
     }

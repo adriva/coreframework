@@ -1,5 +1,8 @@
+using System.Diagnostics;
+
 namespace Adriva.Extensions.Reporting.Abstractions
 {
+    [DebuggerDisplay("{Name} = {FilterValue.Value}")]
     public sealed class ReportCommandParameter
     {
         public string Name { get; private set; }

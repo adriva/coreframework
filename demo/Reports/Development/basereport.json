@@ -1,5 +1,11 @@
 {
     "$schema": "../report-schema.json",
     "base": "root",
-    "name": "base report definition"
+    "name": "base report definition",
+    "dataSources": {
+        "randomUser": {
+            "type": "HttpJson",
+            "connectionString": "https://randomuser.me"
+        }
+    }
 }

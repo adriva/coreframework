@@ -54,10 +54,9 @@ namespace demo.Controllers
 
         public async Task<IActionResult> Index(FilterValuesDictionary model)
         {
-            var def = await this.ReportingService.LoadReportDefinitionAsync("promotions/sample");
-            var dd = await this.ReportingService.GetFilterDataAsync(def, "district", model);
-            await this.ReportingService.PopulateFilterValuesAsync(def, null);
-            return this.Content(Utilities.SafeSerialize(def), "application/json");
+            var def = await this.ReportingService.LoadReportDefinitionAsync("tests/randomusers");
+            var o = await this.ReportingService.ExecuteReportOutputAsync(def, null);
+            return this.View();
         }
     }
 }

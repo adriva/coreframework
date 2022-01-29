@@ -27,7 +27,7 @@
             "dataSource": "DefaultSqlServer",
             "defaultValue": "Get35",
             "command": "getCities",
-            "properties": "Constant, Context",
+            "properties": "Default",
             "fields": {
                 "Id": {},
                 "Name": {}

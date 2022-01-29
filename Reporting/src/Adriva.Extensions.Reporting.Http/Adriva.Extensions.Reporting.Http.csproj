@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Title>Adriva Reporting Services Sql Server Extensions</Title>
-    <PackageDescription>Provides SQl Server data source and related extensions.</PackageDescription>    
+    <Title>Adriva Reporting Services Http Extensions</Title>
+    <PackageDescription>Provides HTTP data source and related extensions.</PackageDescription>    
     <Version>3.1.1</Version>
   </PropertyGroup>
 
@@ -15,6 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="1.1.*" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.*" />
   </ItemGroup>
 </Project>
