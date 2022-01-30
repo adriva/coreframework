@@ -6,6 +6,10 @@
         "randomUser": {
             "type": "HttpJson",
             "connectionString": "https://randomuser.me"
+        },
+        "sampleObject": {
+            "type": "Object",
+            "connectionString": "demo.Controllers.HomeController,demo"
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.UseCommandBuilder<DefaultCommandBuilder>();
             builder.UseFilterValueBinder<DefaultFilterValueBinder>();
             builder.UseDataSource<EnumDataSource>("Enum");
+            builder.UseDataSource<ObjectDataSource>("Object");
             build?.Invoke(builder);
             return services;
         }

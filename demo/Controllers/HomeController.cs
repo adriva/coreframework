@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -52,9 +53,25 @@ namespace demo.Controllers
             this.ReportingService = reportingService;
         }
 
+        public async Task<IEnumerable<object>> GetSampleData(string name, long pageIndex)
+        {
+            await Task.CompletedTask;
+            var arr = new dynamic[10];
+
+            for (int loop = 0; loop < 10; loop++)
+            {
+                arr[loop] = new ExpandoObject();
+                arr[loop].Id = loop;
+                arr[loop].FirstName = Guid.NewGuid().ToString();
+                arr[loop].LastName = Guid.NewGuid().ToString();
+            }
+
+            return arr;
+        }
+
         public async Task<IActionResult> Index(FilterValuesDictionary model)
         {
-            var def = await this.ReportingService.LoadReportDefinitionAsync("tests/randomusers");
+            var def = await this.ReportingService.LoadReportDefinitionAsync("tests/sample");
             var o = await this.ReportingService.ExecuteReportOutputAsync(def, null);
             return this.View();
         }

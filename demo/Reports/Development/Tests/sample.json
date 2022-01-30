@@ -18,6 +18,9 @@
         },
         "getAttributeTargets": {
             "commandText": "Enum"
+        },
+        "getSomeData": {
+            "commandText": "GetSampleData @firstName, @city"
         }
     },
     "filters": {
@@ -27,7 +30,7 @@
             "dataSource": "DefaultSqlServer",
             "defaultValue": "Get35",
             "command": "getCities",
-            "properties": "Default",
+            "properties": "Context",
             "fields": {
                 "Id": {},
                 "Name": {}
@@ -47,7 +50,11 @@
         "dummy": {
             "displayName": "Attribute Targets",
             "dataSource": "AttTargetsEnum",
-            "command": "getAttributeTargets"
+            "command": "getAttributeTargets",
+            "fields": {
+                "value": {},
+                "text": {}
+            }
         },
         "firstName": {
             "displayName": "Ad",
@@ -62,8 +69,8 @@
         }
     },
     "output": {
-        "command": "getUsers",
-        "dataSource": "DefaultSqlServer",
+        "command": "getSomeData",
+        "dataSource": "sampleObject",
         "fields": {
             "Id": {
                 "displayName": "Aydi",

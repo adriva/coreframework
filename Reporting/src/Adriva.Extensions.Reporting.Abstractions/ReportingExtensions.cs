@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Extensions.Configuration;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
-    public static class ReportDefinitionExtensions
+    public static class ReportingExtensions
     {
         public static IEnumerable<FilterDefinition> EnumerateFilterDefinitions(IDictionary<string, FilterDefinition> filterDefinitions)
         {
@@ -13,7 +14,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             {
                 yield return entry.Value;
 
-                foreach (var childDefinition in ReportDefinitionExtensions.EnumerateFilterDefinitions(entry.Value.Children))
+                foreach (var childDefinition in ReportingExtensions.EnumerateFilterDefinitions(entry.Value.Children))
                 {
                     yield return childDefinition;
                 }
@@ -22,7 +23,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public static IEnumerable<FilterDefinition> EnumerateFilterDefinitions(this ReportDefinition reportDefinition)
         {
-            return ReportDefinitionExtensions.EnumerateFilterDefinitions(reportDefinition?.Filters);
+            return ReportingExtensions.EnumerateFilterDefinitions(reportDefinition?.Filters);
         }
 
         public static bool TryFindFilterDefinition(this ReportDefinition reportDefinition, string filterName, out FilterDefinition filterDefinition)
@@ -76,6 +77,16 @@ namespace Adriva.Extensions.Reporting.Abstractions
             {
                 yield return fieldDefinitionEntry.Value;
             }
+        }
+
+        public static string GetNameWithoutParameters(this ReportCommand command)
+        {
+            if (null == command?.CommandDefinition?.CommandText)
+            {
+                return null;
+            }
+
+            return new string(command.CommandDefinition.CommandText.TakeWhile(x => '(' != x && ' ' != x && '@' != x).ToArray());
         }
 
         // public static T Get<T>(this IDynamicDefinition dynamicDefinition) where T : class

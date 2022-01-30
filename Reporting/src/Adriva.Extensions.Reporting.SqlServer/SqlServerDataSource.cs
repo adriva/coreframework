@@ -40,7 +40,6 @@ namespace Adriva.Extensions.Reporting.SqlServer
                     }
                 }
 
-
                 DataSet dataSet = DataSet.FromFields(fields);
                 int[] columnIndices = null;
 

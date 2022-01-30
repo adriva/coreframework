@@ -67,7 +67,44 @@
                     },
                     "minProperties": 1
                 }
+            },
+            "dependencies": {
+                "dataSource": {
+                    "required": [
+                        "dataSource",
+                        "command",
+                        "fields"
+                    ]
+                },
+                "command": {
+                    "required": [
+                        "dataSource",
+                        "command",
+                        "fields"
+                    ]
+                }
             }
+        },
+        "command": {
+            "type": "object",
+            "title": "A name that uniquely identifies the current command in the report.",
+            "default": {
+                "commandText": "COMMAND"
+            },
+            "properties": {
+                "commandText": {
+                    "type": "string",
+                    "minLength": 1,
+                    "title": "The text of the command that will be execute on the data source.",
+                    "description": "The command that will be executed by the data source. For example, a valid SQL query when targeting a SQL Server data source."
+                },
+                "options": {
+                    "$ref": "#/definitions/options"
+                }
+            },
+            "required": [
+                "commandText"
+            ]
         }
     },
     "type": "object",
@@ -129,6 +166,8 @@
                             "type": "string",
                             "examples": [
                                 "SqlServer",
+                                "HttpJson",
+                                "Object",
                                 "Enum"
                             ]
                         },
@@ -145,7 +184,6 @@
             "additionalProperties": true
         },
         "commands": {
-            "$id": "#/properties/commands",
             "type": "object",
             "title": "List of commands available.",
             "description": "Provides a list of command configurations that are available to this report as well as all reports inherited from this one.",
@@ -156,25 +194,7 @@
             },
             "patternProperties": {
                 "\\w+": {
-                    "type": "object",
-                    "title": "A name that uniquely identifies the current command in the report.",
-                    "default": {
-                        "commandText": "COMMAND"
-                    },
-                    "properties": {
-                        "commandText": {
-                            "type": "string",
-                            "minLength": 1,
-                            "title": "The text of the command that will be execute on the data source.",
-                            "description": "The command that will be executed by the data source. For example, a valid SQL query when targeting a SQL Server data source."
-                        },
-                        "options": {
-                            "$ref": "#/definitions/options"
-                        }
-                    },
-                    "required": [
-                        "commandText"
-                    ]
+                    "$ref": "#/definitions/command"
                 }
             },
             "required": [],
@@ -237,21 +257,13 @@
             "additionalProperties": true
         },
         "output": {
-            "$id": "#/properties/output",
             "type": "object",
-            "title": "The output schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": {},
-            "required": [
-                "command",
-                "dataSource",
-                "fields"
+            "title": "Defines the output schema of the current report.",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/dataBoundType"
+                }
             ],
-            "properties": {
-                "command": {},
-                "dataSource": {},
-                "fields": {}
-            },
             "additionalProperties": true
         }
     },

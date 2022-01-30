@@ -86,7 +86,7 @@ namespace Adriva.Extensions.Reporting.Http
             }
             else
             {
-                throw new NotSupportedException($"JToken type '{jToken.Type}' is not supported by the Http data source.");
+                throw new NotSupportedException($"JToken type '{jToken.Type}' is not supported by the Http Json data source.");
             }
         }
 
@@ -99,7 +99,14 @@ namespace Adriva.Extensions.Reporting.Http
                 JToken leafToken = jtoken;
                 foreach (var fieldName in fieldNames)
                 {
-                    leafToken = leafToken[fieldName];
+                    if (null != leafToken.SelectToken(fieldName))
+                    {
+                        leafToken = leafToken[fieldName];
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
 
                 object jValueCandidate = leafToken.Value<object>();

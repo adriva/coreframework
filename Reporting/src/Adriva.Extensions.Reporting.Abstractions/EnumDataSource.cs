@@ -7,29 +7,14 @@ using System.Threading.Tasks;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
-    public class EnumDataSource : IDataSource
+    public class EnumDataSource : ObjectDataSource
     {
-        private Type EnumType;
-
-        public Task OpenAsync(DataSourceDefinition dataSourceDefinition)
+        public EnumDataSource(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            if (string.IsNullOrWhiteSpace(dataSourceDefinition?.ConnectionString))
-            {
-                throw new ArgumentException(nameof(dataSourceDefinition.ConnectionString), "Enum connection string must point to a valid Enum type.");
-            }
 
-            this.EnumType = Type.GetType(dataSourceDefinition.ConnectionString, false, true);
-
-            if (null == this.EnumType)
-            {
-                throw new InvalidOperationException($"Specified data source Enum '{dataSourceDefinition.ConnectionString}' could not be found or loaded.");
-            }
-
-            return Task.CompletedTask;
         }
 
-
-        public Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields)
+        public override Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields)
         {
             if (null == fields || 2 != fields.Length)
             {
@@ -39,18 +24,18 @@ namespace Adriva.Extensions.Reporting.Abstractions
                 };
             }
 
-            Type enumBaseType = this.EnumType.GetEnumUnderlyingType();
-            string[] names = this.EnumType.GetEnumNames();
+            Type enumBaseType = this.ObjectType.GetEnumUnderlyingType();
+            string[] names = this.ObjectType.GetEnumNames();
 
             var dataset = DataSet.FromFields(fields);
 
             foreach (var name in names)
             {
-                var value = Convert.ChangeType(Enum.Parse(this.EnumType, name), enumBaseType);
+                var value = Convert.ChangeType(Enum.Parse(this.ObjectType, name), enumBaseType);
 
                 string description = null;
 
-                var memberInfo = this.EnumType.GetMember(name)?.FirstOrDefault();
+                var memberInfo = this.ObjectType.GetMember(name)?.FirstOrDefault();
 
                 if (null != memberInfo)
                 {
@@ -71,7 +56,5 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
             return Task.FromResult(dataset);
         }
-
-        public Task CloseAsync() => Task.CompletedTask;
     }
 }
