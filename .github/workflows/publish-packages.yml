@@ -107,3 +107,9 @@ jobs:
       with:
         PROJECT_FILE_PATH: Reporting/src/Adriva.Extensions.Reporting.SqlServer/Adriva.Extensions.Reporting.SqlServer.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish Reporting Services Http Extensions
+      uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
+      with:
+        PROJECT_FILE_PATH: Reporting/src/Adriva.Extensions.Reporting.Http/Adriva.Extensions.Reporting.Http.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
