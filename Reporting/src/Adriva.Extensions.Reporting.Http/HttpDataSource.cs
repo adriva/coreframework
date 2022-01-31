@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
 using Adriva.Extensions.Reporting.Abstractions;
+using Microsoft.Extensions.Logging;
 
 namespace Adriva.Extensions.Reporting.Http
 {
@@ -12,10 +13,13 @@ namespace Adriva.Extensions.Reporting.Http
         private readonly IHttpClientFactory HttpClientFactory;
         private HttpClient HttpClient;
 
+        protected ILogger Logger { get; private set; }
+
         public abstract void PopulateDataset(string content, HttpCommandOptions commandOptions, DataSet dataSet);
 
-        public HttpDataSource(IHttpClientFactory httpClientFactory)
+        public HttpDataSource(IHttpClientFactory httpClientFactory, ILoggerFactory loggerFactory)
         {
+            this.Logger = loggerFactory.CreateLogger(this.GetType());
             this.HttpClientFactory = httpClientFactory;
         }
 
@@ -28,6 +32,9 @@ namespace Adriva.Extensions.Reporting.Http
 
             this.HttpClient = this.HttpClientFactory.CreateClient($"{dataSourceDefinition.Type}_HttpClient");
             this.HttpClient.BaseAddress = baseUri;
+
+            this.Logger.LogInformation($"Http data source created named client '{dataSourceDefinition.Type}_HttpClient' targeting '{baseUri}'.");
+
             return Task.CompletedTask;
         }
 
@@ -38,6 +45,7 @@ namespace Adriva.Extensions.Reporting.Http
             if (null != command.CommandDefinition.Options)
             {
                 commandOptions = command.CommandDefinition.Options.ToObject<HttpCommandOptions>();
+                this.Logger.LogTrace($"Http data source using options {Utilities.SafeSerialize(commandOptions)}");
             }
 
             StringBuilder commandBuffer = new StringBuilder(command.Text);
@@ -53,9 +61,26 @@ namespace Adriva.Extensions.Reporting.Http
             {
                 using (var response = await this.HttpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead))
                 {
-                    response.EnsureSuccessStatusCode();
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        if (commandOptions.ThrowDetailedHttpErrors)
+                        {
+                            contentText = await response.Content.ReadAsStringAsync();
+                        }
 
-                    contentText = await response.Content.ReadAsStringAsync();
+                        try
+                        {
+                            response.EnsureSuccessStatusCode();
+                        }
+                        catch (Exception httpError)
+                        {
+                            throw new HttpRequestException(string.IsNullOrWhiteSpace(contentText) ? "Http error retrieving data." : contentText, httpError);
+                        }
+                    }
+                    else
+                    {
+                        contentText = await response.Content.ReadAsStringAsync();
+                    }
                 }
             }
 
@@ -69,7 +94,6 @@ namespace Adriva.Extensions.Reporting.Http
 
         public Task CloseAsync()
         {
-            this.HttpClient.DefaultRequestHeaders.Clear();
             return Task.CompletedTask;
         }
     }

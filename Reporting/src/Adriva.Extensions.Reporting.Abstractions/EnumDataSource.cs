@@ -19,8 +19,8 @@ namespace Adriva.Extensions.Reporting.Abstractions
             if (null == fields || 2 != fields.Length)
             {
                 fields = new FieldDefinition[] {
-                    new FieldDefinition(){Name = "Value"},
-                    new FieldDefinition(){Name = "Text"}
+                    new FieldDefinition(){Name = Constants.EnumValueField},
+                    new FieldDefinition(){Name = Constants.EnumTextField }
                 };
             }
 

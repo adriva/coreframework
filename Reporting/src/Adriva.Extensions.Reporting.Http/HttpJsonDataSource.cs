@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http;
 using Adriva.Extensions.Reporting.Abstractions;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.Http
@@ -12,7 +13,7 @@ namespace Adriva.Extensions.Reporting.Http
     {
         private readonly ArrayPool<object> ArrayPool;
 
-        public HttpJsonDataSource(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
+        public HttpJsonDataSource(IHttpClientFactory httpClientFactory, ILoggerFactory loggerFactory) : base(httpClientFactory, loggerFactory)
         {
             this.ArrayPool = ArrayPool<object>.Shared;
         }

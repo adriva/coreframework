@@ -52,6 +52,5 @@ namespace Adriva.Extensions.Reporting.Abstractions
             this.DataRows.Add(dataRow);
             return dataRow;
         }
-
     }
 }

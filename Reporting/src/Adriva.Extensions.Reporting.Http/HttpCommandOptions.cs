@@ -7,5 +7,7 @@ namespace Adriva.Extensions.Reporting.Http
         public string DataElement { get; set; }
 
         public string Method { get; set; } = HttpMethod.Get.Method;
+
+        public bool ThrowDetailedHttpErrors { get; set; } = false;
     }
 }

@@ -13,9 +13,9 @@ namespace Adriva.Extensions.Reporting.SqlServer
         private SqlConnection Connection;
         private bool IsDisposed;
 
-        public SqlServerDataSource(ILogger<SqlServerDataSource> logger)
+        public SqlServerDataSource(ILoggerFactory loggerFactory)
         {
-            this.Logger = logger;
+            this.Logger = loggerFactory.CreateLogger<SqlServerDataSource>();
         }
 
         public Task OpenAsync(DataSourceDefinition dataSourceDefinition)
@@ -57,13 +57,21 @@ namespace Adriva.Extensions.Reporting.SqlServer
                 {
                     if (null == columnIndices)
                     {
-                        try
+                        int loop = 0;
+                        columnIndices = new int[fields.Length];
+
+                        foreach (var field in fields)
                         {
-                            columnIndices = fields.Select(f => dataReader.GetOrdinal(f.Name)).ToArray();
-                        }
-                        catch (IndexOutOfRangeException indexOutOfRangeException)
-                        {
-                            throw new IndexOutOfRangeException($"Field '{indexOutOfRangeException.Message}' could not be found in the retrieved dataset.", indexOutOfRangeException);
+                            try
+                            {
+                                columnIndices[loop] = dataReader.GetOrdinal(field.Name);
+                            }
+                            catch (IndexOutOfRangeException)
+                            {
+                                columnIndices[loop] = -1;
+                                this.Logger.LogWarning($"Field '{field.Name}' doesn't exist in the data retrieved from the source. This field will be populated with empty values.");
+                            }
+                            ++loop;
                         }
                     }
 
@@ -73,8 +81,15 @@ namespace Adriva.Extensions.Reporting.SqlServer
 
                         foreach (var columnIndex in columnIndices)
                         {
-                            object value = dataReader.GetValue(columnIndex);
-                            dataRow.AddData(DBNull.Value == value ? null : value);
+                            if (-1 < columnIndex)
+                            {
+                                object value = dataReader.GetValue(columnIndex);
+                                dataRow.AddData(DBNull.Value == value ? null : value);
+                            }
+                            else
+                            {
+                                dataRow.AddData(null);
+                            }
                         }
                     }
                 }
