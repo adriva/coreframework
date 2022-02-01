@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <VersionMajor Condition="'$(VersionMajor)' == ''">0</VersionMajor>
+    <VersionMinor Condition="'$(VersionMinor)' == ''">1</VersionMinor>
+    <VersionPatch Condition="'$(VersionPatch)' == ''">$([System.DateTime]::UtcNow.Subtract($([System.DateTime]::new(2022,1,1))).TotalDays.ToString("0"))</VersionPatch>
+    <VersionRevision Condition="'$(VersionRevision)' == ''">$([System.DateTime]::UtcNow.TimeOfDay.TotalMinutes.ToString("0"))</VersionRevision>
+    <Version>$(VersionMajor).$(VersionMinor).$(VersionPatch).$(VersionRevision)</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Adriva.Extensions.Reports" Version="2.1.22.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.*" />
+    <PackageReference Include="System.CommandLine.Hosting" Version="0.4.0-alpha.21617.1" />    
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Reporting\src\Adriva.Extensions.Reporting.Abstractions\Adriva.Extensions.Reporting.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

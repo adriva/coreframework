@@ -59,14 +59,16 @@
             }
         },
         {
-            "name": "Launch Code Analyzer",
+            "name": "Launch Dev Tools",
             "preLaunchTask": "build dev-tools",
             "type": "coreclr",
             "request": "launch",
-            "cwd": "${workspaceFolder}/DevTools/src/Adriva.CodeAnalysis.CSharp",
-            "program": "${workspaceFolder}/DevTools/src/Adriva.CodeAnalysis.CSharp/bin/Debug/netcoreapp3.1/Adriva.CodeAnalysis.CSharp.dll",
+            "cwd": "${workspaceFolder}/DevTools/Adriva.DevTools.Cli",
+            "program": "${workspaceFolder}/DevTools/Adriva.DevTools.Cli/bin/Debug/netcoreapp3.1/Adriva.DevTools.Cli.dll",
             "args": [
-                "/Users/mnemonic/Projects/netcorelibs/Framework/Common/src/Adriva.Common.Core.csproj"
+                "update-report",
+                "-i",
+                "Reporting/MigrationHandler.cs"
             ]
         },
         {

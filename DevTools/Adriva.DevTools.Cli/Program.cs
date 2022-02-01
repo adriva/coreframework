@@ -1,0 +1,129 @@
+﻿using System.CommandLine;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using System.CommandLine.NamingConventionBinder;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System;
+using System.CommandLine.Builder;
+using System.CommandLine.Parsing;
+
+namespace Adriva.DevTools.Cli
+{
+    class Program
+    {
+        private const string AppName = "Adriva command line developer tools.";
+
+        private static IEnumerable<MethodInfo> GetHandlerMethods()
+        {
+            var currentAssembly = Assembly.GetCallingAssembly();
+            return from type in currentAssembly.GetTypes()
+                   from method in type.GetMethods()
+                   where type.IsClass
+                            && !type.IsAbstract
+                            && !type.IsGenericType
+                            && !method.IsStatic
+                            &&
+                                (
+                                    method.Name.Equals("Invoke", StringComparison.OrdinalIgnoreCase)
+                                    || method.Name.Equals("InvokeAsync", StringComparison.OrdinalIgnoreCase)
+                                )
+                            &&
+                                (
+                                    null != method.GetCustomAttribute<CommandHandlerAttribute>()
+                                )
+                   select method;
+        }
+
+        private static Command CreateCommand(IServiceProvider serviceProvider, MethodInfo methodInfo)
+        {
+            if (null == methodInfo)
+            {
+                return null;
+            }
+
+            CommandHandlerAttribute commandHandlerAttribute = methodInfo.GetCustomAttribute<CommandHandlerAttribute>();
+
+            Command command = new Command(commandHandlerAttribute.Name);
+
+            var commandArgumentAttributes = methodInfo.GetCustomAttributes<CommandArgumentAttribute>();
+
+            foreach (var commandArgumentAttribute in commandArgumentAttributes)
+            {
+                Option commandOption = null;
+
+                if (null != commandArgumentAttribute.Type)
+                {
+                    commandOption = new Option(commandArgumentAttribute.Name)
+                    {
+                        IsRequired = commandArgumentAttribute.IsRequired,
+                        IsHidden = commandArgumentAttribute.IsHidden,
+                        Arity = ArgumentArity.ExactlyOne
+                    };
+                }
+                else
+                {
+                    commandOption = new Option(commandArgumentAttribute.Name, null, commandArgumentAttribute.Type)
+                    {
+                        IsRequired = commandArgumentAttribute.IsRequired,
+                        IsHidden = commandArgumentAttribute.IsHidden
+                    };
+                }
+
+                if (null != commandArgumentAttribute.Aliases)
+                {
+                    foreach (string alias in commandArgumentAttribute.Aliases)
+                    {
+                        commandOption.AddAlias(alias);
+                    }
+                }
+
+                command.AddOption(commandOption);
+            }
+
+            var commandTypeInstance = ActivatorUtilities.CreateInstance(serviceProvider, methodInfo.DeclaringType);
+
+            command.Handler = CommandHandler.Create(methodInfo, commandTypeInstance);
+
+            return command;
+        }
+
+        static async Task<int> Main(string[] args)
+        {
+            Startup startup = new Startup();
+
+            ServiceCollection services = new ServiceCollection();
+            startup.ConfigureServices(services);
+            IServiceProvider serviceProvider = services.BuildServiceProvider();
+
+            RootCommand rootCommand = new RootCommand(Program.AppName);
+            rootCommand.AddGlobalOption(new Option<bool>(new[] { "-v", "--verbose" }, "Turns on verbose output.") { IsRequired = false, });
+
+            CommandLineBuilder commandLineBuilder = new CommandLineBuilder(rootCommand);
+
+            foreach (var method in Program.GetHandlerMethods())
+            {
+                Command command = Program.CreateCommand(serviceProvider, method);
+
+                if (null != command)
+                {
+                    rootCommand.AddCommand(command);
+                }
+            }
+
+            Parser parser = commandLineBuilder
+                                    .UseDefaults()
+                                    .AddMiddleware(context =>
+                                    {
+                                        if (0 == context.ParseResult.Errors.Count)
+                                        {
+                                            context.Console.WriteLine(Program.AppName);
+                                            context.Console.WriteLine(string.Empty);
+                                        }
+                                    })
+                                    .Build();
+            return await parser.InvokeAsync(args);
+        }
+    }
+}
