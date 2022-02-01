@@ -7,6 +7,8 @@ namespace Adriva.DevTools.Cli
     {
         public string Name { get; private set; }
 
+        public string Description { get; set; }
+
         public string[] Aliases { get; set; }
 
         public bool IsRequired { get; set; }

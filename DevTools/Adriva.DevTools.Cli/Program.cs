@@ -8,12 +8,13 @@ using System.Reflection;
 using System;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
+using Microsoft.Extensions.Logging;
 
 namespace Adriva.DevTools.Cli
 {
     class Program
     {
-        private const string AppName = "Adriva command line developer tools.";
+        private const string AppName = "Adriva Command Line Developer Tools";
 
         private static IEnumerable<MethodInfo> GetHandlerMethods()
         {
@@ -55,7 +56,7 @@ namespace Adriva.DevTools.Cli
 
                 if (null != commandArgumentAttribute.Type)
                 {
-                    commandOption = new Option(commandArgumentAttribute.Name)
+                    commandOption = new Option(commandArgumentAttribute.Name, commandArgumentAttribute.Description)
                     {
                         IsRequired = commandArgumentAttribute.IsRequired,
                         IsHidden = commandArgumentAttribute.IsHidden,
@@ -114,10 +115,16 @@ namespace Adriva.DevTools.Cli
 
             Parser parser = commandLineBuilder
                                     .UseDefaults()
+                                    .UseExceptionHandler((exception, context) =>
+                                    {
+                                        var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger(string.Empty);
+                                        logger.LogError(exception, "Failed");
+                                    })
                                     .AddMiddleware(context =>
                                     {
                                         if (0 == context.ParseResult.Errors.Count)
                                         {
+                                            context.Console.WriteLine(string.Empty);
                                             context.Console.WriteLine(Program.AppName);
                                             context.Console.WriteLine(string.Empty);
                                         }

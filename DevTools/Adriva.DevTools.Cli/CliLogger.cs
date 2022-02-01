@@ -18,6 +18,11 @@ namespace Adriva.DevTools.Cli
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
             Console.WriteLine(formatter.Invoke(state, exception));
+
+            if (null != exception)
+            {
+                Console.Error.WriteLine(exception.Message);
+            }
         }
     }
 }

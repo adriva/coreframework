@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -6,18 +7,20 @@ namespace Adriva.DevTools.Cli.Reporting
 {
     internal sealed class MigrationHandler : BaseHandler
     {
-        public MigrationHandler(ILoggerFactory loggerFactory) : base(loggerFactory)
+        private readonly IServiceProvider ServiceProvider;
+
+        public MigrationHandler(IServiceProvider serviceProvider, ILoggerFactory loggerFactory) : base(loggerFactory)
         {
+            this.ServiceProvider = serviceProvider;
         }
 
         [CommandHandler("update-report")]
-        [CommandArgument("input", Aliases = new[] { "-i" }, IsRequired = true, Type = typeof(FileInfo))]
-        public async Task InvokeAsync(FileInfo input)
+        [CommandArgument("--repository", Aliases = new[] { "-r" }, IsRequired = false, Type = typeof(DirectoryInfo), Description = "Path of the reports repository. Required if --combined flag is set.")]
+        [CommandArgument("--report", Aliases = new[] { "-n" }, IsRequired = true, Type = typeof(string), Description = "Name of the legacy report if --combined flag is set, otherwise the path of the legacy report.")]
+        [CommandArgument("--output", Aliases = new[] { "-o" }, IsRequired = false, Type = typeof(DirectoryInfo), Description = "Output folder where the new report will be generated. (Default: Current directory).")]
+        [CommandArgument("--combined", Aliases = new[] { "-c" }, IsRequired = false, Type = typeof(bool), Description = "Resolves base reports that may be defined in the legacy report and combines them all into one output. (Default: False)")]
+        public async Task InvokeAsync(DirectoryInfo repository, DirectoryInfo output, string report, bool combined)
         {
-            if (!input.Exists)
-            {
-                this.Logger.LogError($"Input file '{input.FullName}' does not exist.");
-            }
 
             await Task.CompletedTask;
         }
