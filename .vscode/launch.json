@@ -70,7 +70,7 @@
                 "-r",
                 "/Users/mnemonic/Projects/po/portal/PetrolOfisi.Portal.Web/ReportStore",
                 "-n",
-                "Poapi/OilOrder"
+                "/Users/mnemonic/Projects/po/portal/PetrolOfisi.Portal.Web/ReportStore/Poapi/OilOrder.json"
             ]
         },
         {

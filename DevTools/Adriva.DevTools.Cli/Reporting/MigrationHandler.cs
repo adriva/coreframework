@@ -2,9 +2,16 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Adriva.DevTools.Cli.Reporting
 {
+    internal sealed class LegacyReportMapper
+    {
+
+    }
+
     internal sealed class MigrationHandler : BaseHandler
     {
         private readonly IServiceProvider ServiceProvider;
@@ -21,6 +28,18 @@ namespace Adriva.DevTools.Cli.Reporting
         [CommandArgument("--combined", Aliases = new[] { "-c" }, IsRequired = false, Type = typeof(bool), Description = "Resolves base reports that may be defined in the legacy report and combines them all into one output. (Default: False)")]
         public async Task InvokeAsync(DirectoryInfo repository, DirectoryInfo output, string report, bool combined)
         {
+            if (combined && null == repository)
+            {
+                throw new InvalidProgramException($"Combined flag requires the repository to be set. (--repository parameter)");
+            }
+
+            if (!combined)
+            {
+                repository = new DirectoryInfo(Path.GetDirectoryName(report));
+                report = $"{Path.GetFileNameWithoutExtension(report)}.json";
+            }
+
+
 
             await Task.CompletedTask;
         }
