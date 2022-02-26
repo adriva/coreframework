@@ -18,13 +18,13 @@ namespace Adriva.Extensions.Caching.Abstractions
                  => this.GetOrCreateAsync<T>(key, factory, null, dependencyMonikers);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void NotifyChanged(string dependencyMoniker)
+        public void NotifyChanged(string key, string dependencyMoniker)
         {
 
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Task NotifyChangedAsync(string dependencyMoniker) => Task.CompletedTask;
+        public Task NotifyChangedAsync(string key, string dependencyMoniker) => Task.CompletedTask;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ValueTask RemoveAsync(string key) => new ValueTask();

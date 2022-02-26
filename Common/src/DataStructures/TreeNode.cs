@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Adriva.Common.Core.DataStructures
 {
@@ -21,6 +22,7 @@ namespace Adriva.Common.Core.DataStructures
     /// A tree node with a value of type T.
     /// </summary>
     /// <typeparam name="T">The type of the value of the tree node.</typeparam>
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class TreeNode<T> : ITreeNode<T>, IDisposable
     {
         public class TreeNodeEventArgs : EventArgs
@@ -34,37 +36,55 @@ namespace Adriva.Common.Core.DataStructures
             }
         }
 
+        [JsonIgnore]
         private readonly ObservableCollection<TreeNode<T>> ObservableChildren;
+
+        [JsonIgnore]
         private bool IsDisposed;
 
         /// <summary>
         /// Gets the value of the current tree node.
         /// </summary>
         /// <value>The value of the current tree node.</value>
+        [JsonProperty]
         public T Value { get; private set; }
 
         /// <summary>
         /// Gets the child nodes of the current tree node.
         /// </summary>        
+        [JsonProperty]
         public IList<TreeNode<T>> Children => this.ObservableChildren;
 
         /// <summary>
         /// Gets or sets a callback that is called when children are added to this TreeNode<T>.
         /// </summary>
+        [JsonIgnore]
         public Action<TreeNodeEventArgs> OnChildrenAdded { get; set; }
 
         /// <summary>
         /// Gets or sets a callback that is called when children are removed from this TreeNode<T>.
         /// </summary>
+        [JsonIgnore]
         public Action<TreeNodeEventArgs> OnChildrenRemoved { get; set; }
 
         /// <summary>
         /// Creates a new instance of a TreeNode class.
         /// </summary>
+        [JsonConstructor]
         public TreeNode()
         {
             this.ObservableChildren = new ObservableCollection<TreeNode<T>>();
             this.ObservableChildren.CollectionChanged += this.OnChildrenCollectionChanged;
+        }
+
+        /// <summary>
+        /// Creates a new instance of a TreeNode class with the specified value.
+        /// </summary>
+        /// <param name="value">The value of the new tree node object.</param>
+        /// <returns>An instance of the TreeNode class.</returns>
+        public TreeNode(T value) : this()
+        {
+            this.Value = value;
         }
 
         private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -79,16 +99,6 @@ namespace Adriva.Common.Core.DataStructures
                 TreeNodeEventArgs treeNodeEventArgs = new TreeNodeEventArgs(e.OldItems.OfType<TreeNode<T>>());
                 this.OnChildrenRemoved.Invoke(treeNodeEventArgs);
             }
-        }
-
-        /// <summary>
-        /// Creates a new instance of a TreeNode class with the specified value.
-        /// </summary>
-        /// <param name="value">The value of the new tree node object.</param>
-        /// <returns>An instance of the TreeNode class.</returns>
-        public TreeNode(T value) : this()
-        {
-            this.Value = value;
         }
 
         protected virtual void Dispose(bool disposing)

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace Adriva.Extensions.Caching.Distributed
 {
-    public sealed class DistributedCache : ICache
+    public class DistributedCache : ICache
     {
         private readonly IDistributedCache Cache;
 
@@ -86,12 +86,12 @@ namespace Adriva.Extensions.Caching.Distributed
             return this.GetOrCreateAsync(key, factory, null, dependencyMonikers);
         }
 
-        public void NotifyChanged(string dependencyMoniker)
+        public virtual void NotifyChanged(string key, string dependencyMoniker)
         {
             this.Cache.Remove(dependencyMoniker);
         }
 
-        public async Task NotifyChangedAsync(string dependencyMoniker)
+        public virtual async Task NotifyChangedAsync(string key, string dependencyMoniker)
         {
             await this.Cache.RemoveAsync(dependencyMoniker);
         }

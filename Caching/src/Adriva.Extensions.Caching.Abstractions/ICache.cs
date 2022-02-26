@@ -41,14 +41,16 @@ namespace Adriva.Extensions.Caching.Abstractions
         /// <summary>
         /// Notifies the given dependency item of a change so that all cache dependencies are expired in the cache.
         /// </summary>
+        /// <param name="key">The identifier of the item that triggered the change notification.</param>
         /// <param name="dependencyMoniker">The identifier of the dependency.</param>
-        void NotifyChanged(string dependencyMoniker);
+        void NotifyChanged(string key, string dependencyMoniker);
 
         /// <summary>
         /// Notifies the given dependency item of a change so that all cached items depending on this moniker are evicted.
         /// </summary>
+        /// <param name="key">The identifier of the item that triggered the change notification.</param>
         /// <param name="dependencyMoniker">The identifier of the dependency.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task NotifyChangedAsync(string dependencyMoniker);
+        Task NotifyChangedAsync(string key, string dependencyMoniker);
     }
 }

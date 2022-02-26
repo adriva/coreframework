@@ -7,7 +7,7 @@
   <PropertyGroup>
     <Title>Adriva client wrapper for Microsoft ApplicationInsights</Title>
     <PackageDescription>Client library that can be injected to collect analytics data.</PackageDescription>
-    <Version>3.1.3</Version>
+    <Version>3.1.4</Version>
   </PropertyGroup>
 
   <ItemGroup>

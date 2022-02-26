@@ -90,7 +90,7 @@ namespace Adriva.Extensions.Caching.Memory
             await Task.CompletedTask;
         }
 
-        public void NotifyChanged(string dependencyMoniker)
+        public void NotifyChanged(string key, string dependencyMoniker)
         {
             if (string.IsNullOrWhiteSpace(dependencyMoniker)) return;
 
@@ -108,9 +108,9 @@ namespace Adriva.Extensions.Caching.Memory
             this.NotificationQueue.Enqueue(new Tuple<Action<string>, string>(notifyAction, dependencyMoniker));
         }
 
-        public Task NotifyChangedAsync(string dependencyMoniker)
+        public Task NotifyChangedAsync(string key, string dependencyMoniker)
         {
-            return Task.Run(() => this.NotifyChanged(dependencyMoniker));
+            return Task.Run(() => this.NotifyChanged(key, dependencyMoniker));
         }
 
         #region IDisposable Support

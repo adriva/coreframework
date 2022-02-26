@@ -11,7 +11,7 @@
   <PropertyGroup>
     <Title>Adriva In-Memory Cache Storage</Title>
     <PackageDescription>Provides an implementation of cache storage that stores cached items in memory.</PackageDescription>    
-    <Version>3.1.0</Version>
+    <Version>3.1.1</Version>
   </PropertyGroup>
 
   <PropertyGroup>
