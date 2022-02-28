@@ -6,6 +6,7 @@ using Adriva.Storage.Abstractions;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Adriva.Storage.SqlServer
 {
@@ -20,15 +21,17 @@ namespace Adriva.Storage.SqlServer
 
         private readonly DbContextFactory DbContextFactory;
         private readonly IQueueMessageSerializer MessageSerializer;
+        private ILogger Logger;
 
         private QueueDbContext DbContext;
         private SqlServerQueueOptions Options;
         private StorageClientContext Context;
 
-        public SqlServerQueueClient(DbContextFactory dbContextFactory, IQueueMessageSerializer messageSerializer)
+        public SqlServerQueueClient(DbContextFactory dbContextFactory, IQueueMessageSerializer messageSerializer, ILogger<SqlServerQueueClient> logger)
         {
             this.DbContextFactory = dbContextFactory;
             this.MessageSerializer = messageSerializer;
+            this.Logger = logger;
         }
 
         private static void EnsureValidQueueMessage(QueueMessage queueMessage, ref long? id)
@@ -56,7 +59,7 @@ namespace Adriva.Storage.SqlServer
                 {
                     if (!SqlServerQueueClient.IsDatabaseObjectsCreated)
                     {
-                        await DbHelpers.ExecuteScriptAsync(this.DbContext.Database, this.Options, "queue-createtable", "queue-createsp");
+                        await DbHelpers.ExecuteScriptAsync(this.DbContext.Database, this.Options, this.Logger, "queue-createtable", "queue-createsp");
                         SqlServerQueueClient.IsDatabaseObjectsCreated = true;
                     }
                 }

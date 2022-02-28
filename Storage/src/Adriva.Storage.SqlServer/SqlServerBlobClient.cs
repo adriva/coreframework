@@ -9,6 +9,7 @@ using Adriva.Common.Core;
 using Adriva.Storage.Abstractions;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Adriva.Storage.SqlServer
 {
@@ -17,6 +18,7 @@ namespace Adriva.Storage.SqlServer
         private static readonly SemaphoreSlim DatabaseCreateSemaphore = new SemaphoreSlim(1, 1);
 
         private readonly DbContextFactory DbContextFactory;
+        private readonly ILogger Logger;
 
         private string ContainerName;
         private SqlServerBlobOptions Options;
@@ -70,9 +72,10 @@ namespace Adriva.Storage.SqlServer
 
         }
 
-        public SqlServerBlobClient(DbContextFactory dbContextFactory)
+        public SqlServerBlobClient(DbContextFactory dbContextFactory, ILogger<SqlServerBlobClient> logger)
         {
             this.DbContextFactory = dbContextFactory;
+            this.Logger = logger;
         }
 
         private async ValueTask EnsureDatabaseObjectsAsync()
@@ -81,7 +84,7 @@ namespace Adriva.Storage.SqlServer
 
             try
             {
-                await DbHelpers.ExecuteScriptAsync(this.DbContext.Database, this.Options, "blob-createtable", "blob-createsp");
+                await DbHelpers.ExecuteScriptAsync(this.DbContext.Database, this.Options, this.Logger, "blob-createtable", "blob-createsp");
             }
             finally
             {

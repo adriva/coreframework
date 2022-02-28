@@ -3,12 +3,13 @@ using Adriva.Common.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Logging;
 
 namespace Adriva.Storage.SqlServer
 {
     internal static class DbHelpers
     {
-        public static async Task ExecuteScriptAsync(DatabaseFacade database, ISqlServerModelOptions options, params string[] scriptNames)
+        public static async Task ExecuteScriptAsync(DatabaseFacade database, ISqlServerModelOptions options, ILogger logger, params string[] scriptNames)
         {
             var resourceFileProvider = new EmbeddedFileProvider(typeof(DbHelpers).Assembly);
 
@@ -17,6 +18,7 @@ namespace Adriva.Storage.SqlServer
                 foreach (var scriptName in scriptNames)
                 {
                     var scriptFile = resourceFileProvider.GetFileInfo($"{scriptName}.sql");
+
                     string sql = await scriptFile.ReadAllTextAsync();
 
                     sql = sql
@@ -31,6 +33,9 @@ namespace Adriva.Storage.SqlServer
                                 .Replace("{PROC_UPDATE}", blobOptions.UpdateProcedureName)
                                 ;
                     }
+
+                    logger.LogInformation($"Running script '{scriptName}'.");
+                    logger.LogInformation(sql);
 
                     await database.ExecuteSqlRawAsync(sql);
                 }
