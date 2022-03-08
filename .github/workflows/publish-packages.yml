@@ -35,11 +35,11 @@ jobs:
       with:
         PROJECT_FILE_PATH: Caching/src/Adriva.Extensions.Caching.Memory/Adriva.Extensions.Caching.Memory.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
-    - name: Publish NuGet Caching Distributed
+    - name: Publish NuGet Caching SQL Server
       uses: rohith/publish-nuget@v2.1.2
       continue-on-error: true
       with:
-        PROJECT_FILE_PATH: Caching/src/Adriva.Extensions.Caching.Distributed/Adriva.Extensions.Caching.Distributed.csproj
+        PROJECT_FILE_PATH: Caching/src/Adriva.Extensions.Caching.SqlServer/Adriva.Extensions.Caching.SqlServer.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish NuGet Optimization Abstractions
       uses: rohith/publish-nuget@v2.1.2
