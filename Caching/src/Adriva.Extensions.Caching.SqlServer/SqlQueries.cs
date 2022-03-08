@@ -67,6 +67,8 @@ namespace Adriva.Extensions.Caching.SqlServer
 
         public const string DeleteExpiredCacheItemsFormat = "DELETE FROM {0} WHERE @UtcNow > ExpiresAtTime";
 
+        public const string DeleteExpiredDependencyMonikersFormat = "DELETE FROM {1} WHERE NOT EXISTS (SELECT * FROM {0} WHERE {0}.Id = {1}.CacheKey)";
+
         public SqlQueries(string schemaName, string tableName, string dependencyTableName)
         {
             var tableNameWithSchema = string.Format(
@@ -86,6 +88,7 @@ namespace Adriva.Extensions.Caching.SqlServer
             this.TableInfo = string.Format(CultureInfo.InvariantCulture, TableInfoFormat, EscapeLiteral(schemaName), EscapeLiteral(tableName));
             this.AddOrUpdateDependencyMoniker = string.Format(CultureInfo.InvariantCulture, UpsertDependencyMonikerFormat, dependencyTableNameWithSchema);
             this.NotifyChanged = string.Format(CultureInfo.InvariantCulture, NotifyChangedFormat, tableNameWithSchema, dependencyTableNameWithSchema);
+            this.DeleteExpiredDependencyMonikers = string.Format(CultureInfo.InvariantCulture, DeleteExpiredDependencyMonikersFormat, tableNameWithSchema, dependencyTableNameWithSchema);
         }
 
         public string TableInfo { get; }
@@ -99,6 +102,8 @@ namespace Adriva.Extensions.Caching.SqlServer
         public string DeleteCacheItem { get; }
 
         public string DeleteExpiredCacheItems { get; }
+
+        public string DeleteExpiredDependencyMonikers { get; }
 
         public string AddOrUpdateDependencyMoniker { get; }
 

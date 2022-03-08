@@ -98,13 +98,15 @@ namespace Adriva.Extensions.Caching.SqlServer
             var utcNow = DateTimeOffset.UtcNow;
 
             using (var connection = new SqlConnection(ConnectionString))
-            using (var command = new SqlCommand(SqlQueries.DeleteExpiredCacheItems, connection))
+            using (var deleteExpiredCacheItemsCommand = new SqlCommand(SqlQueries.DeleteExpiredCacheItems, connection))
+            using (var deleteExpiredDependencyMonikersCommand = new SqlCommand(SqlQueries.DeleteExpiredDependencyMonikers, connection))
             {
-                command.Parameters.AddWithValue("UtcNow", SqlDbType.DateTime2, utcNow);
+                deleteExpiredCacheItemsCommand.Parameters.AddWithValue("UtcNow", SqlDbType.DateTime2, utcNow);
 
                 connection.Open();
 
-                var effectedRowCount = command.ExecuteNonQuery();
+                _ = deleteExpiredCacheItemsCommand.ExecuteNonQuery();
+                _ = deleteExpiredDependencyMonikersCommand.ExecuteNonQuery();
             }
         }
 
