@@ -38,7 +38,13 @@ namespace demo
                 options.Configuration = "192.168.222.63:6379";
             });
 
-            services.AddCache<Adriva.Extensions.Caching.Distributed.DistributedCache>();
+            services.AddDistributedSqlServerCache(options =>
+            {
+                options.ConnectionString = "Server=10.255.1.127\\SQL2017,1435;Database=Mrt;User Id=poasPortal;Password=portal12;MultipleActiveResultSets=True";
+                options.SchemaName = "dbo";
+                options.DependencyTableName = "CacheDependency";
+                options.TableName = "Cache";
+            });
 
             services
                 .AddControllersWithViews()

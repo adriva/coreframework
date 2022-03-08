@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Distributed cache implementation variant of Microsoft.Extensions.Caching.Distributed.IDistributedCache using Microsoft SQL Server.</Description>
+    <TargetFrameworks>netstandard2.1</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <ExcludeFromSourceBuild>true</ExcludeFromSourceBuild>
+    <NoWarn>$(NoWarn);PKG0001</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="3.*" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.*" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Adriva.Extensions.Caching.Abstractions\Adriva.Extensions.Caching.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\Common\src\Adriva.Common.Core.csproj" />
+  </ItemGroup>
+
+</Project>

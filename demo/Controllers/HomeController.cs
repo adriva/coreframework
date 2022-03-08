@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Dynamic;
-using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
-using Adriva.Common.Core;
 using Adriva.Extensions.Caching.Abstractions;
-using Adriva.Extensions.Caching.Distributed;
 using Adriva.Extensions.Reporting.Abstractions;
-using Adriva.Storage.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -71,9 +62,27 @@ namespace demo.Controllers
 
         public async Task<IActionResult> Index(FilterValuesDictionary model)
         {
-            var def = await this.ReportingService.LoadReportDefinitionAsync("tests/sample");
-            var o = await this.ReportingService.ExecuteReportOutputAsync(def, null);
-            return this.View();
+            // var def = await this.ReportingService.LoadReportDefinitionAsync("tests/sample");
+            // var o = await this.ReportingService.ExecuteReportOutputAsync(def, null);
+            // return this.View();
+            var cache = this.HttpContext.RequestServices.GetService<ICache>();
+            var x = await cache.GetOrCreateAsync<string>("HELO", async entry =>
+            {
+                await Task.CompletedTask;
+                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(40);
+                return "hello world";
+            }, "DEP1");
+
+            var x2 = await cache.GetOrCreateAsync<string>("HELO2", async entry =>
+            {
+                await Task.CompletedTask;
+                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(40);
+                return "hello world";
+            }, "DEP1", "DEP2");
+
+            await cache.NotifyChangedAsync("HELO2", "DEP1");
+
+            return this.Content(x);
         }
     }
 }
