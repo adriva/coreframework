@@ -23,6 +23,7 @@ namespace Adriva.Extensions.Caching.SqlServer
         private readonly Action DeleteExpiredCachedItemsDelegate;
         private readonly TimeSpan DefaultSlidingExpiration;
         private readonly Object Mutex = new Object();
+        private readonly Action<ICacheItem> BeforeStoreCacheItem;
 
         /// <summary>
         /// Initializes a new instance of <see cref="SqlServerCache"/>.
@@ -57,6 +58,7 @@ namespace Adriva.Extensions.Caching.SqlServer
             this.ExpiredItemsDeletionInterval = cacheOptions.ExpiredItemsDeletionInterval ?? SqlServerCache.DefaultExpiredItemsDeletionInterval;
             this.DeleteExpiredCachedItemsDelegate = this.DeleteExpiredCacheItems;
             this.DefaultSlidingExpiration = cacheOptions.DefaultSlidingExpiration;
+            this.BeforeStoreCacheItem = cacheOptions.BeforeStoreCacheItem;
 
             this.DbOperations = new DatabaseOperations(cacheOptions.ConnectionString, cacheOptions.SchemaName, cacheOptions.TableName, cacheOptions.DependencyTableName);
         }
@@ -256,6 +258,11 @@ namespace Adriva.Extensions.Caching.SqlServer
                 string json = Utilities.SafeSerialize(data);
 
                 buffer = Encoding.UTF8.GetBytes(json);
+
+                if (null != this.BeforeStoreCacheItem)
+                {
+                    this.BeforeStoreCacheItem.Invoke(cacheItem);
+                }
 
                 await this.SetAsync(key, buffer, cacheItem);
 

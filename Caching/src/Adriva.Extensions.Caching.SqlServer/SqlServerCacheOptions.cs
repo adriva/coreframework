@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using Adriva.Extensions.Caching.Abstractions;
 using Microsoft.Extensions.Options;
 
 namespace Adriva.Extensions.Caching.SqlServer
@@ -41,6 +42,10 @@ namespace Adriva.Extensions.Caching.SqlServer
         /// By default, its 20 minutes.
         /// </summary>
         public TimeSpan DefaultSlidingExpiration { get; set; } = TimeSpan.FromMinutes(20);
+
+        /// <summary>
+        /// </summary>
+        public Action<ICacheItem> BeforeStoreCacheItem { get; set; }
 
         SqlServerCacheOptions IOptions<SqlServerCacheOptions>.Value
         {
