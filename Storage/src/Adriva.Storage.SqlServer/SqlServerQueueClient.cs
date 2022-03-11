@@ -133,8 +133,11 @@ namespace Adriva.Storage.SqlServer
         {
             var resultset = await this.DbContext.Messages.FromSqlRaw($"EXEC {this.Options.SchemaName}.{this.Options.RetrieveProcedureName} @environment, @application",
                                                                                                                 new SqlParameter("@environment", this.Context.Name),
-                                                                                                                new SqlParameter("@application", this.Options.ApplicationName)).ToArrayAsync();
+                                                                                                                new SqlParameter("@application", this.Options.ApplicationName))
+                                                            .AsNoTracking()
+                                                            .ToArrayAsync();
             var messageEntity = resultset.FirstOrDefault();
+
             if (null == messageEntity) return null;
 
             var queueMessage = this.MessageSerializer.Deserialize(messageEntity.Content);

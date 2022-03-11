@@ -35,7 +35,7 @@ namespace Adriva.Storage.SqlServer
                     }
 
                     logger.LogInformation($"Running script '{scriptName}'.");
-                    logger.LogInformation(sql);
+                    logger.LogDebug(sql);
 
                     await database.ExecuteSqlRawAsync(sql);
                 }
