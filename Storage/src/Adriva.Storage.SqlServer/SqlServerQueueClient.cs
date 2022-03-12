@@ -4,8 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Storage.Abstractions;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Adriva.Storage.SqlServer
@@ -19,17 +17,15 @@ namespace Adriva.Storage.SqlServer
 
         private static bool IsDatabaseObjectsCreated = false;
 
-        private readonly DbContextFactory DbContextFactory;
         private readonly IQueueMessageSerializer MessageSerializer;
-        private ILogger Logger;
+        private readonly ILogger Logger;
 
-        private QueueDbContext DbContext;
+        private QueueDbHelper QueueDbHelper;
         private SqlServerQueueOptions Options;
         private StorageClientContext Context;
 
-        public SqlServerQueueClient(DbContextFactory dbContextFactory, IQueueMessageSerializer messageSerializer, ILogger<SqlServerQueueClient> logger)
+        public SqlServerQueueClient(IQueueMessageSerializer messageSerializer, ILogger<SqlServerQueueClient> logger)
         {
-            this.DbContextFactory = dbContextFactory;
             this.MessageSerializer = messageSerializer;
             this.Logger = logger;
         }
@@ -59,7 +55,7 @@ namespace Adriva.Storage.SqlServer
                 {
                     if (!SqlServerQueueClient.IsDatabaseObjectsCreated)
                     {
-                        await DbHelpers.ExecuteScriptAsync(this.DbContext.Database, this.Options, this.Logger, "queue-createtable", "queue-createsp");
+                        await DbHelpers.ExecuteScriptAsync(this.Options, this.Logger, "queue-createtable", "queue-createsp");
                         SqlServerQueueClient.IsDatabaseObjectsCreated = true;
                     }
                 }
@@ -73,15 +69,10 @@ namespace Adriva.Storage.SqlServer
         public async ValueTask InitializeAsync(StorageClientContext context)
         {
             this.Options = context.GetOptions<SqlServerQueueOptions>();
-            this.DbContext = this.DbContextFactory.GetQueueDbContext(context, this.Options);
-
-            if (null == this.DbContext)
-            {
-                throw new InvalidOperationException($"Failed to construct services for SQL queue client '{context.Name}'. Did you forget to register the client with IStorageBuilder.AddSqlServerQueue('{context.Name}', ...) ?");
-            }
-
             await this.EnsureDatabaseObjectsAsync();
+
             this.Context = context;
+            this.QueueDbHelper = new QueueDbHelper(this.Options);
         }
 
         public async ValueTask AddAsync(QueueMessage message, TimeSpan? timeToLive = null, TimeSpan? visibilityTimeout = null, TimeSpan? initialVisibilityDelay = null)
@@ -115,28 +106,21 @@ namespace Adriva.Storage.SqlServer
             entity.Command = message.CommandType;
             entity.TimeToLive = (int)timeToLive.Value.TotalSeconds;
 
-            await this.DbContext.AddAsync(entity);
-            await this.DbContext.SaveChangesAsync();
-            this.DbContext.Entry(entity).State = EntityState.Detached;
+            long id = await this.QueueDbHelper.AddMessageAsync(entity);
 
-            message.SetId(Convert.ToString(entity.Id));
+            message.SetId(Convert.ToString(id));
         }
 
         public async Task DeleteAsync(QueueMessage message)
         {
             long? messageId = -1;
             SqlServerQueueClient.EnsureValidQueueMessage(message, ref messageId);
-            await this.DbContext.Database.ExecuteSqlRawAsync($"DELETE {this.Options.SchemaName}.{this.Options.TableName} WHERE Id = @messageId", new SqlParameter("@messageId", messageId));
+            await this.QueueDbHelper.DeleteAsync(messageId);
         }
 
         public async Task<QueueMessage> GetNextAsync(CancellationToken cancellationToken)
         {
-            var resultset = await this.DbContext.Messages.FromSqlRaw($"EXEC {this.Options.SchemaName}.{this.Options.RetrieveProcedureName} @environment, @application",
-                                                                                                                new SqlParameter("@environment", this.Context.Name),
-                                                                                                                new SqlParameter("@application", this.Options.ApplicationName))
-                                                            .AsNoTracking()
-                                                            .ToArrayAsync();
-            var messageEntity = resultset.FirstOrDefault();
+            var messageEntity = await this.QueueDbHelper.GetNextAsync(this.Context.Name, cancellationToken);
 
             if (null == messageEntity) return null;
 

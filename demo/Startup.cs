@@ -57,14 +57,9 @@ namespace demo
 
             services
                 .AddStorage()
-                .AddSqlServerQueue(this.HostingEnvironment.EnvironmentName, options =>
-                {
-                    options.ConnectionString = "Server=localhost;Initial Catalog=DevDb;User id=sa;Password=PASS@word1;";
-                    options.ApplicationName = "demo";
-                })
                 .AddSqlServerQueue("zabata", options =>
                 {
-                    options.ConnectionString = "Server=localhost;Initial Catalog=DevDb;User id=sa;Password=PASS@word1;";
+                    options.ConnectionString = "Server=10.255.1.127\\SQL2017,1435;Database=MRT;User Id=poasPortal;Password=portal12;MultipleActiveResultSets=True";
                     options.ApplicationName = "demo";
                 })
                 .AddRabbitMqQueue("Production", options =>
@@ -76,10 +71,6 @@ namespace demo
                      options.ExchangeName = "Demo_EXC";
                      options.DefaultRoutingKey = "Demo_RK";
                  })
-                .AddSqlServerBlob(this.HostingEnvironment.EnvironmentName, options =>
-                {
-                    options.ConnectionString = "Server=localhost;Initial Catalog=DevDb;User id=sa;Password=PASS@word1;";
-                })
                 ;
 
             if (!DisableAnalytics)
