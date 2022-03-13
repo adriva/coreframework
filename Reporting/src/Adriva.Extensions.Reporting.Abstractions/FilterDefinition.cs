@@ -1,7 +1,7 @@
-using Adriva.Common.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Adriva.Common.Core;
 using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.Abstractions

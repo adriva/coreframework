@@ -11,6 +11,8 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public string DisplayName { get; set; }
 
+        public FieldProperties Properties { get; set; }
+
         public JToken Options { get; set; }
 
         public FieldDefinition Clone()
@@ -19,6 +21,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             {
                 Name = this.Name,
                 DisplayName = this.DisplayName,
+                Properties = this.Properties,
                 Options = this.Options?.DeepClone()
             };
 

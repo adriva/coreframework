@@ -7,4 +7,11 @@ namespace Adriva.Extensions.Reporting.Abstractions
         Context = 2,
         Required = 3
     }
+
+    public enum FieldProperties : long
+    {
+        None = 0,
+        KeyField = 1,
+        ValueField = 2
+    }
 }

@@ -1,5 +1,5 @@
 {
-    "$schema": "../../report-schema.json",
+    "$schema": "../../../../Reporting/src/Adriva.Extensions.Reporting.Abstractions/report-schema.json",
     "base": "basereport",
     "name": "promotions sample report",
     "contextProvider": "demo.Controllers.ReportContextProvider,demo",
@@ -31,10 +31,6 @@
             "defaultValue": "Get35",
             "command": "getCities",
             "properties": "Context",
-            "fields": {
-                "Id": {},
-                "Name": {}
-            },
             "children": {
                 "district": {
                     "displayName": "Ilce",
@@ -52,8 +48,12 @@
             "dataSource": "AttTargetsEnum",
             "command": "getAttributeTargets",
             "fields": {
-                "value": {},
-                "text": {}
+                "value": {
+                    "properties": "ValueField"
+                },
+                "text": {
+                    "properties": "ValueField"
+                }
             }
         },
         "firstName": {

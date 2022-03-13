@@ -1,10 +1,11 @@
 using System.Diagnostics;
 using Adriva.Common.Core;
+using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
     [DebuggerDisplay("ReportDefinition = {Name} [Base = {Base}]")]
-    public sealed class ReportDefinition : ICloneable<ReportDefinition>
+    public sealed class ReportDefinition : ICloneable<ReportDefinition>, IDynamicDefinition
     {
         public string Base { get; set; }
 
@@ -19,6 +20,8 @@ namespace Adriva.Extensions.Reporting.Abstractions
         public FilterDefinitionDictionary Filters { get; set; }
 
         public OutputDefinition Output { get; set; }
+
+        public JToken Options { get; set; }
 
         public ReportDefinition Clone()
         {
@@ -38,6 +41,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             foreach (var child in this.Filters) clone.Filters.Add(child.Key, child.Value?.Clone());
 
             clone.Output = (this.Output ?? new OutputDefinition()).Clone();
+            clone.Options = this.Options?.DeepClone();
 
             return clone;
         }

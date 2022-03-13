@@ -3,7 +3,6 @@
     "$id": "http://adriva.com/schemas/2022/report-definition",
     "definitions": {
         "options": {
-            "$id": "/defs/options",
             "type": "object",
             "default": {},
             "title": "Dynamic options.",
@@ -35,6 +34,16 @@
                     "default": null,
                     "title": "The name that may be used when displaying the item on a user interface."
                 },
+                "properties": {
+                    "type": "string",
+                    "default": "None",
+                    "title": "Runtime properties of the field.",
+                    "enum": [
+                        "None",
+                        "KeyField",
+                        "ValueField"
+                    ]
+                },
                 "options": {
                     "$ref": "#/definitions/options"
                 }
@@ -49,7 +58,30 @@
                 "command": {
                     "type": "string",
                     "title": "The name of the command, as declared in the report, that will be used to retrieve the data from teh data source, for the current item."
+                }
+            },
+            "dependencies": {
+                "dataSource": {
+                    "required": [
+                        "dataSource",
+                        "command"
+                    ]
                 },
+                "command": {
+                    "required": [
+                        "dataSource",
+                        "command"
+                    ]
+                }
+            }
+        },
+        "dataBoundTypeWithFields": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/dataBoundType"
+                }
+            ],
+            "properties": {
                 "fields": {
                     "type": "object",
                     "title": "Field definitions for the given data source / command pair.",
@@ -71,15 +103,11 @@
             "dependencies": {
                 "dataSource": {
                     "required": [
-                        "dataSource",
-                        "command",
                         "fields"
                     ]
                 },
                 "command": {
                     "required": [
-                        "dataSource",
-                        "command",
                         "fields"
                     ]
                 }
@@ -116,14 +144,12 @@
     ],
     "properties": {
         "base": {
-            "$id": "#/properties/base",
             "type": "string",
             "title": "Base report that will be merged with this one.",
             "description": "Name of the base report definition file that will be merged with this report definition.",
             "default": ""
         },
         "name": {
-            "$id": "#/properties/name",
             "type": "string",
             "title": "Name of the report.",
             "description": "The name of the report this JSON defines.",
@@ -131,6 +157,11 @@
             "examples": [
                 "Report Name"
             ]
+        },
+        "displayName": {
+            "type": "string",
+            "minLength": 1,
+            "title": "The name that may be used when displaying the report."
         },
         "contextProvider": {
             "$id": "#/properties/contextProvider",
@@ -209,9 +240,12 @@
             "patternProperties": {
                 "\\w+": {
                     "title": "The name of the filter that uniquely identifies this filter in the report definition. The name provided here can be used as a parameter in the data-source bound commands.",
-                    "allOf": [
+                    "anyOf": [
                         {
                             "$ref": "#/definitions/dataBoundType"
+                        },
+                        {
+                            "$ref": "#/definitions/dataBoundTypeWithFields"
                         }
                     ],
                     "properties": {
@@ -250,6 +284,9 @@
                         "children": {
                             "$ref": "#/properties/filters",
                             "title": "Child filters depending on the current field."
+                        },
+                        "options": {
+                            "$ref": "#/definitions/options"
                         }
                     }
                 }
@@ -261,10 +298,13 @@
             "title": "Defines the output schema of the current report.",
             "allOf": [
                 {
-                    "$ref": "#/definitions/dataBoundType"
+                    "$ref": "#/definitions/dataBoundTypeWithFields"
                 }
             ],
             "additionalProperties": true
+        },
+        "options": {
+            "$ref": "#/definitions/options"
         }
     },
     "additionalProperties": true
