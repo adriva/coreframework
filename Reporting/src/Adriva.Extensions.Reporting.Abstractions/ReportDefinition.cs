@@ -13,6 +13,8 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public string ContextProvider { get; set; }
 
+        public string PostProcessor { get; set; }
+
         public StringKeyDictionary<DataSourceDefinition> DataSources { get; set; }
 
         public StringKeyDictionary<CommandDefinition> Commands { get; set; }
@@ -32,6 +34,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             };
 
             clone.ContextProvider = this.ContextProvider;
+            clone.PostProcessor = this.PostProcessor;
             clone.DataSources = new StringKeyDictionary<DataSourceDefinition>();
             clone.Commands = new StringKeyDictionary<CommandDefinition>();
             clone.Filters = new FilterDefinitionDictionary();

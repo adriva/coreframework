@@ -176,6 +176,19 @@
                 "namespace.typename,assemblyname"
             ]
         },
+        "postProcessor": {
+            "$id": "#/properties/postProcessor",
+            "type": [
+                "string",
+                "null"
+            ],
+            "title": "Dataset post-processor type.",
+            "description": "Provides a type that processes the dataset after it is constructed and populated with data, but before it's loaded into the report output.",
+            "default": null,
+            "examples": [
+                "namespace.typename,assemblyname"
+            ]
+        },
         "dataSources": {
             "$id": "#/properties/dataSources",
             "type": "object",

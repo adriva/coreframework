@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Adriva.Extensions.Caching.Abstractions;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
 using Adriva.Extensions.Caching.Memory;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
@@ -98,18 +98,23 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         private async Task<ReportOutput> GetDataAsync(ReportDefinition reportDefinition, IDataDrivenObject dataSourceScope, IEnumerable<FieldDefinition> fieldDefinitions, string commandName, FilterValuesDictionary values)
         {
-            ReportCommandContext context = new ReportCommandContext(reportDefinition, commandName);
-
-            if (!string.IsNullOrWhiteSpace(reportDefinition.ContextProvider))
-            {
-                Type contextProviderType = Type.GetType(reportDefinition.ContextProvider, true, true);
-                context.ContextProvider = ActivatorUtilities.CreateInstance(this.ServiceProvider, contextProviderType);
-            }
-
-            var reportCommand = await this.CommandBuilder.BuildCommandAsync(context, values);
-
+            using (ReportCommandContext context = new ReportCommandContext(reportDefinition, commandName))
             using (IServiceScope serviceScope = this.ServiceProvider.CreateScope())
             {
+                if (!string.IsNullOrWhiteSpace(reportDefinition.ContextProvider))
+                {
+                    Type contextProviderType = Type.GetType(reportDefinition.ContextProvider, true, true);
+                    context.ContextProvider = ActivatorUtilities.CreateInstance(this.ServiceProvider, contextProviderType);
+                }
+
+                if (!string.IsNullOrWhiteSpace(reportDefinition.PostProcessor))
+                {
+                    Type postProcessorType = Type.GetType(reportDefinition.PostProcessor, true, true);
+                    context.PostProcessor = (PostProcessor)ActivatorUtilities.CreateInstance(this.ServiceProvider, postProcessorType);
+                }
+
+                var reportCommand = await this.CommandBuilder.BuildCommandAsync(context, values);
+
                 if (!reportDefinition.TryFindDataSourceDefinition(dataSourceScope, out DataSourceDefinition dataSourceDefinition))
                 {
                     throw new InvalidOperationException($"Could not find data source definition '{dataSourceScope.DataSource}' in the report '{reportDefinition.Name}'.");
@@ -130,6 +135,12 @@ namespace Adriva.Extensions.Reporting.Abstractions
                 try
                 {
                     var dataset = await dataSource.GetDataAsync(reportCommand, fieldDefinitions.ToArray());
+
+                    if (null != context.PostProcessor)
+                    {
+                        await context.PostProcessor.PostProcessAsync(dataset);
+                    }
+
                     return new ReportOutput(reportCommand, dataset);
                 }
                 finally
