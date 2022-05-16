@@ -314,6 +314,9 @@
                     "$ref": "#/definitions/dataBoundTypeWithFields"
                 }
             ],
+            "options": {
+                "$ref": "#/definitions/options"
+            },
             "additionalProperties": true
         },
         "options": {

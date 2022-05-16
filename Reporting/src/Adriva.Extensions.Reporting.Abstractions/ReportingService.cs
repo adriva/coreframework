@@ -60,7 +60,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         private void FixFieldDefinitions(OutputDefinition outputDefinition)
         {
-            if (null == outputDefinition) return;
+            if (null == outputDefinition?.Fields) return;
 
             foreach (var fieldEntry in outputDefinition.Fields)
             {
