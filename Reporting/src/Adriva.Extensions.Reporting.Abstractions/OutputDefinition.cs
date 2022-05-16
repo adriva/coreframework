@@ -1,4 +1,5 @@
 using Adriva.Common.Core;
+using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
@@ -10,12 +11,15 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public StringKeyDictionary<FieldDefinition> Fields { get; set; }
 
+        public JToken Options { get; set; }
+
         public OutputDefinition Clone()
         {
             OutputDefinition clone = new OutputDefinition()
             {
                 DataSource = this.DataSource,
-                Command = this.Command
+                Command = this.Command,
+                Options = this.Options?.DeepClone()
             };
 
             clone.Fields = new StringKeyDictionary<FieldDefinition>();

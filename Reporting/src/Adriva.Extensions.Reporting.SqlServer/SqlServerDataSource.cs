@@ -39,9 +39,6 @@ namespace Adriva.Extensions.Reporting.SqlServer
                     }
                 }
 
-                DataSet dataSet = DataSet.FromFields(fields);
-                int[] columnIndices = null;
-
                 this.Logger.LogInformation($"Executing Sql Command : {command.ToString()}");
 
                 if (null != command.Parameters)
@@ -52,8 +49,29 @@ namespace Adriva.Extensions.Reporting.SqlServer
                     }
                 }
 
+                DataSet dataSet = null;
+
+                int[] columnIndices = null;
+
                 using (var dataReader = await sqlCommand.ExecuteReaderAsync(System.Data.CommandBehavior.SingleResult))
                 {
+                    if (null == fields || 0 == fields.Length)
+                    {
+                        fields = new FieldDefinition[dataReader.FieldCount];
+                        for (int loop = 0; loop < dataReader.FieldCount; loop++)
+                        {
+                            fields[loop] = new FieldDefinition()
+                            {
+                                Name = dataReader.GetName(loop)
+                            };
+                        }
+                    }
+
+                    if (null == dataSet)
+                    {
+                        dataSet = DataSet.FromFields(fields);
+                    }
+
                     if (null == columnIndices)
                     {
                         int loop = 0;

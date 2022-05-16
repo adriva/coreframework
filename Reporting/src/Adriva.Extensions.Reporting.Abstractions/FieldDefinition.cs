@@ -7,7 +7,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
     [DebuggerDisplay("FieldDefinition = {Name}")]
     public sealed class FieldDefinition : IDynamicDefinition, ICloneable<FieldDefinition>
     {
-        public string Name { get; internal set; }
+        public string Name { get; set; }
 
         public string DisplayName { get; set; }
 
