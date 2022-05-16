@@ -70,21 +70,6 @@
     },
     "output": {
         "command": "getSomeData",
-        "dataSource": "sampleObject",
-        "fields": {
-            "Id": {
-                "displayName": "Aydi",
-                "options": {
-                    "web": {
-                        "formatter": "xx1",
-                        "format": "C2"
-                    }
-                }
-            },
-            "firstName": {
-                "displayName": "Name"
-            },
-            "zartName": {}
-        }
+        "dataSource": "sampleObject"
     }
 }

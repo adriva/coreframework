@@ -113,6 +113,32 @@
                 }
             }
         },
+        "dataBoundTypeWithOptionalFields": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/dataBoundType"
+                }
+            ],
+            "properties": {
+                "fields": {
+                    "type": "object",
+                    "title": "Field definitions for the given data source / command pair.",
+                    "description": "Field definitions that should define the data retrieved from the data source with the given command.",
+                    "patternProperties": {
+                        "\\w+": {
+                            "title": "Name of the data source field.",
+                            "description": "Name of the field as it is in the data source. Depending on the data source type, this value may be case-sensitive.",
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/fieldDefinition"
+                                }
+                            ]
+                        }
+                    },
+                    "minProperties": 1
+                }
+            }
+        },
         "command": {
             "type": "object",
             "title": "A name that uniquely identifies the current command in the report.",
@@ -253,12 +279,9 @@
             "patternProperties": {
                 "\\w+": {
                     "title": "The name of the filter that uniquely identifies this filter in the report definition. The name provided here can be used as a parameter in the data-source bound commands.",
-                    "anyOf": [
+                    "allOf": [
                         {
-                            "$ref": "#/definitions/dataBoundType"
-                        },
-                        {
-                            "$ref": "#/definitions/dataBoundTypeWithFields"
+                            "$ref": "#/definitions/dataBoundTypeWithOptionalFields"
                         }
                     ],
                     "properties": {
@@ -311,11 +334,13 @@
             "title": "Defines the output schema of the current report.",
             "allOf": [
                 {
-                    "$ref": "#/definitions/dataBoundTypeWithFields"
+                    "$ref": "#/definitions/dataBoundTypeWithOptionalFields"
                 }
             ],
-            "options": {
-                "$ref": "#/definitions/options"
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/options"
+                }
             },
             "additionalProperties": true
         },
