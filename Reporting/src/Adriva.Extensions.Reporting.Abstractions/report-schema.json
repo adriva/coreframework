@@ -302,6 +302,15 @@
                                 "null"
                             ]
                         },
+                        "defaultValueFormatter": {
+                            "default": null,
+                            "title": "The reference of the static formatter method",
+                            "description": "The reference of the static formatter method that will be used to format the default value of this filter item.",
+                            "type": "string",
+                            "examples": [
+                                "namespace.typename:methodName,assemblyname"
+                            ]
+                        },
                         "properties": {
                             "type": "string",
                             "default": "Default",

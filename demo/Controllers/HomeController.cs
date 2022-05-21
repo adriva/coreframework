@@ -64,9 +64,9 @@ namespace demo.Controllers
 
         public async Task<IActionResult> Index(FilterValuesDictionary model)
         {
-            // var def = await this.ReportingService.LoadReportDefinitionAsync("tests/sample");
-            // var o = await this.ReportingService.ExecuteReportOutputAsync(def, null);
-            // return this.View();
+            var def = await this.ReportingService.LoadReportDefinitionAsync("tests/sample");
+            var o = await this.ReportingService.ExecuteReportOutputAsync(def, null);
+            return this.View();
             var scf = this.HttpContext.RequestServices.GetRequiredService<IStorageClientFactory>();
             var qc = await scf.GetQueueClientAsync("zabata");
 

@@ -19,6 +19,8 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public object DefaultValue { get; set; }
 
+        public string DefaultValueFormatter { get; set; }
+
         public string DataSource { get; set; }
 
         public string Command { get; set; }
@@ -40,6 +42,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             clone.Properties = this.Properties;
             clone.Options = this.Options;
             clone.DefaultValue = this.DefaultValue;
+            clone.DefaultValueFormatter = this.DefaultValueFormatter;
             clone.DataSource = this.DataSource;
             clone.Command = this.Command;
             clone.Options = this.Options?.DeepClone();

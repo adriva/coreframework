@@ -28,7 +28,8 @@
             "displayName": "Sehir",
             "dataType": "Int64",
             "dataSource": "DefaultSqlServer",
-            "defaultValue": "Get35",
+            "defaultValue": "-30",
+            "defaultValueFormatter": "Adriva.Extensions.Reporting.Abstractions.DefaultFormatters:AddDays,Adriva.Extensions.Reporting.Abstractions",
             "command": "getCities",
             "properties": "Context",
             "children": {

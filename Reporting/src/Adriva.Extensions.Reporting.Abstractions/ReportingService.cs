@@ -37,7 +37,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             }
         }
 
-        private void FixFilterDefinitions(IDictionary<string, FilterDefinition> filterDefinitions)
+        private void FixFilterDefinitions(ReportDefinition reportDefinition, IDictionary<string, FilterDefinition> filterDefinitions)
         {
             if (null == filterDefinitions) return;
 
@@ -54,7 +54,12 @@ namespace Adriva.Extensions.Reporting.Abstractions
                     fieldEntry.Value.Name = fieldEntry.Key;
                 }
 
-                this.FixFilterDefinitions(entry.Value.Children);
+                if (!string.IsNullOrWhiteSpace(entry.Value.DefaultValueFormatter))
+                {
+                    entry.Value.DefaultValue = Helpers.ApplyMethodFormatter(reportDefinition, entry.Value);
+                }
+
+                this.FixFilterDefinitions(reportDefinition, entry.Value.Children);
             }
         }
 
@@ -79,7 +84,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
                     reportDefinition = await repository.LoadReportDefinitionAsync(name);
                     if (null != reportDefinition)
                     {
-                        this.FixFilterDefinitions(reportDefinition.Filters);
+                        this.FixFilterDefinitions(reportDefinition, reportDefinition.Filters);
                         this.FixFieldDefinitions(reportDefinition.Output);
                         return reportDefinition;
                     }
