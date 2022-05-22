@@ -113,6 +113,8 @@ namespace demo
                 {
                     x.DefaultRequestHeaders.Add("Portalmibu", "tabiilan");
                 });
+                reportingBuilder.AddRenderer<Adriva.Extensions.Reporting.Abstractions.NullReportRenderer>();
+                reportingBuilder.AddRenderer<Adriva.Extensions.Reporting.Excel.XlsxReportRenderer>();
             });
         }
 

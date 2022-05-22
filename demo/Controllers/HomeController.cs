@@ -64,8 +64,12 @@ namespace demo.Controllers
 
         public async Task<IActionResult> Index(FilterValuesDictionary model)
         {
-            var def = await this.ReportingService.LoadReportDefinitionAsync("tests/sample");
+            string name = "tests/randomusers";
+            var def = await this.ReportingService.LoadReportDefinitionAsync(name);
             var o = await this.ReportingService.ExecuteReportOutputAsync(def, null);
+            var stream = System.IO.File.Open("output.xlsx", System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite, System.IO.FileShare.None);
+            await this.ReportingService.RenderAsync<Adriva.Extensions.Reporting.Excel.XlsxReportRenderer>(name, model, stream);
+            this.Response.RegisterForDispose(stream);
             return this.View();
             var scf = this.HttpContext.RequestServices.GetRequiredService<IStorageClientFactory>();
             var qc = await scf.GetQueueClientAsync("zabata");

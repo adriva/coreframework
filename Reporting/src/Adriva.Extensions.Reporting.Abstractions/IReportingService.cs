@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Adriva.Extensions.Reporting.Abstractions
@@ -11,5 +12,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
         Task<DataSet> GetFilterDataAsync(ReportDefinition reportDefinition, string filterName, FilterValuesDictionary values);
 
         Task<ReportOutput> ExecuteReportOutputAsync(ReportDefinition reportDefinition, FilterValuesDictionary values);
+
+        ValueTask RenderAsync<TRenderer>(string name, FilterValuesDictionary values, Stream stream) where TRenderer : ReportRenderer;
     }
 }

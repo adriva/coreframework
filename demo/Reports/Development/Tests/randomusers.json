@@ -1,6 +1,7 @@
 {
     "$schema": "../../report-schema.json",
     "base": "basereport",
+    "name": "Random Users 1",
     "commands": {
         "getRandomUsers": {
             "commandText": "/api/?nat=@nationalities&results=@pageSize",
@@ -16,7 +17,7 @@
             "dataType": "String"
         },
         "pageSize": {
-            "defaultValue": 10,
+            "defaultValue": 1000,
             "dataType": "Int32"
         }
     },

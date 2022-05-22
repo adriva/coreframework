@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Adriva.Extensions.Caching.Abstractions;
@@ -75,6 +76,11 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public async Task<ReportDefinition> LoadReportDefinitionAsync(string name)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             ReportDefinition reportDefinition = await this.Cache.GetOrCreateAsync($"ReportingService:LoadReportDefinitionAsync:{name}", async (entry) =>
             {
                 entry.AbsoluteExpirationRelativeToNow = this.Options.DefinitionTimeToLive;
@@ -259,6 +265,27 @@ namespace Adriva.Extensions.Reporting.Abstractions
                         }
                     }
                 }
+            }
+        }
+
+        public async ValueTask RenderAsync<TRenderer>(string name, FilterValuesDictionary values, Stream stream) where TRenderer : ReportRenderer
+        {
+            var definition = await this.LoadReportDefinitionAsync(name);
+            var output = await this.ExecuteReportOutputAsync(definition, values);
+
+            using (var serviceScope = this.ServiceProvider.CreateScope())
+            {
+                var renderer = serviceScope.ServiceProvider
+                                            .GetServices<ReportRenderer>()
+                                            .OfType<TRenderer>()
+                                            .FirstOrDefault();
+
+                if (null == renderer)
+                {
+                    throw new ArgumentException($"System cannot find a report renderer of type '{typeof(TRenderer).FullName}'. Did you forget to call reportingBuilder.AddRenderer<T>() ?");
+                }
+
+                await renderer.RenderAsync(string.IsNullOrWhiteSpace(definition.Name) ? name : definition.Name, output, stream);
             }
         }
     }

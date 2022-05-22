@@ -7,7 +7,7 @@
   <PropertyGroup>
     <Title>Adriva Reporting Services Sql Server Extensions</Title>
     <PackageDescription>Provides Sql Server data source and related extensions.</PackageDescription>    
-    <Version>3.1.11</Version>
+    <Version>3.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

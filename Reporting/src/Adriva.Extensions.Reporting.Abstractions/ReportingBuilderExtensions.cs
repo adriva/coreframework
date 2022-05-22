@@ -60,5 +60,11 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.Services.AddSingleton<IFilterValueBinder, TBinder>();
             return builder;
         }
+
+        public static IReportingBuilder AddRenderer<TRenderer>(this IReportingBuilder builder) where TRenderer : ReportRenderer
+        {
+            builder.Services.AddScoped<ReportRenderer, TRenderer>();
+            return builder;
+        }
     }
 }
