@@ -1,21 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Adriva.Extensions.Reporting.Abstractions;
+using ClosedXML.Excel;
+using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.Excel
 {
     public class XlsxReportRenderer : ReportRenderer
     {
-        public override async ValueTask RenderAsync(string title, ReportOutput output, Stream stream)
+        private static string NormalizeTitle(string title)
         {
-            Dictionary<string, Func<LargeXlsx.XlsxWriter, DataRow, LargeXlsx.XlsxWriter>> columnWriters = new Dictionary<string, Func<LargeXlsx.XlsxWriter, DataRow, LargeXlsx.XlsxWriter>>();
-
             if (string.IsNullOrWhiteSpace(title))
             {
-                title = "Report";
+                return "Report";
             }
             else
             {
@@ -33,67 +33,84 @@ namespace Adriva.Extensions.Reporting.Excel
                     }
                 }
 
-                title = titleBuffer.ToString();
+                return titleBuffer.ToString();
             }
+        }
 
-            if (1 > output.DataSet.Rows.Count)
+        protected virtual void RenderHeaders(IXLWorksheet worksheet, ReadOnlyCollection<DataColumn> columns)
+        {
+            var headerRange = worksheet.Cell(1, 1).InsertData(columns.Select(c => c.DisplayName ?? c.Name), true);
+            headerRange.Style.Font.Bold = true;
+        }
+
+        protected virtual void RenderData(IXLWorksheet worksheet, ReadOnlyCollection<DataColumn> columns, ReadOnlyCollection<DataRow> rows)
+        {
+            object[] dataArray = new object[columns.Count];
+
+            worksheet.Cell(2, 1).InsertData(rows.Select(r =>
             {
-                return;
+                int loop = 0;
+                foreach (var column in columns)
+                {
+                    dataArray[loop++] = r[column.Name.ToUpperInvariant()];
+                }
+                return dataArray;
+            }));
+        }
+
+        protected virtual XlsxReportRendererOptions ResolveOptions(OutputDefinition outputDefinition)
+        {
+            var rendererOptionsJson = outputDefinition.Options?
+                                                        .Children<JProperty>()
+                                                        .FirstOrDefault(x => x.Name.Equals(XlsxReportRendererOptions.KeyName, StringComparison.OrdinalIgnoreCase));
+
+            if (null != rendererOptionsJson?.Value)
+            {
+                return rendererOptionsJson.Value.ToObject<XlsxReportRendererOptions>();
             }
-
-            var firstRow = output.DataSet.Rows[0];
-
-            foreach (var column in output.DataSet.Columns)
+            else
             {
-                var dataCell = firstRow[column.Name];
-
-                if (dataCell is int)
-                {
-                    columnWriters[column.Name] = (w, r) => w.Write((int)r[column.Name]);
-                }
-                else if (dataCell is long || dataCell is float || dataCell is double)
-                {
-                    columnWriters[column.Name] = (w, r) => w.Write((double)r[column.Name]);
-                }
-                else if (dataCell is decimal)
-                {
-                    columnWriters[column.Name] = (w, r) => w.Write((decimal)r[column.Name]);
-                }
-                else if (dataCell is DateTime)
-                {
-                    columnWriters[column.Name] = (w, r) => w.Write((DateTime)r[column.Name]);
-                }
-                else
-                {
-                    columnWriters[column.Name] = (w, r) => w.Write(Convert.ToString(r[column.Name]));
-                }
+                return new XlsxReportRendererOptions();
             }
+        }
 
-            using (var writer = new LargeXlsx.XlsxWriter(stream, SharpCompress.Compressors.Deflate.CompressionLevel.Default, false))
+        protected virtual void ApplyOptions(IXLWorksheet worksheet, XlsxReportRendererOptions options)
+        {
+            if (options.CreateTable)
             {
-                writer.BeginWorksheet(title);
+                var reportTable = worksheet.RangeUsed().CreateTable("ReportTable");
+                reportTable.Theme = XLTableTheme.TableStyleLight1;
+            }
+        }
 
-                writer.BeginRow();
+        public override void Render(string title, OutputDefinition outputDefinition, ReportOutput output, Stream stream)
+        {
+            title = XlsxReportRenderer.NormalizeTitle(title);
 
-                foreach (var column in output.DataSet.Columns)
+            XlsxReportRendererOptions rendererOptions = this.ResolveOptions(outputDefinition);
+
+            using (var workbook = new XLWorkbook(new LoadOptions() { EventTracking = XLEventTracking.Disabled, RecalculateAllFormulas = false }))
+            {
+                workbook.CalculationOnSave = false;
+
+                var worksheet = workbook.AddWorksheet(title);
+
+                if (null != output?.DataSet && null != output.DataSet.Columns && null != output.DataSet.Rows)
                 {
-                    writer.Write(column.DisplayName);
-                }
-
-                foreach (var row in output.DataSet.Rows)
-                {
-                    writer.BeginRow();
-
-                    foreach (var column in output.DataSet.Columns)
+                    if (0 < output.DataSet.Columns.Count)
                     {
-                        columnWriters[column.Name](writer, row);
+                        this.RenderHeaders(worksheet, output.DataSet.Columns);
+                    }
+
+                    if (0 < output.DataSet.Rows.Count)
+                    {
+                        this.RenderData(worksheet, output.DataSet.Columns, output.DataSet.Rows);
+                        this.ApplyOptions(worksheet, rendererOptions);
                     }
                 }
 
-                writer.SetAutoFilter(1, 1, writer.CurrentRowNumber - 1, writer.CurrentColumnNumber - 1);
+                workbook.SaveAs(stream);
             }
-
-            await stream.FlushAsync();
         }
     }
 }

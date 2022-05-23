@@ -5,14 +5,14 @@ namespace Adriva.Extensions.Reporting.Abstractions
 {
     public abstract class ReportRenderer
     {
-        public virtual void Render(string title, ReportOutput output, Stream stream)
+        public virtual void Render(string title, OutputDefinition outputDefinition, ReportOutput output, Stream stream)
         {
 
         }
 
-        public virtual async ValueTask RenderAsync(string title, ReportOutput output, Stream stream)
+        public virtual async ValueTask RenderAsync(string title, OutputDefinition outputDefinition, ReportOutput output, Stream stream)
         {
-            this.Render(title, output, stream);
+            this.Render(title, outputDefinition, output, stream);
             await Task.CompletedTask;
         }
     }

@@ -1,5 +1,5 @@
 {
-    "$schema": "../../report-schema.json",
+    "$schema": "../../../../Reporting/src/Adriva.Extensions.Reporting.Abstractions/report-schema.json",
     "base": "basereport",
     "name": "Random Users 1",
     "commands": {
@@ -34,6 +34,9 @@
             "name.last": {
                 "displayName": "Last Name"
             }
+        },
+        "options": {
+            "XlsxRenderer": {}
         }
     }
 }

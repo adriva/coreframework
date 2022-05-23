@@ -285,7 +285,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
                     throw new ArgumentException($"System cannot find a report renderer of type '{typeof(TRenderer).FullName}'. Did you forget to call reportingBuilder.AddRenderer<T>() ?");
                 }
 
-                await renderer.RenderAsync(string.IsNullOrWhiteSpace(definition.Name) ? name : definition.Name, output, stream);
+                await renderer.RenderAsync(string.IsNullOrWhiteSpace(definition.Name) ? name : definition.Name, definition.Output, output, stream);
             }
         }
     }
