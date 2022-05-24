@@ -1,18 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Adriva.Common.Core;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
-using Adriva.Common.Core;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
-using System.Linq;
-using System.ComponentModel;
-using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
@@ -59,14 +56,16 @@ namespace Adriva.Extensions.Reporting.Abstractions
             return null;
         }
 
-        private async Task<ReportDefinitionFile> ResolveReportDefinitionAsync(string name)
+        public async Task<RepositoryFile> GetRepositoryFileAsync(string name, bool isReportDefinition)
         {
-            if (0 != string.Compare(FileSystemReportRepository.Extension, Path.GetExtension(name), StringComparison.OrdinalIgnoreCase))
+            string extension = Path.GetExtension(name);
+
+            if (string.IsNullOrWhiteSpace(extension))
             {
                 name += FileSystemReportRepository.Extension;
             }
 
-            IFileInfo reportFileInfo = null;
+            IFileInfo fileInfo = null;
             IFileInfo environmentSpecificFileInfo = this.FileProvider.GetFileInfo(Path.Combine(this.HostingEnvironment.EnvironmentName, name));
 
             if (!environmentSpecificFileInfo.Exists || environmentSpecificFileInfo.IsDirectory)
@@ -74,32 +73,42 @@ namespace Adriva.Extensions.Reporting.Abstractions
                 IFileInfo genericFileInfo = this.FileProvider.GetFileInfo(name);
                 if (!genericFileInfo.Exists || genericFileInfo.IsDirectory)
                 {
-                    throw new FileNotFoundException($"Report definition '{name}' could not be found.");
+                    return RepositoryFile.NotExists;
                 }
-                reportFileInfo = genericFileInfo;
+                fileInfo = genericFileInfo;
             }
             else
             {
-                reportFileInfo = environmentSpecificFileInfo;
+                fileInfo = environmentSpecificFileInfo;
             }
 
-            if (null == reportFileInfo)
+            if (null == fileInfo)
             {
-                throw new FileNotFoundException($"Report definition '{name}' could not be found.");
+                return RepositoryFile.NotExists;
             }
 
-            string basePath = await this.ResolveBasePathAsync(reportFileInfo);
-            return new ReportDefinitionFile()
+            string basePath = null;
+
+            if (isReportDefinition)
             {
-                Name = reportFileInfo.Name,
-                Path = reportFileInfo.GetDirectoryName(this.Options.RootPath),
+                basePath = await this.ResolveBasePathAsync(fileInfo);
+            }
+            else
+            {
+                basePath = fileInfo.PhysicalPath;
+            }
+
+            return new RepositoryFile()
+            {
+                Name = fileInfo.Name,
+                Path = fileInfo.GetDirectoryName(this.Options.RootPath),
                 Base = basePath
             };
         }
 
-        private async Task<IList<ReportDefinitionFile>> ResolveReportDefinitionChainAsync(ReportDefinitionFile reportDefinitionFile)
+        private async Task<IList<RepositoryFile>> ResolveReportDefinitionChainAsync(RepositoryFile reportDefinitionFile)
         {
-            IList<ReportDefinitionFile> output = new List<ReportDefinitionFile>();
+            IList<RepositoryFile> output = new List<RepositoryFile>();
             string directoryName = reportDefinitionFile.Path;
 
             while (!string.IsNullOrWhiteSpace(directoryName))
@@ -114,7 +123,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
                 if (baseFile.Exists)
                 {
                     var baseOfBase = await this.ResolveBasePathAsync(baseFile);
-                    var baseDefinition = new ReportDefinitionFile()
+                    var baseDefinition = new RepositoryFile()
                     {
                         Name = baseFile.Name,
                         Base = baseOfBase,
@@ -135,14 +144,20 @@ namespace Adriva.Extensions.Reporting.Abstractions
             return output;
         }
 
-        private async Task<IEnumerable<ReportDefinitionFile>> ResolveReportDefinitionChainAsync(string name)
+        private async Task<IEnumerable<RepositoryFile>> ResolveReportDefinitionChainAsync(string name)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
 
-            var reportDefinitionFile = await this.ResolveReportDefinitionAsync(name);
+            var reportDefinitionFile = await this.GetRepositoryFileAsync(name, true);
+
+            if (RepositoryFile.NotExists.Equals(reportDefinitionFile))
+            {
+                throw new IOException($"Report definition '{name}' could not be found in registered repositories.");
+            }
+
             var baseChain = await this.ResolveReportDefinitionChainAsync(reportDefinitionFile);
 
-            List<ReportDefinitionFile> output = new List<ReportDefinitionFile>();
+            List<RepositoryFile> output = new List<RepositoryFile>();
             output.Add(reportDefinitionFile);
             output.AddRange(baseChain);
             output.Reverse();

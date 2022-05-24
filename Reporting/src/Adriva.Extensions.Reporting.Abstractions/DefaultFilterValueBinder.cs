@@ -27,7 +27,14 @@ namespace Adriva.Extensions.Reporting.Abstractions
             if (FilterProperties.Constant == filterDefinition.Properties) value = filterDefinition.DefaultValue;
             else if (FilterProperties.Required == filterDefinition.Properties && null == rawValue)
             {
-                throw new ArgumentNullException(filterDefinition.Name, $"Filter parameter {filterDefinition.Name} is required.");
+                if (null != filterDefinition.DefaultValue)
+                {
+                    value = filterDefinition.DefaultValue;
+                }
+                else
+                {
+                    throw new ArgumentNullException(filterDefinition.Name, $"Filter parameter {filterDefinition.Name} is required.");
+                }
             }
             else if (FilterProperties.Context == filterDefinition.Properties)
             {

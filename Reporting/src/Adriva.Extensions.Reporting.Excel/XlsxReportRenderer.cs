@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Adriva.Extensions.Reporting.Abstractions;
 using ClosedXML.Excel;
 using Newtonsoft.Json.Linq;
@@ -11,6 +13,8 @@ namespace Adriva.Extensions.Reporting.Excel
 {
     public class XlsxReportRenderer : ReportRenderer
     {
+        private readonly IEnumerable<IReportRepository> Repositories;
+
         private static string NormalizeTitle(string title)
         {
             if (string.IsNullOrWhiteSpace(title))
@@ -35,6 +39,11 @@ namespace Adriva.Extensions.Reporting.Excel
 
                 return titleBuffer.ToString();
             }
+        }
+
+        public XlsxReportRenderer(IEnumerable<IReportRepository> repositories)
+        {
+            this.Repositories = repositories;
         }
 
         protected virtual void RenderHeaders(IXLWorksheet worksheet, ReadOnlyCollection<DataColumn> columns)
@@ -83,12 +92,8 @@ namespace Adriva.Extensions.Reporting.Excel
             }
         }
 
-        public override void Render(string title, OutputDefinition outputDefinition, ReportOutput output, Stream stream)
+        protected virtual void RenderData(string title, XlsxReportRendererOptions rendererOptions, ReportOutput output, Stream stream)
         {
-            title = XlsxReportRenderer.NormalizeTitle(title);
-
-            XlsxReportRendererOptions rendererOptions = this.ResolveOptions(outputDefinition);
-
             using (var workbook = new XLWorkbook(new LoadOptions() { EventTracking = XLEventTracking.Disabled, RecalculateAllFormulas = false }))
             {
                 workbook.CalculationOnSave = false;
@@ -110,6 +115,87 @@ namespace Adriva.Extensions.Reporting.Excel
                 }
 
                 workbook.SaveAs(stream);
+            }
+        }
+
+        protected virtual async Task<RepositoryFile> ResolveTemplateFileAsync(string templatePath)
+        {
+            RepositoryFile repositoryFile = RepositoryFile.NotExists;
+
+            foreach (var repository in this.Repositories)
+            {
+                try
+                {
+                    return await repository.GetRepositoryFileAsync(templatePath, false);
+                }
+                catch
+                {
+                    repositoryFile = RepositoryFile.NotExists;
+                }
+            }
+
+            return repositoryFile;
+        }
+
+        protected virtual async ValueTask RenderDataFromTemplateAsync(string title, XlsxReportRendererOptions rendererOptions, ReportOutput output, Stream stream)
+        {
+            RepositoryFile templateFile = await this.ResolveTemplateFileAsync(rendererOptions.TemplatePath);
+
+            if (RepositoryFile.NotExists.Equals(templateFile))
+            {
+                throw new IOException($"Template file '{rendererOptions.TemplatePath}' could not be found in registered repositories.");
+            }
+
+            using (var workbook = new XLWorkbook(templateFile.Base, new LoadOptions() { EventTracking = XLEventTracking.Disabled, RecalculateAllFormulas = false }))
+            {
+                workbook.CalculationOnSave = false;
+
+                IXLTable targetTable = null;
+
+                try
+                {
+                    targetTable = workbook.Table(rendererOptions.TargetTableName);
+                }
+                catch (ArgumentOutOfRangeException e)
+                {
+                    throw new ArgumentOutOfRangeException($"XlsxReportRenderer couldn't find a table named '{rendererOptions.TargetTableName}' in template file '{rendererOptions.TemplatePath}'.", e);
+                }
+
+                var columns = output.DataSet.Columns;
+                var rows = output.DataSet.Rows;
+
+                object[] dataArray = new object[columns.Count];
+
+                targetTable.ReplaceData(rows.Select(r =>
+                {
+                    int loop = 0;
+                    foreach (var column in columns)
+                    {
+                        dataArray[loop++] = r[column.Name.ToUpperInvariant()];
+                    }
+                    return dataArray;
+                }), true);
+
+                workbook.SaveAs(stream, new SaveOptions()
+                {
+                    EvaluateFormulasBeforeSaving = false
+                });
+            }
+        }
+
+        public override async ValueTask RenderAsync(string title, OutputDefinition outputDefinition, ReportOutput output, Stream stream)
+        {
+            title = XlsxReportRenderer.NormalizeTitle(title);
+
+            XlsxReportRendererOptions rendererOptions = this.ResolveOptions(outputDefinition);
+
+            if (string.IsNullOrWhiteSpace(rendererOptions.TemplatePath))
+            {
+                this.RenderData(title, rendererOptions, output, stream);
+            }
+            else
+            {
+                await this.RenderDataFromTemplateAsync(title, rendererOptions, output, stream);
             }
         }
     }
