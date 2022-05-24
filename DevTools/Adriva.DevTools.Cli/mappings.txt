@@ -1,0 +1,5 @@
+"EnumRadioButton" : "enumradiobutton"
+"EnumTab" : "enumtab"
+"DealerSelect": "accountselector"
+"Date" : "calendar"
+"Adriva.Extensions.Reports.ValueFormatters:AddDays, Adriva.Extensions.Reports" :"AddDaysReplacement"

@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.FileProviders;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -14,6 +11,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
+using Microsoft.Extensions.FileProviders;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using JsonFormatting = Newtonsoft.Json.Formatting;
 
 namespace Adriva.Common.Core
@@ -604,7 +604,7 @@ namespace Adriva.Common.Core
         public static string SafeSerialize(object item, JsonSerializerSettings settings)
         {
             if (null == item) return null;
-            return JsonConvert.SerializeObject(item, JsonFormatting.None, settings);
+            return JsonConvert.SerializeObject(item, settings);
         }
 
         public static T SafeDeserialize<T>(string json)

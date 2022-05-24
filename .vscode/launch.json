@@ -67,10 +67,12 @@
             "program": "${workspaceFolder}/DevTools/Adriva.DevTools.Cli/bin/Debug/netcoreapp3.1/Adriva.DevTools.Cli.dll",
             "args": [
                 "update-report",
-                "-r",
+                "-p",
                 "/Users/mnemonic/Projects/po/portal/PetrolOfisi.Portal.Web/ReportStore",
                 "-n",
-                "/Users/mnemonic/Projects/po/portal/PetrolOfisi.Portal.Web/ReportStore/Poapi/OilOrder.json"
+                "poapi/order",
+                "-m",
+                "/Users/mnemonic/Projects/netcorelibs/Framework/DevTools/Adriva.DevTools.Cli/mappings.txt"
             ]
         },
         {

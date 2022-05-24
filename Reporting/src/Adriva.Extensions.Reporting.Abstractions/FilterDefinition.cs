@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Adriva.Common.Core;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.Abstractions
@@ -13,6 +15,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public string DisplayName { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public TypeCode DataType { get; set; }
 
         public FilterProperties Properties { get; set; }
@@ -32,6 +35,11 @@ namespace Adriva.Extensions.Reporting.Abstractions
         public JToken Options { get; set; }
 
         public DataSet Data { get; set; }
+
+        public bool ShouldSerializeChildren()
+        {
+            return null != this.Children && 0 < this.Children.Count;
+        }
 
         public FilterDefinition Clone()
         {
