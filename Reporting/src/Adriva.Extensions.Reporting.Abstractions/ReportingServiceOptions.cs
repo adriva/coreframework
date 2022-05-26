@@ -6,6 +6,8 @@ namespace Adriva.Extensions.Reporting.Abstractions
     {
         public bool UseCache { get; set; }
 
+        public bool AllowSensitiveData { get; set; }
+
         public TimeSpan? DefinitionTimeToLive { get; set; }
     }
 }

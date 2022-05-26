@@ -5,6 +5,15 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ReportingBuilderExtensions
     {
+        public static IReportingBuilder AllowSensitiveData(this IReportingBuilder builder, bool isAllowed = true)
+        {
+            builder.Services.Configure<ReportingServiceOptions>(options =>
+            {
+                options.AllowSensitiveData = isAllowed;
+            });
+            return builder;
+        }
+
         public static IReportingBuilder UseCache(this IReportingBuilder builder, bool enabled = true, TimeSpan? timeToLive = null)
         {
             builder.Services.Configure<ReportingServiceOptions>(options =>

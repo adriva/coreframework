@@ -163,7 +163,14 @@ namespace Adriva.Extensions.Reporting.Abstractions
                         await context.PostProcessor.PostProcessAsync(dataset);
                     }
 
-                    return new ReportOutput(reportCommand, dataset);
+                    if (this.Options.AllowSensitiveData)
+                    {
+                        return new ReportOutput(reportCommand, dataset);
+                    }
+                    else
+                    {
+                        return new ReportOutput(new ReportCommand(commandName, new CommandDefinition() { CommandText = commandName }), dataset);
+                    }
                 }
                 finally
                 {
