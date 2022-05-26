@@ -34,6 +34,8 @@ namespace demo.Controllers
         {
             return 35;
         }
+
+        public static int ThirtyFour => 34;
     }
 
     public class HomeController : Controller
@@ -66,16 +68,17 @@ namespace demo.Controllers
         {
             string name = "tests/dbs";
             var def = await this.ReportingService.LoadReportDefinitionAsync(name);
-            var o = await this.ReportingService.ExecuteReportOutputAsync(def, null);
-            var stream = System.IO.File.Open("output.xlsx", System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite, System.IO.FileShare.None);
-            try
-            {
-                await this.ReportingService.RenderAsync<Adriva.Extensions.Reporting.Excel.XlsxReportRenderer>(name, model, stream);
-            }
-            finally
-            {
-                this.Response.RegisterForDispose(stream);
-            }
+            var a = await this.ReportingService.ExecuteReportOutputAsync(def, model);
+            // var o = await this.ReportingService.ExecuteReportOutputAsync(def, null);
+            // var stream = System.IO.File.Open("output.xlsx", System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite, System.IO.FileShare.None);
+            // try
+            // {
+            //     await this.ReportingService.RenderAsync<Adriva.Extensions.Reporting.Excel.XlsxReportRenderer>(name, model, stream);
+            // }
+            // finally
+            // {
+            //     this.Response.RegisterForDispose(stream);
+            // }
             return this.View();
             var scf = this.HttpContext.RequestServices.GetRequiredService<IStorageClientFactory>();
             var qc = await scf.GetQueueClientAsync("zabata");

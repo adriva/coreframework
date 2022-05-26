@@ -9,6 +9,10 @@
         "DefaultSqlServer": {
             "type": "SqlServer",
             "connectionString": "Server=10.255.1.127\\SQL2017,1435;Database=Portal_UAT;User Id=poasPortal;Password=portal12;MultipleActiveResultSets=True"
+        },
+        "PoapiHttp": {
+            "type": "HttpJson",
+            "connectionString": "http://sapportaluat.petrolofisi.com.tr/poapi"
         }
     },
     "filters": {

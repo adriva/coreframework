@@ -299,6 +299,21 @@ namespace Adriva.Common.Core
             }, fieldFlags);
         }
 
+        public static IEnumerable<PropertyInfo> FindProperties(this Type type, Func<PropertyInfo, bool> predicate, ClrMemberFlags propertyFlags = ClrMemberFlags.Public | ClrMemberFlags.Instance)
+        {
+            if (null == type) throw new ArgumentNullException(nameof(type));
+            if (null == predicate) throw new ArgumentNullException(nameof(predicate));
+
+            BindingFlags bindingFlags = BindingFlags.IgnoreCase;
+
+            bindingFlags |= propertyFlags.HasFlag(ClrMemberFlags.Static) ? BindingFlags.Static : bindingFlags;
+            bindingFlags |= propertyFlags.HasFlag(ClrMemberFlags.Instance) ? BindingFlags.Instance : bindingFlags;
+            bindingFlags |= propertyFlags.HasFlag(ClrMemberFlags.NonPublic) ? BindingFlags.NonPublic : bindingFlags;
+            bindingFlags |= propertyFlags.HasFlag(ClrMemberFlags.Public) ? BindingFlags.Public : bindingFlags;
+
+            return type.GetProperties(bindingFlags).Where(predicate);
+        }
+
         public static void InvokeMethods(IEnumerable<MethodInfo> methods, object instance, params object[] arguments)
         {
             if (null == methods) return;

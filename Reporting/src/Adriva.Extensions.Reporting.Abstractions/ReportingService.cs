@@ -55,12 +55,25 @@ namespace Adriva.Extensions.Reporting.Abstractions
                     fieldEntry.Value.Name = fieldEntry.Key;
                 }
 
-                if (!string.IsNullOrWhiteSpace(entry.Value.DefaultValueFormatter))
+                this.FixFilterDefinitions(reportDefinition, entry.Value.Children);
+            }
+        }
+
+        private async Task FixFilterDefaultValuesAsync(ReportContext reportContext)
+        {
+            var filters = reportContext.ReportDefinition.EnumerateFilterDefinitions();
+
+            foreach (var filter in filters)
+            {
+                if (null != filter.DefaultValue && !string.IsNullOrWhiteSpace(reportContext.ReportDefinition.ContextProvider))
                 {
-                    entry.Value.DefaultValue = Helpers.ApplyMethodFormatter(reportDefinition, entry.Value);
+                    filter.DefaultValue = await Helpers.GetFilterValueFromContextAsync(reportContext, filter, this.Cache);
                 }
 
-                this.FixFilterDefinitions(reportDefinition, entry.Value.Children);
+                if (!string.IsNullOrWhiteSpace(filter.DefaultValueFormatter))
+                {
+                    filter.DefaultValue = Helpers.ApplyMethodFormatter(reportContext.ReportDefinition, filter);
+                }
             }
         }
 
@@ -90,9 +103,14 @@ namespace Adriva.Extensions.Reporting.Abstractions
                     reportDefinition = await repository.LoadReportDefinitionAsync(name);
                     if (null != reportDefinition)
                     {
-                        this.FixFilterDefinitions(reportDefinition, reportDefinition.Filters);
-                        this.FixFieldDefinitions(reportDefinition.Output);
-                        return reportDefinition;
+                        using (var scope = this.ServiceProvider.CreateScope())
+                        using (ReportContext reportContext = ReportContext.Create(scope.ServiceProvider, reportDefinition))
+                        {
+                            this.FixFilterDefinitions(reportDefinition, reportDefinition.Filters);
+                            await this.FixFilterDefaultValuesAsync(reportContext);
+                            this.FixFieldDefinitions(reportDefinition.Output);
+                            return reportDefinition;
+                        }
                     }
                 }
 
@@ -109,21 +127,9 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         private async Task<ReportOutput> GetDataAsync(ReportDefinition reportDefinition, IDataDrivenObject dataSourceScope, IEnumerable<FieldDefinition> fieldDefinitions, string commandName, FilterValuesDictionary values)
         {
-            using (ReportCommandContext context = new ReportCommandContext(reportDefinition, commandName))
             using (IServiceScope serviceScope = this.ServiceProvider.CreateScope())
+            using (ReportCommandContext context = ReportCommandContext.Create(serviceScope.ServiceProvider, reportDefinition, commandName))
             {
-                if (!string.IsNullOrWhiteSpace(reportDefinition.ContextProvider))
-                {
-                    Type contextProviderType = Type.GetType(reportDefinition.ContextProvider, true, true);
-                    context.ContextProvider = ActivatorUtilities.CreateInstance(this.ServiceProvider, contextProviderType);
-                }
-
-                if (!string.IsNullOrWhiteSpace(reportDefinition.PostProcessor))
-                {
-                    Type postProcessorType = Type.GetType(reportDefinition.PostProcessor, true, true);
-                    context.PostProcessor = (PostProcessor)ActivatorUtilities.CreateInstance(this.ServiceProvider, postProcessorType);
-                }
-
                 var reportCommand = await this.CommandBuilder.BuildCommandAsync(context, values);
 
                 if (!reportDefinition.TryFindDataSourceDefinition(dataSourceScope, out DataSourceDefinition dataSourceDefinition))

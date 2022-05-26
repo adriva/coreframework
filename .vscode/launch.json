@@ -70,7 +70,7 @@
                 "-p",
                 "/Users/mnemonic/Projects/po/portal/PetrolOfisi.Portal.Web/ReportStore",
                 "-n",
-                "poapi/order",
+                "poapi/dbsquery",
                 "-m",
                 "/Users/mnemonic/Projects/netcorelibs/Framework/DevTools/Adriva.DevTools.Cli/mappings.txt"
             ]

@@ -7,7 +7,7 @@
   <PropertyGroup>
     <Title>Adriva Core Library</Title>
     <PackageDescription>Base library providing reusable types and utility functions.</PackageDescription>
-    <Version>3.1.7</Version>
+    <Version>3.1.8</Version>
   </PropertyGroup>
 
   <ItemGroup>

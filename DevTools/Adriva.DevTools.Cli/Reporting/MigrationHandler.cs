@@ -89,11 +89,42 @@ namespace Adriva.DevTools.Cli.Reporting
                 ReportDefinition reportDefinition = new ReportDefinition();
 
                 reportDefinition.Base = MigrationHandler.GetJsonValue<string>(legacyReportRoot, "baseReport");
-                reportDefinition.ContextProvider = MigrationHandler.GetJsonValue<string>(legacyReportRoot, "contextProvider");
+                reportDefinition.ContextProvider = textMappingsManager.GetSubstitution(MigrationHandler.GetJsonValue<string>(legacyReportRoot, "contextProvider"));
                 reportDefinition.Name = MigrationHandler.GetJsonValue<string>(legacyReportRoot, "title");
 
+                var dataSources = MigrationHandler.GetJsonValue<Dictionary<string, JToken>>(legacyReportRoot, "dataSources");
                 var queries = MigrationHandler.GetJsonValue<Dictionary<string, JToken>>(legacyReportRoot, "queries");
                 var filters = MigrationHandler.GetJsonValue<List<JToken>>(legacyReportRoot, "filters");
+                var legacyOutput = MigrationHandler.GetJsonValue<JToken>(legacyReportRoot, "output");
+
+                if (null != dataSources && 0 < dataSources.Count)
+                {
+                    reportDefinition.DataSources = new StringKeyDictionary<DataSourceDefinition>();
+
+                    foreach (var dataSource in dataSources)
+                    {
+                        if (!(dataSource.Value is JValue))
+                        {
+                            DataSourceDefinition dataSourceDefinition = new DataSourceDefinition()
+                            {
+                                ConnectionString =
+                                    MigrationHandler.GetJsonValue<string>(dataSource.Value["parameters"], "connectionString")
+                                    ??
+                                    MigrationHandler.GetJsonValue<string>(dataSource.Value["parameters"], "rootUrl"),
+                                Type = textMappingsManager.GetSubstitution(MigrationHandler.GetJsonValue<string>(dataSource.Value, "type"))
+                            };
+
+                            if (!string.IsNullOrWhiteSpace(dataSourceDefinition.ConnectionString))
+                            {
+                                reportDefinition.DataSources.TryAdd(dataSource.Key, dataSourceDefinition);
+                            }
+                            else
+                            {
+                                this.Logger.LogWarning($"Failed to migrate data source '{dataSource.Key}' from '{legacyReportFile.FullName}' since a connection string could not be found or determined.");
+                            }
+                        }
+                    }
+                }
 
                 if (null != queries && 0 < queries.Count)
                 {
@@ -143,6 +174,34 @@ namespace Adriva.DevTools.Cli.Reporting
 
                         reportDefinition.Filters.Add(filterName, filterDefinition);
                     }
+                }
+
+                if (null != legacyOutput && legacyOutput is JObject)
+                {
+                    OutputDefinition outputDefinition = new OutputDefinition();
+
+                    outputDefinition.DataSource = MigrationHandler.GetJsonValue<string>(legacyOutput, "dataSource");
+                    outputDefinition.Command = MigrationHandler.GetJsonValue<string>(legacyOutput, "query");
+
+                    var outputFields = MigrationHandler.GetJsonValue<List<JToken>>(legacyOutput, "columnDefinitions");
+
+                    if (null != outputFields && 0 < outputFields.Count)
+                    {
+                        outputDefinition.Fields = new StringKeyDictionary<FieldDefinition>();
+
+                        foreach (var outputField in outputFields)
+                        {
+                            FieldDefinition fieldDefinition = new FieldDefinition()
+                            {
+                                Name = MigrationHandler.GetJsonValue<string>(outputField, "field"),
+                                DisplayName = MigrationHandler.GetJsonValue<string>(outputField, "title")
+                            };
+
+                            outputDefinition.Fields.Add(fieldDefinition.Name, fieldDefinition);
+                        }
+                    }
+
+                    reportDefinition.Output = outputDefinition;
                 }
 
                 System.Console.WriteLine(Utilities.SafeSerialize(reportDefinition, new JsonSerializerSettings()

@@ -8,7 +8,12 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public CommandDefinition CommandDefinition { get; private set; }
 
-        public ReportCommandContext(ReportDefinition reportDefinition, string commandName) : base(reportDefinition)
+        public static ReportCommandContext Create(IServiceProvider serviceProvider, ReportDefinition reportDefinition, string commandName)
+        {
+            return new ReportCommandContext(serviceProvider, reportDefinition, commandName);
+        }
+
+        protected ReportCommandContext(IServiceProvider serviceProvider, ReportDefinition reportDefinition, string commandName) : base(serviceProvider, reportDefinition)
         {
             if (null == commandName)
             {

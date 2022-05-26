@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
@@ -8,13 +9,31 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public ReportDefinition ReportDefinition { get; private set; }
 
-        public object ContextProvider { get; internal set; }
+        public object ContextProvider { get; private set; }
 
-        public PostProcessor PostProcessor { get; internal set; }
+        public PostProcessor PostProcessor { get; private set; }
 
-        public ReportContext(ReportDefinition reportDefinition)
+        public static ReportContext Create(IServiceProvider serviceProvider, ReportDefinition reportDefinition)
         {
+            return new ReportContext(serviceProvider, reportDefinition);
+        }
+
+        protected ReportContext(IServiceProvider serviceProvider, ReportDefinition reportDefinition)
+        {
+            if (null == serviceProvider) throw new ArgumentNullException(nameof(serviceProvider));
             this.ReportDefinition = reportDefinition ?? throw new ArgumentNullException(nameof(reportDefinition));
+
+            if (!string.IsNullOrWhiteSpace(reportDefinition.ContextProvider))
+            {
+                Type contextProviderType = Type.GetType(reportDefinition.ContextProvider, true, true);
+                this.ContextProvider = ActivatorUtilities.CreateInstance(serviceProvider, contextProviderType);
+            }
+
+            if (!string.IsNullOrWhiteSpace(reportDefinition.PostProcessor))
+            {
+                Type postProcessorType = Type.GetType(reportDefinition.PostProcessor, true, true);
+                this.PostProcessor = (PostProcessor)ActivatorUtilities.CreateInstance(serviceProvider, postProcessorType);
+            }
         }
 
         protected virtual void Dispose(bool disposing)
