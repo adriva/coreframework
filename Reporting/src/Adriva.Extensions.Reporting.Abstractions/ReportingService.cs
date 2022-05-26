@@ -59,15 +59,18 @@ namespace Adriva.Extensions.Reporting.Abstractions
             }
         }
 
-        private async Task FixFilterDefaultValuesAsync(ReportContext reportContext)
+        private async Task FixFilterDefaultValuesAsync(ReportContext reportContext, bool isExecuting = false)
         {
             var filters = reportContext.ReportDefinition.EnumerateFilterDefinitions();
 
             foreach (var filter in filters)
             {
-                if (null != filter.DefaultValue && !string.IsNullOrWhiteSpace(reportContext.ReportDefinition.ContextProvider))
+                if (!isExecuting)
                 {
-                    filter.DefaultValue = await Helpers.GetFilterValueFromContextAsync(reportContext, filter, this.Cache);
+                    if (null != filter.DefaultValue && !string.IsNullOrWhiteSpace(reportContext.ReportDefinition.ContextProvider))
+                    {
+                        filter.DefaultValue = await Helpers.GetFilterValueFromContextAsync(reportContext, filter, this.Cache);
+                    }
                 }
 
                 if (!string.IsNullOrWhiteSpace(filter.DefaultValueFormatter))
@@ -87,7 +90,9 @@ namespace Adriva.Extensions.Reporting.Abstractions
             }
         }
 
-        public async Task<ReportDefinition> LoadReportDefinitionAsync(string name)
+        public Task<ReportDefinition> LoadReportDefinitionAsync(string name) => this.LoadReportDefinitionAsync(name, false);
+
+        private async Task<ReportDefinition> LoadReportDefinitionAsync(string name, bool isExecuting = false)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -107,7 +112,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
                         using (ReportContext reportContext = ReportContext.Create(scope.ServiceProvider, reportDefinition))
                         {
                             this.FixFilterDefinitions(reportDefinition, reportDefinition.Filters);
-                            await this.FixFilterDefaultValuesAsync(reportContext);
+                            await this.FixFilterDefaultValuesAsync(reportContext, isExecuting);
                             this.FixFieldDefinitions(reportDefinition.Output);
                             return reportDefinition;
                         }
@@ -167,9 +172,15 @@ namespace Adriva.Extensions.Reporting.Abstractions
             }
         }
 
-        public async Task<ReportOutput> ExecuteReportOutputAsync(ReportDefinition reportDefinition, FilterValuesDictionary values)
+        private async Task<ReportOutput> ExecuteReportOutputAsync(ReportDefinition reportDefinition, FilterValuesDictionary values)
         {
             return await this.GetDataAsync(reportDefinition, reportDefinition.Output, reportDefinition.EnumerateFieldDefinitions(), reportDefinition.Output.Command, values);
+        }
+
+        public async Task<ReportOutput> ExecuteReportOutputAsync(string name, FilterValuesDictionary values)
+        {
+            var reportDefinition = await this.LoadReportDefinitionAsync(name, true);
+            return await this.ExecuteReportOutputAsync(reportDefinition, values);
         }
 
         private async Task PopulateFilterValuesAsync(ReportDefinition reportDefinition, FilterDefinition filterDefinition, FilterValuesDictionary values)

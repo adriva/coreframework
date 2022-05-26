@@ -24,7 +24,10 @@ namespace Adriva.Extensions.Reporting.Abstractions
         {
             object value;
 
-            if (FilterProperties.Constant == filterDefinition.Properties) value = filterDefinition.DefaultValue;
+            if (FilterProperties.Constant == filterDefinition.Properties)
+            {
+                value = filterDefinition.DefaultValue;
+            }
             else if (FilterProperties.Required == filterDefinition.Properties && null == rawValue)
             {
                 if (null != filterDefinition.DefaultValue)
@@ -38,27 +41,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             }
             else if (FilterProperties.Context == filterDefinition.Properties)
             {
-                string cacheKey = $"{context.ContextProvider.GetType().AssemblyQualifiedName}:{filterDefinition.DefaultValue}:Instance:Public";
-
-                var methodInfo = await this.Cache.GetOrCreateAsync(cacheKey, async entry =>
-                {
-                    entry.SlidingExpiration = TimeSpan.FromMinutes(10);
-                    return await Task.Run<MethodInfo>(() => ReflectionHelpers.FindMethod(context.ContextProvider.GetType(), Convert.ToString(filterDefinition.DefaultValue), ClrMemberFlags.Instance | ClrMemberFlags.Public));
-                });
-
-                if (null == methodInfo)
-                {
-                    cacheKey = $"{context.ContextProvider.GetType().AssemblyQualifiedName}:{filterDefinition.DefaultValue}:Static:Public";
-                    methodInfo = await this.Cache.GetOrCreateAsync(cacheKey, async entry =>
-                    {
-                        entry.SlidingExpiration = TimeSpan.FromMinutes(10);
-                        return await Task.Run<MethodInfo>(() => ReflectionHelpers.FindMethod(context.ContextProvider.GetType(), Convert.ToString(filterDefinition.DefaultValue), ClrMemberFlags.Static | ClrMemberFlags.Public));
-                    });
-                }
-
-                if (null == methodInfo) throw new InvalidOperationException($"Filter value provider method '{filterDefinition.DefaultValue}' could not be found on context provider type '{context.ReportDefinition.ContextProvider}'.");
-
-                value = methodInfo.Invoke(context.ContextProvider, null);
+                value = await Helpers.GetFilterValueFromContextAsync(context, filterDefinition, this.Cache);
             }
             else
             {
