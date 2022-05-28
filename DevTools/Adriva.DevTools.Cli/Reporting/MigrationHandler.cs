@@ -45,14 +45,23 @@ namespace Adriva.DevTools.Cli.Reporting
             {
                 if (filterToken is JObject filterObject)
                 {
+                    Dictionary<string, object> optionsData = new Dictionary<string, object>();
+
                     string viewName = MigrationHandler.GetJsonValue<string>(filterObject["rendererOptions"]?["mvc"], "view");
 
                     if (!string.IsNullOrWhiteSpace(viewName))
                     {
-                        filterDefinition.Options = JToken.FromObject(new
-                        {
-                            control = textMappingsManager.GetSubstitution(viewName)
-                        });
+                        optionsData["control"] = textMappingsManager.GetSubstitution(viewName);
+                    }
+
+                    if (FilterProperties.Context == filterDefinition.Properties)
+                    {
+                        optionsData["hidden"] = true;
+                    }
+
+                    if (0 < optionsData.Count)
+                    {
+                        filterDefinition.Options = JToken.FromObject(optionsData);
                     }
                 }
             }
@@ -64,155 +73,197 @@ namespace Adriva.DevTools.Cli.Reporting
         }
 
         [CommandHandler("update-report")]
-        [CommandArgument("--path", Aliases = new[] { "-p" }, IsRequired = false, Type = typeof(DirectoryInfo), Description = "Root path of the reports repository.")]
-        [CommandArgument("--report", Aliases = new[] { "-n" }, IsRequired = true, Type = typeof(string), Description = "Name of the legacy report.")]
+        [CommandArgument("--path", Aliases = new[] { "-p" }, IsRequired = true, Type = typeof(DirectoryInfo), Description = "Root path of the reports repository.")]
+        [CommandArgument("--report", Aliases = new[] { "-n" }, IsRequired = true, Type = typeof(string), Description = "Name of the legacy report. * wildcard is supported.")]
         [CommandArgument("--mappings", Aliases = new[] { "-m" }, IsRequired = false, Type = typeof(FileInfo), Description = "Path of a user provided string mappings file.")]
-        [CommandArgument("--output", Aliases = new[] { "-o" }, IsRequired = false, Type = typeof(DirectoryInfo), Description = "Output folder where the new report will be generated. (Default: Current directory).")]
+        [CommandArgument("--output", Aliases = new[] { "-o" }, IsRequired = false, Type = typeof(DirectoryInfo), Description = "Output folder where the new report will be generated.")]
         public async Task InvokeAsync(DirectoryInfo path, DirectoryInfo output, string report, FileInfo mappings)
         {
             if (null == output)
             {
                 output = new DirectoryInfo(Directory.GetCurrentDirectory());
             }
-
+            else
+            {
+                if (!output.Exists)
+                {
+                    output.Create();
+                }
+            }
+            bool hasWildcard = report.Contains("*", StringComparison.Ordinal);
             TextMappingsManager textMappingsManager = new TextMappingsManager(mappings);
             await textMappingsManager.InitializeAsync();
 
-            FileInfo legacyReportFile = path.GetFiles($"{report}.json").FirstOrDefault();
+            FileInfo[] legacyReportFiles = path.GetFiles($"{report}.json", hasWildcard ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
 
-            using (var fileStream = legacyReportFile.OpenRead())
-            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true))
-            using (var jsonReader = new JsonTextReader(streamReader))
+            foreach (var legacyReportFile in legacyReportFiles)
             {
-                var legacyReportRoot = await JToken.ReadFromAsync(jsonReader);
+                this.Logger.LogInformation($"Processing legacy report {legacyReportFile.FullName}.");
 
-                ReportDefinition reportDefinition = new ReportDefinition();
-
-                reportDefinition.Base = MigrationHandler.GetJsonValue<string>(legacyReportRoot, "baseReport");
-                reportDefinition.ContextProvider = textMappingsManager.GetSubstitution(MigrationHandler.GetJsonValue<string>(legacyReportRoot, "contextProvider"));
-                reportDefinition.Name = MigrationHandler.GetJsonValue<string>(legacyReportRoot, "title");
-
-                var dataSources = MigrationHandler.GetJsonValue<Dictionary<string, JToken>>(legacyReportRoot, "dataSources");
-                var queries = MigrationHandler.GetJsonValue<Dictionary<string, JToken>>(legacyReportRoot, "queries");
-                var filters = MigrationHandler.GetJsonValue<List<JToken>>(legacyReportRoot, "filters");
-                var legacyOutput = MigrationHandler.GetJsonValue<JToken>(legacyReportRoot, "output");
-
-                if (null != dataSources && 0 < dataSources.Count)
+                try
                 {
-                    reportDefinition.DataSources = new StringKeyDictionary<DataSourceDefinition>();
-
-                    foreach (var dataSource in dataSources)
+                    using (var fileStream = legacyReportFile.OpenRead())
+                    using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true))
+                    using (var jsonReader = new JsonTextReader(streamReader))
                     {
-                        if (!(dataSource.Value is JValue))
-                        {
-                            DataSourceDefinition dataSourceDefinition = new DataSourceDefinition()
-                            {
-                                ConnectionString =
-                                    MigrationHandler.GetJsonValue<string>(dataSource.Value["parameters"], "connectionString")
-                                    ??
-                                    MigrationHandler.GetJsonValue<string>(dataSource.Value["parameters"], "rootUrl"),
-                                Type = textMappingsManager.GetSubstitution(MigrationHandler.GetJsonValue<string>(dataSource.Value, "type"))
-                            };
+                        var legacyReportRoot = await JToken.ReadFromAsync(jsonReader);
 
-                            if (!string.IsNullOrWhiteSpace(dataSourceDefinition.ConnectionString))
+                        ReportDefinition reportDefinition = new ReportDefinition();
+
+                        reportDefinition.Base = MigrationHandler.GetJsonValue<string>(legacyReportRoot, "baseReport");
+                        reportDefinition.ContextProvider = textMappingsManager.GetSubstitution(MigrationHandler.GetJsonValue<string>(legacyReportRoot, "contextProvider"));
+                        reportDefinition.Name = MigrationHandler.GetJsonValue<string>(legacyReportRoot, "title");
+
+                        var dataSources = MigrationHandler.GetJsonValue<Dictionary<string, JToken>>(legacyReportRoot, "dataSources");
+                        var queries = MigrationHandler.GetJsonValue<Dictionary<string, JToken>>(legacyReportRoot, "queries");
+                        var filters = MigrationHandler.GetJsonValue<List<JToken>>(legacyReportRoot, "filters");
+                        var legacyOutput = MigrationHandler.GetJsonValue<JToken>(legacyReportRoot, "output");
+
+                        if (null != dataSources && 0 < dataSources.Count)
+                        {
+                            reportDefinition.DataSources = new StringKeyDictionary<DataSourceDefinition>();
+
+                            foreach (var dataSource in dataSources)
                             {
-                                reportDefinition.DataSources.TryAdd(dataSource.Key, dataSourceDefinition);
+                                if (!(dataSource.Value is JValue))
+                                {
+                                    DataSourceDefinition dataSourceDefinition = new DataSourceDefinition()
+                                    {
+                                        ConnectionString =
+                                            MigrationHandler.GetJsonValue<string>(dataSource.Value["parameters"], "connectionString")
+                                            ??
+                                            MigrationHandler.GetJsonValue<string>(dataSource.Value["parameters"], "rootUrl"),
+                                        Type = textMappingsManager.GetSubstitution(MigrationHandler.GetJsonValue<string>(dataSource.Value, "type"))
+                                    };
+
+                                    if (!string.IsNullOrWhiteSpace(dataSourceDefinition.ConnectionString))
+                                    {
+                                        reportDefinition.DataSources.TryAdd(dataSource.Key, dataSourceDefinition);
+                                    }
+                                    else
+                                    {
+                                        this.Logger.LogWarning($"Failed to migrate data source '{dataSource.Key}' from '{legacyReportFile.FullName}' since a connection string could not be found or determined.");
+                                    }
+                                }
                             }
-                            else
+                        }
+
+                        if (null != queries && 0 < queries.Count)
+                        {
+                            reportDefinition.Commands = new StringKeyDictionary<CommandDefinition>();
+                            foreach (var query in queries)
                             {
-                                this.Logger.LogWarning($"Failed to migrate data source '{dataSource.Key}' from '{legacyReportFile.FullName}' since a connection string could not be found or determined.");
+                                CommandDefinition commandDefinition = new CommandDefinition()
+                                {
+                                    CommandText = MigrationHandler.GetJsonValue<string>(query.Value, "command")
+                                };
+
+                                reportDefinition.Commands.Add(query.Key, commandDefinition);
                             }
                         }
-                    }
-                }
 
-                if (null != queries && 0 < queries.Count)
-                {
-                    reportDefinition.Commands = new StringKeyDictionary<CommandDefinition>();
-                    foreach (var query in queries)
-                    {
-                        CommandDefinition commandDefinition = new CommandDefinition()
+                        if (null != filters && 0 < filters.Count)
                         {
-                            CommandText = MigrationHandler.GetJsonValue<string>(query.Value, "command")
-                        };
-
-                        reportDefinition.Commands.Add(query.Key, commandDefinition);
-                    }
-                }
-
-                if (null != filters && 0 < filters.Count)
-                {
-                    reportDefinition.Filters = new FilterDefinitionDictionary();
-                    foreach (var filter in filters)
-                    {
-                        string filterName = MigrationHandler.GetJsonValue<string>(filter, "name");
-                        var dataType = MigrationHandler.GetJsonValue<TypeCode>(filter, "dataType");
-                        var defaultValue = MigrationHandler.GetJsonValue<object>(filter, "defaultValue");
-
-                        if (defaultValue is string stringDefaultValue && string.IsNullOrWhiteSpace(stringDefaultValue))
-                        {
-                            defaultValue = null;
-                        }
-
-                        if (TypeCode.Empty == dataType)
-                        {
-                            dataType = TypeCode.String;
-                        }
-
-                        FilterDefinition filterDefinition = new FilterDefinition()
-                        {
-                            Fields = null,
-                            DefaultValue = defaultValue,
-                            DefaultValueFormatter = textMappingsManager.GetSubstitution(MigrationHandler.GetJsonValue<string>(filter, "defaultValueFormatter")),
-                            DataType = dataType,
-                            DisplayName = MigrationHandler.GetJsonValue<string>(filter, "title"),
-                            Command = MigrationHandler.GetJsonValue<string>(filter, "query"),
-                            DataSource = MigrationHandler.GetJsonValue<string>(filter, "dataSource"),
-                        };
-
-                        MigrationHandler.ConvertFilterOptions(filter, filterDefinition, textMappingsManager);
-
-                        reportDefinition.Filters.Add(filterName, filterDefinition);
-                    }
-                }
-
-                if (null != legacyOutput && legacyOutput is JObject)
-                {
-                    OutputDefinition outputDefinition = new OutputDefinition();
-
-                    outputDefinition.DataSource = MigrationHandler.GetJsonValue<string>(legacyOutput, "dataSource");
-                    outputDefinition.Command = MigrationHandler.GetJsonValue<string>(legacyOutput, "query");
-
-                    var outputFields = MigrationHandler.GetJsonValue<List<JToken>>(legacyOutput, "columnDefinitions");
-
-                    if (null != outputFields && 0 < outputFields.Count)
-                    {
-                        outputDefinition.Fields = new StringKeyDictionary<FieldDefinition>();
-
-                        foreach (var outputField in outputFields)
-                        {
-                            FieldDefinition fieldDefinition = new FieldDefinition()
+                            reportDefinition.Filters = new FilterDefinitionDictionary();
+                            foreach (var filter in filters)
                             {
-                                Name = MigrationHandler.GetJsonValue<string>(outputField, "field"),
-                                DisplayName = MigrationHandler.GetJsonValue<string>(outputField, "title")
-                            };
+                                string filterName = MigrationHandler.GetJsonValue<string>(filter, "name");
+                                var dataType = MigrationHandler.GetJsonValue<TypeCode>(filter, "dataType");
+                                var defaultValue = MigrationHandler.GetJsonValue<object>(filter, "defaultValue");
 
-                            outputDefinition.Fields.Add(fieldDefinition.Name, fieldDefinition);
+                                if (defaultValue is string stringDefaultValue && string.IsNullOrWhiteSpace(stringDefaultValue))
+                                {
+                                    defaultValue = null;
+                                }
+
+                                if (TypeCode.Empty == dataType)
+                                {
+                                    dataType = TypeCode.String;
+                                }
+
+                                FilterDefinition filterDefinition = new FilterDefinition()
+                                {
+                                    Fields = null,
+                                    DefaultValue = defaultValue,
+                                    DefaultValueFormatter = textMappingsManager.GetSubstitution(MigrationHandler.GetJsonValue<string>(filter, "defaultValueFormatter")),
+                                    DataType = dataType,
+                                    DisplayName = MigrationHandler.GetJsonValue<string>(filter, "title"),
+                                    Command = MigrationHandler.GetJsonValue<string>(filter, "query"),
+                                    DataSource = MigrationHandler.GetJsonValue<string>(filter, "dataSource"),
+                                };
+
+                                string filterType = MigrationHandler.GetJsonValue<string>(filter, "type");
+
+                                if ("Context".Equals(filterType, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    filterDefinition.Properties = FilterProperties.Context;
+                                }
+
+                                MigrationHandler.ConvertFilterOptions(filter, filterDefinition, textMappingsManager);
+
+                                reportDefinition.Filters.Add(filterName, filterDefinition);
+                            }
                         }
-                    }
 
-                    reportDefinition.Output = outputDefinition;
+                        if (null != legacyOutput && legacyOutput is JObject)
+                        {
+                            OutputDefinition outputDefinition = new OutputDefinition();
+
+                            outputDefinition.DataSource = MigrationHandler.GetJsonValue<string>(legacyOutput, "dataSource");
+                            outputDefinition.Command = MigrationHandler.GetJsonValue<string>(legacyOutput, "query");
+
+                            var outputFields = MigrationHandler.GetJsonValue<List<JToken>>(legacyOutput, "columnDefinitions");
+
+                            if (null != outputFields && 0 < outputFields.Count)
+                            {
+                                outputDefinition.Fields = new StringKeyDictionary<FieldDefinition>();
+
+                                foreach (var outputField in outputFields)
+                                {
+                                    FieldDefinition fieldDefinition = new FieldDefinition()
+                                    {
+                                        Name = MigrationHandler.GetJsonValue<string>(outputField, "field"),
+                                        DisplayName = MigrationHandler.GetJsonValue<string>(outputField, "title")
+                                    };
+
+                                    outputDefinition.Fields.Add(fieldDefinition.Name, fieldDefinition);
+                                }
+                            }
+
+                            reportDefinition.Output = outputDefinition;
+                        }
+
+                        var definitionJObject = JObject.FromObject(reportDefinition, new JsonSerializer() { DefaultValueHandling = DefaultValueHandling.Ignore });
+                        definitionJObject.AddFirst(new JProperty("$schema", "https://raw.githubusercontent.com/adriva/coreframework/master/Reporting/src/Adriva.Extensions.Reporting.Abstractions/report-schema.json"));
+                        string newJson = Utilities.SafeSerialize(definitionJObject, new JsonSerializerSettings()
+                        {
+                            DefaultValueHandling = DefaultValueHandling.Ignore,
+                            Formatting = Formatting.Indented,
+                            ContractResolver = new DefaultContractResolver()
+                            {
+                                NamingStrategy = new CamelCaseNamingStrategy(false, false, false)
+                            },
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        });
+
+                        string relativePath = Path.GetRelativePath(path.ToString(), legacyReportFile.ToString());
+
+                        string outputPath = Path.Combine(output.ToString(), relativePath);
+                        string outputDirectory = Path.GetDirectoryName(outputPath);
+
+                        if (!Directory.Exists(outputDirectory))
+                        {
+                            Directory.CreateDirectory(outputDirectory);
+                        }
+
+                        await File.WriteAllTextAsync(outputPath, newJson, Encoding.UTF8);
+                        this.Logger.LogInformation($"Report written to '{outputPath}'.");
+                    }
                 }
-
-                System.Console.WriteLine(Utilities.SafeSerialize(reportDefinition, new JsonSerializerSettings()
+                catch (Exception error)
                 {
-                    DefaultValueHandling = DefaultValueHandling.Ignore,
-                    Formatting = Formatting.Indented,
-                    ContractResolver = new DefaultContractResolver()
-                    {
-                        NamingStrategy = new CamelCaseNamingStrategy(false, false, false)
-                    }
-                }));
+                    this.Logger.LogError(error, $"Error processing '{legacyReportFile}'.");
+                }
             }
         }
     }

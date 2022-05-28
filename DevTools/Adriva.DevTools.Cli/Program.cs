@@ -1,13 +1,13 @@
-﻿using System.CommandLine;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using System.CommandLine.NamingConventionBinder;
+﻿using System;
 using System.Collections.Generic;
+using System.CommandLine;
+using System.CommandLine.Builder;
+using System.CommandLine.NamingConventionBinder;
+using System.CommandLine.Parsing;
 using System.Linq;
 using System.Reflection;
-using System;
-using System.CommandLine.Builder;
-using System.CommandLine.Parsing;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Adriva.DevTools.Cli
@@ -54,18 +54,18 @@ namespace Adriva.DevTools.Cli
             {
                 Option commandOption = null;
 
-                if (null != commandArgumentAttribute.Type)
+                if (null == commandArgumentAttribute.Type)
                 {
                     commandOption = new Option(commandArgumentAttribute.Name, commandArgumentAttribute.Description)
                     {
                         IsRequired = commandArgumentAttribute.IsRequired,
                         IsHidden = commandArgumentAttribute.IsHidden,
-                        Arity = ArgumentArity.ExactlyOne
+                        Arity = ArgumentArity.ExactlyOne,
                     };
                 }
                 else
                 {
-                    commandOption = new Option(commandArgumentAttribute.Name, null, commandArgumentAttribute.Type)
+                    commandOption = new Option(commandArgumentAttribute.Name, commandArgumentAttribute.Description, commandArgumentAttribute.Type)
                     {
                         IsRequired = commandArgumentAttribute.IsRequired,
                         IsHidden = commandArgumentAttribute.IsHidden
