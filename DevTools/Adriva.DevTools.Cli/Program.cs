@@ -99,7 +99,7 @@ namespace Adriva.DevTools.Cli
             IServiceProvider serviceProvider = services.BuildServiceProvider();
 
             RootCommand rootCommand = new RootCommand(Program.AppName);
-            rootCommand.AddGlobalOption(new Option<bool>(new[] { "-v", "--verbose" }, "Turns on verbose output.") { IsRequired = false, });
+            rootCommand.AddGlobalOption(GlobalOptions.VerboseOption);
 
             CommandLineBuilder commandLineBuilder = new CommandLineBuilder(rootCommand);
 
@@ -128,6 +128,8 @@ namespace Adriva.DevTools.Cli
                                             context.Console.WriteLine(Program.AppName);
                                             context.Console.WriteLine(string.Empty);
                                         }
+
+                                        Context.Create(context);
                                     })
                                     .Build();
             return await parser.InvokeAsync(args);
