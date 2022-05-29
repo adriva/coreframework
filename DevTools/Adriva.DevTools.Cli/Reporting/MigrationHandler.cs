@@ -119,6 +119,8 @@ namespace Adriva.DevTools.Cli.Reporting
                         var filters = MigrationHandler.GetJsonValue<List<JToken>>(legacyReportRoot, "filters");
                         var legacyOutput = MigrationHandler.GetJsonValue<JToken>(legacyReportRoot, "output");
 
+                        this.Logger.LogTrace($"Processing {dataSources?.Count ?? 0} data sources for '{legacyReportFile.FullName}'.");
+
                         if (null != dataSources && 0 < dataSources.Count)
                         {
                             reportDefinition.DataSources = new StringKeyDictionary<DataSourceDefinition>();
@@ -148,6 +150,8 @@ namespace Adriva.DevTools.Cli.Reporting
                             }
                         }
 
+                        this.Logger.LogTrace($"Processing {queries?.Count ?? 0} queries for '{legacyReportFile.FullName}'.");
+
                         if (null != queries && 0 < queries.Count)
                         {
                             reportDefinition.Commands = new StringKeyDictionary<CommandDefinition>();
@@ -161,6 +165,8 @@ namespace Adriva.DevTools.Cli.Reporting
                                 reportDefinition.Commands.Add(query.Key, commandDefinition);
                             }
                         }
+
+                        this.Logger.LogTrace($"Processing {filters?.Count ?? 0} filters for '{legacyReportFile.FullName}'.");
 
                         if (null != filters && 0 < filters.Count)
                         {
@@ -204,6 +210,8 @@ namespace Adriva.DevTools.Cli.Reporting
                                 reportDefinition.Filters.Add(filterName, filterDefinition);
                             }
                         }
+
+                        this.Logger.LogTrace($"Processing output for '{legacyReportFile.FullName}'.");
 
                         if (null != legacyOutput && legacyOutput is JObject)
                         {

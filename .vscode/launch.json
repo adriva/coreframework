@@ -70,11 +70,11 @@
                 "-p",
                 "/Users/mnemonic/Projects/po/portal/PetrolOfisi.Portal.Web/ReportStore",
                 "-n",
-                "poapi/*",
-                "-m",
-                "/Users/mnemonic/Projects/netcorelibs/Framework/DevTools/Adriva.DevTools.Cli/mappings.txt",
+                "ApiReports/Lms/UserProfile",
+                // "-m",
+                // "/Users/mnemonic/Projects/netcorelibs/Framework/DevTools/Adriva.DevTools.Cli/mappings.txt",
                 "-o",
-                "/Users/mnemonic/Projects/netcorelibs/Framework/DevTools/Adriva.DevTools.Cli/output"
+                "/Users/mnemonic/Projects/report-output"
             ]
         },
         {
