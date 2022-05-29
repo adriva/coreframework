@@ -35,6 +35,5 @@ namespace Adriva.DevTools.Cli
         {
             this.InvocationContext = invocationContext;
         }
-
     }
 }
