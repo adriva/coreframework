@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Extensions.Logging;
 
 namespace Adriva.DevTools.Cli.Dummy
@@ -11,7 +12,7 @@ namespace Adriva.DevTools.Cli.Dummy
             this.Logger = logger;
         }
 
-        [CommandHandler("mrnorris")]
+        [CommandHandler("mrnorris", Description = "You do not mess with Chuck Norris")]
         public void Invoke(bool verbose)
         {
             if (!verbose)
@@ -20,7 +21,7 @@ namespace Adriva.DevTools.Cli.Dummy
             }
             else
             {
-                this.Logger.LogTrace("Chuck Norris never uses verbose output. He always knows what is happening around.");
+                this.Logger.LogTrace($"{Environment.NewLine}Chuck Norris never uses verbose output. He always knows what is happening around.");
             }
         }
     }

@@ -3,12 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Adriva.Common.Core;
-using Adriva.Extensions.Reporting.Abstractions;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 
 namespace Adriva.DevTools.Cli.Reporting
 {
@@ -22,7 +17,7 @@ namespace Adriva.DevTools.Cli.Reporting
             this.ServiceProvider = serviceProvider;
         }
 
-        [CommandHandler("create-mappings-file")]
+        [CommandHandler("create-mappings-file", Description = "Creates a sample text mappings file")]
         [CommandArgument("--path", Aliases = new[] { "-p" }, IsRequired = false, Type = typeof(DirectoryInfo), Description = "Path of the sample report updater mappings file that will be generated. (Defaults to current directory)")]
         public async Task InvokeAsync(DirectoryInfo path)
         {

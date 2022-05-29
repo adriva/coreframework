@@ -48,7 +48,7 @@ namespace Adriva.DevTools.Cli
 
             CommandHandlerAttribute commandHandlerAttribute = methodInfo.GetCustomAttribute<CommandHandlerAttribute>();
 
-            Command command = new Command(commandHandlerAttribute.Name);
+            Command command = new Command(commandHandlerAttribute.Name, commandHandlerAttribute.Description);
 
             var commandArgumentAttributes = methodInfo.GetCustomAttributes<CommandArgumentAttribute>();
 
@@ -103,7 +103,7 @@ namespace Adriva.DevTools.Cli
             startup.ConfigureServices(services);
             IServiceProvider serviceProvider = services.BuildServiceProvider();
 
-            RootCommand rootCommand = new RootCommand(Program.AppName);
+            RootCommand rootCommand = new RootCommand($"{Program.AppName} (v{Program.AppVersion})");
             rootCommand.AddGlobalOption(GlobalOptions.VerboseOption);
 
             CommandLineBuilder commandLineBuilder = new CommandLineBuilder(rootCommand);

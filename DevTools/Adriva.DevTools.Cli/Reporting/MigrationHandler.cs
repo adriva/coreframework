@@ -71,7 +71,7 @@ namespace Adriva.DevTools.Cli.Reporting
             this.ServiceProvider = serviceProvider;
         }
 
-        [CommandHandler("update-report")]
+        [CommandHandler("update-report", Description = "Migrates Adriva Reports version 2 json definitions to version 3")]
         [CommandArgument("--path", Aliases = new[] { "-p" }, IsRequired = true, Type = typeof(DirectoryInfo), Description = "Root path of the reports repository.")]
         [CommandArgument("--report", Aliases = new[] { "-n" }, IsRequired = true, Type = typeof(string), Description = "Name of the legacy report. * wildcard is supported.")]
         [CommandArgument("--mappings", Aliases = new[] { "-m" }, IsRequired = false, Type = typeof(FileInfo), Description = "Path of a user provided string mappings file.")]
