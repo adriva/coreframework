@@ -38,7 +38,7 @@ namespace Adriva.DevTools.Cli.Reporting
                     {
                         line = await reader.ReadLineAsync();
 
-                        if (!string.IsNullOrWhiteSpace(line))
+                        if (!string.IsNullOrWhiteSpace(line) && !line.StartsWith('#'))
                         {
                             var match = Regex.Match(line, @"(\""(?<fromText>.+)\"")\s*\:\s*(\""(?<toText>.+)\"")((\s*\:\s*(?<sensitivity>(CS|CI))){0,1})");
 

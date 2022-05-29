@@ -4,6 +4,7 @@ using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.NamingConventionBinder;
 using System.CommandLine.Parsing;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Adriva.DevTools.Cli
     class Program
     {
         private const string AppName = "Adriva Command Line Developer Tools";
+        private static string AppVersion;
 
         private static IEnumerable<MethodInfo> GetHandlerMethods()
         {
@@ -92,6 +94,9 @@ namespace Adriva.DevTools.Cli
 
         static async Task<int> Main(string[] args)
         {
+            var versionInfo = FileVersionInfo.GetVersionInfo(typeof(Program).Assembly.Location);
+            Program.AppVersion = versionInfo.ProductVersion;
+
             Startup startup = new Startup();
 
             ServiceCollection services = new ServiceCollection();
@@ -125,7 +130,7 @@ namespace Adriva.DevTools.Cli
                                         if (0 == context.ParseResult.Errors.Count)
                                         {
                                             context.Console.WriteLine(string.Empty);
-                                            context.Console.WriteLine(Program.AppName);
+                                            context.Console.WriteLine($"{Program.AppName} - v{Program.AppVersion}");
                                             context.Console.WriteLine(string.Empty);
                                         }
 
