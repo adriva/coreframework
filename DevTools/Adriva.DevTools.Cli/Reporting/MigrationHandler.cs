@@ -128,23 +128,26 @@ namespace Adriva.DevTools.Cli.Reporting
                             {
                                 if (!(dataSource.Value is JValue))
                                 {
-                                    DataSourceDefinition dataSourceDefinition = new DataSourceDefinition()
+                                    base.RunWithStepOver(() =>
                                     {
-                                        ConnectionString =
-                                            MigrationHandler.GetJsonValue<string>(dataSource.Value["parameters"], "connectionString")
-                                            ??
-                                            MigrationHandler.GetJsonValue<string>(dataSource.Value["parameters"], "rootUrl"),
-                                        Type = textMappingsManager.GetSubstitution(MigrationHandler.GetJsonValue<string>(dataSource.Value, "type"))
-                                    };
+                                        DataSourceDefinition dataSourceDefinition = new DataSourceDefinition()
+                                        {
+                                            ConnectionString =
+                                                                                    MigrationHandler.GetJsonValue<string>(dataSource.Value["parameters"], "connectionString")
+                                                                                    ??
+                                                                                    MigrationHandler.GetJsonValue<string>(dataSource.Value["parameters"], "rootUrl"),
+                                            Type = textMappingsManager.GetSubstitution(MigrationHandler.GetJsonValue<string>(dataSource.Value, "type"))
+                                        };
 
-                                    if (!string.IsNullOrWhiteSpace(dataSourceDefinition.ConnectionString))
-                                    {
-                                        reportDefinition.DataSources.TryAdd(dataSource.Key, dataSourceDefinition);
-                                    }
-                                    else
-                                    {
-                                        this.Logger.LogWarning($"Failed to migrate data source '{dataSource.Key}' from '{legacyReportFile.FullName}' since a connection string could not be found or determined.");
-                                    }
+                                        if (!string.IsNullOrWhiteSpace(dataSourceDefinition.ConnectionString))
+                                        {
+                                            reportDefinition.DataSources.TryAdd(dataSource.Key, dataSourceDefinition);
+                                        }
+                                        else
+                                        {
+                                            this.Logger.LogWarning($"Failed to migrate data source '{dataSource.Key}' from '{legacyReportFile.FullName}' since a connection string could not be found or determined.");
+                                        }
+                                    }, $"Error processing '{dataSource.Key}' in report '{legacyReportFile.FullName}'.");
                                 }
                             }
                         }
@@ -161,7 +164,10 @@ namespace Adriva.DevTools.Cli.Reporting
                                     CommandText = MigrationHandler.GetJsonValue<string>(query.Value, "command")
                                 };
 
-                                reportDefinition.Commands.Add(query.Key, commandDefinition);
+                                base.RunWithStepOver(() =>
+                                {
+                                    reportDefinition.Commands.Add(query.Key, commandDefinition);
+                                }, $"Error processing '{query.Key}' in report '{legacyReportFile.FullName}'.");
                             }
                         }
 
@@ -206,7 +212,10 @@ namespace Adriva.DevTools.Cli.Reporting
 
                                 MigrationHandler.ConvertFilterOptions(filter, filterDefinition, textMappingsManager);
 
-                                reportDefinition.Filters.Add(filterName, filterDefinition);
+                                base.RunWithStepOver(() =>
+                                {
+                                    reportDefinition.Filters.Add(filterName, filterDefinition);
+                                }, $"Error processing '{filterName}' in report '{legacyReportFile.FullName}'.");
                             }
                         }
 
@@ -233,7 +242,10 @@ namespace Adriva.DevTools.Cli.Reporting
                                         DisplayName = MigrationHandler.GetJsonValue<string>(outputField, "title")
                                     };
 
-                                    outputDefinition.Fields.Add(fieldDefinition.Name, fieldDefinition);
+                                    base.RunWithStepOver(() =>
+                                    {
+                                        outputDefinition.Fields.Add(fieldDefinition.Name, fieldDefinition);
+                                    }, $"Error processing '{fieldDefinition.Name}' in report '{legacyReportFile.FullName}'.");
                                 }
                             }
 

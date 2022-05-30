@@ -31,6 +31,8 @@ namespace Adriva.DevTools.Cli
 
         public bool IsVerbose => this.InvocationContext.ParseResult.HasOption(GlobalOptions.VerboseOption);
 
+        public bool ShouldStepOverErrors => this.InvocationContext.ParseResult.HasOption(GlobalOptions.StepOverErrorsOption);
+
         private Context(InvocationContext invocationContext)
         {
             this.InvocationContext = invocationContext;

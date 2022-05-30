@@ -105,6 +105,7 @@ namespace Adriva.DevTools.Cli
 
             RootCommand rootCommand = new RootCommand($"{Program.AppName} (v{Program.AppVersion})");
             rootCommand.AddGlobalOption(GlobalOptions.VerboseOption);
+            rootCommand.AddGlobalOption(GlobalOptions.StepOverErrorsOption);
 
             CommandLineBuilder commandLineBuilder = new CommandLineBuilder(rootCommand);
 
@@ -135,6 +136,10 @@ namespace Adriva.DevTools.Cli
                                         }
 
                                         Context.Create(context);
+                                        System.Console.WriteLine($"{"IsVerbose".PadRight(24)} = {Context.Current.IsVerbose}");
+                                        System.Console.WriteLine($"{"ShouldStepOverErrors".PadRight(24)} = {Context.Current.ShouldStepOverErrors}");
+                                        System.Console.WriteLine();
+
                                     })
                                     .Build();
             return await parser.InvokeAsync(args);
