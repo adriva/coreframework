@@ -119,3 +119,9 @@ jobs:
       with:
         PROJECT_FILE_PATH: Reporting/src/Adriva.Extensions.Reporting.Excel/Adriva.Extensions.Reporting.Excel.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish Dev Tools
+      uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
+      with:
+        PROJECT_FILE_PATH: DevTools/Adriva.DevTools.Cli/Adriva.DevTools.Cli.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
