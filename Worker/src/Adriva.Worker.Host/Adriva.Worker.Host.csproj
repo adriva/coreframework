@@ -5,6 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Adriva.Extensions.Worker\Adriva.Extensions.Worker.csproj" />
+    <ProjectReference Include="..\Adriva.Extensions.Worker.Hangfire\Adriva.Extensions.Worker.Hangfire.csproj" />
   </ItemGroup>
 </Project>

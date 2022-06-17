@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Adriva.Extensions.Worker;
+using Adriva.Extensions.Worker.Hangfire;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -38,7 +39,8 @@ namespace Adriva.Worker.Host
                 builder.AddConsole();
             });
             // services.AddHostedService<Worker>();
-            services.AddScheduledJobs();
+            // services.AddScheduledJobs();
+            services.AddHangfireScheduledJobs();
             services.AddSingleton<IScheduledJobEvents, ScheduledJobsEvents>();
         }
     }
@@ -50,6 +52,12 @@ namespace Adriva.Worker.Host
             using (var workerHost = WorkerHost
                     .Create(args)
                     .UseStartup<Startup>()
+                    .UseHangfire(new HangfireOptions()
+                    {
+                        ConnectionString = "Server=10.255.1.127\\SQL2017,1435;Database=Mrt;User Id=poasPortal;Password=portal12;MultipleActiveResultSets=True",
+                        SchemaName = "jobs",
+                        AutomaticRetryCount = 0
+                    })
                     .Build())
             {
                 workerHost.Run();

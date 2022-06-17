@@ -1,126 +1,28 @@
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Adriva.Extensions.Worker
 {
-    internal class ScheduledJobsHost : BackgroundService, IScheduledJobsHost
+    internal class ScheduledJobsHost : ScheduledJobsHostBase
     {
-        internal class ScheduledItem
-        {
-            public string Expression { get; }
-
-            public MethodInfo Method { get; }
-
-            public IExpressionParser Parser { get; }
-
-            public bool IsRunning { get; set; }
-
-            public bool IsSingleton { get; private set; }
-
-            public bool IsQueued { get; set; }
-
-            public bool ShouldRunOnStartup { get; set; }
-
-            public string JobId { get; private set; }
-
-            public string InstanceId { get; private set; }
-
-            public ScheduledItem(string jobId, string expression, MethodInfo method, IExpressionParser parser, bool isSingleton)
-            {
-                this.JobId = jobId;
-                this.Expression = expression;
-                this.Method = method;
-                this.Parser = parser;
-                this.IsSingleton = isSingleton;
-            }
-        }
-
-        internal class ScheduledItemInstance
-        {
-            public ScheduledItem ScheduledItem { get; private set; }
-
-            public string InstanceId { get; private set; }
-
-            public ScheduledItemInstance(ScheduledItem scheduledItem, string instanceId)
-            {
-                this.ScheduledItem = scheduledItem;
-                this.InstanceId = instanceId;
-            }
-        }
-
         private readonly Timer Timer;
-        private readonly CancellationTokenSource CancellationTokenSource;
-        private readonly IServiceProvider ServiceProvider;
-        private readonly IList<ScheduledItem> ScheduledItems = new List<ScheduledItem>();
-        private readonly ILogger Logger;
-        private readonly IScheduledJobEvents Events;
-        private readonly IWorkerLock WorkerLock;
 
         private DateTime LastRunDate;
         private long RunningItemCount = 0;
-        private bool IsDisposed = false;
 
-        private static string GenerateJobId(MethodInfo methodInfo)
+        public ScheduledJobsHost(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            StringBuilder buffer = new StringBuilder();
-            buffer.AppendFormat("{0}@", methodInfo.DeclaringType.Assembly.ManifestModule.Name);
-            buffer.AppendFormat("{0}:", ReflectionHelpers.GetNormalizedName(methodInfo.DeclaringType));
-            buffer.AppendFormat("{0}", ReflectionHelpers.GetNormalizedName(methodInfo));
-
-            var bytes = System.Text.Encoding.ASCII.GetBytes(buffer.ToString());
-            return Utilities.GetBaseString(bytes, Utilities.Base63Alphabet);
-        }
-
-        public ScheduledJobsHost(IServiceProvider serviceProvider, ILogger<ScheduledJobsHost> logger)
-        {
-            this.ServiceProvider = serviceProvider;
-            this.Logger = logger;
-            this.CancellationTokenSource = new CancellationTokenSource();
             this.Timer = new Timer(this.OnTimerElapsed, null, Timeout.Infinite, 5000);
-            this.Events = this.ServiceProvider.GetService<IScheduledJobEvents>();
-            this.WorkerLock = this.ServiceProvider.GetService<IWorkerLock>() ?? new NullLock();
-        }
-
-        public IEnumerable<MethodInfo> ResolveScheduledMethods()
-        {
-            return from type in ReflectionHelpers.FindTypes(t => t.IsClass && !t.IsAbstract && !t.IsSpecialName)
-                   from method in type.GetMethods()
-                   where !method.IsSpecialName && method.GetCustomAttributes<ScheduleAttribute>(true).Any()
-                   select method;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var methods = this.ResolveScheduledMethods();
-            IDictionary<Type, IExpressionParser> parserCache = new Dictionary<Type, IExpressionParser>();
-
-            foreach (var method in methods)
-            {
-                var scheduleAttributes = method.GetCustomAttributes<ScheduleAttribute>();
-                foreach (var scheduleAttribute in scheduleAttributes)
-                {
-                    if (!parserCache.ContainsKey(scheduleAttribute.ExpressionParserType))
-                    {
-                        parserCache[scheduleAttribute.ExpressionParserType] = (IExpressionParser)ActivatorUtilities.CreateInstance(this.ServiceProvider, scheduleAttribute.ExpressionParserType);
-                    }
-                    string jobId = ScheduledJobsHost.GenerateJobId(method);
-                    var scheduledItem = new ScheduledItem(jobId, scheduleAttribute.Expression, method, parserCache[scheduleAttribute.ExpressionParserType], scheduleAttribute.IsSingleton);
-                    scheduledItem.ShouldRunOnStartup = scheduleAttribute.RunOnStartup;
-                    this.ScheduledItems.Add(scheduledItem);
-                }
-            }
-
-            parserCache.Clear();
+            await base.ExecuteAsync(stoppingToken);
 
             this.LastRunDate = DateTime.UtcNow;
             foreach (var scheduledItem in this.ScheduledItems)
@@ -161,42 +63,11 @@ namespace Adriva.Extensions.Worker
                         {
                             scheduledItem.IsQueued = true;
                             ScheduledItemInstance scheduledItemInstance = new ScheduledItemInstance(scheduledItem, Guid.NewGuid().ToString());
-                            _ = this.TryQueueItemAsync(scheduledItemInstance);
+                            _ = this.RunItemAsync(scheduledItemInstance);
                         }
                     }
                 }
             }
-        }
-
-        private async ValueTask<LockStatus> TryQueueItemAsync(ScheduledItemInstance scheduledItemInstance)
-        {
-            if (null == scheduledItemInstance)
-            {
-                return new LockStatus(null, false);
-            }
-
-            LockStatus lockStatus = new LockStatus(scheduledItemInstance.InstanceId, true);
-
-            if (scheduledItemInstance.ScheduledItem.IsSingleton)
-            {
-                lockStatus = await this.WorkerLock.AcquireLockAsync(scheduledItemInstance.ScheduledItem.JobId, scheduledItemInstance.InstanceId, TimeSpan.Zero);
-
-                if (lockStatus.HasLock)
-                {
-                    this.Logger.LogInformation($"Job instance '{scheduledItemInstance.InstanceId}' ({ReflectionHelpers.GetNormalizedName(scheduledItemInstance.ScheduledItem.Method)}) has acquired lock.");
-                }
-                else
-                {
-                    this.Logger.LogWarning($"Job instance '{scheduledItemInstance.InstanceId}' ({ReflectionHelpers.GetNormalizedName(scheduledItemInstance.ScheduledItem.Method)}) has failed to acquire a lock.");
-                }
-            }
-
-            if (lockStatus.HasLock && ThreadPool.QueueUserWorkItem(this.SafeRunItemAsync, scheduledItemInstance))
-            {
-                return lockStatus;
-            }
-
-            return new LockStatus(null, false);
         }
 
         private async void SafeRunItemAsync(object state)
@@ -233,18 +104,6 @@ namespace Adriva.Extensions.Worker
             }
             finally
             {
-                try
-                {
-                    if (scheduledItemInstance.ScheduledItem.IsSingleton)
-                    {
-                        await this.WorkerLock.ReleaseLockAsync(scheduledItem.JobId, scheduledItemInstance.InstanceId);
-                    }
-                }
-                catch (Exception lockError)
-                {
-                    this.Logger.LogError(lockError, $"Failed to release lock on scheduled job instance id '{scheduledItemInstance.InstanceId}'. {ReflectionHelpers.GetNormalizedName(scheduledItem.Method)}");
-                }
-
                 this.LastRunDate = DateTime.UtcNow;
                 scheduledItem.IsRunning = false;
                 scheduledItem.IsQueued = false;
@@ -270,103 +129,10 @@ namespace Adriva.Extensions.Worker
             }, 30000);
         }
 
-        public async ValueTask<LockStatus> RunAsync(MethodInfo methodInfo)
-        {
-            if (null == methodInfo)
-            {
-                throw new ArgumentNullException(nameof(methodInfo));
-            }
-
-            var scheduledItem = this.ScheduledItems.FirstOrDefault(s => s.Method == methodInfo);
-
-            if (null == scheduledItem)
-            {
-                throw new InvalidOperationException($"Method '{ReflectionHelpers.GetNormalizedName(methodInfo)}' is not a valid scheduled job.");
-            }
-
-            string instanceId = Guid.NewGuid().ToString();
-            ScheduledItemInstance scheduledItemInstance = new ScheduledItemInstance(scheduledItem, instanceId);
-
-            return await this.TryQueueItemAsync(scheduledItemInstance);
-        }
-
-        private async Task RunItemAsync(ScheduledItemInstance scheduledItemInstance)
-        {
-            object ownerInstance = null;
-            ScheduledItem scheduledItem = scheduledItemInstance.ScheduledItem;
-
-            if (!scheduledItem.Method.IsStatic)
-            {
-                ownerInstance = ActivatorUtilities.CreateInstance(this.ServiceProvider, scheduledItem.Method.DeclaringType);
-            }
-
-            var parameterInfoItems = scheduledItem.Method.GetParameters();
-            object[] parameters = new object[parameterInfoItems.Length];
-
-            for (int loop = 0; loop < parameters.Length; loop++)
-            {
-                if (parameterInfoItems[loop].ParameterType == typeof(CancellationToken))
-                {
-                    parameters[loop] = this.CancellationTokenSource.Token;
-                }
-                else
-                {
-                    parameters[loop] = ActivatorUtilities.CreateInstance(this.ServiceProvider, parameterInfoItems[loop].ParameterType);
-                }
-            }
-
-            this.Logger.LogInformation($"Executing scheduled job '{scheduledItem.Method.Name}'.");
-
-            try
-            {
-
-                if (null != this.Events)
-                {
-                    await this.Events.ExecutingAsync(ownerInstance, scheduledItemInstance.InstanceId, scheduledItem.Method);
-                }
-
-                object returnValue = scheduledItem.Method.Invoke(ownerInstance, parameters);
-
-                if (returnValue is Task returnTask)
-                {
-                    await returnTask;
-                }
-
-                if (null != this.Events)
-                {
-                    await this.Events.ExecutedAsync(ownerInstance, scheduledItemInstance.InstanceId, scheduledItem.Method, null);
-                }
-            }
-            catch (Exception error)
-            {
-                if (null != this.Events)
-                {
-                    await this.Events.ExecutedAsync(ownerInstance, scheduledItemInstance.InstanceId, scheduledItem.Method, error);
-                }
-
-                throw;
-            }
-            finally
-            {
-                if (ownerInstance is IDisposable disposable)
-                {
-                    disposable.Dispose();
-                }
-                else if (ownerInstance is IAsyncDisposable asyncDisposable)
-                {
-                    await asyncDisposable.DisposeAsync();
-                }
-            }
-
-            this.Logger.LogInformation($"Executed scheduled job '{scheduledItem.Method.Name}'.");
-        }
-
         public override void Dispose()
         {
             if (!this.IsDisposed)
             {
-                this.Logger.LogDebug("Disposing 'ScheduledJobsHost' instance.");
-                this.IsDisposed = true;
                 base.Dispose();
                 this.Timer.Dispose();
             }

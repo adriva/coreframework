@@ -8,6 +8,6 @@ namespace Adriva.Extensions.Worker
     {
         IEnumerable<MethodInfo> ResolveScheduledMethods();
 
-        ValueTask<LockStatus> RunAsync(MethodInfo methodInfo);
+        Task RunAsync(MethodInfo methodInfo);
     }
 }

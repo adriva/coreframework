@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Adriva.Extensions.Worker
 {
@@ -7,17 +9,21 @@ namespace Adriva.Extensions.Worker
     {
         public static IServiceCollection AddScheduledJobs(this IServiceCollection services)
         {
-            services.AddSingleton<IScheduledJobsHost, ScheduledJobsHost>();
-            services.AddHostedService<ScheduledJobsHost>(serviceProvider =>
+            return services.AddScheduledJobs<ScheduledJobsHost>();
+        }
+
+        public static IServiceCollection AddScheduledJobs<THost>(this IServiceCollection services) where THost : class, IScheduledJobsHost, IHostedService
+        {
+            if (services.Any(s => s.ServiceType.Equals(typeof(IScheduledJobsHost))))
             {
-                var instance = serviceProvider.GetRequiredService<IScheduledJobsHost>();
+                throw new InvalidOperationException($"Already added.");
+            }
 
-                if (null == instance)
-                {
-                    throw new InvalidProgramException("IScheduledJobsHost implementation is overriden. Please do not inject custom services implementing the IScheduledJobHost interface.");
-                }
-
-                return instance as ScheduledJobsHost;
+            services.AddSingleton<IScheduledJobsHost, THost>();
+            services.AddHostedService<THost>(serviceProvider =>
+            {
+                var instance = serviceProvider.GetService<IScheduledJobsHost>();
+                return instance as THost;
             });
             return services;
         }
