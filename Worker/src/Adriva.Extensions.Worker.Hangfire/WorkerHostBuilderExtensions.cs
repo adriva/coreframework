@@ -2,8 +2,8 @@ using System;
 using Adriva.Extensions.Worker;
 using Adriva.Extensions.Worker.Hangfire;
 using Hangfire;
+using Hangfire.SqlServer;
 using Newtonsoft.Json;
-using Hf = Hangfire;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -13,15 +13,15 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             builder.HostBuilder.ConfigureServices((context, services) =>
             {
-                var globalConfiguration = Hf.GlobalConfiguration.Configuration;
-                Hf.SqlServer.SqlServerStorageOptions sqlServerStorageOptions = new Hf.SqlServer.SqlServerStorageOptions()
+                var globalConfiguration = GlobalConfiguration.Configuration;
+
+                SqlServerStorageOptions sqlServerStorageOptions = new SqlServerStorageOptions()
                 {
                     SchemaName = string.IsNullOrWhiteSpace(options.SchemaName) ? "rt" : options.SchemaName,
                     PrepareSchemaIfNecessary = true,
                     UseRecommendedIsolationLevel = true,
                     QueuePollInterval = TimeSpan.FromSeconds(60)
                 };
-
 
                 globalConfiguration.UseSqlServerStorage(options.ConnectionString, sqlServerStorageOptions);
                 globalConfiguration.UseColouredConsoleLogProvider();
@@ -38,6 +38,10 @@ namespace Microsoft.Extensions.DependencyInjection
                     JsonSerializerSettings defaultJsonSerializerSettings = new JsonSerializerSettings();
                     configureSerializer(defaultJsonSerializerSettings);
                     globalConfiguration.UseSerializerSettings(defaultJsonSerializerSettings);
+                }
+                else
+                {
+                    globalConfiguration.UseRecommendedSerializerSettings();
                 }
             });
             return builder;

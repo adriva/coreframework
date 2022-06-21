@@ -18,7 +18,8 @@ namespace Adriva.Worker.Host
 
         }
 
-        [Schedule("0 */5 * * * *", RunOnStartup = true)]
+        [Schedule("0 */5 * * * *", RunOnStartup = false)]
+        [Adriva.Extensions.Worker.Hangfire.IgnoreMissedRun(15)]
         public void DoIt(CancellationToken cancellationToken)
         {
             // throw new Exception("adada");

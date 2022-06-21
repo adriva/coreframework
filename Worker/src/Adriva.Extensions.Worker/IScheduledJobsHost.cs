@@ -9,5 +9,7 @@ namespace Adriva.Extensions.Worker
         IEnumerable<MethodInfo> ResolveScheduledMethods();
 
         Task RunAsync(MethodInfo methodInfo);
+
+        bool TryResolveMethod(ScheduledItem scheduledItem, out MethodInfo methodInfo);
     }
 }

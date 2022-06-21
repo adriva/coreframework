@@ -11,6 +11,9 @@
     <PackageReference Include="Hangfire.SqlServer" Version="1.7.30" />
   </ItemGroup>
 
-  
-
+<PropertyGroup>
+    <Title>Adriva Worker library based on Hangfire</Title>
+    <PackageDescription>Provides worker components to implement long running services, background jobs and scheduled jobs based using Hangfire.</PackageDescription>    
+    <Version>3.1.21</Version>
+  </PropertyGroup>
 </Project>

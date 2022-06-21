@@ -1,68 +1,57 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
 using Hangfire;
-using Hf = Hangfire;
+using Hangfire.Common;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Adriva.Extensions.Worker.Hangfire
 {
-    public class ScheduledJobsHost : ScheduledJobsHostBase
+    public partial class ScheduledJobsHost : ScheduledJobsHostBase
     {
-        private sealed class HangfireJobActivatorScope : Hf.JobActivatorScope
-        {
-            private readonly JobActivatorScope Scope;
-
-            public HangfireJobActivatorScope(JobActivatorScope scope)
-            {
-                this.Scope = scope;
-            }
-
-            public override object Resolve(Type type) => this.Scope.Resolve(type);
-
-            public override void DisposeScope()
-            {
-                // base.DisposeScope();
-            }
-        }
-
-        private sealed class HangfireJobActivator : Hf.JobActivator
-        {
-            private readonly ScheduledJobsHost Host;
-
-            public override object ActivateJob(Type jobType)
-            {
-                return this.Host;
-            }
-
-            public HangfireJobActivator(ScheduledJobsHost host)
-            {
-                this.Host = host;
-            }
-
-            public override JobActivatorScope BeginScope(JobActivatorContext context)
-            {
-                return new HangfireJobActivatorScope(base.BeginScope(context));
-            }
-        }
-
-        private Hf.BackgroundJobServer JobServer;
+        private BackgroundJobServer JobServer;
 
         public ScheduledJobsHost(IServiceProvider serviceProvider) : base(serviceProvider)
         {
 
         }
 
+        private bool CheckCronExpression(string expression)
+        {
+            if (string.IsNullOrWhiteSpace(expression))
+            {
+                return false;
+            }
+
+            try
+            {
+                _ = Cronos.CronExpression.Parse(expression, Cronos.CronFormat.IncludeSeconds);
+                return true;
+            }
+            catch
+            {
+                this.Logger.LogError($"Given expression '{expression}' could not be parsed by the CronExpressionParser.");
+                return false;
+            }
+        }
+
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
-            this.JobServer = new Hf.BackgroundJobServer(new Hf.BackgroundJobServerOptions()
+            var providers = this.ServiceProvider.GetRequiredService<IJobFilterProvider>() as JobFilterProviderCollection;
+            providers.Add(ActivatorUtilities.CreateInstance<DefaultFilterProvider>(this.ServiceProvider));
+
+            this.JobServer = new BackgroundJobServer(new BackgroundJobServerOptions()
             {
                 ServerName = $"{Environment.MachineName}",
-                Activator = new ScheduledJobsHost.HangfireJobActivator(this),
+                Activator = this.ServiceProvider.GetRequiredService<JobActivator>(),
                 WorkerCount = 1
             });
+
             await base.StartAsync(cancellationToken);
         }
 
@@ -92,16 +81,27 @@ namespace Adriva.Extensions.Worker.Hangfire
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await base.ExecuteAsync(stoppingToken);
+
             foreach (var scheduledItem in this.ScheduledItems)
             {
                 ScheduledItemInstance scheduledItemInstance = new ScheduledItemInstance(scheduledItem, Guid.NewGuid().ToString());
 
                 if (scheduledItem.ShouldRunOnStartup)
                 {
-                    BackgroundJob.Enqueue(() => this.RunWithHangfireAsync(scheduledItemInstance));
+                    try
+                    {
+                        BackgroundJob.Enqueue(() => this.RunWithHangfireAsync(scheduledItemInstance));
+                    }
+                    catch (Exception enqueueError)
+                    {
+                        this.Logger.LogError(enqueueError, $"Error enqueueing start-up job '{scheduledItem.JobId}'. This error will be ignored.");
+                    }
                 }
 
-                RecurringJob.AddOrUpdate(scheduledItem.JobId, () => this.RunWithHangfireAsync(scheduledItemInstance), scheduledItem.Expression);
+                if (scheduledItem.Parser is CronExpressionParser && this.CheckCronExpression(scheduledItem.Expression))
+                {
+                    RecurringJob.AddOrUpdate(scheduledItem.JobId, () => this.RunWithHangfireAsync(scheduledItemInstance), scheduledItem.Expression);
+                }
             }
 
             await this.JobServer.WaitForShutdownAsync(stoppingToken);

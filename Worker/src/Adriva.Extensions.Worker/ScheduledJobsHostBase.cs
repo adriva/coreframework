@@ -9,7 +9,6 @@ using Adriva.Common.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace Adriva.Extensions.Worker
 {
@@ -57,6 +56,19 @@ namespace Adriva.Extensions.Worker
                    from method in type.GetMethods()
                    where !method.IsSpecialName && method.GetCustomAttributes<ScheduleAttribute>(true).Any()
                    select method;
+        }
+
+        public bool TryResolveMethod(ScheduledItem scheduledItem, out MethodInfo methodInfo)
+        {
+            methodInfo = null;
+
+            if (string.IsNullOrWhiteSpace(scheduledItem?.JobId))
+            {
+                return false;
+            }
+
+            methodInfo = this.ScheduledItems.FirstOrDefault(si => 0 == string.Compare(scheduledItem.JobId, si.JobId))?.Method;
+            return null != methodInfo;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
