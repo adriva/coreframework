@@ -16,7 +16,7 @@ namespace Adriva.Extensions.Worker
         {
             if (services.Any(s => s.ServiceType.Equals(typeof(IScheduledJobsHost))))
             {
-                throw new InvalidOperationException($"Already added.");
+                throw new InvalidOperationException($"Another scheduled job host has already been added. Only one scheduled job host is allowed per service container.");
             }
 
             services.AddSingleton<IScheduledJobsHost, THost>();
