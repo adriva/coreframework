@@ -98,7 +98,7 @@ namespace Adriva.Extensions.Worker
             return Task.CompletedTask;
         }
 
-        protected virtual async Task RunItemAsync(ScheduledItemInstance scheduledItemInstance)
+        protected virtual async Task<LockStatus> RunItemAsync(ScheduledItemInstance scheduledItemInstance)
         {
             object ownerInstance = null;
             ScheduledItem scheduledItem = scheduledItemInstance.ScheduledItem;
@@ -140,6 +140,7 @@ namespace Adriva.Extensions.Worker
                     else
                     {
                         this.Logger.LogWarning($"Job instance '{scheduledItemInstance.InstanceId}' ({ReflectionHelpers.GetNormalizedName(scheduledItemInstance.ScheduledItem.Method)}) has failed to acquire a lock.");
+                        return lockStatus;
                     }
                 }
 
@@ -182,11 +183,11 @@ namespace Adriva.Extensions.Worker
 
                 await this.WorkerLock.ReleaseLockAsync(scheduledItem.JobId, scheduledItemInstance.InstanceId);
             }
-
             this.Logger.LogInformation($"Executed scheduled job '{scheduledItem.Method.Name}'.");
+            return lockStatus;
         }
 
-        public virtual async Task RunAsync(MethodInfo methodInfo)
+        public virtual async Task<LockStatus> RunAsync(MethodInfo methodInfo)
         {
             if (null == methodInfo)
             {
@@ -203,7 +204,7 @@ namespace Adriva.Extensions.Worker
             string instanceId = Guid.NewGuid().ToString();
             ScheduledItemInstance scheduledItemInstance = new ScheduledItemInstance(scheduledItem, instanceId);
 
-            await this.RunItemAsync(scheduledItemInstance);
+            return await this.RunItemAsync(scheduledItemInstance);
         }
 
         public override void Dispose()
