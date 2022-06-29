@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using Newtonsoft.Json;
 
@@ -12,19 +13,18 @@ namespace Adriva.Extensions.Worker
 
         public IExpressionParser Parser { get; }
 
-        public bool IsRunning { get; set; }
-
         [JsonProperty]
         public bool IsSingleton { get; private set; }
-
-        [JsonProperty]
-        public bool IsQueued { get; set; }
 
         [JsonProperty]
         public bool ShouldRunOnStartup { get; set; }
 
         [JsonProperty]
         public string JobId { get; private set; }
+
+        public DateTime? NextScheduledDate { get; set; }
+
+        public bool IsReadyToRun { get; set; }
 
         [JsonConstructor]
         private ScheduledItem()

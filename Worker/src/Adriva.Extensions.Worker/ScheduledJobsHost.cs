@@ -1,9 +1,6 @@
 using System;
-using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Adriva.Common.Core;
 using Microsoft.Extensions.Logging;
 
 namespace Adriva.Extensions.Worker
@@ -12,7 +9,7 @@ namespace Adriva.Extensions.Worker
     {
         private readonly Timer Timer;
 
-        private DateTime LastRunDate;
+        private int TimerElapseCheck = 0;
         private long RunningItemCount = 0;
 
         public ScheduledJobsHost(IServiceProvider serviceProvider) : base(serviceProvider)
@@ -24,15 +21,6 @@ namespace Adriva.Extensions.Worker
         {
             await base.ExecuteAsync(stoppingToken);
 
-            this.LastRunDate = DateTime.UtcNow;
-            foreach (var scheduledItem in this.ScheduledItems)
-            {
-                DateTime? nextRunDate = scheduledItem.Parser.GetNext(this.LastRunDate, scheduledItem.Expression);
-
-                if (!nextRunDate.HasValue) continue;
-
-                this.Logger.LogInformation($"Next scheduled run for '{scheduledItem.Method.Name}' is at '{nextRunDate.Value}'.");
-            }
             while (0 != DateTime.Now.Second % 5)
             {
                 await Task.Delay(250);
@@ -42,77 +30,57 @@ namespace Adriva.Extensions.Worker
 
         private void OnTimerElapsed(object state)
         {
-            foreach (var scheduledItem in this.ScheduledItems)
+            if (1 == Interlocked.CompareExchange(ref this.TimerElapseCheck, 1, 0))
             {
-                DateTime? nextRunDate = null;
-                lock (scheduledItem)
-                {
-                    if (scheduledItem.ShouldRunOnStartup) nextRunDate = DateTime.MinValue;
-                    scheduledItem.ShouldRunOnStartup = false;
-                }
-
-                nextRunDate = nextRunDate ?? scheduledItem.Parser.GetNext(this.LastRunDate, scheduledItem.Expression);
-
-                if (!nextRunDate.HasValue) continue;
-
-                if (!scheduledItem.IsQueued && nextRunDate.Value <= DateTime.Now)
-                {
-                    lock (scheduledItem)
-                    {
-                        if (!scheduledItem.IsQueued && nextRunDate.Value <= DateTime.Now)
-                        {
-                            scheduledItem.IsQueued = true;
-                            ScheduledItemInstance scheduledItemInstance = new ScheduledItemInstance(scheduledItem, Guid.NewGuid().ToString());
-                            _ = this.RunItemAsync(scheduledItemInstance);
-                        }
-                    }
-                }
+                return;
             }
-        }
-
-        private async void SafeRunItemAsync(object state)
-        {
-            ScheduledItem scheduledItem = null;
-            ScheduledItemInstance scheduledItemInstance = null;
 
             try
             {
-                scheduledItemInstance = state as ScheduledItemInstance;
-                scheduledItem = scheduledItemInstance.ScheduledItem;
-
-                if (null == scheduledItem) return;
-
-                if (!scheduledItem.IsRunning)
+                foreach (var scheduledItem in this.ScheduledItems)
                 {
                     lock (scheduledItem)
                     {
-                        if (!scheduledItem.IsRunning)
+                        if (scheduledItem.ShouldRunOnStartup)
                         {
-                            scheduledItem.IsRunning = true;
+                            scheduledItem.NextScheduledDate = DateTime.Now;
+                            scheduledItem.ShouldRunOnStartup = false;
+                            scheduledItem.IsReadyToRun = true;
                         }
-                        else return;
+                        else if (!scheduledItem.IsReadyToRun)
+                        {
+                            scheduledItem.NextScheduledDate = scheduledItem.Parser.GetNext(scheduledItem.NextScheduledDate ?? DateTime.Now, scheduledItem.Expression);
+                            scheduledItem.IsReadyToRun = true;
+                            this.Logger.LogInformation($"Next scheduled run for '{scheduledItem.Method.Name}' is at '{scheduledItem.NextScheduledDate.Value}'.");
+                        }
+                    }
+
+                    if (!scheduledItem.IsReadyToRun) continue;
+
+                    if (scheduledItem.IsReadyToRun && scheduledItem.NextScheduledDate <= DateTime.Now)
+                    {
+                        lock (scheduledItem)
+                        {
+                            if (scheduledItem.IsReadyToRun && scheduledItem.NextScheduledDate <= DateTime.Now)
+                            {
+                                ScheduledItemInstance scheduledItemInstance = new ScheduledItemInstance(scheduledItem, Guid.NewGuid().ToString());
+
+                                try
+                                {
+                                    _ = this.RunItemAsync(scheduledItemInstance);
+                                }
+                                finally
+                                {
+                                    scheduledItem.IsReadyToRun = false;
+                                }
+                            }
+                        }
                     }
                 }
-
-                Interlocked.Increment(ref this.RunningItemCount);
-
-                await this.RunItemAsync(scheduledItemInstance);
-            }
-            catch (Exception fatalError)
-            {
-                this.Logger.LogError(fatalError, $"Failed to execute scheduled job '{scheduledItem.Method.Name}'.");
             }
             finally
             {
-                this.LastRunDate = DateTime.UtcNow;
-                scheduledItem.IsRunning = false;
-                scheduledItem.IsQueued = false;
-                Interlocked.Decrement(ref this.RunningItemCount);
-                DateTime? nextRunDate = scheduledItem.Parser.GetNext(this.LastRunDate, scheduledItem.Expression);
-                if (nextRunDate.HasValue)
-                {
-                    this.Logger.LogInformation($"Next scheduled run for '{scheduledItem.Method.Name}' is at '{nextRunDate.Value}'.");
-                }
+                Interlocked.Exchange(ref this.TimerElapseCheck, 0);
             }
         }
 

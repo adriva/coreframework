@@ -6,6 +6,11 @@ namespace Adriva.Extensions.Worker
     {
         public virtual DateTime? GetNext(DateTime fromDate, string expression)
         {
+            if (DateTimeKind.Local == fromDate.Kind)
+            {
+                fromDate = fromDate.ToUniversalTime();
+            }
+
             var cronExpression = Cronos.CronExpression.Parse(expression, Cronos.CronFormat.IncludeSeconds);
             DateTime? nextDate = cronExpression.GetNextOccurrence(fromDate, TimeZoneInfo.Local);
             if (!nextDate.HasValue) return null;
