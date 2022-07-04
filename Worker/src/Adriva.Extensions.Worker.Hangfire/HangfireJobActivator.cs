@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Adriva.Extensions.Worker.Hangfire
 {
-    internal sealed class HangfireJobActivator : JobActivator
+    public sealed class HangfireJobActivator : JobActivator
     {
         private readonly IServiceCollection Services;
         private readonly IServiceProvider ServiceProvider;
