@@ -89,6 +89,12 @@ jobs:
       with:
         PROJECT_FILE_PATH: Worker/src/Adriva.Extensions.Worker/Adriva.Extensions.Worker.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish Worker Hangfire
+      uses: rohith/publish-nuget@v2.1.2
+      continue-on-error: true
+      with:
+        PROJECT_FILE_PATH: Worker/src/Adriva.Extensions.Worker.Hangfire/Adriva.Extensions.Worker.Hangfire.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish Analytics Client
       uses: rohith/publish-nuget@v2.1.2
       continue-on-error: true
