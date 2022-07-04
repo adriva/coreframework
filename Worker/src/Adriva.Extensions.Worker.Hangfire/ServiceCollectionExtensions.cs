@@ -53,5 +53,16 @@ namespace Microsoft.Extensions.DependencyInjection
 
             return services;
         }
+
+        public static IServiceCollection AddStandaloneHangfireServer(this IServiceCollection services)
+        {
+            return services.AddStandaloneHangfireServer<HangfireJobActivator>();
+        }
+
+        public static IServiceCollection AddStandaloneHangfireServer<TJobActivator>(this IServiceCollection services)
+        {
+            services.AddHostedService<HangfireServer>();
+            return services;
+        }
     }
 }
