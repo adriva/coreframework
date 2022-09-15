@@ -39,8 +39,13 @@ namespace Adriva.Extensions.Reporting.Abstractions
             return DataSet.FromFields(names.Select(n => new FieldDefinition() { Name = n }).ToArray());
         }
 
+        public IDictionary<string, object> Metadata { get; }
+
         [JsonConstructor]
-        private DataSet() { }
+        private DataSet()
+        {
+            this.Metadata = new Dictionary<string, object>();
+        }
 
         public DataRow CreateRow()
         {

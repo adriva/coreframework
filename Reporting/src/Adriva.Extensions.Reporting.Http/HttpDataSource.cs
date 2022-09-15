@@ -17,6 +17,12 @@ namespace Adriva.Extensions.Reporting.Http
 
         public abstract void PopulateDataset(string content, HttpCommandOptions commandOptions, DataSet dataSet);
 
+        public virtual Task DecorateRequestAsync(HttpRequestMessage request, ReportCommand command) => Task.CompletedTask;
+
+        public virtual Task DecorateDatasetAsync(DataSet dataset) => Task.CompletedTask;
+
+        public virtual Task<string> ProcessResponseContentAsync(string content) => Task.FromResult(content);
+
         public HttpDataSource(IHttpClientFactory httpClientFactory, ILoggerFactory loggerFactory)
         {
             this.Logger = loggerFactory.CreateLogger(this.GetType());
@@ -59,6 +65,8 @@ namespace Adriva.Extensions.Reporting.Http
 
             using (var request = new HttpRequestMessage(new HttpMethod(commandOptions.Method), commandBuffer.ToString()))
             {
+                await this.DecorateRequestAsync(request, command);
+
                 using (var response = await this.HttpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead))
                 {
                     if (!response.IsSuccessStatusCode)
@@ -84,10 +92,13 @@ namespace Adriva.Extensions.Reporting.Http
                 }
             }
 
+            contentText = await this.ProcessResponseContentAsync(contentText);
 
             var dataset = DataSet.FromFields(fields);
 
             this.PopulateDataset(contentText, commandOptions, dataset);
+
+            await this.DecorateDatasetAsync(dataset);
 
             return dataset;
         }
