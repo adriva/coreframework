@@ -109,35 +109,26 @@ namespace Adriva.Extensions.Reporting.Abstractions
         private async Task<IList<RepositoryFile>> ResolveReportDefinitionChainAsync(RepositoryFile reportDefinitionFile)
         {
             IList<RepositoryFile> output = new List<RepositoryFile>();
-            string directoryName = reportDefinitionFile.Path;
 
-            while (!string.IsNullOrWhiteSpace(directoryName))
+            RepositoryFile current = reportDefinitionFile;
+
+            while (!string.IsNullOrWhiteSpace(current.Base))
             {
-                if (Path.GetRelativePath(this.Options.RootPath, Path.Combine(this.Options.RootPath, directoryName)).StartsWith("..", StringComparison.OrdinalIgnoreCase))
+                var baseFile = await this.GetRepositoryFileAsync(Path.Combine(current.Path, current.Base), true);
+
+                if (RepositoryFile.NotExists.Equals(baseFile))
                 {
-                    throw new FileNotFoundException($"Failed to locate the base report definition '{reportDefinitionFile.Base}'.");
+                    baseFile = await this.GetRepositoryFileAsync(current.Base, true);
                 }
 
-                string testPath = Path.Combine(directoryName, reportDefinitionFile.Base);
-                var baseFile = this.FileProvider.GetFileInfo(testPath);
-                if (baseFile.Exists)
+                if (!RepositoryFile.NotExists.Equals(baseFile))
                 {
-                    var baseOfBase = await this.ResolveBasePathAsync(baseFile);
-                    var baseDefinition = new RepositoryFile()
-                    {
-                        Name = baseFile.Name,
-                        Base = baseOfBase,
-                        Path = baseFile.GetDirectoryName(this.Options.RootPath)
-                    };
-                    reportDefinitionFile.Base = baseDefinition.Base;
-                    output.Add(baseDefinition);
-
-                    if (null == baseOfBase) break;
+                    output.Add(baseFile);
+                    current = baseFile;
                 }
                 else
                 {
-                    directoryName = Path.Combine(this.Options.RootPath, directoryName, "..");
-                    directoryName = Path.GetRelativePath(this.Options.RootPath, directoryName);
+                    throw new FileNotFoundException($"Failed to locate the base report definition '{current.Base}'.");
                 }
             }
 

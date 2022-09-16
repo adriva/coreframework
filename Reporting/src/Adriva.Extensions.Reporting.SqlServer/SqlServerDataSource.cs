@@ -39,7 +39,7 @@ namespace Adriva.Extensions.Reporting.SqlServer
                     }
                 }
 
-                this.Logger.LogInformation($"Executing Sql Command : {command.ToString()}");
+                this.Logger.LogInformation($"Executing Sql Command : {command.Text}");
 
                 if (null != command.Parameters)
                 {

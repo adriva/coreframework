@@ -50,6 +50,13 @@
             "request": "launch",
             "cwd": "${workspaceFolder}/demo",
             "program": "${workspaceFolder}/demo/bin/Debug/netcoreapp3.1/demo.dll",
+            "osx": {
+                "program": "dotnet3",
+                "args": [
+                    "${workspaceFolder}/demo/bin/Debug/netcoreapp3.1/demo.dll"
+                ],
+                "targetArchitecture": "x86_64"
+            },
             "launchBrowser": {
                 "enabled": true,
                 "args": "${auto-detect-url}"
