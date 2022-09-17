@@ -41,7 +41,7 @@
                     "enum": [
                         "None",
                         "KeyField",
-                        "ValueField"
+                        "DisplayField"
                     ]
                 },
                 "options": {
