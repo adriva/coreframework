@@ -12,6 +12,6 @@ namespace Adriva.Extensions.Reporting.Abstractions
     {
         None = 0,
         KeyField = 1,
-        ValueField = 2
+        DisplayField = 2
     }
 }
