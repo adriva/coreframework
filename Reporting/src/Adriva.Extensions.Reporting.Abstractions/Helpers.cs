@@ -89,6 +89,11 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
             if (string.IsNullOrWhiteSpace(contextMemberName))
             {
+                contextMemberName = filterDefinition.Name;
+            }
+
+            if (string.IsNullOrWhiteSpace(contextMemberName))
+            {
                 return filterDefinition.DefaultValue;
             }
 

@@ -24,7 +24,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             DataSet dataSet = new DataSet();
             foreach (var field in fields)
             {
-                dataSet.DataColumns.Add(new DataColumn(field.Name, field.DisplayName));
+                dataSet.DataColumns.Add(new DataColumn(field.Name, field.DisplayName, field.Options));
             }
             return dataSet;
         }

@@ -6,18 +6,23 @@ using Adriva.Common.Core;
 using Adriva.Extensions.Caching.Abstractions;
 using Adriva.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
     public class DefaultFilterValueBinder : IFilterValueBinder
     {
         private readonly ICache Cache;
+        private readonly ILogger Logger;
 
-        public DefaultFilterValueBinder(IServiceProvider serviceProvider)
+        public DefaultFilterValueBinder(IServiceProvider serviceProvider, ILogger<DefaultFilterValueBinder> logger)
         {
             var cacheWrapper = serviceProvider.GetService<ICache<InMemoryCache>>();
+
             if (null == cacheWrapper?.Instance) this.Cache = new NullCache();
             else this.Cache = cacheWrapper.Instance;
+
+            this.Logger = logger;
         }
 
         public async Task<FilterValue> GetFilterValueAsync(ReportContext context, FilterDefinition filterDefinition, string rawValue)
@@ -54,7 +59,15 @@ namespace Adriva.Extensions.Reporting.Abstractions
             }
             else
             {
-                value = Convert.ChangeType(value, filterDefinition.DataType, CultureInfo.CurrentCulture);
+                try
+                {
+                    value = Convert.ChangeType(value, filterDefinition.DataType, CultureInfo.CurrentCulture);
+                }
+                catch (Exception conversionError)
+                {
+                    this.Logger.LogError(conversionError, $"Error binding filter '{filterDefinition.Name}' using raw value '{rawValue ?? "NULL"}' and assumed value '{value ?? "NULL"}'");
+                    throw;
+                }
             }
 
             return new FilterValue(rawValue, value);
