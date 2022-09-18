@@ -2,5 +2,5 @@
 "EnumTab" : "enumtab"
 "DealerSelect" : "accountSelector"
 "Date" : "calendar"
-"Adriva.Extensions.Reports.ValueFormatters:AddDays, Adriva.Extensions.Reports" :"AddDaysReplacement"
+"Adriva.Extensions.Reports.ValueFormatters:AddDays, Adriva.Extensions.Reports" :"PetrolOfisi.Order.Common.Reporting.DefaultFormatters:AddDays,PetrolOfisi.Order.Common"
 "PoApiJson" : "HttpJson"
