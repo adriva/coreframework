@@ -34,6 +34,15 @@
                     "default": null,
                     "title": "The name that may be used when displaying the item on a user interface."
                 },
+                "dataType": {
+                    "$ref": "#/definitions/dataTypes"
+                },
+                "format": {
+                    "type": "string",
+                    "default": null,
+                    "title": "A formatter string that provides the display format for the output data",
+                    "description": "A format string to format the output of the field. Note that not all renderers may support (or a subset of) all possible format strings."
+                },
                 "properties": {
                     "type": "string",
                     "default": "None",

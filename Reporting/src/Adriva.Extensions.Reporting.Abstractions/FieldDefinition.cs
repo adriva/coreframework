@@ -1,5 +1,8 @@
+using System;
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 using Adriva.Common.Core;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.Abstractions
@@ -10,6 +13,11 @@ namespace Adriva.Extensions.Reporting.Abstractions
         public string Name { get; set; }
 
         public string DisplayName { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public TypeCode DataType { get; set; } = TypeCode.Object;
+
+        public string Format { get; set; }
 
         public FieldProperties Properties { get; set; }
 
