@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.Abstractions
@@ -11,7 +13,12 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         public string DisplayName { get; private set; }
 
-        public JToken Options { get; private set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public TypeCode DataType { get; set; } = TypeCode.String;
+
+        public string Format { get; set; }
+
+        public JToken Options { get; set; }
 
         private string DebugView
         {
@@ -21,12 +28,14 @@ namespace Adriva.Extensions.Reporting.Abstractions
             }
         }
 
-        public DataColumn(string name, string displayName = null, JToken options = null)
+        public DataColumn(string name, TypeCode dataType = TypeCode.String, string displayName = null, string format = null, JToken options = null)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("DataColumn requires a name.");
 
             this.Name = name;
             this.DisplayName = string.IsNullOrWhiteSpace(displayName) ? name : displayName;
+            this.DataType = dataType;
+            this.Format = format;
             this.Options = options;
         }
     }

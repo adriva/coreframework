@@ -24,7 +24,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             DataSet dataSet = new DataSet();
             foreach (var field in fields)
             {
-                dataSet.DataColumns.Add(new DataColumn(field.Name, field.DisplayName, field.Options));
+                dataSet.DataColumns.Add(new DataColumn(field.Name, field.DataType, field.DisplayName, field.Format, field.Options));
             }
             return dataSet;
         }
@@ -39,6 +39,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             return DataSet.FromFields(names.Select(n => new FieldDefinition() { Name = n }).ToArray());
         }
 
+        [JsonProperty("metadata")]
         public IDictionary<string, object> Metadata { get; }
 
         [JsonConstructor]
