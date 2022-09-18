@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Adriva.Extensions.Reporting.Abstractions
@@ -7,5 +8,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
         Task<ReportDefinition> LoadReportDefinitionAsync(string name);
 
         Task<RepositoryFile> GetRepositoryFileAsync(string name, bool isReportDefinition);
+
+        Stream OpenReadStream(RepositoryFile repositoryFile);
     }
 }

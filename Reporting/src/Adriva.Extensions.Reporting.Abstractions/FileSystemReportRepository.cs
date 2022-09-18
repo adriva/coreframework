@@ -155,6 +155,24 @@ namespace Adriva.Extensions.Reporting.Abstractions
             return output;
         }
 
+        public Stream OpenReadStream(RepositoryFile repositoryFile)
+        {
+            if (RepositoryFile.NotExists.Equals(repositoryFile))
+            {
+                throw new FileNotFoundException($"Repository file not found.");
+            }
+
+            string targetPath = Path.Combine(repositoryFile.Path, repositoryFile.Name);
+            var fileInfo = this.FileProvider.GetFileInfo(targetPath);
+
+            if (!fileInfo.Exists || fileInfo.IsDirectory)
+            {
+                throw new FileNotFoundException($"Repository file not found.");
+            }
+
+            return fileInfo.CreateReadStream();
+        }
+
         public async Task<ReportDefinition> LoadReportDefinitionAsync(string name)
         {
             var reportDefinitionFiles = await this.ResolveReportDefinitionChainAsync(name);
