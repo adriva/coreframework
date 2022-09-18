@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Humanizer;
 
 namespace Adriva.DevTools.Cli.Reporting
 {
@@ -70,7 +71,7 @@ namespace Adriva.DevTools.Cli.Reporting
             }
         }
 
-        public string GetSubstitution(string originalText)
+        public string GetSubstitution(string originalText, bool useCamelCase = false)
         {
             if (string.IsNullOrWhiteSpace(originalText)) return originalText;
 
@@ -79,7 +80,13 @@ namespace Adriva.DevTools.Cli.Reporting
                 this.CaseInsensitiveLookup.TryGetValue(originalText, out replacementText);
             }
 
-            return replacementText ?? originalText;
+            string output = replacementText ?? originalText;
+
+            return useCamelCase switch
+            {
+                true => output.Camelize(),
+                false => output
+            };
         }
     }
 }

@@ -77,12 +77,30 @@
                 "-p",
                 "/Users/mnemonic/Projects/po/portal/PetrolOfisi.Portal.Web/ReportStore",
                 "-n",
-                "ApiReports/Lms/UserProfile",
+                "UserProfile/UserProfileList",
                 // "-m",
                 // "/Users/mnemonic/Projects/netcorelibs/Framework/DevTools/Adriva.DevTools.Cli/mappings.txt",
                 "-o",
                 "/Users/mnemonic/Projects/report-output"
-            ]
+            ],
+            "osx": {
+                "program": "dotnet3",
+                "args": [
+                    "${workspaceFolder}/DevTools/Adriva.DevTools.Cli/bin/Debug/netcoreapp3.1/Adriva.DevTools.Cli.dll",
+                    "update-report",
+                    "-p",
+                    "/Users/mnemonic/Projects/po/portal/PetrolOfisi.Portal.Web/ReportStore",
+                    "-n",
+                    "UserProfile/UserProfileList",
+                    // "-m",
+                    // "/Users/mnemonic/Projects/netcorelibs/Framework/DevTools/Adriva.DevTools.Cli/mappings.txt",
+                    "-o",
+                    "/Users/mnemonic/Projects/report-output",
+                    "-m",
+                    "/Users/mnemonic/Projects/netcorelibs/Framework/DevTools/Adriva.DevTools.Cli/mappings.txt"
+                ],
+                "targetArchitecture": "x86_64"
+            }
         },
         {
             "name": "Launch Worker Host",

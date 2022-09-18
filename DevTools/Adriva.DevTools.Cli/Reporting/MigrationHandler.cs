@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
 using Adriva.Extensions.Reporting.Abstractions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
@@ -21,9 +24,21 @@ namespace Adriva.DevTools.Cli.Reporting
         {
             if (null == jtoken) return default(T);
 
+            if (string.IsNullOrWhiteSpace(name)) return default(T);
+
             if (JTokenType.Object == jtoken.Type)
             {
                 JObject jobject = (JObject)jtoken;
+
+                if (name.Contains('.', StringComparison.Ordinal))
+                {
+                    var pathToken = jobject.SelectToken(name);
+                    if (null != pathToken)
+                    {
+                        return pathToken.Value<T>();
+                    }
+                }
+
                 if (!jobject.ContainsKey(name))
                 {
                     return default(T);
@@ -47,15 +62,16 @@ namespace Adriva.DevTools.Cli.Reporting
                     Dictionary<string, object> optionsData = new Dictionary<string, object>();
 
                     string viewName = MigrationHandler.GetJsonValue<string>(filterObject["rendererOptions"]?["mvc"], "view");
+                    string cssClass = MigrationHandler.GetJsonValue<string>(filterObject["rendererOptions"]?["mvc"]?["Properties"], "cssClass");
 
                     if (!string.IsNullOrWhiteSpace(viewName))
                     {
-                        optionsData["control"] = textMappingsManager.GetSubstitution(viewName);
+                        optionsData["editor"] = textMappingsManager.GetSubstitution(viewName, true);
                     }
 
-                    if (FilterProperties.Context == filterDefinition.Properties)
+                    if (!string.IsNullOrWhiteSpace(cssClass))
                     {
-                        optionsData["hidden"] = true;
+                        optionsData["containerClass"] = textMappingsManager.GetSubstitution(cssClass);
                     }
 
                     if (0 < optionsData.Count)
@@ -212,6 +228,18 @@ namespace Adriva.DevTools.Cli.Reporting
 
                                 MigrationHandler.ConvertFilterOptions(filter, filterDefinition, textMappingsManager);
 
+                                if ("CurrentUser".Equals(MigrationHandler.GetJsonValue<string>(filter, "rendererOptions.mvc.view"), StringComparison.OrdinalIgnoreCase))
+                                {
+                                    filterDefinition.Properties = FilterProperties.Context;
+                                    filterDefinition.DefaultValue = "CurrentUserId";
+
+                                    if (filterDefinition.Options is JObject jobjectOptions)
+                                    {
+                                        var editorProperty = jobjectOptions.Property("editor", StringComparison.OrdinalIgnoreCase);
+                                        editorProperty?.Remove();
+                                    }
+                                }
+
                                 base.RunWithStepOver(() =>
                                 {
                                     reportDefinition.Filters.Add(filterName, filterDefinition);
@@ -242,6 +270,12 @@ namespace Adriva.DevTools.Cli.Reporting
                                         DisplayName = MigrationHandler.GetJsonValue<string>(outputField, "title")
                                     };
 
+                                    if (outputDefinition.Fields.ContainsKey(fieldDefinition.Name))
+                                    {
+                                        this.Logger.LogWarning($"Output field '{fieldDefinition.Name}' is declared more than once in '{legacyReportFile.FullName}'. This instance will be skipped.");
+                                        continue;
+                                    }
+
                                     base.RunWithStepOver(() =>
                                     {
                                         outputDefinition.Fields.Add(fieldDefinition.Name, fieldDefinition);
@@ -252,15 +286,18 @@ namespace Adriva.DevTools.Cli.Reporting
                             reportDefinition.Output = outputDefinition;
                         }
 
-                        var definitionJObject = JObject.FromObject(reportDefinition, new JsonSerializer() { DefaultValueHandling = DefaultValueHandling.Ignore });
-                        definitionJObject.AddFirst(new JProperty("$schema", "https://raw.githubusercontent.com/adriva/coreframework/master/Reporting/src/Adriva.Extensions.Reporting.Abstractions/report-schema.json"));
-                        string newJson = Utilities.SafeSerialize(definitionJObject, new JsonSerializerSettings()
+                        string newJson = Utilities.SafeSerialize(reportDefinition, new JsonSerializerSettings()
                         {
                             DefaultValueHandling = DefaultValueHandling.Ignore,
+                            NullValueHandling = NullValueHandling.Ignore,
                             Formatting = Formatting.Indented,
                             ContractResolver = new DefaultContractResolver()
                             {
                                 NamingStrategy = new CamelCaseNamingStrategy(false, false, false)
+                            },
+                            Converters = new JsonConverter[]{
+                                new ReportDefinitionConverter(),
+                                new StringEnumConverter()
                             },
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         });
@@ -283,6 +320,38 @@ namespace Adriva.DevTools.Cli.Reporting
                 {
                     this.Logger.LogError(error, $"Error processing '{legacyReportFile}'.");
                 }
+            }
+        }
+    }
+
+    internal sealed class ReportDefinitionConverter : JsonConverter<ReportDefinition>
+    {
+        public override bool CanRead => false;
+
+        public override bool CanWrite => true;
+
+        public override ReportDefinition ReadJson(JsonReader reader, Type objectType, ReportDefinition existingValue, bool hasExistingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void WriteJson(JsonWriter writer, ReportDefinition value, JsonSerializer serializer)
+        {
+            int index = serializer.Converters.IndexOf(this);
+
+            if (-1 < index)
+            {
+                serializer.Converters.RemoveAt(index);
+            }
+
+            var jobject = JObject.FromObject(value, serializer);
+            jobject.AddFirst(new JProperty("$schema", "https://raw.githubusercontent.com/adriva/coreframework/master/Reporting/src/Adriva.Extensions.Reporting.Abstractions/report-schema.json"));
+
+            jobject.WriteTo(writer, serializer.Converters.ToArray());
+
+            if (-1 < index)
+            {
+                serializer.Converters.Insert(index, this);
             }
         }
     }
