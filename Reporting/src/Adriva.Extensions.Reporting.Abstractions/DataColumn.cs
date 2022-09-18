@@ -14,11 +14,11 @@ namespace Adriva.Extensions.Reporting.Abstractions
         public string DisplayName { get; private set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public TypeCode DataType { get; set; } = TypeCode.String;
+        public TypeCode DataType { get; private set; }
 
-        public string Format { get; set; }
+        public string Format { get; private set; }
 
-        public JToken Options { get; set; }
+        public JToken Options { get; private set; }
 
         private string DebugView
         {

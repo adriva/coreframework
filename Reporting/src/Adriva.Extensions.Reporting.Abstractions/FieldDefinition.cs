@@ -30,6 +30,8 @@ namespace Adriva.Extensions.Reporting.Abstractions
                 Name = this.Name,
                 DisplayName = this.DisplayName,
                 Properties = this.Properties,
+                DataType = this.DataType,
+                Format = this.Format,
                 Options = this.Options?.DeepClone()
             };
 
