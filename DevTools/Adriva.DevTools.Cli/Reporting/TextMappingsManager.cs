@@ -62,6 +62,10 @@ namespace Adriva.DevTools.Cli.Reporting
 
                                 if (!string.IsNullOrWhiteSpace(fromText))
                                 {
+                                    if ("null".Equals(toText, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        toText = null;
+                                    }
                                     targetDictionary.TryAdd(fromText, toText);
                                 }
                             }
@@ -75,12 +79,18 @@ namespace Adriva.DevTools.Cli.Reporting
         {
             if (string.IsNullOrWhiteSpace(originalText)) return originalText;
 
+            bool hasMatch = false;
+
             if (!this.CaseSensitiveLookup.TryGetValue(originalText, out string replacementText))
             {
-                this.CaseInsensitiveLookup.TryGetValue(originalText, out replacementText);
+                hasMatch = this.CaseInsensitiveLookup.TryGetValue(originalText, out replacementText);
+            }
+            else
+            {
+                hasMatch = true;
             }
 
-            string output = replacementText ?? originalText;
+            string output = hasMatch ? replacementText : originalText;
 
             return useCamelCase switch
             {
