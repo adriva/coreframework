@@ -33,7 +33,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("DataColumn requires a name.");
 
             this.Name = name;
-            this.DisplayName = string.IsNullOrWhiteSpace(displayName) ? name : displayName;
+            this.DisplayName = displayName;
             this.DataType = dataType;
             this.Format = format;
             this.Options = options;

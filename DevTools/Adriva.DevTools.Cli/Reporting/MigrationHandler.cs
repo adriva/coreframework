@@ -266,8 +266,9 @@ namespace Adriva.DevTools.Cli.Reporting
                                 {
                                     FieldDefinition fieldDefinition = new FieldDefinition()
                                     {
-                                        Name = MigrationHandler.GetJsonValue<string>(outputField, "field"),
-                                        DisplayName = MigrationHandler.GetJsonValue<string>(outputField, "title")
+                                        DisplayName = MigrationHandler.GetJsonValue<string>(outputField, "title"),
+                                        DataType = MigrationHandler.GetJsonValue<TypeCode>(outputField, "dataType"),
+                                        Format = MigrationHandler.GetJsonValue<string>(outputField, "format"),
                                     };
 
                                     if (outputDefinition.Fields.ContainsKey(fieldDefinition.Name))
