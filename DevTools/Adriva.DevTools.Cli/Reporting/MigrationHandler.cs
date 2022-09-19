@@ -82,6 +82,31 @@ namespace Adriva.DevTools.Cli.Reporting
             }
         }
 
+        private static void ConvertOutputFieldOptions(JToken filterToken, FieldDefinition fieldDefinition, TextMappingsManager textMappingsManager)
+        {
+            if (null == filterToken || null == fieldDefinition) return;
+
+            if (JTokenType.Object == filterToken.Type)
+            {
+                if (filterToken is JObject filterObject)
+                {
+                    Dictionary<string, object> optionsData = new Dictionary<string, object>();
+
+                    string rendererMethod = MigrationHandler.GetJsonValue<string>(filterObject["rendererOptions"]?["mvc"], "renderer");
+
+                    if (!string.IsNullOrWhiteSpace(rendererMethod))
+                    {
+                        optionsData["formatter"] = rendererMethod;
+                    }
+
+                    if (0 < optionsData.Count)
+                    {
+                        fieldDefinition.Options = JToken.FromObject(optionsData);
+                    }
+                }
+            }
+        }
+
         public MigrationHandler(IServiceProvider serviceProvider, ILoggerFactory loggerFactory) : base(loggerFactory)
         {
             this.ServiceProvider = serviceProvider;
@@ -271,15 +296,19 @@ namespace Adriva.DevTools.Cli.Reporting
                                         Format = MigrationHandler.GetJsonValue<string>(outputField, "format"),
                                     };
 
-                                    if (outputDefinition.Fields.ContainsKey(fieldDefinition.Name))
+                                    string fieldName = MigrationHandler.GetJsonValue<string>(outputField, "field") ?? string.Empty;
+
+                                    if (outputDefinition.Fields.ContainsKey(fieldName))
                                     {
                                         this.Logger.LogWarning($"Output field '{fieldDefinition.Name}' is declared more than once in '{legacyReportFile.FullName}'. This instance will be skipped.");
                                         continue;
                                     }
 
+                                    MigrationHandler.ConvertOutputFieldOptions(outputField, fieldDefinition, textMappingsManager);
+
                                     base.RunWithStepOver(() =>
                                     {
-                                        outputDefinition.Fields.Add(fieldDefinition.Name, fieldDefinition);
+                                        outputDefinition.Fields.Add(fieldName, fieldDefinition);
                                     }, $"Error processing '{fieldDefinition.Name}' in report '{legacyReportFile.FullName}'.");
                                 }
                             }
