@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Adriva.Common.Core;
 using Adriva.Extensions.Reporting.Abstractions;
+using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -103,6 +103,32 @@ namespace Adriva.DevTools.Cli.Reporting
                     {
                         fieldDefinition.Options = JToken.FromObject(optionsData);
                     }
+                }
+            }
+        }
+
+        private static IEnumerable<Esprima.Ast.FunctionDeclaration> FindAllJavascriptFunctions(Esprima.Ast.ChildNodes nodes)
+        {
+            if (!nodes.Any())
+            {
+                yield break;
+            }
+
+            foreach (var node in nodes)
+            {
+                if (null == node)
+                {
+                    continue;
+                }
+
+                if (Esprima.Ast.Nodes.FunctionDeclaration == node.Type)
+                {
+                    yield return (Esprima.Ast.FunctionDeclaration)node;
+                }
+
+                foreach (var childNode in MigrationHandler.FindAllJavascriptFunctions(node.ChildNodes))
+                {
+                    yield return childNode;
                 }
             }
         }
@@ -344,12 +370,80 @@ namespace Adriva.DevTools.Cli.Reporting
 
                         await File.WriteAllTextAsync(outputPath, newJson, Encoding.UTF8);
                         this.Logger.LogInformation($"Report written to '{outputPath}'.");
+
+                        try
+                        {
+                            await this.ExtractCustomViewScriptsAsync(legacyReportFile, outputDirectory);
+                        }
+                        catch (Exception scriptExtractionError)
+                        {
+                            this.Logger.LogError(scriptExtractionError, $"Error extracting scripts from '{legacyReportFile.FullName}'.");
+                        }
                     }
                 }
                 catch (Exception error)
                 {
                     this.Logger.LogError(error, $"Error processing '{legacyReportFile}'.");
                 }
+            }
+        }
+
+        private async Task ExtractCustomViewScriptsAsync(FileInfo legacyReportFile, string outputDirectory)
+        {
+            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(legacyReportFile.FullName);
+            string cshtmlFile = Path.Combine(legacyReportFile.DirectoryName, $"{fileNameWithoutExtension}.cshtml");
+
+            if (!File.Exists(cshtmlFile))
+            {
+                return;
+            }
+
+            HtmlDocument cshtmlDocument = new HtmlDocument();
+            cshtmlDocument.Load(cshtmlFile);
+
+            var nodes = cshtmlDocument.DocumentNode.SelectNodes("//script");
+
+            if (null == nodes || 0 == nodes.Count)
+            {
+                return;
+            }
+
+            StringBuilder outputBuffer = new StringBuilder();
+
+            nodes
+                .Where(n => 0 < n.InnerLength)
+                .ForEach((index, node) =>
+                {
+                    var parser = new Esprima.JavaScriptParser();
+                    var javascript = parser.ParseScript(node.InnerText);
+
+                    var scriptNodes = MigrationHandler.FindAllJavascriptFunctions(javascript.ChildNodes).ToArray();
+
+                    var topLevelNodes = scriptNodes
+                                    .Where(x => !scriptNodes.Any(y => x != y && x.Range.Start > y.Range.Start && x.Range.End < y.Range.End))
+                                    .Where(x => !x.Id.Name.Equals("gridReady", StringComparison.Ordinal));
+
+                    foreach (var topLevelNode in topLevelNodes)
+                    {
+                        string code = Esprima.Utils.AstToJavaScript.ToJavaScriptString(topLevelNode, new Esprima.Utils.KnRJavaScriptTextFormatterOptions()
+                        {
+                            Indent = "\t",
+                            KeepEmptyBlockBodyInLine = false
+                        });
+                        if (!string.IsNullOrWhiteSpace(code))
+                        {
+                            outputBuffer.Append(code);
+                            outputBuffer.Append(Environment.NewLine);
+                            outputBuffer.Append(Environment.NewLine);
+                        }
+                    }
+                });
+
+            if (0 < outputBuffer.Length)
+            {
+                string outputPath = Path.Combine(outputDirectory, $"{fileNameWithoutExtension}.js");
+                await File.WriteAllTextAsync(outputPath, outputBuffer.ToString(), Encoding.UTF8);
+                this.Logger.LogInformation($"Scripts from '{cshtmlFile}' for report '{legacyReportFile.FullName}' extracted to '{outputPath}'.");
             }
         }
     }
