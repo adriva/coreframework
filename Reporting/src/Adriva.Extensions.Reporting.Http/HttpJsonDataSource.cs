@@ -22,8 +22,6 @@ namespace Adriva.Extensions.Reporting.Http
                 return null;
             }
 
-            jContainer.Remove();
-
             return jContainer
                         .Descendants()
                         .OfType<JValue>()
@@ -68,11 +66,12 @@ namespace Adriva.Extensions.Reporting.Http
             }
             else
             {
-                throw new NotSupportedException();
+                throw new NotSupportedException($"Only json array and object is supported as root. Current json element is of type '{jToken.Type}'.");
             }
 
-            foreach (var jRowContainer in jarray.Descendants().OfType<JContainer>())
+            foreach (var jArrayItem in jarray.Children<JContainer>())
             {
+                var jRowContainer = (JContainer)jArrayItem.DeepClone();
                 var dictionary = this.ParseRowContainer(jRowContainer);
 
                 if (null != dictionary)
@@ -93,5 +92,6 @@ namespace Adriva.Extensions.Reporting.Http
                 }
             }
         }
+
     }
 }
