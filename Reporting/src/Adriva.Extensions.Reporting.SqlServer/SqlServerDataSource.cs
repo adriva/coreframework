@@ -96,7 +96,7 @@ namespace Adriva.Extensions.Reporting.SqlServer
 
                     while (await dataReader.ReadAsync())
                     {
-                        if (long.MinValue == recordCount && !string.IsNullOrWhiteSpace(outputOptions.RowCountField))
+                        if (long.MinValue == recordCount && !string.IsNullOrWhiteSpace(outputOptions?.RowCountField))
                         {
                             int rowCountFieldIndex = -1;
                             try
