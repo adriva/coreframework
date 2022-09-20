@@ -6,7 +6,14 @@ namespace Adriva.Extensions.Reporting.Abstractions
 {
     public sealed class DataSetMetadata : Dictionary<string, object>
     {
-        public long RecordCount { get; set; }
+        [JsonProperty()]
+        public long? RecordCount { get; set; }
+
+        [JsonProperty]
+        public int? PageNumber { get; set; }
+
+        [JsonProperty]
+        public int? PageCount { get; set; }
 
         [JsonConstructor]
         public DataSetMetadata() : base(StringComparer.OrdinalIgnoreCase)

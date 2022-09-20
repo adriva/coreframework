@@ -6,7 +6,7 @@
 <PropertyGroup>
     <Title>Adriva Reporting Renderer Services for Microsoft Excel</Title>
     <PackageDescription>Provides Microsoft Excel (xslx) rendering capabilities to Adriva Reports.</PackageDescription>    
-    <Version>3.2.14</Version>
+    <Version>3.2.20</Version>
   </PropertyGroup>
 
   <ItemGroup>

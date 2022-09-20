@@ -58,25 +58,30 @@ namespace Adriva.Extensions.Reporting.Http
                 }
             }
 
-            if (null == jToken)
+            await this.PopulateDatasetAsync(jToken, command, dataSet);
+        }
+
+        protected virtual async ValueTask PopulateDatasetAsync(JToken responseToken, ReportCommand command, DataSet dataSet)
+        {
+            if (null == responseToken)
             {
                 return;
             }
 
             JArray jarray;
 
-            if (JTokenType.Object == jToken.Type)
+            if (JTokenType.Object == responseToken.Type)
             {
                 jarray = new JArray();
-                jarray.Add(jToken);
+                jarray.Add(responseToken);
             }
-            else if (JTokenType.Array == jToken.Type)
+            else if (JTokenType.Array == responseToken.Type)
             {
-                jarray = (JArray)jToken;
+                jarray = (JArray)responseToken;
             }
             else
             {
-                throw new NotSupportedException($"Only json array and object is supported as root. Current json element is of type '{jToken.Type}'.");
+                throw new NotSupportedException($"Only json array and object is supported as root. Current json element is of type '{responseToken.Type}'.");
             }
 
             foreach (var jArrayItem in jarray.Children<JContainer>())
@@ -102,7 +107,7 @@ namespace Adriva.Extensions.Reporting.Http
                 }
             }
 
-            await this.DecorateJsonDatasetAsync(dataSet, command, jToken);
+            await this.DecorateJsonDatasetAsync(dataSet, command, responseToken);
         }
     }
 }
