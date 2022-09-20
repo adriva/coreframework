@@ -16,11 +16,17 @@ namespace Adriva.Extensions.Reporting.Http
 
         protected ILogger Logger { get; private set; }
 
-        public abstract void PopulateDataset(string content, ReportCommand command, DataSet dataSet);
+        public abstract ValueTask PopulateDatasetAsync(string content, ReportCommand command, DataSet dataSet);
 
-        public virtual Task DecorateRequestAsync(HttpRequestMessage request, ReportCommand command) => Task.CompletedTask;
+        public virtual async ValueTask DecorateRequestAsync(HttpRequestMessage request, ReportCommand command)
+        {
+            await Task.CompletedTask;
+        }
 
-        public virtual Task DecorateDatasetAsync(DataSet dataset, ReportCommand command, JToken outputOptions) => Task.CompletedTask;
+        public virtual async ValueTask DecorateDatasetAsync(DataSet dataset, ReportCommand command, JToken outputOptions)
+        {
+            await Task.CompletedTask;
+        }
 
         public virtual Task<string> ProcessResponseContentAsync(string content) => Task.FromResult(content);
 
@@ -97,7 +103,7 @@ namespace Adriva.Extensions.Reporting.Http
 
             var dataset = DataSet.FromFields(fields);
 
-            this.PopulateDataset(contentText, command, dataset);
+            await this.PopulateDatasetAsync(contentText, command, dataset);
 
             await this.DecorateDatasetAsync(dataset, command, outputOptions);
 

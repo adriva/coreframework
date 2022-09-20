@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Adriva.Extensions.Reporting.Abstractions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
@@ -13,6 +14,13 @@ namespace Adriva.Extensions.Reporting.Http
         public HttpJsonDataSource(IHttpClientFactory httpClientFactory, ILoggerFactory loggerFactory) : base(httpClientFactory, loggerFactory)
         {
 
+        }
+
+        protected virtual Task<JToken> DecorateJsonResponseAsync(JToken responseJsonToken) => Task.FromResult(responseJsonToken);
+
+        protected virtual async ValueTask DecorateJsonDatasetAsync(DataSet dataset, ReportCommand command, JToken responseJsonToken)
+        {
+            await Task.CompletedTask;
         }
 
         protected virtual IDictionary<string, object> ParseRowContainer(JContainer jContainer)
@@ -29,7 +37,7 @@ namespace Adriva.Extensions.Reporting.Http
 
         }
 
-        public override void PopulateDataset(string content, ReportCommand command, DataSet dataSet)
+        public override async ValueTask PopulateDatasetAsync(string content, ReportCommand command, DataSet dataSet)
         {
             if (string.IsNullOrWhiteSpace(content))
             {
@@ -37,6 +45,8 @@ namespace Adriva.Extensions.Reporting.Http
             }
 
             JToken jToken = JToken.Parse(content);
+
+            jToken = await this.DecorateJsonResponseAsync(jToken);
 
             if (null != command.CommandDefinition.Options)
             {
@@ -91,7 +101,8 @@ namespace Adriva.Extensions.Reporting.Http
                     }
                 }
             }
-        }
 
+            await this.DecorateJsonDatasetAsync(dataSet, command, jToken);
+        }
     }
 }
