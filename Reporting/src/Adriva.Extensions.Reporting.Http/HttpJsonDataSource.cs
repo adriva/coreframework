@@ -1,9 +1,7 @@
 using System;
-using System.Buffers;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using Adriva.Extensions.Reporting.Abstractions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
@@ -12,52 +10,25 @@ namespace Adriva.Extensions.Reporting.Http
 {
     public class HttpJsonDataSource : HttpDataSource
     {
-        private readonly ArrayPool<object> ArrayPool;
-
         public HttpJsonDataSource(IHttpClientFactory httpClientFactory, ILoggerFactory loggerFactory) : base(httpClientFactory, loggerFactory)
         {
-            this.ArrayPool = ArrayPool<object>.Shared;
+
         }
 
-        protected virtual Func<JToken, object> BuildColumnMapping(DataColumn column)
+        protected virtual IDictionary<string, object> ParseRowContainer(JContainer jContainer)
         {
-            string[] fieldNames = column.Name.Split('.', StringSplitOptions.RemoveEmptyEntries);
-
-            return jtoken =>
+            if (null == jContainer)
             {
-                JToken leafToken = jtoken;
-                foreach (var fieldName in fieldNames)
-                {
-                    if (null != leafToken.SelectToken(fieldName))
-                    {
-                        leafToken = leafToken[fieldName];
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-
-                object jValueCandidate = leafToken.Value<object>();
-
-                if (jValueCandidate is JValue jvalue)
-                {
-                    return jvalue.Value;
-                }
-                else
-                {
-                    return null;
-                }
-            };
-        }
-
-        protected virtual void PopulateDataRow(object[] rowData, JObject jObject, ReadOnlyCollection<DataColumn> columns, IDictionary<DataColumn, Func<JToken, object>> columnPopulators)
-        {
-            for (int loop = 0; loop < columns.Count; loop++)
-            {
-                DataColumn column = columns[loop];
-                rowData[loop] = columnPopulators[column](jObject);
+                return null;
             }
+
+            jContainer.Remove();
+
+            return jContainer
+                        .Descendants()
+                        .OfType<JValue>()
+                        .ToDictionary(x => x.Path, x => x.Value, StringComparer.OrdinalIgnoreCase);
+
         }
 
         public override void PopulateDataset(string content, ReportCommand command, DataSet dataSet)
@@ -84,57 +55,42 @@ namespace Adriva.Extensions.Reporting.Http
                 return;
             }
 
-            Dictionary<DataColumn, Func<JToken, object>> columnPopulators = new Dictionary<DataColumn, Func<JToken, object>>();
+            JArray jarray;
 
-            foreach (var column in dataSet.Columns)
+            if (JTokenType.Object == jToken.Type)
             {
-                columnPopulators[column] = this.BuildColumnMapping(column);
+                jarray = new JArray();
+                jarray.Add(jToken);
             }
-
-            if (JTokenType.Array == jToken.Type)
+            else if (JTokenType.Array == jToken.Type)
             {
-                var jArray = (JArray)jToken;
-
-                foreach (var jrowToken in jArray)
-                {
-                    object[] rowData = this.ArrayPool.Rent(dataSet.Columns.Count);
-
-                    try
-                    {
-                        this.PopulateDataRow(rowData, jrowToken as JObject, dataSet.Columns, columnPopulators);
-
-                        DataRow row = dataSet.CreateRow();
-                        for (int loop = 0; loop < dataSet.Columns.Count; loop++)
-                        {
-                            row.AddData(rowData[loop]);
-                        }
-                    }
-                    finally
-                    {
-                        this.ArrayPool.Return(rowData);
-                    }
-                }
-            }
-            else if (JTokenType.Object == jToken.Type)
-            {
-                object[] rowData = this.ArrayPool.Rent(dataSet.Columns.Count);
-                try
-                {
-                    this.PopulateDataRow(rowData, jToken as JObject, dataSet.Columns, columnPopulators);
-                    DataRow row = dataSet.CreateRow();
-                    for (int loop = 0; loop < dataSet.Columns.Count; loop++)
-                    {
-                        row.AddData(rowData[loop]);
-                    }
-                }
-                finally
-                {
-                    this.ArrayPool.Return(rowData);
-                }
+                jarray = (JArray)jToken;
             }
             else
             {
-                throw new NotSupportedException($"JToken type '{jToken.Type}' is not supported by the Http Json data source.");
+                throw new NotSupportedException();
+            }
+
+            foreach (var jRowContainer in jarray.Descendants().OfType<JContainer>())
+            {
+                var dictionary = this.ParseRowContainer(jRowContainer);
+
+                if (null != dictionary)
+                {
+                    var dataRow = dataSet.CreateRow();
+
+                    foreach (var dataColumn in dataSet.Columns)
+                    {
+                        if (dictionary.ContainsKey(dataColumn.Name))
+                        {
+                            dataRow.AddData(dictionary[dataColumn.Name]);
+                        }
+                        else
+                        {
+                            dataRow.AddData(null);
+                        }
+                    }
+                }
             }
         }
     }
