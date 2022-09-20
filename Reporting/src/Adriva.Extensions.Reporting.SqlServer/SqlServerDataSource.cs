@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Adriva.Extensions.Reporting.Abstractions;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.SqlServer
 {
@@ -23,7 +24,7 @@ namespace Adriva.Extensions.Reporting.SqlServer
             return this.Connection.OpenAsync();
         }
 
-        public async Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields)
+        protected virtual async Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, SqlServerReportOutputOptions outputOptions)
         {
             using (SqlCommand sqlCommand = new SqlCommand(command.Text, this.Connection))
             {
@@ -52,6 +53,7 @@ namespace Adriva.Extensions.Reporting.SqlServer
                 DataSet dataSet = null;
 
                 int[] columnIndices = null;
+                long recordCount = long.MinValue;
 
                 using (var dataReader = await sqlCommand.ExecuteReaderAsync(System.Data.CommandBehavior.SingleResult))
                 {
@@ -94,6 +96,20 @@ namespace Adriva.Extensions.Reporting.SqlServer
 
                     while (await dataReader.ReadAsync())
                     {
+                        if (long.MinValue == recordCount && !string.IsNullOrWhiteSpace(outputOptions.RowCountField))
+                        {
+                            int rowCountFieldIndex = -1;
+                            try
+                            {
+                                rowCountFieldIndex = dataReader.GetOrdinal(outputOptions.RowCountField);
+                                recordCount = dataReader.GetFieldValue<long>(rowCountFieldIndex);
+                            }
+                            catch (IndexOutOfRangeException)
+                            {
+                                recordCount = 0;
+                            }
+                        }
+
                         var dataRow = dataSet.CreateRow();
 
                         foreach (var columnIndex in columnIndices)
@@ -110,8 +126,22 @@ namespace Adriva.Extensions.Reporting.SqlServer
                         }
                     }
                 }
+
+                if (0 >= recordCount)
+                {
+                    recordCount = dataSet.Rows.Count;
+                }
+
+                dataSet.Metadata.RecordCount = recordCount;
+
                 return dataSet;
             }
+        }
+
+        public Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, JToken outputOptions)
+        {
+            var concreteOptions = outputOptions?.ToObject<SqlServerReportOutputOptions>();
+            return this.GetDataAsync(command, fields, concreteOptions);
         }
 
         public Task CloseAsync()

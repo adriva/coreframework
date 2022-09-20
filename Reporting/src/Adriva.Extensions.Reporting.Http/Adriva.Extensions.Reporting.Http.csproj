@@ -7,7 +7,7 @@
   <PropertyGroup>
     <Title>Adriva Reporting Services Http Extensions</Title>
     <PackageDescription>Provides HTTP data source and related extensions.</PackageDescription>    
-    <Version>3.2.12</Version>
+    <Version>3.2.13</Version>
   </PropertyGroup>
 
   <ItemGroup>

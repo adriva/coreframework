@@ -37,7 +37,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             return Task.CompletedTask;
         }
 
-        public virtual async Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields)
+        public virtual async Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, JToken outputOptions)
         {
             string commandMethodName = command.GetNameWithoutParameters();
 
@@ -121,17 +121,19 @@ namespace Adriva.Extensions.Reporting.Abstractions
             {
                 if (null != dataItem)
                 {
-                    var jdataItem = JObject.FromObject(dataItem);
+                    var jdataItemDictionary = JObject
+                                                .FromObject(dataItem)
+                                                .Descendants()
+                                                .OfType<JValue>()
+                                                .ToDictionary(x => x.Path, x => x.Value, StringComparer.OrdinalIgnoreCase);
 
                     var dataRow = dataSet.CreateRow();
 
                     foreach (var field in fields)
                     {
-                        JProperty property = jdataItem.Property(field.Name, StringComparison.OrdinalIgnoreCase);
-
-                        if (null != property?.Value && property.Value is JValue jvalue)
+                        if (jdataItemDictionary.ContainsKey(field.Name))
                         {
-                            dataRow.AddData(jvalue.Value);
+                            dataRow.AddData(jdataItemDictionary[field.Name]);
                         }
                         else
                         {
@@ -149,10 +151,5 @@ namespace Adriva.Extensions.Reporting.Abstractions
             this.ObjectType = null;
             return Task.CompletedTask;
         }
-    }
-
-    public class ObjectCommandOptions
-    {
-
     }
 }

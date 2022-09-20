@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Adriva.Common.Core;
 using Adriva.Extensions.Reporting.Abstractions;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.Http
 {
@@ -15,11 +16,11 @@ namespace Adriva.Extensions.Reporting.Http
 
         protected ILogger Logger { get; private set; }
 
-        public abstract void PopulateDataset(string content, HttpCommandOptions commandOptions, DataSet dataSet);
+        public abstract void PopulateDataset(string content, ReportCommand command, DataSet dataSet);
 
         public virtual Task DecorateRequestAsync(HttpRequestMessage request, ReportCommand command) => Task.CompletedTask;
 
-        public virtual Task DecorateDatasetAsync(DataSet dataset) => Task.CompletedTask;
+        public virtual Task DecorateDatasetAsync(DataSet dataset, ReportCommand command, JToken outputOptions) => Task.CompletedTask;
 
         public virtual Task<string> ProcessResponseContentAsync(string content) => Task.FromResult(content);
 
@@ -44,7 +45,7 @@ namespace Adriva.Extensions.Reporting.Http
             return Task.CompletedTask;
         }
 
-        public async Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields)
+        public async Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, JToken outputOptions)
         {
             HttpCommandOptions commandOptions = new HttpCommandOptions();
 
@@ -96,9 +97,9 @@ namespace Adriva.Extensions.Reporting.Http
 
             var dataset = DataSet.FromFields(fields);
 
-            this.PopulateDataset(contentText, commandOptions, dataset);
+            this.PopulateDataset(contentText, command, dataset);
 
-            await this.DecorateDatasetAsync(dataset);
+            await this.DecorateDatasetAsync(dataset, command, outputOptions);
 
             return dataset;
         }

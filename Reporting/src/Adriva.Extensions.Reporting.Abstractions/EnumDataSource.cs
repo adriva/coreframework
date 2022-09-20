@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
@@ -14,7 +15,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
         }
 
-        public override Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields)
+        public override Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, JToken outputOptions)
         {
             if (null == fields || 2 != fields.Length)
             {

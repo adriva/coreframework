@@ -1,5 +1,5 @@
 {
-    "$schema": "../report-schema.json",
+    "$schema": "../../../../Reporting/src/Adriva.Extensions.Reporting.Abstractions/report-schema.json",
     "base": "root",
     "name": "base report definition",
     "dataSources": {

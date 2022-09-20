@@ -130,6 +130,17 @@ namespace Adriva.Extensions.Reporting.Abstractions
             return reportDefinition?.Clone() ?? throw new InvalidOperationException();
         }
 
+        private async Task PopulateFilterValuesAsync(ReportDefinition reportDefinition, FilterDefinition filterDefinition, FilterValuesDictionary values)
+        {
+            if (null == filterDefinition || string.IsNullOrWhiteSpace(filterDefinition.DataSource))
+            {
+                return;
+            }
+
+            var output = await this.GetDataAsync(reportDefinition, filterDefinition, filterDefinition.EnumerateFieldDefinitions(), filterDefinition.Command, values);
+            filterDefinition.Data = output.DataSet;
+        }
+
         private async Task<ReportOutput> GetDataAsync(ReportDefinition reportDefinition, IDataDrivenObject dataSourceScope, IEnumerable<FieldDefinition> fieldDefinitions, string commandName, FilterValuesDictionary values)
         {
             using (IServiceScope serviceScope = this.ServiceProvider.CreateScope())
@@ -156,11 +167,11 @@ namespace Adriva.Extensions.Reporting.Abstractions
 
                 try
                 {
-                    var dataset = await dataSource.GetDataAsync(reportCommand, fieldDefinitions.ToArray());
+                    var dataset = await dataSource.GetDataAsync(reportCommand, fieldDefinitions.ToArray(), reportDefinition.Output.Options);
 
                     if (null != context.PostProcessor)
                     {
-                        await context.PostProcessor.PostProcessAsync(dataset);
+                        await context.PostProcessor.PostProcessAsync(dataset, reportCommand);
                     }
 
                     if (this.Options.AllowSensitiveData)
@@ -188,17 +199,6 @@ namespace Adriva.Extensions.Reporting.Abstractions
         {
             var reportDefinition = await this.LoadReportDefinitionAsync(name, true);
             return await this.ExecuteReportOutputAsync(reportDefinition, values);
-        }
-
-        private async Task PopulateFilterValuesAsync(ReportDefinition reportDefinition, FilterDefinition filterDefinition, FilterValuesDictionary values)
-        {
-            if (null == filterDefinition || string.IsNullOrWhiteSpace(filterDefinition.DataSource))
-            {
-                return;
-            }
-
-            var output = await this.GetDataAsync(reportDefinition, filterDefinition, filterDefinition.EnumerateFieldDefinitions(), filterDefinition.Command, values);
-            filterDefinition.Data = output.DataSet;
         }
 
         public async Task<DataSet> GetFilterDataAsync(ReportDefinition reportDefinition, string filterName, FilterValuesDictionary values)

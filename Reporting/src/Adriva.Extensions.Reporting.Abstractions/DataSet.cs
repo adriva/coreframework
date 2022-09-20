@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Adriva.Common.Core;
 using Newtonsoft.Json;
 
 namespace Adriva.Extensions.Reporting.Abstractions
@@ -33,19 +34,19 @@ namespace Adriva.Extensions.Reporting.Abstractions
         {
             if (null == names || 0 == names.Length)
             {
-                throw new ArgumentException("Data set requires at least one field with a non-empty name to construct its columns.", nameof(names));
+                throw new ArgumentException("Dataset requires at least one field with a non-empty name to construct its columns.", nameof(names));
             }
 
             return DataSet.FromFields(names.Select(n => new FieldDefinition() { Name = n }).ToArray());
         }
 
         [JsonProperty("metadata")]
-        public IDictionary<string, object> Metadata { get; }
+        public DataSetMetadata Metadata { get; }
 
         [JsonConstructor]
         private DataSet()
         {
-            this.Metadata = new Dictionary<string, object>();
+            this.Metadata = new DataSetMetadata();
         }
 
         public DataRow CreateRow()
@@ -54,9 +55,59 @@ namespace Adriva.Extensions.Reporting.Abstractions
             {
                 throw new InvalidOperationException("There is no fields defined in the dataset.");
             }
+
             DataRow dataRow = new DataRow(this);
             this.DataRows.Add(dataRow);
             return dataRow;
+        }
+
+        public void AddColumn(DataColumn dataColumn)
+        {
+            if (null == dataColumn)
+            {
+                throw new ArgumentNullException(nameof(dataColumn));
+            }
+
+            if (null == dataColumn.Name)
+            {
+                throw new ArgumentNullException("Data column must have a name. Null names are not supported.");
+            }
+
+            if (this.DataColumns.Any(c => 0 == string.Compare(c.Name, dataColumn.Name)))
+            {
+                throw new InvalidOperationException($"Dataset already has a column named '{dataColumn.Name}'.");
+            }
+
+            this.DataColumns.Add(dataColumn);
+        }
+
+        public void SpliceRows(int startIndex, int length)
+        {
+            if (0 > startIndex || 0 >= length)
+            {
+                return;
+            }
+            else if (0 == this.DataRows.Count)
+            {
+                return;
+            }
+
+            foreach (var deleteRow in this.DataRows.Skip(startIndex).Take(length))
+            {
+                this.DataRows.Remove(deleteRow);
+            }
+        }
+
+        public DataSet CopyStructure()
+        {
+            var clone = new DataSet();
+
+            this.DataColumns.ForEach((index, column) =>
+            {
+                clone.DataColumns.Add(column);
+            });
+
+            return clone;
         }
     }
 }

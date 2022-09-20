@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.Abstractions
 {
@@ -6,7 +7,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
     {
         Task OpenAsync(DataSourceDefinition dataSourceDefinition);
 
-        Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields);
+        Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, JToken outputOptions);
 
         Task CloseAsync();
     }

@@ -3,6 +3,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Adriva.Extensions.Reporting.Abstractions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
@@ -18,7 +19,48 @@ namespace Adriva.Extensions.Reporting.Http
             this.ArrayPool = ArrayPool<object>.Shared;
         }
 
-        public override void PopulateDataset(string content, HttpCommandOptions commandOptions, DataSet dataSet)
+        protected virtual Func<JToken, object> BuildColumnMapping(DataColumn column)
+        {
+            string[] fieldNames = column.Name.Split('.', StringSplitOptions.RemoveEmptyEntries);
+
+            return jtoken =>
+            {
+                JToken leafToken = jtoken;
+                foreach (var fieldName in fieldNames)
+                {
+                    if (null != leafToken.SelectToken(fieldName))
+                    {
+                        leafToken = leafToken[fieldName];
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+
+                object jValueCandidate = leafToken.Value<object>();
+
+                if (jValueCandidate is JValue jvalue)
+                {
+                    return jvalue.Value;
+                }
+                else
+                {
+                    return null;
+                }
+            };
+        }
+
+        protected virtual void PopulateDataRow(object[] rowData, JObject jObject, ReadOnlyCollection<DataColumn> columns, IDictionary<DataColumn, Func<JToken, object>> columnPopulators)
+        {
+            for (int loop = 0; loop < columns.Count; loop++)
+            {
+                DataColumn column = columns[loop];
+                rowData[loop] = columnPopulators[column](jObject);
+            }
+        }
+
+        public override void PopulateDataset(string content, ReportCommand command, DataSet dataSet)
         {
             if (string.IsNullOrWhiteSpace(content))
             {
@@ -27,9 +69,14 @@ namespace Adriva.Extensions.Reporting.Http
 
             JToken jToken = JToken.Parse(content);
 
-            if (!string.IsNullOrWhiteSpace(commandOptions.DataElement))
+            if (null != command.CommandDefinition.Options)
             {
-                jToken = jToken[commandOptions.DataElement];
+                var commandOptions = command.CommandDefinition.Options.ToObject<HttpCommandOptions>();
+
+                if (!string.IsNullOrWhiteSpace(commandOptions.DataElement))
+                {
+                    jToken = jToken[commandOptions.DataElement];
+                }
             }
 
             if (null == jToken)
@@ -88,47 +135,6 @@ namespace Adriva.Extensions.Reporting.Http
             else
             {
                 throw new NotSupportedException($"JToken type '{jToken.Type}' is not supported by the Http Json data source.");
-            }
-        }
-
-        protected virtual Func<JToken, object> BuildColumnMapping(DataColumn column)
-        {
-            string[] fieldNames = column.Name.Split('.', StringSplitOptions.RemoveEmptyEntries);
-
-            return jtoken =>
-            {
-                JToken leafToken = jtoken;
-                foreach (var fieldName in fieldNames)
-                {
-                    if (null != leafToken.SelectToken(fieldName))
-                    {
-                        leafToken = leafToken[fieldName];
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-
-                object jValueCandidate = leafToken.Value<object>();
-
-                if (jValueCandidate is JValue jvalue)
-                {
-                    return jvalue.Value;
-                }
-                else
-                {
-                    return null;
-                }
-            };
-        }
-
-        protected virtual void PopulateDataRow(object[] rowData, JObject jObject, ReadOnlyCollection<DataColumn> columns, IDictionary<DataColumn, Func<JToken, object>> columnPopulators)
-        {
-            for (int loop = 0; loop < columns.Count; loop++)
-            {
-                DataColumn column = columns[loop];
-                rowData[loop] = columnPopulators[column](jObject);
             }
         }
     }
