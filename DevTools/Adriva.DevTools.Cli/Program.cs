@@ -94,6 +94,12 @@ namespace Adriva.DevTools.Cli
 
         static async Task<int> Main(string[] args)
         {
+
+            var md = new Adriva.Extensions.Reporting.Abstractions.DataSetMetadata();
+            md.Add("asdad", 1);
+            md.PageCount = 234;
+            var js = Common.Core.Utilities.SafeSerialize(md);
+
             var versionInfo = FileVersionInfo.GetVersionInfo(typeof(Program).Assembly.Location);
             Program.AppVersion = versionInfo.ProductVersion;
 

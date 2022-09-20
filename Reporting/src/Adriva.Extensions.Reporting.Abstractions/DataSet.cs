@@ -41,12 +41,12 @@ namespace Adriva.Extensions.Reporting.Abstractions
         }
 
         [JsonProperty("metadata")]
-        public DataSetMetadata Metadata { get; }
+        public DataSetMetadata Metadata { get; } = new DataSetMetadata();
 
         [JsonConstructor]
         private DataSet()
         {
-            this.Metadata = new DataSetMetadata();
+
         }
 
         public DataRow CreateRow()
