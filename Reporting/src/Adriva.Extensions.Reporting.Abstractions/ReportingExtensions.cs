@@ -20,7 +20,15 @@ namespace Adriva.Extensions.Reporting.Abstractions
                 return null;
             }
 
-            return reportCommand.Parameters.FirstOrDefault(x => 0 == string.Compare(x.Name, filterName, StringComparison.OrdinalIgnoreCase));
+            var match = reportCommand.Parameters.FirstOrDefault(x => 0 == string.Compare(x.Name, filterName, StringComparison.OrdinalIgnoreCase));
+
+            if (null == match)
+            {
+                filterName = $"@{filterName}";
+                match = reportCommand.Parameters.FirstOrDefault(x => 0 == string.Compare(x.Name, filterName, StringComparison.OrdinalIgnoreCase));
+            }
+
+            return match;
         }
 
         public static IEnumerable<FilterDefinition> EnumerateFilterDefinitions(IDictionary<string, FilterDefinition> filterDefinitions)

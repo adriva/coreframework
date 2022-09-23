@@ -24,6 +24,32 @@ namespace Adriva.Extensions.Reporting.SqlServer
             return this.Connection.OpenAsync();
         }
 
+        protected virtual ValueTask PopulateMetadataAsync(DataSet dataset, ReportCommand command, FieldDefinition[] fields, SqlServerReportOutputOptions options)
+        {
+            if (null != options && dataset.Metadata.RecordCount.HasValue)
+            {
+                if (
+                    !string.IsNullOrWhiteSpace(options.PageNumberFilter)
+                    && !string.IsNullOrWhiteSpace(options.PageSizeFilter)
+                )
+                {
+                    var pageNumberParameter = command.FindParameter(options.PageNumberFilter);
+                    var pageSizeParameter = command.FindParameter(options.PageSizeFilter);
+
+                    if (
+                        pageNumberParameter.FilterValue.Value is int pageNumber
+                        && pageSizeParameter.FilterValue.Value is int pageSize
+                        && 0 < pageSize)
+                    {
+                        dataset.Metadata.PageNumber = pageNumber;
+                        dataset.Metadata.PageCount = (int)Math.Ceiling((double)dataset.Metadata.RecordCount.Value / pageSize);
+                    }
+                }
+            }
+
+            return new ValueTask();
+        }
+
         protected virtual async Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, SqlServerReportOutputOptions outputOptions)
         {
             using (SqlCommand sqlCommand = new SqlCommand(command.Text, this.Connection))
@@ -102,7 +128,7 @@ namespace Adriva.Extensions.Reporting.SqlServer
                             try
                             {
                                 rowCountFieldIndex = dataReader.GetOrdinal(outputOptions.RowCountField);
-                                recordCount = dataReader.GetFieldValue<long>(rowCountFieldIndex);
+                                recordCount = (long)dataReader.GetValue(rowCountFieldIndex);
                             }
                             catch (IndexOutOfRangeException)
                             {
@@ -138,31 +164,12 @@ namespace Adriva.Extensions.Reporting.SqlServer
             }
         }
 
-        public async Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, JToken outputOptions)
+        public virtual async Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, JToken outputOptions)
         {
             var concreteOptions = outputOptions?.ToObject<SqlServerReportOutputOptions>();
             var dataset = await this.GetDataAsync(command, fields, concreteOptions);
 
-            if (null != concreteOptions && dataset.Metadata.RecordCount.HasValue)
-            {
-                if (
-                    !string.IsNullOrWhiteSpace(concreteOptions.PageNumberFilter)
-                    && !string.IsNullOrWhiteSpace(concreteOptions.PageSizeFilter)
-                )
-                {
-                    var pageNumberParameter = command.FindParameter(concreteOptions.PageNumberFilter);
-                    var pageSizeParameter = command.FindParameter(concreteOptions.PageSizeFilter);
-
-                    if (
-                        pageNumberParameter.FilterValue.Value is int pageNumber
-                        && pageSizeParameter.FilterValue.Value is int pageSize
-                        && 0 < pageSize)
-                    {
-                        dataset.Metadata.PageNumber = pageNumber;
-                        dataset.Metadata.PageCount = (int)Math.Ceiling((double)dataset.Metadata.RecordCount.Value / pageSize);
-                    }
-                }
-            }
+            await this.PopulateMetadataAsync(dataset, command, fields, concreteOptions);
 
             return dataset;
         }
