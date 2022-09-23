@@ -26,7 +26,7 @@ namespace Adriva.Extensions.Reporting.SqlServer
 
         protected virtual ValueTask PopulateMetadataAsync(DataSet dataset, ReportCommand command, FieldDefinition[] fields, SqlServerReportOutputOptions options)
         {
-            if (null != options && dataset.Metadata.RecordCount.HasValue)
+            if (null != options && null != dataset.Metadata && dataset.Metadata.RecordCount.HasValue)
             {
                 if (
                     !string.IsNullOrWhiteSpace(options.PageNumberFilter)
@@ -37,7 +37,9 @@ namespace Adriva.Extensions.Reporting.SqlServer
                     var pageSizeParameter = command.FindParameter(options.PageSizeFilter);
 
                     if (
-                        pageNumberParameter.FilterValue.Value is int pageNumber
+                        null != pageNumberParameter
+                        && null != pageSizeParameter
+                        && pageNumberParameter.FilterValue.Value is int pageNumber
                         && pageSizeParameter.FilterValue.Value is int pageSize
                         && 0 < pageSize)
                     {
