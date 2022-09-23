@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -5,6 +6,23 @@ namespace Adriva.Extensions.Reporting.Abstractions
 {
     public static class ReportingExtensions
     {
+        public static FilterDefinition FindFilter(this ReportDefinition reportDefinition, string filterName)
+        {
+            return reportDefinition
+                        .EnumerateFilterDefinitions()
+                        .FirstOrDefault(x => 0 == string.Compare(filterName, x.Name, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public static ReportCommandParameter FindParameter(this ReportCommand reportCommand, string filterName)
+        {
+            if (null == reportCommand?.Parameters)
+            {
+                return null;
+            }
+
+            return reportCommand.Parameters.FirstOrDefault(x => 0 == string.Compare(x.Name, filterName, StringComparison.OrdinalIgnoreCase));
+        }
+
         public static IEnumerable<FilterDefinition> EnumerateFilterDefinitions(IDictionary<string, FilterDefinition> filterDefinitions)
         {
             if (null == filterDefinitions) yield break;

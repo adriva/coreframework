@@ -138,10 +138,33 @@ namespace Adriva.Extensions.Reporting.SqlServer
             }
         }
 
-        public Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, JToken outputOptions)
+        public async Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, JToken outputOptions)
         {
             var concreteOptions = outputOptions?.ToObject<SqlServerReportOutputOptions>();
-            return this.GetDataAsync(command, fields, concreteOptions);
+            var dataset = await this.GetDataAsync(command, fields, concreteOptions);
+
+            if (null != concreteOptions && dataset.Metadata.RecordCount.HasValue)
+            {
+                if (
+                    !string.IsNullOrWhiteSpace(concreteOptions.PageNumberFilter)
+                    && !string.IsNullOrWhiteSpace(concreteOptions.PageSizeFilter)
+                )
+                {
+                    var pageNumberParameter = command.FindParameter(concreteOptions.PageNumberFilter);
+                    var pageSizeParameter = command.FindParameter(concreteOptions.PageSizeFilter);
+
+                    if (
+                        pageNumberParameter.FilterValue.Value is int pageNumber
+                        && pageSizeParameter.FilterValue.Value is int pageSize
+                        && 0 < pageSize)
+                    {
+                        dataset.Metadata.PageNumber = pageNumber;
+                        dataset.Metadata.PageCount = (int)Math.Ceiling((double)dataset.Metadata.RecordCount.Value / pageSize);
+                    }
+                }
+            }
+
+            return dataset;
         }
 
         public Task CloseAsync()
