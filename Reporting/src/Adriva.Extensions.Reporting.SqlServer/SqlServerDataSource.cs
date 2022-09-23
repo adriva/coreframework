@@ -145,8 +145,6 @@ namespace Adriva.Extensions.Reporting.SqlServer
                                 {
                                     recordCount = (dataReader.GetValue(rowCountFieldIndex) as long?) ?? 0L;
                                 }
-
-                                recordCount = (long)dataReader.GetValue(rowCountFieldIndex);
                             }
                             catch (IndexOutOfRangeException)
                             {
