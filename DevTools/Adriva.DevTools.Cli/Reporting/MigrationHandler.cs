@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Adriva.Common.Core;
 using Adriva.Extensions.Reporting.Abstractions;
 using HtmlAgilityPack;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -142,8 +143,9 @@ namespace Adriva.DevTools.Cli.Reporting
         [CommandArgument("--path", Aliases = new[] { "-p" }, IsRequired = true, Type = typeof(DirectoryInfo), Description = "Root path of the reports repository.")]
         [CommandArgument("--report", Aliases = new[] { "-n" }, IsRequired = true, Type = typeof(string), Description = "Name of the legacy report. * wildcard is supported.")]
         [CommandArgument("--mappings", Aliases = new[] { "-m" }, IsRequired = false, Type = typeof(FileInfo), Description = "Path of a user provided string mappings file.")]
+        [CommandArgument("--local-schema", Aliases = new[] { "-ls" }, IsRequired = false, Type = typeof(string), Description = "Overrides default json schema and uses the local schema when generating report definition files. This setting should always be relative to the input path.")]
         [CommandArgument("--output", Aliases = new[] { "-o" }, IsRequired = false, Type = typeof(DirectoryInfo), Description = "Output folder where the new report will be generated.")]
-        public async Task InvokeAsync(DirectoryInfo path, DirectoryInfo output, string report, FileInfo mappings)
+        public async Task InvokeAsync(DirectoryInfo path, DirectoryInfo output, string report, FileInfo mappings, string localSchema)
         {
             if (null == output)
             {
@@ -156,6 +158,23 @@ namespace Adriva.DevTools.Cli.Reporting
                     output.Create();
                 }
             }
+
+            IFileInfo localSchemaFile = null;
+
+            if (!string.IsNullOrWhiteSpace(localSchema))
+            {
+                using (PhysicalFileProvider physicalFileProvider = new PhysicalFileProvider(path.FullName))
+                {
+                    localSchemaFile = physicalFileProvider.GetFileInfo(localSchema);
+
+                    if (!localSchemaFile.Exists || localSchemaFile.IsDirectory)
+                    {
+                        this.Logger.LogError($"Provided local schema file '{localSchema}' could not be found. Tried '{localSchemaFile.PhysicalPath}'");
+                        return;
+                    }
+                }
+            }
+
             bool hasWildcard = report.Contains("*", StringComparison.Ordinal);
             TextMappingsManager textMappingsManager = new TextMappingsManager(mappings);
             await textMappingsManager.InitializeAsync();
@@ -199,12 +218,19 @@ namespace Adriva.DevTools.Cli.Reporting
                                     {
                                         DataSourceDefinition dataSourceDefinition = new DataSourceDefinition()
                                         {
-                                            ConnectionString =
-                                                                                    MigrationHandler.GetJsonValue<string>(dataSource.Value["parameters"], "connectionString")
-                                                                                    ??
-                                                                                    MigrationHandler.GetJsonValue<string>(dataSource.Value["parameters"], "rootUrl"),
+                                            ConnectionString = MigrationHandler.GetJsonValue<string>(dataSource.Value["parameters"], "connectionString")
+                                                                ??
+                                                                MigrationHandler.GetJsonValue<string>(dataSource.Value["parameters"], "rootUrl"),
                                             Type = textMappingsManager.GetSubstitution(MigrationHandler.GetJsonValue<string>(dataSource.Value, "type"))
                                         };
+
+                                        if (Uri.TryCreate(dataSourceDefinition.ConnectionString, UriKind.Absolute, out Uri dataSourceUri))
+                                        {
+                                            if (Utilities.IsValidHttpUri(dataSourceUri))
+                                            {
+                                                dataSourceDefinition.ConnectionString = dataSourceDefinition.ConnectionString.EndsWith('/') ? dataSourceDefinition.ConnectionString : dataSourceDefinition.ConnectionString + '/';
+                                            }
+                                        }
 
                                         if (!string.IsNullOrWhiteSpace(dataSourceDefinition.ConnectionString))
                                         {
@@ -230,6 +256,8 @@ namespace Adriva.DevTools.Cli.Reporting
                                 {
                                     CommandText = MigrationHandler.GetJsonValue<string>(query.Value, "command")
                                 };
+
+                                commandDefinition.CommandText = commandDefinition.CommandText?.TrimStart('/');
 
                                 base.RunWithStepOver(() =>
                                 {
@@ -342,6 +370,16 @@ namespace Adriva.DevTools.Cli.Reporting
                             reportDefinition.Output = outputDefinition;
                         }
 
+                        string relativePath = Path.GetRelativePath(path.ToString(), legacyReportFile.ToString());
+                        string outputPath = Path.Combine(output.ToString(), relativePath);
+                        string outputDirectory = Path.GetDirectoryName(outputPath);
+                        string jsonSchemaLocation = "https://raw.githubusercontent.com/adriva/coreframework/master/Reporting/src/Adriva.Extensions.Reporting.Abstractions/report-schema.json";
+
+                        if (null != localSchemaFile)
+                        {
+                            jsonSchemaLocation = Path.GetRelativePath(Path.GetDirectoryName(legacyReportFile.FullName), localSchemaFile.PhysicalPath);
+                        }
+
                         string newJson = Utilities.SafeSerialize(reportDefinition, new JsonSerializerSettings()
                         {
                             DefaultValueHandling = DefaultValueHandling.Ignore,
@@ -352,16 +390,11 @@ namespace Adriva.DevTools.Cli.Reporting
                                 NamingStrategy = new CamelCaseNamingStrategy(false, false, false)
                             },
                             Converters = new JsonConverter[]{
-                                new ReportDefinitionConverter(),
+                                new ReportDefinitionConverter(jsonSchemaLocation),
                                 new StringEnumConverter()
                             },
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         });
-
-                        string relativePath = Path.GetRelativePath(path.ToString(), legacyReportFile.ToString());
-
-                        string outputPath = Path.Combine(output.ToString(), relativePath);
-                        string outputDirectory = Path.GetDirectoryName(outputPath);
 
                         if (!Directory.Exists(outputDirectory))
                         {
@@ -444,38 +477,6 @@ namespace Adriva.DevTools.Cli.Reporting
                 string outputPath = Path.Combine(outputDirectory, $"{fileNameWithoutExtension}.js");
                 await File.WriteAllTextAsync(outputPath, outputBuffer.ToString(), Encoding.UTF8);
                 this.Logger.LogInformation($"Scripts from '{cshtmlFile}' for report '{legacyReportFile.FullName}' extracted to '{outputPath}'.");
-            }
-        }
-    }
-
-    internal sealed class ReportDefinitionConverter : JsonConverter<ReportDefinition>
-    {
-        public override bool CanRead => false;
-
-        public override bool CanWrite => true;
-
-        public override ReportDefinition ReadJson(JsonReader reader, Type objectType, ReportDefinition existingValue, bool hasExistingValue, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void WriteJson(JsonWriter writer, ReportDefinition value, JsonSerializer serializer)
-        {
-            int index = serializer.Converters.IndexOf(this);
-
-            if (-1 < index)
-            {
-                serializer.Converters.RemoveAt(index);
-            }
-
-            var jobject = JObject.FromObject(value, serializer);
-            jobject.AddFirst(new JProperty("$schema", "https://raw.githubusercontent.com/adriva/coreframework/master/Reporting/src/Adriva.Extensions.Reporting.Abstractions/report-schema.json"));
-
-            jobject.WriteTo(writer, serializer.Converters.ToArray());
-
-            if (-1 < index)
-            {
-                serializer.Converters.Insert(index, this);
             }
         }
     }

@@ -97,7 +97,9 @@
                     "-o",
                     "/Users/mnemonic/Projects/report-output",
                     "-m",
-                    "/Users/mnemonic/Projects/netcorelibs/Framework/DevTools/Adriva.DevTools.Cli/mappings.txt"
+                    "/Users/mnemonic/Projects/netcorelibs/Framework/DevTools/Adriva.DevTools.Cli/mappings.txt",
+                    "-ls",
+                    "ReportSchema.json"
                 ],
                 "targetArchitecture": "x86_64"
             }
