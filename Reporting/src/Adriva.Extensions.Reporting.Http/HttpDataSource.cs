@@ -18,7 +18,7 @@ namespace Adriva.Extensions.Reporting.Http
 
         public abstract ValueTask PopulateDatasetAsync(string content, ReportCommand command, DataSet dataSet);
 
-        public virtual async ValueTask DecorateRequestAsync(HttpRequestMessage request, ReportCommand command)
+        public virtual async ValueTask DecorateRequestAsync(HttpRequestMessage request, ReportCommand command, FieldDefinition[] fields)
         {
             await Task.CompletedTask;
         }
@@ -72,7 +72,7 @@ namespace Adriva.Extensions.Reporting.Http
 
             using (var request = new HttpRequestMessage(new HttpMethod(commandOptions.Method), commandBuffer.ToString()))
             {
-                await this.DecorateRequestAsync(request, command);
+                await this.DecorateRequestAsync(request, command, fields);
 
                 using (var response = await this.HttpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead))
                 {
