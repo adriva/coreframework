@@ -183,6 +183,11 @@ namespace Adriva.DevTools.Cli.Reporting
 
             foreach (var legacyReportFile in legacyReportFiles)
             {
+                if (null != localSchemaFile && localSchemaFile.PhysicalPath.Equals(legacyReportFile.FullName, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
                 this.Logger.LogInformation($"Processing legacy report {legacyReportFile.FullName}.");
 
                 try
