@@ -92,7 +92,13 @@ namespace Adriva.Extensions.Reporting.Abstractions
                 return;
             }
 
-            foreach (var deleteRow in this.DataRows.Skip(startIndex).Take(length))
+            Queue<DataRow> deleteQueue = new Queue<DataRow>();
+            this.DataRows.Skip(startIndex).Take(length).ForEach((index, row) =>
+            {
+                deleteQueue.Enqueue(row);
+            });
+
+            while (deleteQueue.TryDequeue(out DataRow deleteRow))
             {
                 this.DataRows.Remove(deleteRow);
             }
