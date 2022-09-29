@@ -14,5 +14,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
         Task<ReportOutput> ExecuteReportOutputAsync(string name, FilterValuesDictionary values);
 
         ValueTask RenderAsync<TRenderer>(string name, FilterValuesDictionary values, Stream stream) where TRenderer : ReportRenderer;
+
+        Task<ReportOutput> ExecuteCommandAsync(string name, string commandName, FilterValuesDictionary values, string dataSourceName = null);
     }
 }
