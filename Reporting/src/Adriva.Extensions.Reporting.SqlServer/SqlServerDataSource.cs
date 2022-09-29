@@ -52,39 +52,38 @@ namespace Adriva.Extensions.Reporting.SqlServer
             return new ValueTask();
         }
 
-        private Task<T> ExecuteSqlCommandAsync<T>(ReportCommand command, Func<SqlCommand, Task<T>> handler)
+        protected virtual SqlCommand PrepareSqlCommand(ReportCommand command)
         {
-            using (SqlCommand sqlCommand = new SqlCommand(command.Text, this.Connection))
+            SqlCommand sqlCommand = new SqlCommand(command.Text, this.Connection);
+
+            if (null != command.Parameters)
             {
-                if (null != command.Parameters)
+                foreach (var parameter in command.Parameters)
                 {
-                    foreach (var parameter in command.Parameters)
-                    {
-                        SqlParameter sqlParameter = new SqlParameter();
-                        sqlParameter.ParameterName = parameter.Name;
-                        sqlParameter.Value = parameter.FilterValue.Value ?? DBNull.Value;
+                    SqlParameter sqlParameter = new SqlParameter();
+                    sqlParameter.ParameterName = parameter.Name;
+                    sqlParameter.Value = parameter.FilterValue.Value ?? DBNull.Value;
 
-                        sqlCommand.Parameters.Add(sqlParameter);
-                    }
+                    sqlCommand.Parameters.Add(sqlParameter);
                 }
-
-                this.Logger.LogInformation($"Executing Sql Command : {command.Text}");
-
-                if (null != command.Parameters)
-                {
-                    foreach (var parameter in command.Parameters)
-                    {
-                        this.Logger.LogInformation($"{parameter.Name} = {parameter.FilterValue.Value}");
-                    }
-                }
-
-                return handler(sqlCommand);
             }
+
+            this.Logger.LogInformation($"Executing Sql Command : {command.Text}");
+
+            if (null != command.Parameters)
+            {
+                foreach (var parameter in command.Parameters)
+                {
+                    this.Logger.LogInformation($"{parameter.Name} = {parameter.FilterValue.Value}");
+                }
+            }
+
+            return sqlCommand;
         }
 
-        protected virtual Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, SqlServerReportOutputOptions outputOptions)
+        protected virtual async Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, SqlServerReportOutputOptions outputOptions)
         {
-            return this.ExecuteSqlCommandAsync<DataSet>(command, async (sqlCommand) =>
+            using (var sqlCommand = this.PrepareSqlCommand(command))
             {
                 DataSet dataSet = null;
 
@@ -185,7 +184,7 @@ namespace Adriva.Extensions.Reporting.SqlServer
                 dataSet.Metadata.RecordCount = recordCount;
 
                 return dataSet;
-            });
+            }
         }
 
         public virtual async Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, JToken outputOptions)
@@ -200,7 +199,10 @@ namespace Adriva.Extensions.Reporting.SqlServer
 
         public virtual Task<object> ExecuteAsync(ReportCommand command)
         {
-            return this.ExecuteSqlCommandAsync<object>(command, sqlCommand => sqlCommand.ExecuteScalarAsync());
+            using (var sqlCommand = this.PrepareSqlCommand(command))
+            {
+                return sqlCommand.ExecuteScalarAsync();
+            }
         }
 
         public Task CloseAsync()
