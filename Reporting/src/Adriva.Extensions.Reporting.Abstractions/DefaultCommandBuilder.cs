@@ -43,7 +43,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             return !string.IsNullOrWhiteSpace(commandText);
         }
 
-        public async Task<ReportCommand> BuildCommandAsync(ReportCommandContext context, IDictionary<string, string> values)
+        public async Task<ReportCommand> BuildCommandAsync(ReportCommandContext context, IDictionary<string, string> values, bool allowArbitraryValues)
         {
             if (!this.TryParseCommandText(context.CommandDefinition.CommandText, out string commandText, out IList<string> parameterNames))
             {
@@ -65,6 +65,16 @@ namespace Adriva.Extensions.Reporting.Abstractions
                     }
 
                     FilterValue filterValue = await this.FilterValueBinder.GetFilterValueAsync(context, filterDefinition, rawValue);
+                    ReportCommandParameter reportCommandParameter = new ReportCommandParameter(parameterName, filterValue);
+                    reportCommand.Parameters.Add(reportCommandParameter);
+                }
+                else if (allowArbitraryValues)
+                {
+                    if (!values.TryGetValue(parameterName, out string rawValue))
+                    {
+                        rawValue = null;
+                    }
+                    FilterValue filterValue = new FilterValue(rawValue, rawValue);
                     ReportCommandParameter reportCommandParameter = new ReportCommandParameter(parameterName, filterValue);
                     reportCommand.Parameters.Add(reportCommandParameter);
                 }

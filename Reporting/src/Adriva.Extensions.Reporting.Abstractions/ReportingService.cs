@@ -146,7 +146,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             using (IServiceScope serviceScope = this.ServiceProvider.CreateScope())
             using (ReportCommandContext context = ReportCommandContext.Create(serviceScope.ServiceProvider, reportDefinition, commandName))
             {
-                var reportCommand = await this.CommandBuilder.BuildCommandAsync(context, values);
+                var reportCommand = await this.CommandBuilder.BuildCommandAsync(context, values, false);
 
                 if (!reportDefinition.TryFindDataSourceDefinition(dataSourceScope, out DataSourceDefinition dataSourceDefinition))
                 {
@@ -322,7 +322,7 @@ namespace Adriva.Extensions.Reporting.Abstractions
             using (IServiceScope serviceScope = this.ServiceProvider.CreateScope())
             using (ReportCommandContext context = ReportCommandContext.Create(serviceScope.ServiceProvider, reportDefinition, commandName))
             {
-                var reportCommand = await this.CommandBuilder.BuildCommandAsync(context, values);
+                var reportCommand = await this.CommandBuilder.BuildCommandAsync(context, values, true);
 
                 if (!reportDefinition.TryFindDataSourceDefinition(dataSourceName, out DataSourceDefinition dataSourceDefinition))
                 {
