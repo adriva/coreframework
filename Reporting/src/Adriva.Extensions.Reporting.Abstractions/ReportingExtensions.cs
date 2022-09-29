@@ -76,12 +76,17 @@ namespace Adriva.Extensions.Reporting.Abstractions
             return false;
         }
 
-        public static bool TryFindDataSourceDefinition(this ReportDefinition reportDefinition, IDataDrivenObject dataDrivenObject, out DataSourceDefinition dataSourceDefinition)
+        public static bool TryFindDataSourceDefinition(this ReportDefinition reportDefinition, string dataSourceName, out DataSourceDefinition dataSourceDefinition)
         {
             dataSourceDefinition = null;
             if (null == reportDefinition) return false;
-            if (string.IsNullOrWhiteSpace(dataDrivenObject?.DataSource)) return false;
-            return reportDefinition.DataSources.TryGetValue(dataDrivenObject.DataSource, out dataSourceDefinition);
+            if (string.IsNullOrWhiteSpace(dataSourceName)) return false;
+            return reportDefinition.DataSources.TryGetValue(dataSourceName, out dataSourceDefinition);
+        }
+
+        public static bool TryFindDataSourceDefinition(this ReportDefinition reportDefinition, IDataDrivenObject dataDrivenObject, out DataSourceDefinition dataSourceDefinition)
+        {
+            return reportDefinition.TryFindDataSourceDefinition(dataDrivenObject?.DataSource, out dataSourceDefinition);
         }
 
         public static IEnumerable<FieldDefinition> EnumerateFieldDefinitions(this ReportDefinition reportDefinition)

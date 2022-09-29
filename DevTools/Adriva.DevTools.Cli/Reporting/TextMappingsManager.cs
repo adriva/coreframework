@@ -75,6 +75,21 @@ namespace Adriva.DevTools.Cli.Reporting
             }
         }
 
+        public string GetCommandSubstitution(string commandText, bool useCamelCase = false)
+        {
+            if (string.IsNullOrWhiteSpace(commandText)) return commandText;
+            MatchEvaluator evaluator = (m) =>
+            {
+                if (m.Success && null != m.Groups["name"] && m.Groups["name"].Success)
+                {
+                    return "@" + this.GetSubstitution(m.Groups["name"].Value, useCamelCase);
+                }
+                return this.GetSubstitution(m.Value, useCamelCase);
+            };
+
+            return Regex.Replace(commandText, @"(?<parameter>\@(?<name>\w+))", evaluator, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        }
+
         public string GetSubstitution(string originalText, bool useCamelCase = false)
         {
             if (string.IsNullOrWhiteSpace(originalText)) return originalText;

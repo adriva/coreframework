@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Adriva.Extensions.Reporting.SqlServer
 {
-    public class SqlServerDataSource : IDataSource, IDisposable
+    public class SqlServerDataSource : IExecutableDataSource, IDisposable
     {
         private readonly ILogger Logger;
         private SqlConnection Connection;
@@ -52,7 +52,7 @@ namespace Adriva.Extensions.Reporting.SqlServer
             return new ValueTask();
         }
 
-        protected virtual async Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, SqlServerReportOutputOptions outputOptions)
+        private Task<T> ExecuteSqlCommandAsync<T>(ReportCommand command, Func<SqlCommand, Task<T>> handler)
         {
             using (SqlCommand sqlCommand = new SqlCommand(command.Text, this.Connection))
             {
@@ -78,6 +78,14 @@ namespace Adriva.Extensions.Reporting.SqlServer
                     }
                 }
 
+                return handler(sqlCommand);
+            }
+        }
+
+        protected virtual Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, SqlServerReportOutputOptions outputOptions)
+        {
+            return this.ExecuteSqlCommandAsync<DataSet>(command, async (sqlCommand) =>
+            {
                 DataSet dataSet = null;
 
                 int[] columnIndices = null;
@@ -177,7 +185,7 @@ namespace Adriva.Extensions.Reporting.SqlServer
                 dataSet.Metadata.RecordCount = recordCount;
 
                 return dataSet;
-            }
+            });
         }
 
         public virtual async Task<DataSet> GetDataAsync(ReportCommand command, FieldDefinition[] fields, JToken outputOptions)
@@ -188,6 +196,11 @@ namespace Adriva.Extensions.Reporting.SqlServer
             await this.PopulateMetadataAsync(dataset, command, fields, concreteOptions);
 
             return dataset;
+        }
+
+        public virtual Task<object> ExecuteAsync(ReportCommand command)
+        {
+            return this.ExecuteSqlCommandAsync<object>(command, sqlCommand => sqlCommand.ExecuteScalarAsync());
         }
 
         public Task CloseAsync()

@@ -262,7 +262,7 @@ namespace Adriva.DevTools.Cli.Reporting
                                     CommandText = MigrationHandler.GetJsonValue<string>(query.Value, "command")
                                 };
 
-                                commandDefinition.CommandText = commandDefinition.CommandText?.TrimStart('/');
+                                commandDefinition.CommandText = textMappingsManager.GetCommandSubstitution(commandDefinition.CommandText?.TrimStart('/'));
 
                                 base.RunWithStepOver(() =>
                                 {
@@ -278,7 +278,7 @@ namespace Adriva.DevTools.Cli.Reporting
                             reportDefinition.Filters = new FilterDefinitionDictionary();
                             foreach (var filter in filters)
                             {
-                                string filterName = MigrationHandler.GetJsonValue<string>(filter, "name");
+                                string filterName = textMappingsManager.GetSubstitution(MigrationHandler.GetJsonValue<string>(filter, "name"), true);
                                 var dataType = MigrationHandler.GetJsonValue<TypeCode>(filter, "dataType");
                                 var defaultValue = MigrationHandler.GetJsonValue<object>(filter, "defaultValue");
 
@@ -365,6 +365,17 @@ namespace Adriva.DevTools.Cli.Reporting
 
                                     MigrationHandler.ConvertOutputFieldOptions(outputField, fieldDefinition, textMappingsManager);
 
+                                    string mvcTemplate = outputField["rendererOptions"]?["mvc"]?["template"]?.Value<string>();
+
+                                    if (!string.IsNullOrWhiteSpace(mvcTemplate))
+                                    {
+                                        if (null == fieldDefinition.Options)
+                                        {
+                                            fieldDefinition.Options = JToken.Parse("{}");
+                                        }
+
+                                        fieldDefinition.Options["formatter"] = mvcTemplate;
+                                    }
                                     base.RunWithStepOver(() =>
                                     {
                                         outputDefinition.Fields.Add(fieldName, fieldDefinition);

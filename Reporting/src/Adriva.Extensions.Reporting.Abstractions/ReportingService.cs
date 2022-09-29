@@ -312,5 +312,63 @@ namespace Adriva.Extensions.Reporting.Abstractions
                 await renderer.RenderAsync(string.IsNullOrWhiteSpace(definition.Name) ? name : definition.Name, definition.Output, output, stream);
             }
         }
+
+        public async Task<ReportOutput> ExecuteCommandAsync(string name, string commandName, FilterValuesDictionary values, string dataSourceName = null)
+        {
+            var reportDefinition = await this.LoadReportDefinitionAsync(name, false);
+            var dataSourceScope = reportDefinition.Output;
+            dataSourceName = string.IsNullOrWhiteSpace(dataSourceName) ? dataSourceScope.DataSource : dataSourceName;
+
+            using (IServiceScope serviceScope = this.ServiceProvider.CreateScope())
+            using (ReportCommandContext context = ReportCommandContext.Create(serviceScope.ServiceProvider, reportDefinition, commandName))
+            {
+                var reportCommand = await this.CommandBuilder.BuildCommandAsync(context, values);
+
+                if (!reportDefinition.TryFindDataSourceDefinition(dataSourceName, out DataSourceDefinition dataSourceDefinition))
+                {
+                    throw new InvalidOperationException($"Could not find data source definition '{dataSourceName}' in the report '{reportDefinition.Name}'.");
+                }
+
+                var dataSourceRegistrationOptionsSnapshot = serviceScope.ServiceProvider.GetRequiredService<IOptionsSnapshot<DataSourceRegistrationOptions>>();
+                var dataSourceRegistrationOptions = dataSourceRegistrationOptionsSnapshot.Get(dataSourceDefinition.Type);
+
+                if (null == dataSourceRegistrationOptions.TypeHandle || IntPtr.Zero == dataSourceRegistrationOptions.TypeHandle.Value)
+                {
+                    throw new InvalidOperationException($"No data source service is registered for data source type '{dataSourceDefinition.Type}'.");
+                }
+
+                Type dataSourceType = Type.GetTypeFromHandle(dataSourceRegistrationOptions.TypeHandle);
+                IDataSource dataSource = (IDataSource)serviceScope.ServiceProvider.GetRequiredService(dataSourceType);
+
+                if (!(dataSource is IExecutableDataSource exexcutableDataSource))
+                {
+                    throw new NotSupportedException($"Data source '{dataSourceName}' does not support exexcuting ad-hoc commands. Ad-hoc command execution a data source of type {nameof(IExecutableDataSource)}.");
+                }
+
+                await exexcutableDataSource.OpenAsync(dataSourceDefinition);
+
+                try
+                {
+                    var output = await exexcutableDataSource.ExecuteAsync(reportCommand);
+                    var dataset = DataSet.FromColumnNames("Output");
+
+                    var row = dataset.CreateRow();
+                    row.AddData(output);
+
+                    if (this.Options.AllowSensitiveData)
+                    {
+                        return new ReportOutput(reportCommand, dataset);
+                    }
+                    else
+                    {
+                        return new ReportOutput(new ReportCommand(commandName, new CommandDefinition() { CommandText = commandName }), dataset);
+                    }
+                }
+                finally
+                {
+                    await exexcutableDataSource.CloseAsync();
+                }
+            }
+        }
     }
 }
