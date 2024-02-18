@@ -1,0 +1,30 @@
+<Project>
+  <Choose>
+    <When Condition="'$(UsePlusOneVersion)' == ''">
+      <PropertyGroup>
+        <Version>$(NugetVersionPrefix).$(Version)</Version>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <Version>$(NugetPlus1VersionPrefix).$(Version)</Version>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+  <Choose>
+    <When Condition="'$(NET7)' == 'True'">
+      <PropertyGroup>
+        <DefineConstants>NET7COMPILER</DefineConstants>
+      </PropertyGroup>
+    </When>
+  </Choose>
+  
+  <Choose>
+    <When Condition="'$(NET8)' == 'True'">
+      <PropertyGroup>
+        <DefineConstants>NET7COMPILER;NET8COMPILER</DefineConstants>
+      </PropertyGroup>
+    </When>
+  </Choose>
+</Project>

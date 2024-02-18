@@ -1,0 +1,31 @@
+<Project>
+  <PropertyGroup>
+    <Authors>adriva</Authors>
+    <Company>Adriva LLC.</Company>
+    <Copyright>(c) 2020, Adriva LLC.</Copyright>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/adriva/coreframework</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/adriva/coreframework</PackageProjectUrl>
+    <RepositoryBranch>master</RepositoryBranch>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <langversion>latest</langversion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+      <NET3 Condition="'$(dotnet)' == '3'">True</NET3>
+      <NET7 Condition="'$(dotnet)' == '7'">True</NET7>
+      <NET8 Condition="'$(dotnet)' == '8' Or '$(dotnet)' == ''">True</NET8>
+      
+      <NugetVersionPrefix Condition="$(NET3) == 'True'">3.1</NugetVersionPrefix>
+      <NugetVersionPrefix Condition="$(NET7) == 'True'">7.0</NugetVersionPrefix>
+      <NugetVersionPrefix Condition="$(NET8) == 'True'">8.0</NugetVersionPrefix>
+      
+      <NugetPlus1VersionPrefix Condition="$(NET3) == 'True'">3.2</NugetPlus1VersionPrefix>      
+      <NugetPlus1VersionPrefix Condition="$(NET7) == 'True'">7.0</NugetPlus1VersionPrefix>      
+      <NugetPlus1VersionPrefix Condition="$(NET8) == 'True'">8.0</NugetPlus1VersionPrefix>      
+    </PropertyGroup>
+
+  <Target Name="WriteBuildInfo" AfterTargets="Build">
+    <Message Text="Built '$(MSBuildProjectName)' for version '$(NugetVersionPrefix)'" Importance="High" />
+  </Target>
+</Project>
