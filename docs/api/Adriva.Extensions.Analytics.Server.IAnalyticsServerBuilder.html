@@ -1,0 +1,393 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IAnalyticsServerBuilder
+   | Adriva Core Framework </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IAnalyticsServerBuilder
+   | Adriva Core Framework ">  
+    
+    <link rel="canonical" href="https://adriva.github.io/coreframework/api/Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html">
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    <meta property="docfx:newtab" content="true">
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-80107673-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-80107673-6');
+    </script>
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder">
+  
+  <div style="text-align:center;margin-bottom: 20px;color: #ca3030;">
+  [This is preliminary documentation and is subject to change.]
+  </div>
+  <div>
+    <h6><strong>Namespace</strong>: <a class="xref" href="Adriva.Extensions.Analytics.Server.html">Adriva.Extensions.Analytics.Server</a></h6>
+    <h6><strong>Assembly</strong>: Adriva.Extensions.Analytics.Server.dll</h6>
+  </div>
+  <h1 id="Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder" class="text-break">Interface IAnalyticsServerBuilder
+  </h1>
+  <div class="markdown level0 summary"><p>Provides methods and properties that will be used by the system to build an analytics server.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h5 id="Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IAnalyticsServerBuilder</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsServerBuilder.cs/#L15">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_Services_" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.Services*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_Services" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.Services">Services</h4>
+  <div class="markdown level1 summary"><p>Gets the IServiceCollection that is used by the current builder.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IServiceCollection Services { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IServiceCollection</span></td>
+        <td><p>The current Microsoft.Extensions.DependencyInjection.IServiceCollection.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsServerBuilder.cs/#L50">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_Build_" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.Build*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_Build" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.Build">Build()</h4>
+  <div class="markdown level1 summary"><p>Called by the system to build the analytics server with the configuration provided.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Build()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsServerBuilder.cs/#L45">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_SetBufferCapacity_" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.SetBufferCapacity*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_SetBufferCapacity_System_Int32_" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.SetBufferCapacity(System.Int32)">SetBufferCapacity(Int32)</h4>
+  <div class="markdown level1 summary"><p>Sets the maximum number of items that can be stored in the memory buffer before persisted in the repository.
+<remarks>The value set in this method declares an intention and not a hard limit.async System may flush the buffer before it reaches its capacity.</remarks></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IAnalyticsServerBuilder SetBufferCapacity(int capacity)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">capacity</span></td>
+        <td><p>Maximum number of items that can be stored in the buffer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html">IAnalyticsServerBuilder</a></td>
+        <td><p>The Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder so that additional calls can be chained.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsServerBuilder.cs/#L37">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_SetProcessorThreadCount_" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.SetProcessorThreadCount*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_SetProcessorThreadCount_System_Int32_" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.SetProcessorThreadCount(System.Int32)">SetProcessorThreadCount(Int32)</h4>
+  <div class="markdown level1 summary"><p>Sets the count of processor threads that will be used to extract and persist analytics data.
+<remarks>Number of threads cannot be less than 1. If so, system will override the value and set it to 1 automatically.</remarks></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IAnalyticsServerBuilder SetProcessorThreadCount(int threadCount)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">threadCount</span></td>
+        <td><p>The number of threads that will be made available to the system.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html">IAnalyticsServerBuilder</a></td>
+        <td><p>The Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder so that additional calls can be chained.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsServerBuilder.cs/#L29">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_UseHandler_" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.UseHandler*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_UseHandler__1" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.UseHandler``1">UseHandler&lt;THandler&gt;()</h4>
+  <div class="markdown level1 summary"><p>Registers an IAnalyticsHandler to be used by the system to parse and extract analyics data from incoming requests.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IAnalyticsServerBuilder UseHandler&lt;THandler&gt;()
+
+    where THandler : IAnalyticsHandler</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html">IAnalyticsServerBuilder</a></td>
+        <td><p>The Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder so that additional calls can be chained.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">THandler</span></td>
+        <td><p>Type of analytics handler.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsServerBuilder.cs/#L22">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_UseRepository_" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.UseRepository*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_UseRepository__1" data-uid="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.UseRepository``1">UseRepository&lt;TRepository&gt;()</h4>
+  <div class="markdown level1 summary"><p>Registers an IAnalyticsRepository to be used by the system to persist analytics data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IAnalyticsServerBuilder UseRepository&lt;TRepository&gt;()
+
+    where TRepository : class, IAnalyticsRepository</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html">IAnalyticsServerBuilder</a></td>
+        <td><p>The Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder so that additional calls can be chained.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TRepository</span></td>
+        <td><p>Type of the analytics repository.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.html#Microsoft_Extensions_DependencyInjection_EntityFrameworkRepositoryExtensions_UseEntityFrameworkRepository__3_Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_Action_DbContextOptionsBuilder__ServiceLifetime_ServiceLifetime_">EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository&lt;TContext, TRepository, TModelBuilder&gt;(IAnalyticsServerBuilder, Action&lt;DbContextOptionsBuilder&gt;, ServiceLifetime, ServiceLifetime)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.html#Microsoft_Extensions_DependencyInjection_EntityFrameworkRepositoryExtensions_UseEntityFrameworkRepository__2_Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_Action_DbContextOptionsBuilder__ServiceLifetime_ServiceLifetime_">EntityFrameworkRepositoryExtensions.UseEntityFrameworkRepository&lt;TContext, TRepository&gt;(IAnalyticsServerBuilder, Action&lt;DbContextOptionsBuilder&gt;, ServiceLifetime, ServiceLifetime)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.html#Microsoft_Extensions_DependencyInjection_EntityFrameworkRepositoryExtensions_UseInMemoryRepository_Adriva_Extensions_Analytics_Server_IAnalyticsServerBuilder_System_String_">EntityFrameworkRepositoryExtensions.UseInMemoryRepository(IAnalyticsServerBuilder, String)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/IAnalyticsServerBuilder.cs/#L8" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>&copy; 2020, <strong>Adriva LLC.</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Title>Adriva Core Framework Workflow Engine</Title>
+    <PackageDescription>Provides simple dynamic workflow engine where the workflows can be defined in JSON.</PackageDescription>
+    <Version>7</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\src\Adriva.Common.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="$(NugetVersionPrefix).*" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="$(NugetVersionPrefix).*" />
+    <PackageReference Include="FastExpressionCompiler" Version="3.3.4" />
+    <PackageReference Include="FluentValidation" Version="11.7.1" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.4" />
+  </ItemGroup>
+
+  
+
+</Project>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework Condition="!$([MSBuild]::VersionGreaterThanOrEquals('$(NETCoreSdkVersion)', '7.0'))">netcoreapp3.1</TargetFramework>
+    <TargetFramework Condition="$([MSBuild]::VersionGreaterThanOrEquals('$(NETCoreSdkVersion)', '7.0'))">net7.0</TargetFramework>
+    <Title>Adriva Web Common Functions Library</Title>
+    <PackageDescription>Base library providing abstractions and common components and functions that cna be used in any web project.</PackageDescription>
+    <Version>5</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\src\Adriva.Common.Core.csproj" />
+  </ItemGroup>
+</Project>
