@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.Faster.Server", "Adriva.Extensions.Faster.Server\Adriva.Extensions.Faster.Server.csproj", "{BD0487C8-0384-42E6-ABB6-117FF95F48AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.Faster", "Adriva.Extensions.Faster\Adriva.Extensions.Faster.csproj", "{5476A3A4-5BD4-407E-9A66-295A3B60CA6E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD0487C8-0384-42E6-ABB6-117FF95F48AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD0487C8-0384-42E6-ABB6-117FF95F48AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD0487C8-0384-42E6-ABB6-117FF95F48AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD0487C8-0384-42E6-ABB6-117FF95F48AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5476A3A4-5BD4-407E-9A66-295A3B60CA6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5476A3A4-5BD4-407E-9A66-295A3B60CA6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5476A3A4-5BD4-407E-9A66-295A3B60CA6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5476A3A4-5BD4-407E-9A66-295A3B60CA6E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

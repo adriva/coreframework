@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework Condition="!$([MSBuild]::VersionGreaterThanOrEquals('$(NETCoreSdkVersion)', '7.0'))">netcoreapp3.1</TargetFramework>
+    <TargetFramework Condition="$([MSBuild]::VersionGreaterThanOrEquals('$(NETCoreSdkVersion)', '7.0'))">net7.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Adriva Worker library based on Hangfire</Title>
+    <PackageDescription>Provides worker components to implement long running services, background jobs and scheduled jobs based using Hangfire.</PackageDescription>    
+    <Version>28</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Adriva.Extensions.Worker\Adriva.Extensions.Worker.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hangfire.SqlServer" Version="1.7.33" />
+  </ItemGroup>
+</Project>

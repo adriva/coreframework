@@ -1,0 +1,13 @@
+<Project>
+    <PropertyGroup>
+      <Version>$(NugetOutputVersionPrefix).$(Version)</Version>
+    </PropertyGroup>
+    
+  <Choose>
+    <When Condition="'$(NET8)' == 'True'">
+      <PropertyGroup>
+        <DefineConstants>NET7COMPILER;NET8COMPILER</DefineConstants>
+      </PropertyGroup>
+    </When>
+  </Choose>
+</Project>
