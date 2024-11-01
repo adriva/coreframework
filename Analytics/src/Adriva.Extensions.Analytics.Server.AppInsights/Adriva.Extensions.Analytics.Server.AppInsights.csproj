@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+ <PropertyGroup>
+    <TargetFramework Condition="!$([MSBuild]::VersionGreaterThanOrEquals('$(NETCoreSdkVersion)', '7.0'))">netcoreapp3.1</TargetFramework>
+    <TargetFramework Condition="$([MSBuild]::VersionGreaterThanOrEquals('$(NETCoreSdkVersion)', '7.0'))">net7.0</TargetFramework>
+    <Version>1</Version>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.20.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Adriva.Extensions.Analytics.Server\Adriva.Extensions.Analytics.Server.csproj" />
+    <ProjectReference Include="..\..\..\Common\src\Adriva.Common.Core.csproj" />
+  </ItemGroup>
+
+</Project>

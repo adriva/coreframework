@@ -1,0 +1,28 @@
+<Project>
+  <PropertyGroup>
+    <Authors>adriva</Authors>
+    <Company>Adriva LLC.</Company>
+    <Copyright>(c) 2020, Adriva LLC.</Copyright>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/adriva/coreframework</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/adriva/coreframework</PackageProjectUrl>
+    <RepositoryBranch>master</RepositoryBranch>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <langversion>latest</langversion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+      <NET3 Condition="'$(dotnet)' == '3'">True</NET3>
+      <NET8 Condition="'$(dotnet)' == '8' Or '$(dotnet)' == ''">True</NET8>
+      
+      <NugetVersionPrefix Condition="$(NET3) == 'True'">3.1</NugetVersionPrefix>
+      <NugetVersionPrefix Condition="$(NET8) == 'True'">8.0</NugetVersionPrefix>      
+      
+      <NugetOutputVersionPrefix Condition="$(NET3) == 'True'">3.3</NugetOutputVersionPrefix>
+      <NugetOutputVersionPrefix Condition="$(NET8) == 'True'">8.0</NugetOutputVersionPrefix>
+    </PropertyGroup>
+
+  <Target Name="WriteBuildInfo" AfterTargets="Build">
+    <Message Text="Built '$(MSBuildProjectName)' for version '$(NugetVersionPrefix)'" Importance="High" />
+  </Target>
+</Project>

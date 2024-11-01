@@ -1,0 +1,8 @@
+"DealerSelect" : "accountSelector"
+"Date" : "calendar"
+"EnumTab" : "enumList"
+"PoApiJson" : "HttpJson"
+"pageIndex" : "pageNumber",
+"Adriva.Extensions.Reports.ValueFormatters:AddDays, Adriva.Extensions.Reports" :"PetrolOfisi.Order.Common.Reporting.DefaultFormatters:AddDays,PetrolOfisi.Order.Common"
+"PetrolOfisi.Portal.Web.Common.ReportContextProvider, PetrolOfisi.Portal.Web.Common" : "PetrolOfisi.Order.Common.Reporting.DefaultContextProvider, PetrolOfisi.Order.Common"
+"PetrolOfisi.Portal.NullObject, PetrolOfisi.Portal": "null
