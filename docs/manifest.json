@@ -1,0 +1,1709 @@
+{
+  "sitemap": {
+    "fileOptions": {
+      "**/api/**.yml": {
+        "baseUrl": "https://adriva.github.io/coreframework/",
+        "changefreq": "weekly",
+        "priority": 0.7
+      },
+      "**/*.md": {
+        "baseUrl": "https://adriva.github.io/coreframework/",
+        "changefreq": "weekly",
+        "priority": 0.9
+      }
+    },
+    "baseUrl": "https://adriva.github.io/coreframework/",
+    "changefreq": "weekly",
+    "priority": 0.9
+  },
+  "homepages": [],
+  "source_base_path": "/Users/mnemonic/Projects/netcorelibs/Framework/documentation",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.AsyncQueueProcessor-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.AsyncQueueProcessor-1.html",
+          "hash": "XZ2tQlUbh8+Y6b3RR+/JvA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.AutoStream.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.AutoStream.html",
+          "hash": "RKccldA6yt7ND98bAtmfog=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.Crc32.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.Crc32.html",
+          "hash": "Kfh38+eUGPlPd93RRlayLA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.Crc64.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.Crc64.html",
+          "hash": "egrG1hikq4b8822B4s5vig=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.DataStructures.ITreeNode-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.DataStructures.ITreeNode-1.html",
+          "hash": "2er+HR1hTJukBTX+HRSbrQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.DataStructures.TreeNode-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.DataStructures.TreeNode-1.html",
+          "hash": "YHvmN56T3Rl+RdvL3KJyXQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.DataStructures.TreeNodeExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.DataStructures.TreeNodeExtensions.html",
+          "hash": "RIx/18ejc2fgB53vVGQHTw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.DataStructures.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.DataStructures.html",
+          "hash": "GszJloLS2UIqupUc6JIabQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.DynamicItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.DynamicItem.html",
+          "hash": "Bx7YekiiyP5qpdnKKecWHw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.GenericEqualityComparer-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.GenericEqualityComparer-1.html",
+          "hash": "FJ/yIDfX1qoJviZYvrntBA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.HttpClientExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.HttpClientExtensions.html",
+          "hash": "+im1dlsmLYuwlPpYQIPUOw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.IAsyncQueueProcessor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.IAsyncQueueProcessor.html",
+          "hash": "7dLcdxN1Yxc7jF8OZ/At/Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.IPagedResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.IPagedResult.html",
+          "hash": "x4RzdY5oUufymea2qCSl3w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.ISegmentedResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.ISegmentedResult.html",
+          "hash": "yxHBithQEOtWyeF1xDO7/g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.NdJsonSerializer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.NdJsonSerializer.html",
+          "hash": "IVJxCrvpaWJCSDK1Ou3/cA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.NullDisposable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.NullDisposable.html",
+          "hash": "mFzK7V9V8HXqN4JGSCy1Sg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.PagedResult-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.PagedResult-1.html",
+          "hash": "OVeQIn3rj8Jh1ZHkrpSQnA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.ProcessWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.ProcessWrapper.html",
+          "hash": "Hj3O/PQ9AEIsZ4KGxaz5GQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.QueueMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.QueueMessage.html",
+          "hash": "eziCk8DWbqwSu1Ao64bcLw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.QueueMessageFlags.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.QueueMessageFlags.html",
+          "hash": "uOrntpfUz9lmjcNekqh0Fg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.SegmentedResult-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.SegmentedResult-1.html",
+          "hash": "86orPpoVavL4Q79t0c2Xrw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.Utilities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.Utilities.html",
+          "hash": "Joy1egWcguV1YYit0frwkg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Common.Core.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Common.Core.html",
+          "hash": "DByaEUZcFzJFPyPxUd5J0Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.AppInsights.AnalyticsOptions.html",
+          "hash": "CYpBj/Uhch36NqjQhCfk7g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.AppInsights.IAnalyticsBuilder.html",
+          "hash": "G98A+v83OWWoa6TeVhYD/g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.AppInsights.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.AppInsights.html",
+          "hash": "CeuETqWqcuQcQEwxA91nmw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.html",
+          "hash": "F2GsKBewMSA6nBR5ahZaDA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html",
+          "hash": "aTL4hyVq61ABHWCwhLm8fA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.IDatabaseModelBuilder.html",
+          "hash": "zqp8cASEPazQ/BlybLGIhg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.html",
+          "hash": "5hkAxRrVdk7CPCe93sk+7A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.html",
+          "hash": "tvgo5qLX6vp/2TX3FBFivg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.html",
+          "hash": "i4GLNfpw1iyTr00yruj8Gg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Repository.EntityFramework.html",
+          "hash": "d7B6iXEzWGKEsWXxuaNtXA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AnalyticsServerOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AnalyticsServerOptions.html",
+          "hash": "aqsTEvF+9vSmZk53Wo9AvA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.AnalyticsItemPopulator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.AnalyticsItemPopulator.html",
+          "hash": "6f2VQ5CvaixgV6pAiYPfVw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsHandler.html",
+          "hash": "AYMSPvNnTUYV/m8Zn6pWFQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsValidator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.AppInsightsValidator.html",
+          "hash": "nIMGLSH8oR6y8gfcV+y5nw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.AvailabilityData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.AvailabilityData.html",
+          "hash": "EMQQFdHSf7fbF8hn0Rl47Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.Base.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.Base.html",
+          "hash": "rZ125XSBdmydqXtSgENk4g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.DataPoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.DataPoint.html",
+          "hash": "KG3lRt5nEZJ4FzN5y03PLQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.Domain.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.Domain.html",
+          "hash": "LX5ToF5WeCOp5EomX5kkQQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.Envelope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.Envelope.html",
+          "hash": "TUD1nDJNmewx1pkywz9Piw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.EventData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.EventData.html",
+          "hash": "LMr4QfsM74UzH2K/jVDoOg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.ExceptionData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.ExceptionData.html",
+          "hash": "IBtfSufT5rrV3Ox3hGFHxw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.ExceptionDetails.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.ExceptionDetails.html",
+          "hash": "5VCY013Im15pmj8R6NZ8uQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.MessageData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.MessageData.html",
+          "hash": "JhQ3sU0oLxCc2T0w5dpLow=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.MetricData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.MetricData.html",
+          "hash": "lOnmn0jk/mTytBrSN5wHgw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.PageViewData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.PageViewData.html",
+          "hash": "SF5xmLCcYFm3vcVOoJ6cuA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.PageViewPerfData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.PageViewPerfData.html",
+          "hash": "xyuBEiHCAN9mzqKlGsfY0w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.RemoteDependencyData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.RemoteDependencyData.html",
+          "hash": "Av7LR388GsHzKLcd/VsSaA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.RequestData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.RequestData.html",
+          "hash": "X8/fs2b/Q0iSNcoT8X5EWw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.StackFrame.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.StackFrame.html",
+          "hash": "LZtqfYAVWgk0AQ/WwWP72A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.Contracts.html",
+          "hash": "lUN5POCJYHMOpHeIB2FSUQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.IAppInsightsValidator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.IAppInsightsValidator.html",
+          "hash": "du4VwDszCT8+AvtMhNUp2A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.TelemetryConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.TelemetryConverter.html",
+          "hash": "zVFgizAMshq08feKFkSVGA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.AppInsights.html",
+          "hash": "n5xQADtXW8D7ewh2Cx14+A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html",
+          "hash": "C71ndJN1zzvWm3/lXvbRhw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.AvailabilityItem.html",
+          "hash": "pW9t8T5lxJI/GINQ3F5j4A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.DataPointType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.DataPointType.html",
+          "hash": "7JmVsnGB4IQFv5iMlej+Cg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.DependencyItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.DependencyItem.html",
+          "hash": "r0++T3iIOEbyPJy6S25nrA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.EventItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.EventItem.html",
+          "hash": "wuL6HCsExcP1xkf9M5Gl3g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.ExceptionItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.ExceptionItem.html",
+          "hash": "DGZkUSHAE6SH1ekQLC+pdA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.IAnalyticsObject.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.IAnalyticsObject.html",
+          "hash": "x/KA/lKCoPPCA8geV8phOg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.MessageItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.MessageItem.html",
+          "hash": "v7m2j6xBkGeYI+FBLTrIUw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.MetricItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.MetricItem.html",
+          "hash": "L/TNb16RaDn1U5Vi1WCJsw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.RequestItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.RequestItem.html",
+          "hash": "DChRdBf9/mM0JnjEaijNEA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.Severity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.Severity.html",
+          "hash": "pohGlHwJ1wjvooMm1hjE0A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.Entities.html",
+          "hash": "oHVVj0tfT/lFqfcc6MFpkA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.IAnalyticsHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.IAnalyticsHandler.html",
+          "hash": "ItM9rZj/VFxRHZh9npTMIA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.IAnalyticsRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.IAnalyticsRepository.html",
+          "hash": "wbso/dgm8D2bDTWB7xn/NQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.IAnalyticsServerBuilder.html",
+          "hash": "D+uctPzCjGp84wyIaTJIrg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.IQueueingService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.IQueueingService.html",
+          "hash": "12i2HQ1L7g692iQEV2B7zQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.NullRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.NullRepository.html",
+          "hash": "y3SEHD56qLwqy9u0b0X8cw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Analytics.Server.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Analytics.Server.html",
+          "hash": "wywOOJk66JIYjKpsfzTr0w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Caching.Abstractions.EvictionCallback.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Caching.Abstractions.EvictionCallback.html",
+          "hash": "juv0GKhYtuGouNVSDbS/sw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Caching.Abstractions.ICache.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Caching.Abstractions.ICache.html",
+          "hash": "4a+ATKn2Y2f90GJnW1a57w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Caching.Abstractions.ICacheItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Caching.Abstractions.ICacheItem.html",
+          "hash": "3Ch6ca36+8d/G7E4SUdhdw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Caching.Abstractions.NullCacheItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Caching.Abstractions.NullCacheItem.html",
+          "hash": "DXVfXR78luHt1aiiYh1NhQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Caching.Abstractions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Caching.Abstractions.html",
+          "hash": "aLjv3k6Urtf5L4snXH5dtQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Caching.Memory.InMemoryCache.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Caching.Memory.InMemoryCache.html",
+          "hash": "mXSr15JlWdQNbzWTZ/XmHg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Caching.Memory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Caching.Memory.html",
+          "hash": "PgLxpTCiw+p7IOcK6m6oKw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.Asset.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.Asset.html",
+          "hash": "jehBRoU9NZq8ZZQqoK0Wtg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.AssetDisposerTransform.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.AssetDisposerTransform.html",
+          "hash": "dYv34yHtxQjL7Fb0Hvlabg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.AssetExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.AssetExtensions.html",
+          "hash": "2VCepFnMVY2tGjqQAosqBQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationContext.html",
+          "hash": "vP+mrr7BtfJ3l+pmc3f9hw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.DefaultOptimizationScope-1.html",
+          "hash": "tL+AV5fuP/HQQL9I3cH5Ew=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.FileAssetOrderer.html",
+          "hash": "iiMLScKrh9fN/3x+9eK53Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.HttpAssetLoader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.HttpAssetLoader.html",
+          "hash": "Z21eDy1PDArs1CQ89K7TPQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IAssetLoader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IAssetLoader.html",
+          "hash": "VoWZJBscjrfAQZAPFtf0oQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IAssetOrderer.html",
+          "hash": "NQiSD97uNvPkx3HVjxPcHg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationBuilder-1.html",
+          "hash": "37CWVxo8POoS2Z92Dz/P4g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationContext.html",
+          "hash": "SN5F2i2YsyVGW5N5Pu1dzg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationEvents-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationEvents-1.html",
+          "hash": "Syby+Qx/hli0duXeoFIllQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationManager.html",
+          "hash": "9odYfn/xzXGEIzkCbiNOng=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationResultFormatter-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationResultFormatter-1.html",
+          "hash": "PtBlz8ANPl9VNRRFw1A+vw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.IOptimizationScope.html",
+          "hash": "/PCmVXxgnfVJhtJbS/geQg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.ITransform.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.ITransform.html",
+          "hash": "Es/qWU1Tkv2dmhIg3NlwqA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.MergeContentTransform.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.MergeContentTransform.html",
+          "hash": "lRJ/6FIhynW5xr2NIjnutg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.OptimizationException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.OptimizationException.html",
+          "hash": "LyvY+/JmvyZ5gKF444RB9w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.OptimizationOptions.html",
+          "hash": "I6VExc8DE5MjtXoswKSWcQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.OptimizationResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.OptimizationResult.html",
+          "hash": "xvzYWGpTQ3YRiqjpiGA0RA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.PhysicalFileAssetLoader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.PhysicalFileAssetLoader.html",
+          "hash": "dlcmdOzCMmro5E96evVrYg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Abstractions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Abstractions.html",
+          "hash": "3SH/IU3DmLR8/kTksmwyiw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Transforms.JavascriptBundleTransform.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Transforms.JavascriptBundleTransform.html",
+          "hash": "0Esu5z1bxQERSr60uynLZg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Transforms.JavascriptMinificationTransform.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Transforms.JavascriptMinificationTransform.html",
+          "hash": "JtkzpYr0eePKj3K8CjQKeA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Transforms.StylesheetBundleTransform.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Transforms.StylesheetBundleTransform.html",
+          "hash": "/hBaXdj5b48xFB7huM+tHQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Transforms.StylesheetMinificationTransform.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Transforms.StylesheetMinificationTransform.html",
+          "hash": "Znmz35XFhHYzb+QlojWEOQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Transforms.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Transforms.html",
+          "hash": "LpfEx58qwYtLEbOZaCIJVw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilder.html",
+          "hash": "sLfnFKwm+jlNLlp0o0J0TA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilderFactory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Web.IOptimizationResultTagBuilderFactory.html",
+          "hash": "KzoIABJ5AAb77Pcl9WxnBg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Web.ITagBuilderOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Web.ITagBuilderOptions.html",
+          "hash": "Y7oDo7LqoHu2m+V3pf8MJw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Web.JavascriptResultTagBuilder.html",
+          "hash": "/nJCBWAzB7eliVWEItO5NA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Web.OptimizationTagOutput.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Web.OptimizationTagOutput.html",
+          "hash": "iwnNvynGt0vIW16YKM01dQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Web.OptimizedResourceTagHelper.html",
+          "hash": "vCGDD4UTwO8qQf04Lqp6aA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Web.StylesheetResultTagBuilder.html",
+          "hash": "Gi1OEsrmpuVaigSTdWpOnw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Web.WebOptimizationOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Web.WebOptimizationOptions.html",
+          "hash": "J5DwRGwgUeQh9676bcS7bg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Adriva.Extensions.Optimization.Web.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Adriva.Extensions.Optimization.Web.html",
+          "hash": "UJzJUlBeFoZi/a85K4IVCA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Extensions.DependencyInjection.AnalyticsExtensions.html",
+          "hash": "YFhYDVmsNpCr8ouGjIBtpw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Extensions.DependencyInjection.AnalyticsServerExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Extensions.DependencyInjection.AnalyticsServerExtensions.html",
+          "hash": "wzcwuZZpaXLstkjn+m7QZw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Extensions.DependencyInjection.AppInsightsAnalyticsServerExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Extensions.DependencyInjection.AppInsightsAnalyticsServerExtensions.html",
+          "hash": "KVWJPPHA6YmRqom4whYSVQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Extensions.DependencyInjection.CacheExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Extensions.DependencyInjection.CacheExtensions.html",
+          "hash": "sPNZDxi9mzWowGGpvxyO1Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Extensions.DependencyInjection.EntityFrameworkRepositoryExtensions.html",
+          "hash": "c0wT32piisnPDkvEyikOkQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Extensions.DependencyInjection.EntityFrameworkSqliteRepositoryExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Extensions.DependencyInjection.EntityFrameworkSqliteRepositoryExtensions.html",
+          "hash": "iCDk/fqdaEbZjId1WjdVKA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Extensions.DependencyInjection.InMemoryCacheExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Extensions.DependencyInjection.InMemoryCacheExtensions.html",
+          "hash": "hkdLdZ8RYQee2SeB6rIkJA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Extensions.DependencyInjection.OptimizationExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Extensions.DependencyInjection.OptimizationExtensions.html",
+          "hash": "hYcVDuGqMc1VdBX5e5TsoA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Extensions.DependencyInjection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Extensions.DependencyInjection.html",
+          "hash": "Vpe8GeY3VUgOzBfDfq9hSA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "1WEMo5xKoL4e/+765DoZYg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "DMr37hgDgR0dgTd/ALgWjQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/analytics-aspnetcore.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/analytics-aspnetcore.html",
+          "hash": "1jibiLlNmFLj2FyHVx77dA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/analytics-server.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/analytics-server.html",
+          "hash": "dhVIKJhLLob/o4AYGAXgkQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "articles/analytics.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/analytics.html",
+          "hash": "byiAz2A5eAN0IChKlrU1eA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "articles/gettingstarted.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/gettingstarted.html",
+          "hash": "ZC7+rKPxnfy+meigChHrnA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/optimization-web.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/optimization-web.html",
+          "hash": "p15D3+UTSHKmVS/FC9tvjA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "uPof5HxKkXMLjakOXvbh2A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "Kg8Ffpr7CgwrUO9grcmiZg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "l8UX4aGCHLmxQ+lwvMFGMg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 7,
+          "skipped_file_count": 6
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 126,
+          "skipped_file_count": 126
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: should not trace intermediate info.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
