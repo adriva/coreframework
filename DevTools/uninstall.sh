@@ -1,0 +1,1 @@
+dotnet tool uninstall --global Adriva.DevTools.Cli
