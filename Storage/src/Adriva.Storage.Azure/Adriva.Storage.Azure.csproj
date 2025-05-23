@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Title>Adriva Core Framework Azure Storage Services Client</Title>
+    <PackageDescription>Base library providing common types and interfaces for Microsoft Azure storage service integrations.</PackageDescription>
+    <Version>8</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Adriva.Storage.Abstractions\Adriva.Storage.Abstractions.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Data.Tables" Version="12.10.0" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.23.0" />
+  </ItemGroup>
+</Project>
