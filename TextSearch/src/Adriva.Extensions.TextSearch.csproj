@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <NoWarn>$(NoWarn);NU5104</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lucene.Net.Analysis.Common" Version="4.8.0-beta00017" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <Title>Adriva Lucene Search Library</Title>
+    <PackageDescription>Provides common components to consume Lucene search services.</PackageDescription>    
+    <Version>11</Version>
+  </PropertyGroup>
+</Project>
