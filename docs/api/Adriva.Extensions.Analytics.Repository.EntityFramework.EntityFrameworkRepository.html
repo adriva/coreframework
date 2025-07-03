@@ -1,0 +1,399 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class EntityFrameworkRepository
+   | Adriva Core Framework </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class EntityFrameworkRepository
+   | Adriva Core Framework ">  
+    
+    <link rel="canonical" href="https://adriva.github.io/coreframework/api/Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.html">
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    <meta property="docfx:newtab" content="true">
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-80107673-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-80107673-6');
+    </script>
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository">
+  
+  <div style="text-align:center;margin-bottom: 20px;color: #ca3030;">
+  [This is preliminary documentation and is subject to change.]
+  </div>
+  <div>
+    <h6><strong>Namespace</strong>: <a class="xref" href="Adriva.Extensions.Analytics.Repository.EntityFramework.html">Adriva.Extensions.Analytics.Repository.EntityFramework</a></h6>
+    <h6><strong>Assembly</strong>: Adriva.Extensions.Analytics.Repository.EntityFramework.dll</h6>
+  </div>
+  <h1 id="Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository" class="text-break">Class EntityFrameworkRepository
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a base class for an analytics repository that stores data using EF Core.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">EntityFrameworkRepository</span></div>
+      <div class="level2"><a class="xref" href="Adriva.Extensions.Analytics.Repository.EntityFramework.InMemoryRepository.html">InMemoryRepository</a></div>
+      <div class="level2"><a class="xref" href="Adriva.Extensions.Analytics.Repository.EntityFramework.Sqlite.SqliteRepository.html">SqliteRepository</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Adriva.Extensions.Analytics.Server.IAnalyticsRepository.html">IAnalyticsRepository</a></div>
+  </div>
+  <h5 id="Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class EntityFrameworkRepository : object, IAnalyticsRepository</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework/EntityFrameworkRepository.cs/#L34">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository__ctor_" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.#ctor*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository__ctor_Adriva_Extensions_Analytics_Repository_EntityFramework_AnalyticsDatabaseContext_ILogger_" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.#ctor(Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext,ILogger)">EntityFrameworkRepository(AnalyticsDatabaseContext, ILogger)</h4>
+  <div class="markdown level1 summary"><p>Initiates a new instance of Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected EntityFrameworkRepository(AnalyticsDatabaseContext analyticsDatabaseContext, ILogger logger)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.html">AnalyticsDatabaseContext</a></td>
+        <td><span class="parametername">analyticsDatabaseContext</span></td>
+        <td><p>The AnalyticsDatabaseContext object that will be used to store data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ILogger</span></td>
+        <td><span class="parametername">logger</span></td>
+        <td><p>An instance of an ILogger object that is used to write log messages to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework/EntityFrameworkRepository.cs/#L27">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_Context_" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.Context*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_Context" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.Context">Context</h4>
+  <div class="markdown level1 summary"><p>Gets an instance of AnalyticsDatabaseContext class that is used to persist analytics data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected AnalyticsDatabaseContext Context { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Adriva.Extensions.Analytics.Repository.EntityFramework.AnalyticsDatabaseContext.html">AnalyticsDatabaseContext</a></td>
+        <td><p>An instance of AnalyticsDatabaseContext class.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework/EntityFrameworkRepository.cs/#L21">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_Logger_" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.Logger*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_Logger" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.Logger">Logger</h4>
+  <div class="markdown level1 summary"><p>Gets the logger that can be used to write log output.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ILogger Logger { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ILogger</span></td>
+        <td><p>A concrete implementation of ILogger interface.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework/EntityFrameworkRepository.cs/#L67">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_HandleErrorAsync_" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.HandleErrorAsync*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_HandleErrorAsync_IEnumerable_Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem__Exception_" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.HandleErrorAsync(IEnumerable{Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem},Exception)">HandleErrorAsync(IEnumerable&lt;AnalyticsItem&gt;, Exception)</h4>
+  <div class="markdown level1 summary"><p>Called by the system when the StoreAsync method encounters an exception.
+<remarks>In-memory repository only writes the error message to the log and returns.</remarks></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task HandleErrorAsync(IEnumerable&lt;AnalyticsItem&gt; items, Exception exception)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html">AnalyticsItem</a>&gt;</td>
+        <td><span class="parametername">items</span></td>
+        <td><p>Items that failed to be stored in the repository.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Exception</span></td>
+        <td><span class="parametername">exception</span></td>
+        <td><p>The exception that is caught by the system.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td><p>Represents the asynchronous process operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework/EntityFrameworkRepository.cs/#L44">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_InitializeAsync_" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.InitializeAsync*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_InitializeAsync" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.InitializeAsync">InitializeAsync()</h4>
+  <div class="markdown level1 summary"><p>Initializes the current instance of Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task InitializeAsync()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td><p>Represents the asynchronous process operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework/EntityFrameworkRepository.cs/#L52">View Source</a>
+  </span>
+  <a id="Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_StoreAsync_" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.StoreAsync*"></a>
+  <h4 id="Adriva_Extensions_Analytics_Repository_EntityFramework_EntityFrameworkRepository_StoreAsync_IEnumerable_Adriva_Extensions_Analytics_Server_Entities_AnalyticsItem__CancellationToken_" data-uid="Adriva.Extensions.Analytics.Repository.EntityFramework.EntityFrameworkRepository.StoreAsync(IEnumerable{Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem},CancellationToken)">StoreAsync(IEnumerable&lt;AnalyticsItem&gt;, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Called by the system when the server analytics buffer is full to persist items in the repository.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task StoreAsync(IEnumerable&lt;AnalyticsItem&gt; items, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem.html">AnalyticsItem</a>&gt;</td>
+        <td><span class="parametername">items</span></td>
+        <td><p>Items that should be persisted in the repository.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td><p>Propagates notification that operations should be canceled.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td><p>Represents the asynchronous process operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Adriva.Extensions.Analytics.Server.IAnalyticsRepository.html">IAnalyticsRepository</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Repository.EntityFramework/EntityFrameworkRepository.cs/#L15" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>&copy; 2020, <strong>Adriva LLC.</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

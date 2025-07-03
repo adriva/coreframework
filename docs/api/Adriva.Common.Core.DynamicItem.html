@@ -1,0 +1,764 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class DynamicItem
+   | Adriva Core Framework </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class DynamicItem
+   | Adriva Core Framework ">  
+    
+    <link rel="canonical" href="https://adriva.github.io/coreframework/api/Adriva.Common.Core.DynamicItem.html">
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    <meta property="docfx:newtab" content="true">
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-80107673-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-80107673-6');
+    </script>
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Adriva.Common.Core.DynamicItem">
+  
+  <div style="text-align:center;margin-bottom: 20px;color: #ca3030;">
+  [This is preliminary documentation and is subject to change.]
+  </div>
+  <div>
+    <h6><strong>Namespace</strong>: <a class="xref" href="Adriva.Common.Core.html">Adriva.Common.Core</a></h6>
+    <h6><strong>Assembly</strong>: Adriva.Common.Core.dll</h6>
+  </div>
+  <h1 id="Adriva_Common_Core_DynamicItem" data-uid="Adriva.Common.Core.DynamicItem" class="text-break">Class DynamicItem
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a class that can have dynamic properties and be casted to dynamic type.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">System.Dynamic.DynamicObject</span></div>
+    <div class="level2"><span class="xref">DynamicItem</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">System.Dynamic.IDynamicMetaObjectProvider</span></div>
+    <div><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;<span class="xref">System.String</span>, <span class="xref">System.Object</span>&gt;&gt;</div>
+    <div><span class="xref">System.Collections.IEnumerable</span></div>
+    <div><span class="xref">System.ICloneable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Dynamic.DynamicObject.GetMetaObject(System.Linq.Expressions.Expression)</span>
+    </div>
+    <div>
+      <span class="xref">System.Dynamic.DynamicObject.TryBinaryOperation(System.Dynamic.BinaryOperationBinder, System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Dynamic.DynamicObject.TryConvert(System.Dynamic.ConvertBinder, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Dynamic.DynamicObject.TryCreateInstance(System.Dynamic.CreateInstanceBinder, System.Object[], System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Dynamic.DynamicObject.TryDeleteIndex(System.Dynamic.DeleteIndexBinder, System.Object[])</span>
+    </div>
+    <div>
+      <span class="xref">System.Dynamic.DynamicObject.TryDeleteMember(System.Dynamic.DeleteMemberBinder)</span>
+    </div>
+    <div>
+      <span class="xref">System.Dynamic.DynamicObject.TryGetIndex(System.Dynamic.GetIndexBinder, System.Object[], System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Dynamic.DynamicObject.TryInvoke(System.Dynamic.InvokeBinder, System.Object[], System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Dynamic.DynamicObject.TryInvokeMember(System.Dynamic.InvokeMemberBinder, System.Object[], System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Dynamic.DynamicObject.TrySetIndex(System.Dynamic.SetIndexBinder, System.Object[], System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Dynamic.DynamicObject.TryUnaryOperation(System.Dynamic.UnaryOperationBinder, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h5 id="Adriva_Common_Core_DynamicItem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Serializable]
+public class DynamicItem : DynamicObject, IDynamicMetaObjectProvider, IEnumerable&lt;KeyValuePair&lt;string, object&gt;&gt;, IEnumerable, ICloneable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/DynamicItem.cs/#L124">View Source</a>
+  </span>
+  <a id="Adriva_Common_Core_DynamicItem__ctor_" data-uid="Adriva.Common.Core.DynamicItem.#ctor*"></a>
+  <h4 id="Adriva_Common_Core_DynamicItem__ctor" data-uid="Adriva.Common.Core.DynamicItem.#ctor">DynamicItem()</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of DynamicItem class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DynamicItem()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/DynamicItem.cs/#L131">View Source</a>
+  </span>
+  <a id="Adriva_Common_Core_DynamicItem__ctor_" data-uid="Adriva.Common.Core.DynamicItem.#ctor*"></a>
+  <h4 id="Adriva_Common_Core_DynamicItem__ctor_System_Collections_Generic_IDictionary_System_String_System_Object__" data-uid="Adriva.Common.Core.DynamicItem.#ctor(System.Collections.Generic.IDictionary{System.String,System.Object})">DynamicItem(IDictionary&lt;String, Object&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of DynamicItem class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DynamicItem(IDictionary&lt;string, object&gt; items)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IDictionary</span>&lt;<span class="xref">System.String</span>, <span class="xref">System.Object</span>&gt;</td>
+        <td><span class="parametername">items</span></td>
+        <td><p>A key/value collection representing the dynamic property names and their values, to create the class dynamic properties with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/DynamicItem.cs/#L106">View Source</a>
+  </span>
+  <a id="Adriva_Common_Core_DynamicItem_Count_" data-uid="Adriva.Common.Core.DynamicItem.Count*"></a>
+  <h4 id="Adriva_Common_Core_DynamicItem_Count" data-uid="Adriva.Common.Core.DynamicItem.Count">Count</h4>
+  <div class="markdown level1 summary"><p>Gets the number of dynamic properties defined on this instance of the class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Count { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The number of dynamic properties defined on this instance of the class.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/DynamicItem.cs/#L207">View Source</a>
+  </span>
+  <a id="Adriva_Common_Core_DynamicItem_Dynamic_" data-uid="Adriva.Common.Core.DynamicItem.Dynamic*"></a>
+  <h4 id="Adriva_Common_Core_DynamicItem_Dynamic" data-uid="Adriva.Common.Core.DynamicItem.Dynamic">Dynamic</h4>
+  <div class="markdown level1 summary"><p>Casts the current DynamicItem to a dynamic object to support accessing the dynamic properties using the language semantics.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public dynamic Dynamic { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><p>A dynamic type that has all the properties defined on the DynamicItem class.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/DynamicItem.cs/#L115">View Source</a>
+  </span>
+  <a id="Adriva_Common_Core_DynamicItem_Item_" data-uid="Adriva.Common.Core.DynamicItem.Item*"></a>
+  <h4 id="Adriva_Common_Core_DynamicItem_Item_System_String_" data-uid="Adriva.Common.Core.DynamicItem.Item(System.String)">Item[String]</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the property values associated with the given dynamic property name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object this[string key] { get; set; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><p>The value of the dynamic property with the given name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/DynamicItem.cs/#L174">View Source</a>
+  </span>
+  <a id="Adriva_Common_Core_DynamicItem_Clear_" data-uid="Adriva.Common.Core.DynamicItem.Clear*"></a>
+  <h4 id="Adriva_Common_Core_DynamicItem_Clear" data-uid="Adriva.Common.Core.DynamicItem.Clear">Clear()</h4>
+  <div class="markdown level1 summary"><p>Removes all dynamic properties from the dynamic object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Clear()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/DynamicItem.cs/#L266">View Source</a>
+  </span>
+  <a id="Adriva_Common_Core_DynamicItem_Clone_" data-uid="Adriva.Common.Core.DynamicItem.Clone*"></a>
+  <h4 id="Adriva_Common_Core_DynamicItem_Clone" data-uid="Adriva.Common.Core.DynamicItem.Clone">Clone()</h4>
+  <div class="markdown level1 summary"><p>Creates a new object that is a copy of the current instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><p>A new object that is a copy of this instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/DynamicItem.cs/#L147">View Source</a>
+  </span>
+  <a id="Adriva_Common_Core_DynamicItem_ContainsKey_" data-uid="Adriva.Common.Core.DynamicItem.ContainsKey*"></a>
+  <h4 id="Adriva_Common_Core_DynamicItem_ContainsKey_System_String_" data-uid="Adriva.Common.Core.DynamicItem.ContainsKey(System.String)">ContainsKey(String)</h4>
+  <div class="markdown level1 summary"><p>Checks if the given dynamic property exists on this instance of the class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ContainsKey(string key)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The name of the property to be sought.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the property name exists, otherwise False.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/DynamicItem.cs/#L219">View Source</a>
+  </span>
+  <a id="Adriva_Common_Core_DynamicItem_GetDynamicMemberNames_" data-uid="Adriva.Common.Core.DynamicItem.GetDynamicMemberNames*"></a>
+  <h4 id="Adriva_Common_Core_DynamicItem_GetDynamicMemberNames" data-uid="Adriva.Common.Core.DynamicItem.GetDynamicMemberNames">GetDynamicMemberNames()</h4>
+  <div class="markdown level1 summary"><p>Gets a collection containing the dynamic property names defined.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IEnumerable&lt;string&gt; GetDynamicMemberNames()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><p>An enumerable list of strings representing the dynamic property names.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Dynamic.DynamicObject.GetDynamicMemberNames()</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/DynamicItem.cs/#L185">View Source</a>
+  </span>
+  <a id="Adriva_Common_Core_DynamicItem_GetEnumerator_" data-uid="Adriva.Common.Core.DynamicItem.GetEnumerator*"></a>
+  <h4 id="Adriva_Common_Core_DynamicItem_GetEnumerator" data-uid="Adriva.Common.Core.DynamicItem.GetEnumerator">GetEnumerator()</h4>
+  <div class="markdown level1 summary"><p>Returns an enumerator that iterates through the dynamic properties.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerator&lt;KeyValuePair&lt;string, object&gt;&gt; GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerator</span>&lt;<span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;<span class="xref">System.String</span>, <span class="xref">System.Object</span>&gt;&gt;</td>
+        <td><p>An enumerator structure for the dynamic properties.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/DynamicItem.cs/#L161">View Source</a>
+  </span>
+  <a id="Adriva_Common_Core_DynamicItem_GetValue_" data-uid="Adriva.Common.Core.DynamicItem.GetValue*"></a>
+  <h4 id="Adriva_Common_Core_DynamicItem_GetValue__1_System_String___0_" data-uid="Adriva.Common.Core.DynamicItem.GetValue``1(System.String,``0)">GetValue&lt;T&gt;(String, T)</h4>
+  <div class="markdown level1 summary"><p>Gets the value of a dynamic property with the given name if found, otherwise returns the default value given.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T GetValue&lt;T&gt;(string key, T defaultValue)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The name of the dynamic property to be retrieved.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">defaultValue</span></td>
+        <td><p>The default value that will be returned if the dynamic property does not exist.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>The value of the dynamic property.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of the property value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/DynamicItem.cs/#L230">View Source</a>
+  </span>
+  <a id="Adriva_Common_Core_DynamicItem_TryGetMember_" data-uid="Adriva.Common.Core.DynamicItem.TryGetMember*"></a>
+  <h4 id="Adriva_Common_Core_DynamicItem_TryGetMember_System_Dynamic_GetMemberBinder_System_Object__" data-uid="Adriva.Common.Core.DynamicItem.TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)">TryGetMember(GetMemberBinder, out Object)</h4>
+  <div class="markdown level1 summary"><p>Provides the implementation for operations that get member values. Classes derived from the System.Dynamic.DynamicObject class can override this method to specify dynamic behavior for operations such as getting a value for a property.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool TryGetMember(GetMemberBinder binder, out object result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Dynamic.GetMemberBinder</span></td>
+        <td><span class="parametername">binder</span></td>
+        <td><p>Provides information about the object that called the dynamic operation. The binder.Name property provides the name of the member on which the dynamic operation is performed. For example, for the Console.WriteLine(sampleObject.SampleProperty) statement, where sampleObject is an instance of the class derived from the System.Dynamic.DynamicObject class, binder.Name returns &quot;SampleProperty&quot;. The binder.IgnoreCase property specifies whether the member name is case-sensitive.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>The result of the get operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the operation is successful; otherwise, False. If this method returns False, the run-time binder of the language determines the behavior. (In most cases, a run-time exception is thrown.)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Dynamic.DynamicObject.TryGetMember(System.Dynamic.GetMemberBinder, System.Object)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/DynamicItem.cs/#L249">View Source</a>
+  </span>
+  <a id="Adriva_Common_Core_DynamicItem_TrySetMember_" data-uid="Adriva.Common.Core.DynamicItem.TrySetMember*"></a>
+  <h4 id="Adriva_Common_Core_DynamicItem_TrySetMember_System_Dynamic_SetMemberBinder_System_Object_" data-uid="Adriva.Common.Core.DynamicItem.TrySetMember(System.Dynamic.SetMemberBinder,System.Object)">TrySetMember(SetMemberBinder, Object)</h4>
+  <div class="markdown level1 summary"><p>Provides the implementation for operations that set member values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool TrySetMember(SetMemberBinder binder, object value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Dynamic.SetMemberBinder</span></td>
+        <td><span class="parametername">binder</span></td>
+        <td><p>Provides information about the object that called the dynamic operation. The binder.Name property provides the name of the member to which the value is being assigned.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The value to set to the member.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the operation is successful; otherwise, False. If this method returns False, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Dynamic.DynamicObject.TrySetMember(System.Dynamic.SetMemberBinder, System.Object)</span></div>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/DynamicItem.cs/#L194">View Source</a>
+  </span>
+  <a id="Adriva_Common_Core_DynamicItem_System_Collections_IEnumerable_GetEnumerator_" data-uid="Adriva.Common.Core.DynamicItem.System#Collections#IEnumerable#GetEnumerator*"></a>
+  <h4 id="Adriva_Common_Core_DynamicItem_System_Collections_IEnumerable_GetEnumerator" data-uid="Adriva.Common.Core.DynamicItem.System#Collections#IEnumerable#GetEnumerator">IEnumerable.GetEnumerator()</h4>
+  <div class="markdown level1 summary"><p>Returns an enumerator that iterates through the dynamic properties.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerator IEnumerable.GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.IEnumerator</span></td>
+        <td><p>An enumerator structure for the dynamic properties.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">System.Dynamic.IDynamicMetaObjectProvider</span>
+  </div>
+  <div>
+      <span class="xref">System.Collections.Generic.IEnumerable&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.Collections.IEnumerable</span>
+  </div>
+  <div>
+      <span class="xref">System.ICloneable</span>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Adriva.Common.Core.DataStructures.TreeNodeExtensions.html#Adriva_Common_Core_DataStructures_TreeNodeExtensions_CreateTree__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_Int64__System_Func___0_System_Nullable_System_Int64___">TreeNodeExtensions.CreateTree&lt;TValue&gt;(IEnumerable&lt;TValue&gt;, Func&lt;TValue, Int64&gt;, Func&lt;TValue, Nullable&lt;Int64&gt;&gt;)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/adriva/coreframework/blob/master/Common/src/DynamicItem.cs/#L13" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>&copy; 2020, <strong>Adriva LLC.</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FF77FFD0-AC24-41B7-919D-7E2DACB50861}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Documents.Abstractions", "src\Adriva.Documents.Abstractions\Adriva.Documents.Abstractions.csproj", "{3EC1413F-FBBC-4DDB-9578-98A79B70EF20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Documents.Excel", "src\Adriva.Documents.Excel\Adriva.Documents.Excel.csproj", "{F5EC72D6-997E-41F1-A8A2-413A00BE5A07}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3EC1413F-FBBC-4DDB-9578-98A79B70EF20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EC1413F-FBBC-4DDB-9578-98A79B70EF20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EC1413F-FBBC-4DDB-9578-98A79B70EF20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EC1413F-FBBC-4DDB-9578-98A79B70EF20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5EC72D6-997E-41F1-A8A2-413A00BE5A07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5EC72D6-997E-41F1-A8A2-413A00BE5A07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5EC72D6-997E-41F1-A8A2-413A00BE5A07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5EC72D6-997E-41F1-A8A2-413A00BE5A07}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3EC1413F-FBBC-4DDB-9578-98A79B70EF20} = {FF77FFD0-AC24-41B7-919D-7E2DACB50861}
+		{F5EC72D6-997E-41F1-A8A2-413A00BE5A07} = {FF77FFD0-AC24-41B7-919D-7E2DACB50861}
+	EndGlobalSection
+EndGlobal
