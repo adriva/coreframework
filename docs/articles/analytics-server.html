@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Adriva Analytics Server | Adriva Core Framework </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Adriva Analytics Server | Adriva Core Framework ">  
+    
+    <link rel="canonical" href="https://adriva.github.io/coreframework/articles/analytics-server.html">
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    <meta property="docfx:newtab" content="true">
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-80107673-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-80107673-6');
+    </script>
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="adriva-analytics-server">Adriva Analytics Server</h1>
+
+<h2 id="overview">Overview</h2>
+<p><code>Adriva.Extensions.Analytics.Server</code> library provides a base server implementation that provides the common functionality to listen for incoming analytics data, parse and store the data in virtually any repository.</p>
+<p><code>Adriva.Extensions.Analytics.Server.AppInsights</code> library provides the functionality to parse incoming Microsoft AppInsights data and convert it to a common format. You can then store the output data in your custom on-premise repository or any other repository of your choice.</p>
+<h2 id="flow">Flow</h2>
+<p>This section describes the basic flow of the <code>Adriva.Extensions.Analytics.Server</code> in order to customize the analytics server and add support for any incoming analytics data or persisting analytics data in your own repository.</p>
+<p>There are 3 main components in the server side flow. Which are:</p>
+<ul>
+<li>Middleware</li>
+<li>Handler</li>
+<li>Repository</li>
+</ul>
+<h3 id="middleware">Middleware</h3>
+<p>Analytics middleware captures the incoming requests and tries to parse and queue them for further processing. Middleware should return Http status code 204 for success. The default middleware is an internal class and cannot be customized.</p>
+<h3 id="handler">Handler</h3>
+<p>Handler is a concrete implementation of <code>Adriva.Extensions.Analytics.Server.IAnalyticsHandler</code> interface and is responsible of processing the incoming <code>HttpRequest</code> object and returning a collection of <code>Adriva.Extensions.Analytics.Server.Entities.AnalyticsItem</code> objects. Please take a look at the default implementation of <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server.AppInsights/AppInsightsHandler.cs">AppInsightsHandler</a> class. A handler is basically is a parser. The default implementation of <code>AppInsightsHandler</code> parses the incoming <strong>Microsoft AppInsights</strong> requests and converts them to a common format to be stored in a repository.</p>
+<p>Common entities (common format) is defined in the <code>Adriva.Extensions.Analytics.Server.Entities</code> namespace which can be found <a href="https://github.com/adriva/coreframework/tree/master/Analytics/src/Adriva.Extensions.Analytics.Server/Entities">here</a>.</p>
+<p>In the common data model the root object is called <code>AnalyticsItem</code> all other types are linked to a parent <code>AnalyticsItem</code> class. For example a <code>RequestItem</code> which stores the data for a request analytics data is the child of an <code>AnalyticsItem</code> class. Please take a look at the definition of the <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/Entities/AnalyticsItem.cs">AnalyticsItem</a> class.</p>
+<h3 id="repository">Repository</h3>
+<p>Once the incoming data is parsed and converted to the common format successfully and added to the buffer, the system will try to persist it in a repository. All default repository libraries provided in this frame work can be found <a href="https://github.com/adriva/coreframework/tree/master/Analytics/src">here</a> and all repository libraries start with the prefix <code>Adriva.Extensions.Analytics.Repository</code>. Support for custom repositories can be very useful when you need to store analytics data on your own servers, such as storing Microsoft AppInsights data on an on-premise database.
+A custom repostitory should implement the <code>Adriva.Extensions.Analytics.Server.IAnalyticsRepository</code> interface and the simplest repository implementation, which actually doesn't do anything, can be found <a href="https://github.com/adriva/coreframework/blob/master/Analytics/src/Adriva.Extensions.Analytics.Server/NullRepository.cs">here</a>.</p>
+<h2 id="aspnet-core-service-configuration">asp.net Core Service Configuration</h2>
+<p>In order to use the analytics server-side services we need to register them in the application service collection and add the middleware to the application pipeline.</p>
+<p>Here is a sample that uses the default AppInsights handler and an in-memory entity framework repository.</p>
+<p>The following code registers the required services:</p>
+<pre><code>public void ConfigureServices(IServiceCollection services)
+{
+    services.AddAppInsightsAnalyticsServer(builder =&gt;
+    {
+        ...
+        builder
+            .SetProcessorThreadCount(1)
+            .SetBufferCapacity(100)
+            .UseInMemoryRepository()
+        ;
+        ...
+    });
+}
+</code></pre>
+<blockquote>
+<p><code>SetProcessorThreadCount</code> tells the system how many threads will be allocated to verify and store the buffered data on the server. This value cannot be less than <strong>1</strong>.</p>
+</blockquote>
+<blockquote>
+<p><code>SetBufferCapacity</code> tells the system how many items can be buffered berfore they are persisted in the repository. This value is not a hard limit and system may decide to flush the buffer before it is full.</p>
+</blockquote>
+<p>The following code adds the middleware to the pipeline:</p>
+<pre><code>public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    ...
+    app.UseAnalyticsServer(&quot;/analytics&quot;);
+    ...
+}
+</code></pre>
+<blockquote>
+<p><code>UseAnalyticsServer</code> method accepts a string parameter which is the endpoint (path) it will listen for incoming requests. The system will add a <code>/track</code> suffix to the given base path so that the final relative url to send the analytics data will be <code>[/prefix]/track</code> which is <code>/analytics/track</code> in our example.</p>
+</blockquote>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>&copy; 2020, <strong>Adriva LLC.</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
