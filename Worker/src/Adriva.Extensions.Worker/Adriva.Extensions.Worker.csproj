@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Cronos" Version="0.7.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="$(NugetVersionPrefix).*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\src\Adriva.Common.Core.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <Title>Adriva Worker / Service Library</Title>
+    <PackageDescription>Shared library providing abstractions and common components to implement long running services, background jobs and scheduled jobs.</PackageDescription>    
+    <Version>24</Version>
+  </PropertyGroup>
+
+</Project>

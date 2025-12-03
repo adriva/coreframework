@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Distributed cache implementation variant of Microsoft.Extensions.Caching.Distributed.IDistributedCache using Microsoft SQL Server.</Description>
+    <TargetFrameworks>netstandard2.1</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <ExcludeFromSourceBuild>true</ExcludeFromSourceBuild>
+    <NoWarn>$(NoWarn);PKG0001</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Adriva SQL Server Cache Storage</Title>
+    <PackageDescription>
+      Provides an implementation of cache storage that stores cached items in SQL Server. The source code is forked from Microsoft SQL Server Caching library which can be found at https://github.com/dotnet/aspnetcore/tree/main/src/Caching/SqlServer/src</PackageDescription>
+      <PackageTags>cache;distributedcache;sqlserver</PackageTags>
+    <Version>11</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.*" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="$(NugetVersionPrefix).*" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="$(NugetVersionPrefix).*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Adriva.Extensions.Caching.Abstractions\Adriva.Extensions.Caching.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\Common\src\Adriva.Common.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,62 @@
+name: .NET Core
+
+on: [push] 
+
+env:
+  NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+  PACKAGE_VERSION_PREFIX: 8
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET Core 8
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          8.0.x
+    - name: Restore Dependencies
+      run: dotnet restore
+    # - name: Build with dotnet
+    #   run: dotnet build ./Framework.sln --configuration Release
+    - name: Create NuGet Packages
+      run: |
+        echo "Packing..."
+        dotnet pack --configuration Release ./Common/src/Adriva.Common.Core.csproj -p:dotnet=$PACKAGE_VERSION_PREFIX
+        dotnet pack --configuration Release ./Analytics/src/Adriva.Extensions.Analytics.AppInsights/Adriva.Extensions.Analytics.AppInsights.csproj -p:dotnet=$PACKAGE_VERSION_PREFIX
+        dotnet pack --configuration Release ./Caching/src/Adriva.Extensions.Caching.Abstractions/Adriva.Extensions.Caching.Abstractions.csproj -p:dotnet=$PACKAGE_VERSION_PREFIX
+        dotnet pack --configuration Release ./Caching/src/Adriva.Extensions.Caching.Memory/Adriva.Extensions.Caching.Memory.csproj -p:dotnet=$PACKAGE_VERSION_PREFIX
+        dotnet pack --configuration Release ./Caching/src/Adriva.Extensions.Caching.SqlServer/Adriva.Extensions.Caching.SqlServer.csproj -p:dotnet=$PACKAGE_VERSION_PREFIX
+        dotnet pack --configuration Release ./DevTools/Adriva.DevTools.Cli/Adriva.DevTools.Cli.csproj -p:dotnet=$PACKAGE_VERSION_PREFIX
+        dotnet pack --configuration Release ./Reporting/src/Adriva.Extensions.Reporting.Abstractions/Adriva.Extensions.Reporting.Abstractions.csproj -p:dotnet=$PACKAGE_VERSION_PREFIX
+        dotnet pack --configuration Release ./Reporting/src/Adriva.Extensions.Reporting.Excel/Adriva.Extensions.Reporting.Excel.csproj -p:dotnet=$PACKAGE_VERSION_PREFIX
+        dotnet pack --configuration Release ./Reporting/src/Adriva.Extensions.Reporting.Http/Adriva.Extensions.Reporting.Http.csproj -p:dotnet=$PACKAGE_VERSION_PREFIX
+        dotnet pack --configuration Release ./Reporting/src/Adriva.Extensions.Reporting.SqlServer/Adriva.Extensions.Reporting.SqlServer.csproj -p:dotnet=$PACKAGE_VERSION_PREFIX
+        dotnet pack --configuration Release ./Storage/src/Adriva.Storage.Abstractions/Adriva.Storage.Abstractions.csproj -p:dotnet=$PACKAGE_VERSION_PREFIX
+        dotnet pack --configuration Release ./Storage/src/Adriva.Storage.SqlServer/Adriva.Storage.SqlServer.csproj -p:dotnet=$PACKAGE_VERSION_PREFIX
+        dotnet pack --configuration Release ./Workflow/src/Adriva.Extensions.WorkflowEngine/Adriva.Extensions.WorkflowEngine.csproj -p:dotnet=$PACKAGE_VERSION_PREFIX
+        dotnet pack --configuration Release ./Documents/src/Adriva.Documents.Abstractions/Adriva.Documents.Abstractions.csproj -p:dotnet=$PACKAGE_VERSION_PREFIX
+        dotnet pack --configuration Release ./Documents/src/Adriva.Documents.Excel/Adriva.Documents.Excel.csproj -p:dotnet=$PACKAGE_VERSION_PREFIX
+        dotnet pack --configuration Release ./Forms/Adriva.Extensions.Forms/Adriva.Extensions.Forms.csproj -p:dotnet=$PACKAGE_VERSION_PREFIX
+    - name: Push Packages
+      run:  |
+        echo "Pushing packages to Nuget"
+        dotnet nuget push "./Common/src/bin/Release/Adriva.Common.Core.$PACKAGE_VERSION_PREFIX.*.nupkg" --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+        dotnet nuget push "./Analytics/src/Adriva.Extensions.Analytics.AppInsights/bin/Release/Adriva.Extensions.Analytics.AppInsights.$PACKAGE_VERSION_PREFIX.*.nupkg" --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+        dotnet nuget push "./Caching/src/Adriva.Extensions.Caching.Abstractions/bin/Release/Adriva.Extensions.Caching.Abstractions.$PACKAGE_VERSION_PREFIX.*.nupkg" --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+        dotnet nuget push "./Caching/src/Adriva.Extensions.Caching.Memory/bin/Release/Adriva.Extensions.Caching.Memory.$PACKAGE_VERSION_PREFIX.*.nupkg" --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+        dotnet nuget push "./Caching/src/Adriva.Extensions.Caching.SqlServer/bin/Release/Adriva.Extensions.Caching.SqlServer.$PACKAGE_VERSION_PREFIX.*.nupkg" --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+        dotnet nuget push "./DevTools/Adriva.DevTools.Cli/bin/Release/Adriva.DevTools.Cli.$PACKAGE_VERSION_PREFIX.*.nupkg" --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+        dotnet nuget push "./Reporting/src/Adriva.Extensions.Reporting.Abstractions/bin/Release/Adriva.Extensions.Reporting.Abstractions.$PACKAGE_VERSION_PREFIX.*.nupkg" --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+        dotnet nuget push "./Reporting/src/Adriva.Extensions.Reporting.Excel/bin/Release/Adriva.Extensions.Reporting.Excel.$PACKAGE_VERSION_PREFIX.*.nupkg" --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+        dotnet nuget push "./Reporting/src/Adriva.Extensions.Reporting.Http/bin/Release/Adriva.Extensions.Reporting.Http.$PACKAGE_VERSION_PREFIX.*.nupkg" --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+        dotnet nuget push "./Reporting/src/Adriva.Extensions.Reporting.SqlServer/bin/Release/Adriva.Extensions.Reporting.SqlServer.$PACKAGE_VERSION_PREFIX.*.nupkg" --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+        dotnet nuget push "./Storage/src/Adriva.Storage.Abstractions/bin/Release/Adriva.Storage.Abstractions.$PACKAGE_VERSION_PREFIX.*.nupkg" --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+        dotnet nuget push "./Storage/src/Adriva.Storage.SqlServer/bin/Release/Adriva.Storage.SqlServer.$PACKAGE_VERSION_PREFIX.*.nupkg" --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate        
+        dotnet nuget push "./Workflow/src/Adriva.Extensions.WorkflowEngine/bin/Release/Adriva.Extensions.WorkflowEngine.$PACKAGE_VERSION_PREFIX.*.nupkg" --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+        dotnet nuget push "./Documents/src/Adriva.Documents.Abstractions/bin/Release/Adriva.Documents.Abstractions.$PACKAGE_VERSION_PREFIX.*.nupkg" --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+        dotnet nuget push "./Documents/src/Adriva.Documents.Excel/bin/Release/Adriva.Documents.Excel.$PACKAGE_VERSION_PREFIX.*.nupkg" --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+        dotnet nuget push "./Forms/Adriva.Extensions.Forms/bin/Release/Adriva.Extensions.Forms.$PACKAGE_VERSION_PREFIX.*.nupkg" --api-key $NUGET_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate

@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <Title>Adriva Storage Library For SQL Server</Title>
+    <PackageDescription>Provides types and utility functions to work with blobs on SQL Server and provides SQL Server based a file system..</PackageDescription>
+    <Version>23</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="*.sql" />    
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Adriva.Storage.Abstractions\Adriva.Storage.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(NugetVersionPrefix).*" />
+      <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="$(NugetVersionPrefix).*" />      
+  </ItemGroup>
+
+</Project>

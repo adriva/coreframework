@@ -1,0 +1,89 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflow", "Workflow", "{E65FEA47-66E3-4BBD-9853-626A3F94A4A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{55ACD40E-CA4C-45C6-9EAC-C6C9384FCA69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.WorkflowEngine", "Workflow\src\Adriva.Extensions.WorkflowEngine\Adriva.Extensions.WorkflowEngine.csproj", "{7C7BD49E-B44D-44D0-956D-586626756986}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reporting", "Reporting", "{437B602B-B66B-4B15-AC42-F1C9EFA3EA0C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{56A56A21-B062-46DD-AEAB-55B013DBDB54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.Reporting.SqlServer", "Reporting\src\Adriva.Extensions.Reporting.SqlServer\Adriva.Extensions.Reporting.SqlServer.csproj", "{2AEE2F29-4E35-46E4-BC8B-D275A67D075C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.Reporting.Http", "Reporting\src\Adriva.Extensions.Reporting.Http\Adriva.Extensions.Reporting.Http.csproj", "{130D9277-D917-4E3C-9441-C61361C8E978}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.Reporting.Excel", "Reporting\src\Adriva.Extensions.Reporting.Excel\Adriva.Extensions.Reporting.Excel.csproj", "{72005D09-2E3A-4FF1-89C7-7A3165105707}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Caching", "Caching", "{F9C8473F-3775-4337-8F12-616E43DF056D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2693194C-0DB9-46F9-A3BA-7961CBE6A307}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.Caching.SqlServer", "Caching\src\Adriva.Extensions.Caching.SqlServer\Adriva.Extensions.Caching.SqlServer.csproj", "{B1865700-0B70-4094-AFE5-6B99D97342D5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevTools", "DevTools", "{8F277B70-C1BA-4E53-A732-0D4C76AD33A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.DevTools.Cli", "DevTools\Adriva.DevTools.Cli\Adriva.DevTools.Cli.csproj", "{1CDC1123-8ED8-4160-BA61-81909403EC26}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Analytics", "Analytics", "{B3519FD3-4B63-4C90-ACA8-A7EEAC3823C2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7931A00E-F213-4B3F-B8B3-7137967E6757}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adriva.Extensions.Analytics.OTelemetry", "Analytics\src\Adriva.Extensions.Analytics.OTelemetry\Adriva.Extensions.Analytics.OTelemetry.csproj", "{6BF4ED25-D786-4B4E-9CE8-63DB20F62337}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7C7BD49E-B44D-44D0-956D-586626756986}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C7BD49E-B44D-44D0-956D-586626756986}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C7BD49E-B44D-44D0-956D-586626756986}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C7BD49E-B44D-44D0-956D-586626756986}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AEE2F29-4E35-46E4-BC8B-D275A67D075C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AEE2F29-4E35-46E4-BC8B-D275A67D075C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AEE2F29-4E35-46E4-BC8B-D275A67D075C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AEE2F29-4E35-46E4-BC8B-D275A67D075C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{130D9277-D917-4E3C-9441-C61361C8E978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{130D9277-D917-4E3C-9441-C61361C8E978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{130D9277-D917-4E3C-9441-C61361C8E978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{130D9277-D917-4E3C-9441-C61361C8E978}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72005D09-2E3A-4FF1-89C7-7A3165105707}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72005D09-2E3A-4FF1-89C7-7A3165105707}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72005D09-2E3A-4FF1-89C7-7A3165105707}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72005D09-2E3A-4FF1-89C7-7A3165105707}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1865700-0B70-4094-AFE5-6B99D97342D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1865700-0B70-4094-AFE5-6B99D97342D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1865700-0B70-4094-AFE5-6B99D97342D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1865700-0B70-4094-AFE5-6B99D97342D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CDC1123-8ED8-4160-BA61-81909403EC26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CDC1123-8ED8-4160-BA61-81909403EC26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CDC1123-8ED8-4160-BA61-81909403EC26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CDC1123-8ED8-4160-BA61-81909403EC26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BF4ED25-D786-4B4E-9CE8-63DB20F62337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BF4ED25-D786-4B4E-9CE8-63DB20F62337}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BF4ED25-D786-4B4E-9CE8-63DB20F62337}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BF4ED25-D786-4B4E-9CE8-63DB20F62337}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{55ACD40E-CA4C-45C6-9EAC-C6C9384FCA69} = {E65FEA47-66E3-4BBD-9853-626A3F94A4A7}
+		{7C7BD49E-B44D-44D0-956D-586626756986} = {55ACD40E-CA4C-45C6-9EAC-C6C9384FCA69}
+		{56A56A21-B062-46DD-AEAB-55B013DBDB54} = {437B602B-B66B-4B15-AC42-F1C9EFA3EA0C}
+		{2AEE2F29-4E35-46E4-BC8B-D275A67D075C} = {56A56A21-B062-46DD-AEAB-55B013DBDB54}
+		{130D9277-D917-4E3C-9441-C61361C8E978} = {56A56A21-B062-46DD-AEAB-55B013DBDB54}
+		{72005D09-2E3A-4FF1-89C7-7A3165105707} = {56A56A21-B062-46DD-AEAB-55B013DBDB54}
+		{2693194C-0DB9-46F9-A3BA-7961CBE6A307} = {F9C8473F-3775-4337-8F12-616E43DF056D}
+		{B1865700-0B70-4094-AFE5-6B99D97342D5} = {2693194C-0DB9-46F9-A3BA-7961CBE6A307}
+		{1CDC1123-8ED8-4160-BA61-81909403EC26} = {8F277B70-C1BA-4E53-A732-0D4C76AD33A3}
+		{7931A00E-F213-4B3F-B8B3-7137967E6757} = {B3519FD3-4B63-4C90-ACA8-A7EEAC3823C2}
+		{6BF4ED25-D786-4B4E-9CE8-63DB20F62337} = {7931A00E-F213-4B3F-B8B3-7137967E6757}
+	EndGlobalSection
+EndGlobal

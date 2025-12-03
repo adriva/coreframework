@@ -1,0 +1,107 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://adriva.com/schemas/2023/workflow-definition",
+    "definitions": {
+        "action": {
+            "type": "object",
+            "properties": {
+                "target": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "default": "ActionOutputParameter"
+                }
+            },
+            "required": [
+                "target"
+            ]
+        },
+        "properties": {
+            "type": "object",
+            "additionalProperties": true,
+            "minProperties": 1
+        },
+        "step": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "pattern": "\\w+",
+                    "minLength": 3,
+                    "maxLength": 255,
+                    "title": "Name of the workflow step",
+                    "description": "Unique name of the workflow step within the current workflow definition"
+                },
+                "predicate": {
+                    "type": "string",
+                    "minLength": 3,
+                    "title": "Runtime predicate of the step.",
+                    "description": "Represents the body of a Linq Expression that will be executed in runtime."
+                },
+                "isEnabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "title": "Step is enabled or not.",
+                    "description": "If a step is disabled, then all its sub tree will be ignored by the runtime."
+                },
+                "operator": {
+                    "type": "string",
+                    "default": "None",
+                    "enum": [
+                        "None",
+                        "And",
+                        "Or"
+                    ],
+                    "title": "Specifies how the child steps will be processed.",
+                    "description": "None means regardless of the predicate result execute all children. And means all predicates of the child steps must return True where as Or means the execution will follow the path of the child step that returns True first."
+                },
+                "action": {
+                    "$ref": "#/definitions/action"
+                },
+                "properties": {
+                    "$ref": "#/definitions/properties"
+                },
+                "steps": {
+                    "type": "array",
+                    "items": {
+                        "ref": "#/definitions/step"
+                    },
+                    "minItems": 1
+                }
+            },
+            "required": [
+                "name",
+                "isEnabled"
+            ],
+            "dependencies": {
+                "steps": [
+                    "operator"
+                ]
+            }
+        }
+    },
+    "type": "object",
+    "title": "Workflow definition",
+    "description": "JSON formatted definition of the dynamic workflow.",
+    "properties": {
+        "name": {
+            "type": "string",
+            "default": "Workflow Name",
+            "title": "Name of the workflow."
+        },
+        "steps": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/step"
+            },
+            "title": "Workflow steps.",
+            "description": "The steps that the workflow will execute when started.",
+            "minItems": 1
+        }
+    },
+    "required": [
+        "name",
+        "steps"
+    ]
+}

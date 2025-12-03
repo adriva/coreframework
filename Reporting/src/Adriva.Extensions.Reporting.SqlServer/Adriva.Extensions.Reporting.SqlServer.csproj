@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Adriva Reporting Services Sql Server Extensions</Title>
+    <PackageDescription>Provides Sql Server data source and related extensions.</PackageDescription>    
+    <Version>32</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Adriva.Extensions.Reporting.Abstractions\Adriva.Extensions.Reporting.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.*" />
+  </ItemGroup>
+</Project>

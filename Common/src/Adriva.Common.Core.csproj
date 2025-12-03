@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <Title>Adriva Core Library</Title>
+    <PackageDescription>Base library providing reusable types and utility functions.</PackageDescription>
+    <Version>18</Version>
+  </PropertyGroup>
+
+  <Target Name="InitializeBuild" BeforeTargets="Restore">
+    <Message Text="Using Nuget Version Prefix = '$(NugetVersionPrefix)'" Importance="High" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="$(NugetVersionPrefix).*" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="$(NugetVersionPrefix).0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Mime-Detective" Version="24.7.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="System.Text.Json" Version="8.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="suffix_list.dat" />
+  </ItemGroup>
+</Project>

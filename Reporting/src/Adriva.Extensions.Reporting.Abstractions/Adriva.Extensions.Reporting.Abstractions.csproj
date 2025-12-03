@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Adriva Reporting Services</Title>
+    <PackageDescription>Provides data source agnostic types and methods to host reporting services.</PackageDescription>
+    <Version>34</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\src\Adriva.Common.Core.csproj" />
+    <ProjectReference Include="..\..\..\Caching\src\Adriva.Extensions.Caching.Abstractions\Adriva.Extensions.Caching.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\Caching\src\Adriva.Extensions.Caching.Memory\Adriva.Extensions.Caching.Memory.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.*" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="$(NugetVersionPrefix).*" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="$(NugetVersionPrefix).*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="$(NugetVersionPrefix).*" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="$(NugetVersionPrefix).*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="report-schema.json">
+      <IncludeInPackage>true</IncludeInPackage>
+    </Content>
+  </ItemGroup>
+</Project>

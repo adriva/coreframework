@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+    <Version>3</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="$(NugetVersionPrefix).*" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="$(NugetVersionPrefix).*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Adriva.Extensions.Analytics.Server\Adriva.Extensions.Analytics.Server.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,371 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://adriva.com/schemas/2022/report-definition",
+    "definitions": {
+        "options": {
+            "type": "object",
+            "default": {},
+            "title": "Dynamic options.",
+            "description": "Provides an object of dynamic options that may be platform dependent that are not necessarily recognized by the core reporting infrastructure.",
+            "additionalProperties": true
+        },
+        "dataTypes": {
+            "type": "string",
+            "default": "String",
+            "title": "The underlying data type of the current item.",
+            "enum": [
+                "Boolean",
+                "DateTime",
+                "Decimal",
+                "Double",
+                "Empty",
+                "Int32",
+                "Int64",
+                "String"
+            ]
+        },
+        "fieldDefinition": {
+            "properties": {
+                "displayName": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "default": null,
+                    "title": "The name that may be used when displaying the item on a user interface."
+                },
+                "dataType": {
+                    "$ref": "#/definitions/dataTypes"
+                },
+                "format": {
+                    "type": "string",
+                    "default": null,
+                    "title": "A formatter string that provides the display format for the output data",
+                    "description": "A format string to format the output of the field. Note that not all renderers may support (or a subset of) all possible format strings."
+                },
+                "properties": {
+                    "type": "string",
+                    "default": "None",
+                    "title": "Runtime properties of the field.",
+                    "enum": [
+                        "None",
+                        "KeyField",
+                        "DisplayField"
+                    ]
+                },
+                "options": {
+                    "$ref": "#/definitions/options"
+                }
+            }
+        },
+        "dataBoundType": {
+            "properties": {
+                "dataSource": {
+                    "type": "string",
+                    "title": "The name of the data source, as declared in the report, that will be used to retrieve the data for the current item."
+                },
+                "command": {
+                    "type": "string",
+                    "title": "The name of the command, as declared in the report, that will be used to retrieve the data from teh data source, for the current item."
+                }
+            },
+            "dependencies": {
+                "dataSource": {
+                    "required": [
+                        "dataSource",
+                        "command"
+                    ]
+                },
+                "command": {
+                    "required": [
+                        "dataSource",
+                        "command"
+                    ]
+                }
+            }
+        },
+        "dataBoundTypeWithFields": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/dataBoundType"
+                }
+            ],
+            "properties": {
+                "fields": {
+                    "type": "object",
+                    "title": "Field definitions for the given data source / command pair.",
+                    "description": "Field definitions that should define the data retrieved from the data source with the given command.",
+                    "patternProperties": {
+                        "\\w+": {
+                            "title": "Name of the data source field.",
+                            "description": "Name of the field as it is in the data source. Depending on the data source type, this value may be case-sensitive.",
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/fieldDefinition"
+                                }
+                            ]
+                        }
+                    },
+                    "minProperties": 1
+                }
+            },
+            "dependencies": {
+                "dataSource": {
+                    "required": [
+                        "fields"
+                    ]
+                },
+                "command": {
+                    "required": [
+                        "fields"
+                    ]
+                }
+            }
+        },
+        "dataBoundTypeWithOptionalFields": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/dataBoundType"
+                }
+            ],
+            "properties": {
+                "fields": {
+                    "type": "object",
+                    "title": "Field definitions for the given data source / command pair.",
+                    "description": "Field definitions that should define the data retrieved from the data source with the given command.",
+                    "patternProperties": {
+                        "\\w+": {
+                            "title": "Name of the data source field.",
+                            "description": "Name of the field as it is in the data source. Depending on the data source type, this value may be case-sensitive.",
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/fieldDefinition"
+                                }
+                            ]
+                        }
+                    },
+                    "minProperties": 1
+                }
+            }
+        },
+        "command": {
+            "type": "object",
+            "title": "A name that uniquely identifies the current command in the report.",
+            "default": {
+                "commandText": "COMMAND"
+            },
+            "properties": {
+                "commandText": {
+                    "type": "string",
+                    "minLength": 1,
+                    "title": "The text of the command that will be execute on the data source.",
+                    "description": "The command that will be executed by the data source. For example, a valid SQL query when targeting a SQL Server data source."
+                },
+                "options": {
+                    "$ref": "#/definitions/options"
+                }
+            },
+            "required": [
+                "commandText"
+            ]
+        }
+    },
+    "type": "object",
+    "title": "Report definition",
+    "description": "JSON formatted definition of the dynamic report.",
+    "default": {},
+    "required": [
+        "name"
+    ],
+    "properties": {
+        "base": {
+            "type": "string",
+            "title": "Base report that will be merged with this one.",
+            "description": "Name of the base report definition file that will be merged with this report definition.",
+            "default": ""
+        },
+        "name": {
+            "type": "string",
+            "title": "Name of the report.",
+            "description": "The name of the report this JSON defines.",
+            "default": "",
+            "examples": [
+                "Report Name"
+            ]
+        },
+        "displayName": {
+            "type": "string",
+            "minLength": 1,
+            "title": "The name that may be used when displaying the report."
+        },
+        "contextProvider": {
+            "$id": "#/properties/contextProvider",
+            "type": [
+                "string",
+                "null"
+            ],
+            "title": "Context data provider.",
+            "description": "Provides a type that provdes data which is not bound to a specific data source, but retrieved from the specified type in runtime.",
+            "default": null,
+            "examples": [
+                "namespace.typename,assemblyname"
+            ]
+        },
+        "postProcessor": {
+            "$id": "#/properties/postProcessor",
+            "type": [
+                "string",
+                "null"
+            ],
+            "title": "Dataset post-processor type.",
+            "description": "Provides a type that processes the dataset after it is constructed and populated with data, but before it's loaded into the report output.",
+            "default": null,
+            "examples": [
+                "namespace.typename,assemblyname"
+            ]
+        },
+        "dataSources": {
+            "$id": "#/properties/dataSources",
+            "type": "object",
+            "title": "List of data sources that are available.",
+            "description": "Provides a list of data source configurations that are available to this report as well as all reports inherited from this one to populate filter and output data in runtime.",
+            "default": {},
+            "patternProperties": {
+                "\\w+": {
+                    "type": "object",
+                    "default": {
+                        "type": "",
+                        "connectionString": ""
+                    },
+                    "properties": {
+                        "connectionString": {
+                            "type": "string"
+                        },
+                        "type": {
+                            "type": "string",
+                            "examples": [
+                                "SqlServer",
+                                "HttpJson",
+                                "Object",
+                                "Enum"
+                            ]
+                        },
+                        "options": {
+                            "$ref": "#/definitions/options"
+                        }
+                    },
+                    "required": [
+                        "connectionString",
+                        "type"
+                    ]
+                }
+            },
+            "additionalProperties": true
+        },
+        "commands": {
+            "type": "object",
+            "title": "List of commands available.",
+            "description": "Provides a list of command configurations that are available to this report as well as all reports inherited from this one.",
+            "default": {
+                "commandName": {
+                    "commandText": "COMMAND"
+                }
+            },
+            "patternProperties": {
+                "\\w+": {
+                    "$ref": "#/definitions/command"
+                }
+            },
+            "required": [],
+            "additionalProperties": true
+        },
+        "filters": {
+            "$id": "#/properties/filters",
+            "type": "object",
+            "title": "Defines filters that are available",
+            "description": "Defines the filters that may be used to filter the default output of the report.",
+            "default": {},
+            "patternProperties": {
+                "\\w+": {
+                    "title": "The name of the filter that uniquely identifies this filter in the report definition. The name provided here can be used as a parameter in the data-source bound commands.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/dataBoundTypeWithOptionalFields"
+                        }
+                    ],
+                    "properties": {
+                        "displayName": {
+                            "type": "string",
+                            "minLength": 1,
+                            "title": "The name that may be used when displaying the item on a user interface."
+                        },
+                        "defaultValue": {
+                            "default": null,
+                            "title": "Default value that will be used by the system when no values are provided in the runtime.",
+                            "description": "Default value may be a concrete value, the name of a public parameterless method in the context (if filter is set to use Context in filter.properties) or a constant.",
+                            "type": [
+                                "string",
+                                "number",
+                                "integer",
+                                "boolean",
+                                "null"
+                            ]
+                        },
+                        "defaultValueFormatter": {
+                            "default": null,
+                            "title": "The reference of the static formatter method",
+                            "description": "The reference of the static formatter method that will be used to format the default value of this filter item.",
+                            "type": "string",
+                            "examples": [
+                                "namespace.typename:methodName,assemblyname"
+                            ]
+                        },
+                        "properties": {
+                            "type": "string",
+                            "default": "Default",
+                            "title": "Runtime properties of the field.",
+                            "minLength": 1,
+                            "enum": [
+                                "Default",
+                                "Constant",
+                                "Context",
+                                "Required"
+                            ]
+                        },
+                        "dataType": {
+                            "$ref": "#/definitions/dataTypes"
+                        },
+                        "children": {
+                            "type": "object",
+                            "$ref": "#/properties/filters",
+                            "title": "Child filters depending on the current field."
+                        },
+                        "options": {
+                            "$ref": "#/definitions/options"
+                        }
+                    }
+                }
+            },
+            "additionalProperties": true
+        },
+        "output": {
+            "type": "object",
+            "title": "Defines the output schema of the current report.",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/dataBoundTypeWithOptionalFields"
+                }
+            ],
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/options"
+                }
+            },
+            "additionalProperties": true
+        },
+        "options": {
+            "$ref": "#/definitions/options"
+        }
+    },
+    "additionalProperties": true
+}

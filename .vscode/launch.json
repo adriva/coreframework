@@ -1,0 +1,120 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C#: Storage Demo Debug",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/Storage/demo/demo.csproj"
+        },
+        {
+            "name": "Launch Common Tests",
+            "type": "coreclr",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/Common/test",
+            "program": "dotnet",
+            "args": [
+                "test",
+                "${workspaceFolder}/Common/test/test.csproj"
+            ],
+            "env": {
+                "VSTEST_HOST_DEBUG": "1"
+            }
+        },
+        {
+            "name": "Launch Optimization Tests",
+            "type": "coreclr",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/Optimization/test",
+            "program": "dotnet",
+            "args": [
+                "test",
+                "${workspaceFolder}/Optimization/test/test.csproj"
+            ],
+            "env": {
+                "VSTEST_HOST_DEBUG": "1"
+            }
+        },
+        {
+            "name": "Launch Demo Web",
+            "preLaunchTask": "build demo",
+            "type": "coreclr",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/demo",
+            "program": "${workspaceFolder}/demo/bin/Debug/netcoreapp3.1/demo.dll",
+            "osx": {
+                "program": "dotnet",
+                "args": [
+                    "${workspaceFolder}/demo/bin/Debug/net8.0/demo.dll"
+                ]
+            },
+            "launchBrowser": {
+                "enabled": false,
+                "args": "${auto-detect-url}"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
+        {
+            "name": "Launch Dev Tools",
+            "preLaunchTask": "build dev-tools",
+            "type": "coreclr",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/DevTools/Adriva.DevTools.Cli",
+            "program": "${workspaceFolder}/DevTools/Adriva.DevTools.Cli/bin/Debug/netcoreapp3.1/Adriva.DevTools.Cli.dll",
+            "args": [
+                "update-report",
+                "-p",
+                "/Users/mnemonic/Projects/po/portal/PetrolOfisi.Portal.Web/ReportStore",
+                "-n",
+                "UserProfile/UserProfileList",
+                // "-m",
+                // "/Users/mnemonic/Projects/netcorelibs/Framework/DevTools/Adriva.DevTools.Cli/mappings.txt",
+                "-o",
+                "/Users/mnemonic/Projects/report-output"
+            ],
+            "osx": {
+                "program": "dotnet3",
+                "args": [
+                    "${workspaceFolder}/DevTools/Adriva.DevTools.Cli/bin/Debug/netcoreapp3.1/Adriva.DevTools.Cli.dll",
+                    "update-report",
+                    "-p",
+                    "/Users/mnemonic/Projects/po/portal/PetrolOfisi.Portal.Web/ReportStore",
+                    "-n",
+                    "DealerInfo/DealerGroup",
+                    "-o",
+                    "/Users/mnemonic/Projects/report-output",
+                    "-m",
+                    "/Users/mnemonic/Projects/netcorelibs/Framework/DevTools/Adriva.DevTools.Cli/mappings.txt",
+                    "-ls",
+                    "ReportSchema.json"
+                ],
+                "targetArchitecture": "x86_64"
+            }
+        },
+        {
+            "name": "Launch Worker Host",
+            "preLaunchTask": "build worker",
+            "type": "coreclr",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/Worker/src/Adriva.Worker.Host",
+            "program": "${workspaceFolder}/Worker/src/Adriva.Worker.Host/bin/Debug/net8.0/Adriva.Worker.Host.dll"
+        },
+        {
+            "name": "Launch Faster Server",
+            "preLaunchTask": "build faster",
+            "type": "coreclr",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/Faster/Adriva.Extensions.Faster.Server/",
+            "program": "${workspaceFolder}/Faster/Adriva.Extensions.Faster.Server/bin/Debug/net8.0/Adriva.Extensions.Faster.Server.dll",
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}",
+        }
+    ],
+    "compounds": []
+}
